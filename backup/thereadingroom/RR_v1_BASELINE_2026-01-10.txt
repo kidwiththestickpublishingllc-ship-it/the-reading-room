@@ -1,0 +1,706 @@
+﻿"use client";
+
+
+import { useEffect, useMemo, useState, type ReactNode } from "react";
+
+
+// =========================
+// Types
+// =========================
+type Author = {
+  slug: string;
+  name: string;
+  tagline: string;
+  genres: string[];
+  image: string; // put these in /public/images/...
+};
+
+
+type Story = {
+  slug: string;
+  title: string;
+  author: string;
+  badge: "Serial" | "Exclusive" | "Early Access";
+  description: string;
+  cover: string; // put these in /public/images/...
+};
+
+
+type Unlocks = Record<string, boolean>;
+type AuthorJar = Record<string, number>;
+
+
+// =========================
+// Constants
+// =========================
+const SQUARESPACE_READING_ROOM =
+  "https://www.the-tiniest-library.com/the-reading-room";
+
+
+// TTL palette + layout direction
+const TTL_BG = "#6495ED"; // cornflower blue
+const PANEL_BG = "bg-black/70";
+const CARD_BG = "bg-black/60";
+const CARD_HOVER = "hover:bg-black/50";
+
+
+// Ink economics (Phase 1)
+const DEFAULT_INK = 250;
+const DEFAULT_UNLOCK_COST = 25;
+
+
+const INK_PACKS = [
+  { id: "ink-100", label: "Starter", ink: 100, price: "$1" },
+  { id: "ink-600", label: "Reader", ink: 600, price: "$5" },
+  { id: "ink-1500", label: "Supporter", ink: 1500, price: "$10" },
+];
+
+
+// =========================
+// LocalStorage Helpers
+// =========================
+function getInk(): number {
+  if (typeof window === "undefined") return DEFAULT_INK;
+  const raw = window.localStorage.getItem("ttl_ink");
+  return raw ? Number(raw) : DEFAULT_INK;
+}
+
+
+function setInkStore(n: number) {
+  if (typeof window === "undefined") return;
+  window.localStorage.setItem("ttl_ink", String(n));
+}
+
+
+function getUnlocks(): Unlocks {
+  if (typeof window === "undefined") return {};
+  const raw = window.localStorage.getItem("ttl_unlocks");
+  return raw ? (JSON.parse(raw) as Unlocks) : {};
+}
+
+
+function setUnlocks(next: Unlocks) {
+  if (typeof window === "undefined") return;
+  window.localStorage.setItem("ttl_unlocks", JSON.stringify(next));
+}
+
+
+function getJar(): AuthorJar {
+  if (typeof window === "undefined") return {};
+  const raw = window.localStorage.getItem("ttl_author_jar");
+  return raw ? (JSON.parse(raw) as AuthorJar) : {};
+}
+
+
+function setJar(next: AuthorJar) {
+  if (typeof window === "undefined") return;
+  window.localStorage.setItem("ttl_author_jar", JSON.stringify(next));
+}
+
+
+// =========================
+// Demo Data
+// =========================
+const authors: Author[] = [
+  {
+    slug: "a-rivera",
+    name: "A. Rivera",
+    tagline: "Slow-burn mystery with heart.",
+    genres: ["Mystery", "Cozy"],
+    image: "/images/author-1.jpg",
+  },
+  {
+    slug: "j-holloway",
+    name: "J. Holloway",
+    tagline: "Dark academia + modern folklore.",
+    genres: ["Dark Academia", "Fantasy"],
+    image: "/images/author-2.jpg",
+  },
+  {
+    slug: "m-chen",
+    name: "M. Chen",
+    tagline: "Soft sci-fi, big emotions.",
+    genres: ["Sci-Fi", "YA"],
+    image: "/images/author-3.jpg",
+  },
+  {
+    slug: "s-gomez",
+    name: "S. Gomez",
+    tagline: "Thrillers that don’t let go.",
+    genres: ["Crime", "Thriller"],
+    image: "/images/author-4.jpg",
+  },
+];
+
+
+const stories: Story[] = [
+  {
+    slug: "fox-vs-the-world",
+    title: "Fox Vs. The World (Preview)",
+    author: "Daniel Cedeno",
+    badge: "Early Access",
+    description:
+      "A first look at a world that refuses to stay quiet—exclusive chapters live here.",
+    cover: "/images/cover-1.jpg",
+  },
+  {
+    slug: "the-quiet-stairwell",
+    title: "The Quiet Stairwell",
+    author: "J. Holloway",
+    badge: "Exclusive",
+    description:
+      "A private campus, a hidden society, and a truth that changes everything.",
+    cover: "/images/cover-2.jpg",
+  },
+  {
+    slug: "lanterns-over-hartford",
+    title: "Lanterns Over Hartford",
+    author: "A. Rivera",
+    badge: "Serial",
+    description:
+      "A cozy mystery told in weekly chapters—support to unlock the next page.",
+    cover: "/images/cover-3.jpg",
+  },
+  {
+    slug: "stars-dont-apologize",
+    title: "Stars Don’t Apologize",
+    author: "M. Chen",
+    badge: "Serial",
+    description:
+      "A tender sci-fi serial about distance, hope, and the gravity of choices.",
+    cover: "/images/cover-4.jpg",
+  },
+];
+
+
+// =========================
+// UI Components
+// =========================
+function Badge({ label }: { label: Story["badge"] }) {
+  const base =
+    "inline-flex items-center rounded-full border px-3 py-1 text-xs font-semibold tracking-wide";
+
+
+  const styles =
+    label === "Exclusive"
+      ? "border-white/20 text-white/85 bg-white/10"
+      : label === "Early Access"
+      ? "border-black/20 text-black bg-white/80"
+      : "border-white/20 text-white/85 bg-white/10";
+
+
+  return <span className={`${base} ${styles}`}>{label}</span>;
+}
+
+
+function Section({
+  eyebrow,
+  title,
+  children,
+}: {
+  eyebrow?: string;
+  title: string;
+  children: ReactNode;
+}) {
+  return (
+    <section className="mt-12">
+      <div className="flex items-end justify-between gap-6">
+        <div>
+          {eyebrow ? (
+            <p className="text-xs uppercase tracking-[0.3em] text-black/70">
+              {eyebrow}
+            </p>
+          ) : null}
+          <h2 className="mt-2 text-2xl sm:text-3xl font-semibold tracking-tight text-black">
+            {title}
+          </h2>
+        </div>
+      </div>
+      <div className="mt-5">{children}</div>
+    </section>
+  );
+}
+
+
+function InkWidget({
+  ink,
+  onAddInk,
+}: {
+  ink: number;
+  onAddInk: (amount: number) => void;
+}) {
+  return (
+    <div className={`rounded-2xl border border-white/20 ${PANEL_BG} p-5`}>
+      <p className="text-sm text-white/70">Your Ink</p>
+      <p className="mt-1 text-3xl font-semibold text-white">{ink}</p>
+
+
+      <button
+        type="button"
+        onClick={() => onAddInk(50)}
+        className="mt-4 rounded-xl border border-white/15 bg-white/10 px-4 py-2 text-sm font-semibold text-white hover:bg-white/15"
+        title="Dev helper (Phase 1)"
+      >
+        Add 50 Ink (dev)
+      </button>
+
+
+      <p className="mt-3 text-xs text-white/60">
+        Phase 1 stores Ink in your browser (localStorage). Next phase will connect
+        real checkout.
+      </p>
+    </div>
+  );
+}
+
+
+function BuyInkPanel({
+  onBuyInk,
+}: {
+  onBuyInk: (amount: number) => void;
+}) {
+  return (
+    <div className={`rounded-2xl border border-white/20 ${PANEL_BG} p-5`}>
+      <p className="text-sm text-white/70">Buy Ink (pricing)</p>
+      <p className="mt-1 text-xs text-white/60">
+        Phase 1 demo: buttons add Ink. Next phase: wire each pack to Squarespace checkout.
+      </p>
+
+
+      <div className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-3">
+        {INK_PACKS.map((p) => (
+          <button
+            key={p.id}
+            type="button"
+            onClick={() => onBuyInk(p.ink)}
+            className="rounded-xl border border-white/15 bg-white/10 p-4 text-left transition hover:bg-white/15"
+          >
+            <p className="text-xs text-white/70">{p.label}</p>
+            <p className="mt-1 text-lg font-semibold text-white">{p.ink} Ink</p>
+            <p className="mt-1 text-sm font-semibold text-white/90">{p.price}</p>
+          </button>
+        ))}
+      </div>
+
+
+      <p className="mt-4 text-xs text-white/60">
+        When you’re ready: each pack becomes a Squarespace product URL → on success, we credit Ink.
+      </p>
+    </div>
+  );
+}
+
+
+function AuthorCard({
+  author,
+  jarTotal,
+  onTip,
+}: {
+  author: Author;
+  jarTotal: number;
+  onTip: (authorSlug: string, amount: number) => void;
+}) {
+  return (
+    <a
+      href={`/reading-room/authors/${author.slug}`}
+      className={`group block rounded-2xl border border-white/20 ${CARD_BG} p-5 shadow-sm transition hover:-translate-y-1 hover:border-white/30 ${CARD_HOVER}`}
+    >
+      <div className="flex items-start gap-4">
+        <div className="h-14 w-14 overflow-hidden rounded-xl border border-white/20 bg-white/10">
+          <img
+            src={author.image}
+            alt={author.name}
+            className="h-full w-full object-cover"
+            onError={(e) => {
+              e.currentTarget.src =
+                "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=200&q=80";
+            }}
+          />
+        </div>
+
+
+        <div className="min-w-0 flex-1">
+          <p className="text-base font-semibold text-white line-clamp-1">
+            {author.name}
+          </p>
+          <p className="mt-1 text-sm text-white/75 line-clamp-2">
+            {author.tagline}
+          </p>
+
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            {author.genres.map((g) => (
+              <span
+                key={g}
+                className="rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs text-white/80"
+              >
+                {g}
+              </span>
+            ))}
+          </div>
+
+
+          <div className="mt-4 flex flex-wrap items-center gap-2">
+            <button
+              type="button"
+              onClick={(e) => {
+                e.preventDefault();
+                onTip(author.slug, 10);
+              }}
+              className="rounded-xl border border-white/15 bg-white/10 px-3 py-2 text-sm font-semibold text-white hover:bg-white/15"
+            >
+              Tip 10 Ink
+            </button>
+            <button
+              type="button"
+              onClick={(e) => {
+                e.preventDefault();
+                onTip(author.slug, 25);
+              }}
+              className="rounded-xl border border-white/15 bg-white/10 px-3 py-2 text-sm font-semibold text-white hover:bg-white/15"
+            >
+              Tip 25
+            </button>
+
+
+            <span className="ml-auto text-xs text-white/70">
+              Jar: <span className="font-semibold text-white">{jarTotal}</span> Ink
+            </span>
+          </div>
+
+
+          <div className="mt-5 flex items-center justify-between">
+            <span className="text-sm text-white/70">
+              <span className="font-semibold text-white">🪶</span> Writer profile
+            </span>
+
+
+            <span className="text-sm font-semibold text-white/90 group-hover:text-white">
+              View →
+            </span>
+          </div>
+        </div>
+      </div>
+    </a>
+  );
+}
+
+
+function StoryCard({
+  story,
+  ink,
+  inkCost,
+  isUnlocked,
+  onUnlock,
+}: {
+  story: Story;
+  ink: number;
+  inkCost: number;
+  isUnlocked: boolean;
+  onUnlock: (slug: string) => void;
+}) {
+  const canUnlock = ink >= inkCost;
+
+
+  return (
+    <div
+      className={`group rounded-2xl border border-white/20 ${CARD_BG} p-5 shadow-sm transition hover:-translate-y-1 hover:border-white/30 ${CARD_HOVER}`}
+    >
+      <div className="flex gap-4">
+        <div className="h-20 w-16 overflow-hidden rounded-xl border border-white/20 bg-white/10">
+          <img
+            src={story.cover}
+            alt={story.title}
+            className="h-full w-full object-cover"
+            onError={(e) => {
+              (e.currentTarget as HTMLImageElement).src =
+                "https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=300&q=80";
+            }}
+          />
+        </div>
+
+
+        <div className="min-w-0 flex-1">
+          <div className="flex items-start justify-between gap-3">
+            <div className="min-w-0">
+              <p className="text-base font-semibold text-white line-clamp-1">
+                {story.title}
+              </p>
+              <p className="mt-1 text-sm text-white/75">by {story.author}</p>
+            </div>
+            <Badge label={story.badge} />
+          </div>
+
+
+          <p className="mt-3 text-sm text-white/80 line-clamp-2">
+            {story.description}
+          </p>
+
+
+          <div className="mt-5 flex items-center justify-between gap-3">
+            <span className="text-sm text-white/70">
+              {isUnlocked ? "✅ Unlocked" : `Unlock costs ${inkCost} Ink`}
+            </span>
+
+
+            <button
+              type="button"
+              disabled={isUnlocked || !canUnlock}
+              onClick={() => onUnlock(story.slug)}
+              className={`rounded-xl px-3 py-2 text-sm font-semibold transition ${
+                isUnlocked
+                  ? "border border-white/20 bg-white/10 text-white/70"
+                  : canUnlock
+                  ? "border border-white/20 bg-white/10 text-white hover:bg-white/15"
+                  : "border border-white/20 bg-white/10 text-white/50"
+              }`}
+            >
+              {isUnlocked ? "Unlocked" : canUnlock ? "Unlock" : "Need more Ink"}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+
+// =========================
+// Page
+// =========================
+export default function ReadingRoomHome() {
+  const [ink, setInk] = useState<number>(DEFAULT_INK);
+  const [unlocks, setUnlocksState] = useState<Unlocks>({});
+  const [jar, setJarState] = useState<AuthorJar>({});
+
+
+  // Load from storage once
+  useEffect(() => {
+    setInk(getInk());
+    setUnlocksState(getUnlocks());
+    setJarState(getJar());
+  }, []);
+// 1) URL Parameter: add Ink via ?ink=NUMBER (one-time)
+useEffect(() => {
+  if (typeof window === "undefined") return;
+
+
+  const params = new URLSearchParams(window.location.search);
+  const inkParam = params.get("ink");
+  if (!inkParam) return;
+
+
+  const amount = Number(inkParam);
+  if (!Number.isFinite(amount) || amount <= 0) return;
+
+
+  setInk((current) => current + amount);
+
+
+  // Clean the URL so refresh doesn't re-add Ink
+  params.delete("ink");
+  const cleanUrl =
+    window.location.pathname + (params.toString() ? `?${params.toString()}` : "");
+  window.history.replaceState({}, "", cleanUrl);
+}, []);
+
+
+  // Persist on change
+  useEffect(() => {
+    setInkStore(ink);
+  }, [ink]);
+
+
+  useEffect(() => {
+    setUnlocks(unlocks);
+  }, [unlocks]);
+
+
+  useEffect(() => {
+    setJar(jar);
+  }, [jar]);
+
+
+  const addInk = (amount: number) => {
+    setInk((v) => v + amount);
+  };
+
+
+  const buyInk = (amount: number) => {
+    // Phase 1: demo purchase just adds Ink
+    addInk(amount);
+    alert(`Added ${amount} Ink (demo). Next phase: connect checkout.`);
+  };
+
+
+  const unlockStory = (slug: string, cost = DEFAULT_UNLOCK_COST) => {
+    if (ink < cost) {
+      alert(`You need ${cost} Ink to unlock this.`);
+      return;
+    }
+    setInk((v) => v - cost);
+    setUnlocksState((u) => ({ ...u, [slug]: true }));
+  };
+
+
+  const tipAuthor = (authorSlug: string, amount: number) => {
+    if (ink < amount) {
+      alert("Not enough Ink yet.");
+      return;
+    }
+    setInk((v) => v - amount);
+    setJarState((j) => ({ ...j, [authorSlug]: (j[authorSlug] ?? 0) + amount }));
+    alert(`Supported the author with ${amount} Ink!`);
+  };
+
+
+  const jarTotals = useMemo(() => jar, [jar]);
+
+
+  return (
+    <main className="min-h-screen" style={{ background: TTL_BG }}>
+      <div className="mx-auto max-w-6xl px-6 py-12">
+        {/* HERO */}
+        <div className="rounded-3xl border border-black/20 bg-white/90 p-8 sm:p-12 shadow-sm">
+          <p className="text-xs uppercase tracking-[0.3em] text-black/60">
+            The Tiniest Library
+          </p>
+
+
+          <h1 className="mt-4 text-4xl sm:text-6xl font-semibold tracking-tight text-black">
+            The Reading Room
+          </h1>
+
+
+          <p className="mt-5 max-w-2xl text-base sm:text-lg leading-relaxed text-black/70">
+            A members-only space for long stories, serialized chapters, and exclusive
+            releases. Support creators with Ink and unlock what’s next.
+          </p>
+
+
+          <div className="mt-8 flex flex-col sm:flex-row gap-3">
+            <a
+              href={SQUARESPACE_READING_ROOM}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center rounded-2xl bg-black px-6 py-3 font-semibold text-white transition hover:opacity-95"
+            >
+              Enter the Reading Room
+            </a>
+
+
+            <a
+              href="#how-it-works"
+              className="inline-flex items-center justify-center rounded-2xl border border-black/20 bg-white px-6 py-3 font-semibold text-black/90 transition hover:bg-black/5"
+            >
+              How it works
+            </a>
+          </div>
+        </div>
+
+
+        {/* WALLET + PRICING */}
+        <Section eyebrow="Wallet" title="Reader Ink">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <InkWidget ink={ink} onAddInk={addInk} />
+            <BuyInkPanel onBuyInk={buyInk} />
+          </div>
+        </Section>
+
+
+        {/* FEATURED AUTHORS */}
+        <Section eyebrow="Discover" title="Featured Authors">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {authors.map((a) => (
+              <AuthorCard
+                key={a.slug}
+                author={a}
+                jarTotal={jarTotals[a.slug] ?? 0}
+                onTip={tipAuthor}
+              />
+            ))}
+          </div>
+        </Section>
+
+
+        {/* STORIES */}
+        <Section eyebrow="Read" title="Featured Stories">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {stories.map((s) => (
+              <StoryCard
+                key={s.slug}
+                story={s}
+                ink={ink}
+                inkCost={DEFAULT_UNLOCK_COST}
+                isUnlocked={Boolean(unlocks[s.slug])}
+                onUnlock={(slug) => unlockStory(slug, DEFAULT_UNLOCK_COST)}
+              />
+            ))}
+          </div>
+        </Section>
+
+
+        {/* HOW IT WORKS */}
+        <section id="how-it-works" className="mt-12">
+          <div className="rounded-3xl border border-white/20 bg-black/60 p-8 sm:p-12">
+            <p className="text-xs uppercase tracking-[0.3em] text-white/60">
+              Simple
+            </p>
+            <h2 className="mt-2 text-2xl sm:text-3xl font-semibold tracking-tight text-white">
+              How it works
+            </h2>
+
+
+            <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="rounded-2xl border border-white/20 bg-white/10 p-6">
+                <p className="text-sm font-semibold text-white">1) Read</p>
+                <p className="mt-2 text-sm text-white/75">
+                  Browse authors and follow long stories chapter by chapter.
+                </p>
+              </div>
+
+
+              <div className="rounded-2xl border border-white/20 bg-white/10 p-6">
+                <p className="text-sm font-semibold text-white">2) Support</p>
+                <p className="mt-2 text-sm text-white/75">
+                  Add Ink (Phase 1 demo) and tip writers you want to back.
+                </p>
+              </div>
+
+
+              <div className="rounded-2xl border border-white/20 bg-white/10 p-6">
+                <p className="text-sm font-semibold text-white">3) Unlock</p>
+                <p className="mt-2 text-sm text-white/75">
+                  Ink unlocks early-access chapters and members-only exclusives.
+                </p>
+              </div>
+            </div>
+
+
+            <div className="mt-10 flex flex-col sm:flex-row gap-3">
+              <a
+                href={SQUARESPACE_READING_ROOM}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center rounded-2xl border border-white/25 bg-white/10 px-6 py-3 font-semibold text-white transition hover:bg-white/15"
+              >
+                Go to Members Reading Room
+              </a>
+
+
+              <span className="inline-flex items-center justify-center rounded-2xl border border-white/20 bg-black/30 px-6 py-3 text-sm text-white/70">
+                Payments + real checkout = next phase
+              </span>
+            </div>
+          </div>
+        </section>
+
+
+        {/* FOOTER */}
+        <footer className="mt-12 pb-10 text-center text-sm text-black/70">
+          © {new Date().getFullYear()} The Tiniest Library • The Reading Room
+        </footer>
+      </div>
+    </main>
+  );
+}

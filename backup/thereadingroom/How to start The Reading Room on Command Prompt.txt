@@ -1,0 +1,105 @@
+﻿Microsoft Windows [Version 10.0.26200.7462]
+(c) Microsoft Corporation. All rights reserved.
+
+
+C:\Users\danie>cd Desktop
+The system cannot find the path specified.
+
+
+C:\Users\danie>dir
+ Volume in drive C is Windows-SSD
+ Volume Serial Number is D280-470B
+
+
+ Directory of C:\Users\danie
+
+
+01/06/2026  01:19 PM    <DIR>          .
+11/12/2025  08:16 AM    <DIR>          ..
+01/06/2026  01:19 PM    <DIR>          .vscode
+03/03/2025  09:20 AM    <DIR>          Contacts
+03/03/2025  09:48 AM    <DIR>          Documents
+01/10/2026  11:11 AM    <DIR>          Downloads
+03/03/2025  09:20 AM    <DIR>          Favorites
+05/15/2025  02:37 PM    <DIR>          Fruit Punch!       !!!!!!!!!!!!!This is Wrong!!!!!!!!!!!!!!!!
+03/03/2025  09:20 AM    <DIR>          Links
+03/03/2025  09:20 AM    <DIR>          Music
+01/10/2026  09:59 AM    <DIR>          OneDrive
+03/03/2025  09:20 AM    <DIR>          Saved Games
+03/03/2025  09:37 AM    <DIR>          Searches
+01/06/2026  08:40 PM    <DIR>          the-reading-room
+03/07/2025  10:15 AM    <DIR>          Videos
+               0 File(s)              0 bytes
+              15 Dir(s)  123,946,598,400 bytes free
+
+
+C:\Users\danie>cd the-reading-room               !!!!!!!!!!!!!Type this code. This is the correct path to find file on computer!!!!!!!!!!!!!!!!
+
+
+
+
+C:\Users\danie\the-reading-room>dir
+ Volume in drive C is Windows-SSD
+ Volume Serial Number is D280-470B
+
+
+ Directory of C:\Users\danie\the-reading-room—-This is good!!!!!!!!!!!
+
+
+
+
+01/06/2026  08:40 PM    <DIR>          .
+01/06/2026  01:19 PM    <DIR>          ..
+01/06/2026  08:31 PM               307 .env.local
+01/06/2026  12:57 PM               480 .gitignore
+01/06/2026  02:04 PM    <DIR>          .next
+01/06/2026  09:29 PM    <DIR>          app
+01/06/2026  12:57 PM               465 eslint.config.mjs
+01/06/2026  08:41 PM    <DIR>          lib
+01/06/2026  01:02 PM               251 next-env.d.ts
+01/06/2026  12:57 PM               133 next.config.ts
+01/06/2026  07:36 PM    <DIR>          node_modules—-This is good!!!!!!!!!!!
+01/07/2026  10:49 AM           231,546 package-lock.json
+01/06/2026  07:36 PM               578 package.json
+01/06/2026  12:57 PM                94 postcss.config.mjs
+01/06/2026  12:59 PM    <DIR>          public
+01/06/2026  12:57 PM             1,450 README.md
+01/06/2026  12:59 PM               666 tsconfig.json
+              10 File(s)        235,970 bytes
+               7 Dir(s)  123,941,535,744 bytes free
+
+
+C:\Users\danie\the-reading-room>npm install !!!!!!!!!!!!!Type this code. This is the correct path to install file on computer!!!!!!!!!!!!!!!!
+
+
+
+
+up to date, audited 367 packages in 2s
+
+
+141 packages are looking for funding—-This is good!!!!!!!!!!!
+  run `npm fund` for details
+
+
+found 0 vulnerabilities
+
+
+C:\Users\danie\the-reading-room>npm run dev !!!!!!!!!!!!!Type this code. This is the correct path to run file on computer!!!!!!!!!!!!!!!!
+
+
+
+
+> the-reading-room@0.1.0 dev
+> next dev
+
+
+▲ Next.js 16.1.1 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.4.51:3000 —-This is good!!!!!!!!!!!
+
+
+- Environments: .env.local
+
+
+✓ Starting...
+✓ Ready in 2.2s
