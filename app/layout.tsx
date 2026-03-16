@@ -1,6 +1,7 @@
 import './globals.css'
 import { Playfair_Display, Inter } from 'next/font/google'
 import PageChatWidget from "./components/PageChatWidget";
+import WelcomeTour from "./components/WelcomeTour";
 
 const playfair = Playfair_Display({
   subsets: ['latin'],
@@ -22,6 +23,7 @@ export default function RootLayout({
       <body className="font-inter bg-[#FAFAF8] text-[#111111]">
         {children}
         <PageChatWidget />
+        <WelcomeTour />
       </body>
     </html>
   )
