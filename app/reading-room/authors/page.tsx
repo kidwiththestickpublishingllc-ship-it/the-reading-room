@@ -1,657 +1,226 @@
 "use client";
 
-import Link from "next/link";
-import { useState, useMemo, useEffect } from "react";
+import { useState } from "react";
 
-// ─────────────────────────────────────────────
-// TYPE
-// ─────────────────────────────────────────────
-type Author = {
-  name: string;
-  slug: string;
-  genre: string;
-  role: string;
-  initial: string;
-  bio: string;
-  stories: number;
-};
+const STYLES = `
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Syne:wght@400;500;600;700&display=swap');
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-// ─────────────────────────────────────────────
-// HARDCODED DATA
-// When Supabase is ready, replace this block with:
-//   const { data: authors } = await supabase.from("authors").select("*");
-// and remove the AUTHORS const below.
-// ─────────────────────────────────────────────
-const AUTHORS: Author[] = [
-  {
-    name: "A. Rivera",
-    slug: "a-rivera",
-    genre: "Mystery",
-    role: "Founding Author",
-    initial: "R",
-    bio: "Writes shadowed narratives where nothing is what it seems.",
-    stories: 4,
-  },
-  {
-    name: "J. Holloway",
-    slug: "j-holloway",
-    genre: "Dark Academia",
-    role: "Founding Author",
-    initial: "H",
-    bio: "Explores the dangerous romance of knowledge and obsession.",
-    stories: 6,
-  },
-  {
-    name: "M. Chen",
-    slug: "m-chen",
-    genre: "Sci-Fi",
-    role: "Founding Author",
-    initial: "C",
-    bio: "Builds futures that feel terrifyingly close to now.",
-    stories: 3,
-  },
-];
+  :root {
+    --ttl-bg:        #6495ED;
+    --ttl-panel:     rgba(10, 25, 60, 0.72);
+    --ttl-panel-alt: rgba(10, 25, 60, 0.55);
+    --ttl-border:    rgba(255,255,255,0.18);
+    --ttl-border-soft: rgba(255,255,255,0.10);
+    --ttl-gold:      #c9a84c;
+    --ttl-gold-dim:  rgba(201,168,76,0.45);
+    --ttl-text:      #f0ece2;
+    --ttl-text-dim:  rgba(240,236,226,0.55);
+    --ttl-text-mute: rgba(240,236,226,0.30);
+  }
 
-const GENRES = [
-  "All",
-  "Mystery",
-  "Dark Academia",
-  "Sci-Fi",
-  "Romance",
-  "Horror",
-  "Literary Fiction",
-  "Fantasy",
-];
+  .ap-root {
+    min-height: 100vh;
+    font-family: 'Syne', sans-serif;
+    color: var(--ttl-text);
+    background: var(--ttl-bg);
+    background-image:
+      radial-gradient(900px circle at 10% 10%, rgba(255,255,255,0.18), transparent 60%),
+      radial-gradient(700px circle at 85% 80%, rgba(0,0,0,0.15), transparent 55%),
+      repeating-linear-gradient(45deg, rgba(255,255,255,0.04) 0px, rgba(255,255,255,0.04) 1px, transparent 1px, transparent 10px);
+    position: relative; overflow-x: hidden;
+  }
 
-// ─────────────────────────────────────────────
-// COMPONENT
-// ─────────────────────────────────────────────
-export default function AuthorsDirectory() {
-  const [search, setSearch] = useState("");
-  const [activeGenre, setActiveGenre] = useState("All");
-  const [spotlight, setSpotlight] = useState<Author | null>(null);
+  /* NAV */
+  .ap-nav { position:sticky; top:0; z-index:40; background:rgba(10,25,60,0.88); backdrop-filter:blur(14px); border-bottom:1px solid var(--ttl-border-soft); }
+  .ap-nav-inner { max-width:780px; margin:0 auto; padding:0 32px; height:58px; display:flex; align-items:center; justify-content:space-between; gap:20px; }
+  .ap-nav-brand { font-family:'Cormorant Garamond',serif; font-size:20px; font-weight:400; color:var(--ttl-text); text-decoration:none; letter-spacing:0.03em; }
+  .ap-nav-brand span { color:var(--ttl-gold); }
+  .ap-nav-back { font-size:10px; letter-spacing:0.16em; text-transform:uppercase; color:var(--ttl-text-dim); text-decoration:none; border:1px solid var(--ttl-border-soft); padding:6px 14px; border-radius:2px; transition:all 0.2s; }
+  .ap-nav-back:hover { color:var(--ttl-text); border-color:var(--ttl-border); background:rgba(255,255,255,0.07); }
 
-  useEffect(() => {
-    const pick = AUTHORS[Math.floor(Math.random() * AUTHORS.length)];
-    setSpotlight(pick);
-  }, []);
+  /* BANNER */
+  .ap-banner { position:relative; width:100%; height:260px; overflow:hidden; cursor:pointer; background:linear-gradient(135deg, rgba(10,25,60,0.9) 0%, rgba(20,50,120,0.8) 100%); }
+  .ap-banner img { width:100%; height:100%; object-fit:cover; }
+  .ap-banner-overlay { position:absolute; inset:0; background:linear-gradient(to bottom, transparent 30%, var(--ttl-bg) 100%); }
+  .ap-banner-upload { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; opacity:0; transition:opacity 0.3s; background:rgba(0,0,30,0.45); cursor:pointer; }
+  .ap-banner:hover .ap-banner-upload { opacity:1; }
+  .ap-upload-hint { font-family:'Syne',sans-serif; font-size:10px; letter-spacing:0.18em; text-transform:uppercase; color:var(--ttl-text); border:1px solid var(--ttl-border); padding:10px 22px; backdrop-filter:blur(4px); background:rgba(10,25,60,0.5); }
 
-  const filtered = useMemo(() => {
-    return AUTHORS.filter((a) => {
-      const matchesGenre = activeGenre === "All" || a.genre === activeGenre;
-      const matchesSearch =
-        search === "" ||
-        a.name.toLowerCase().includes(search.toLowerCase()) ||
-        a.genre.toLowerCase().includes(search.toLowerCase());
-      return matchesGenre && matchesSearch;
-    });
-  }, [search, activeGenre]);
+  /* CONTENT */
+  .ap-content { position:relative; z-index:1; max-width:780px; margin:0 auto; padding:0 32px 80px; }
 
-  const genreCount = new Set(AUTHORS.map((a) => a.genre)).size;
-  const totalStories = AUTHORS.reduce((sum, a) => sum + a.stories, 0);
+  /* HEADER */
+  .ap-header { display:flex; align-items:flex-end; gap:28px; margin-top:-60px; margin-bottom:44px; }
+  .ap-avatar-wrap { position:relative; flex-shrink:0; cursor:pointer; }
+  .ap-avatar { width:120px; height:120px; border-radius:2px; background:rgba(10,25,60,0.8); border:3px solid var(--ttl-bg); object-fit:cover; display:block; }
+  .ap-avatar-placeholder { width:120px; height:120px; border-radius:2px; background:rgba(10,25,60,0.8); border:3px solid var(--ttl-bg); display:flex; align-items:center; justify-content:center; font-family:'Cormorant Garamond',serif; font-size:48px; font-weight:300; color:var(--ttl-gold); text-transform:uppercase; }
+  .ap-avatar-upload { position:absolute; inset:3px; background:rgba(0,0,30,0.55); display:flex; align-items:center; justify-content:center; opacity:0; transition:opacity 0.2s; border-radius:1px; }
+  .ap-avatar-wrap:hover .ap-avatar-upload { opacity:1; }
+  .ap-avatar-icon { color:var(--ttl-text); font-size:22px; }
+  .ap-header-info { padding-bottom:8px; }
+  .ap-badge { display:inline-block; font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:var(--ttl-gold); border:1px solid var(--ttl-gold-dim); padding:3px 10px; margin-bottom:10px; background:rgba(201,168,76,0.1); }
+  .ap-name { font-family:'Cormorant Garamond',serif; font-size:44px; font-weight:300; line-height:1; letter-spacing:0.02em; text-transform:capitalize; color:var(--ttl-text); }
+
+  /* DIVIDER */
+  .ap-divider { height:1px; background:linear-gradient(to right, var(--ttl-gold-dim), transparent); margin:0 0 36px; }
+
+  /* FORM GROUP */
+  .ap-section-group { padding-left:20px; border-left:2px solid rgba(201,168,76,0.2); }
+  .ap-section { margin-bottom:32px; }
+  .ap-label { font-size:10px; letter-spacing:0.22em; text-transform:uppercase; color:var(--ttl-gold); margin-bottom:10px; display:block; }
+
+  /* INPUTS */
+  .ap-input, .ap-textarea {
+    width:100%;
+    background:var(--ttl-panel-alt);
+    border:1px solid var(--ttl-border-soft);
+    border-radius:2px;
+    color:var(--ttl-text);
+    font-family:'Syne',sans-serif;
+    font-size:14px;
+    padding:12px 16px;
+    transition:all 0.2s;
+    outline:none;
+    resize:none;
+    backdrop-filter:blur(6px);
+  }
+  .ap-input::placeholder, .ap-textarea::placeholder { color:var(--ttl-text-mute); }
+  .ap-input:focus, .ap-textarea:focus { border-color:var(--ttl-gold-dim); background:rgba(10,25,60,0.7); }
+
+  /* LINKS GRID */
+  .ap-links-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; }
+  .ap-link-wrap { position:relative; }
+  .ap-link-icon { position:absolute; left:14px; top:50%; transform:translateY(-50%); font-size:14px; color:var(--ttl-text-mute); pointer-events:none; }
+  .ap-link-input { padding-left:38px !important; }
+
+  /* PRIZE GRID */
+  .ap-prize-grid { display:grid; grid-template-columns:1fr 2fr; gap:10px; }
+
+  /* SAVE BTN */
+  .ap-save-btn {
+    width:100%; padding:15px;
+    background:transparent; border:1px solid var(--ttl-gold);
+    color:var(--ttl-gold); font-family:'Syne',sans-serif;
+    font-size:10px; letter-spacing:0.25em; text-transform:uppercase;
+    cursor:pointer; transition:all 0.25s; margin-top:10px; border-radius:2px;
+  }
+  .ap-save-btn:hover, .ap-save-btn.saved { background:var(--ttl-gold); color:#0a1940; }
+
+  /* RESPONSIVE */
+  @media (max-width:600px) {
+    .ap-banner { height:180px; }
+    .ap-header { flex-direction:column; align-items:flex-start; gap:14px; margin-top:-44px; }
+    .ap-name { font-size:32px; }
+    .ap-links-grid { grid-template-columns:1fr; }
+    .ap-prize-grid { grid-template-columns:1fr; }
+    .ap-content { padding:0 20px 60px; }
+    .ap-nav-inner { padding:0 20px; }
+  }
+`;
+
+export default function AuthorProfile({ params }: { params: { slug: string } }) {
+  const slug = params?.slug || "unknown-author";
+  const authorName = slug.replaceAll("-", " ");
+
+  const [bio, setBio] = useState("");
+  const [achievements, setAchievements] = useState("");
+  const [website, setWebsite] = useState("");
+  const [twitter, setTwitter] = useState("");
+  const [instagram, setInstagram] = useState("");
+  const [prizeTitle, setPrizeTitle] = useState("");
+  const [prizeDesc, setPrizeDesc] = useState("");
+  const [profilePreview, setProfilePreview] = useState<string | null>(null);
+  const [bannerPreview, setBannerPreview] = useState<string | null>(null);
+  const [saved, setSaved] = useState(false);
+
+  const handleSave = () => { setSaved(true); setTimeout(() => setSaved(false), 2500); };
 
   return (
     <>
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Syne:wght@400;500;600;700&display=swap');
+      <style>{STYLES}</style>
+      <div className="ap-root">
 
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        {/* NAV */}
+        <nav className="ap-nav">
+          <div className="ap-nav-inner">
+            <a href="/reading-room" className="ap-nav-brand">The Tiniest <span>Library</span></a>
+            <a href="/reading-room/authors" className="ap-nav-back">← Author Directory</a>
+          </div>
+        </nav>
 
-        .ad-root {
-          min-height: 100vh;
-          background: #0c0c0e;
-          font-family: 'Syne', sans-serif;
-          color: #e8e4da;
-          position: relative;
-          overflow-x: hidden;
-        }
+        {/* BANNER */}
+        <div className="ap-banner">
+          {bannerPreview && <img src={bannerPreview} alt="Profile banner" />}
+          <div className="ap-banner-overlay" />
+          <label className="ap-banner-upload" htmlFor="banner-upload">
+            <span className="ap-upload-hint">Change Banner</span>
+          </label>
+          <input id="banner-upload" type="file" accept="image/*" style={{ display:"none" }} onChange={e => { const f = e.target.files?.[0]; if (f) setBannerPreview(URL.createObjectURL(f)); }} />
+        </div>
 
-        .ad-root::before {
-          content: '';
-          position: fixed;
-          inset: 0;
-          background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-          pointer-events: none;
-          z-index: 0;
-          opacity: 0.4;
-        }
-
-        .ad-wrap {
-          position: relative;
-          z-index: 1;
-          max-width: 960px;
-          margin: 0 auto;
-          padding: 72px 32px 96px;
-        }
-
-        /* ── PAGE HEADER ── */
-        .ad-eyebrow {
-          font-size: 10px;
-          letter-spacing: 0.28em;
-          text-transform: uppercase;
-          color: #c9a84c;
-          display: block;
-          margin-bottom: 12px;
-        }
-
-        .ad-title {
-          font-family: 'Cormorant Garamond', serif;
-          font-size: 60px;
-          font-weight: 300;
-          line-height: 1;
-          color: #f0ece2;
-          margin-bottom: 14px;
-        }
-
-        .ad-desc {
-          font-size: 13px;
-          color: rgba(232,228,218,0.38);
-          max-width: 420px;
-          line-height: 1.7;
-          margin-bottom: 40px;
-        }
-
-        /* ── STATS BAR ── */
-        .ad-stats {
-          display: flex;
-          gap: 0;
-          margin-bottom: 52px;
-          border: 1px solid rgba(232,228,218,0.08);
-          border-radius: 2px;
-          overflow: hidden;
-        }
-
-        .ad-stat {
-          flex: 1;
-          padding: 18px 24px;
-          border-right: 1px solid rgba(232,228,218,0.08);
-        }
-
-        .ad-stat:last-child { border-right: none; }
-
-        .ad-stat-num {
-          font-family: 'Cormorant Garamond', serif;
-          font-size: 36px;
-          font-weight: 300;
-          color: #c9a84c;
-          line-height: 1;
-          margin-bottom: 4px;
-        }
-
-        .ad-stat-label {
-          font-size: 9px;
-          letter-spacing: 0.2em;
-          text-transform: uppercase;
-          color: rgba(232,228,218,0.28);
-        }
-
-        /* ── SPOTLIGHT ── */
-        .ad-spotlight-label {
-          font-size: 9px;
-          letter-spacing: 0.25em;
-          text-transform: uppercase;
-          color: rgba(201,168,76,0.5);
-          margin-bottom: 14px;
-          display: flex;
-          align-items: center;
-          gap: 12px;
-        }
-
-        .ad-spotlight-label::after {
-          content: '';
-          flex: 1;
-          height: 1px;
-          background: rgba(201,168,76,0.12);
-        }
-
-        .ad-spotlight {
-          display: block;
-          text-decoration: none;
-          position: relative;
-          background: linear-gradient(135deg, rgba(201,168,76,0.07) 0%, rgba(255,255,255,0.02) 100%);
-          border: 1px solid rgba(201,168,76,0.18);
-          border-radius: 2px;
-          padding: 36px 40px;
-          margin-bottom: 56px;
-          overflow: hidden;
-          transition: border-color 0.3s, background 0.3s;
-        }
-
-        .ad-spotlight:hover {
-          border-color: rgba(201,168,76,0.4);
-          background: linear-gradient(135deg, rgba(201,168,76,0.1) 0%, rgba(255,255,255,0.04) 100%);
-        }
-
-        .ad-spotlight::before {
-          content: '';
-          position: absolute;
-          top: 0; left: 0;
-          width: 3px;
-          height: 100%;
-          background: #c9a84c;
-        }
-
-        .ad-spotlight-inner {
-          display: flex;
-          align-items: center;
-          gap: 28px;
-        }
-
-        .ad-spotlight-avatar {
-          width: 80px;
-          height: 80px;
-          flex-shrink: 0;
-          border-radius: 2px;
-          background: linear-gradient(135deg, #1e1e26, #2a2a38);
-          border: 1px solid rgba(201,168,76,0.3);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-family: 'Cormorant Garamond', serif;
-          font-size: 36px;
-          font-weight: 300;
-          color: #c9a84c;
-        }
-
-        .ad-spotlight-info { flex: 1; }
-
-        .ad-spotlight-genre {
-          font-size: 9px;
-          letter-spacing: 0.2em;
-          text-transform: uppercase;
-          color: rgba(201,168,76,0.65);
-          margin-bottom: 6px;
-        }
-
-        .ad-spotlight-name {
-          font-family: 'Cormorant Garamond', serif;
-          font-size: 38px;
-          font-weight: 300;
-          color: #f0ece2;
-          line-height: 1;
-          margin-bottom: 10px;
-        }
-
-        .ad-spotlight-bio {
-          font-size: 13px;
-          color: rgba(232,228,218,0.48);
-          line-height: 1.6;
-          max-width: 480px;
-        }
-
-        .ad-spotlight-cta {
-          font-size: 10px;
-          letter-spacing: 0.18em;
-          text-transform: uppercase;
-          color: #c9a84c;
-          margin-top: 18px;
-          display: inline-flex;
-          align-items: center;
-          gap: 6px;
-          transition: gap 0.25s;
-        }
-
-        .ad-spotlight:hover .ad-spotlight-cta { gap: 12px; }
-
-        /* ── SEARCH + FILTER ── */
-        .ad-controls {
-          display: flex;
-          flex-direction: column;
-          gap: 14px;
-          margin-bottom: 28px;
-        }
-
-        .ad-search-wrap { position: relative; }
-
-        .ad-search-icon {
-          position: absolute;
-          left: 16px;
-          top: 50%;
-          transform: translateY(-50%);
-          color: rgba(232,228,218,0.22);
-          font-size: 15px;
-          pointer-events: none;
-        }
-
-        .ad-search {
-          width: 100%;
-          background: rgba(255,255,255,0.04);
-          border: 1px solid rgba(232,228,218,0.09);
-          border-radius: 2px;
-          color: #e8e4da;
-          font-family: 'Syne', sans-serif;
-          font-size: 13px;
-          padding: 13px 16px 13px 42px;
-          outline: none;
-          transition: border-color 0.2s;
-        }
-
-        .ad-search::placeholder { color: rgba(232,228,218,0.2); }
-        .ad-search:focus { border-color: rgba(201,168,76,0.38); }
-
-        .ad-genres {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 8px;
-        }
-
-        .ad-genre-btn {
-          font-family: 'Syne', sans-serif;
-          font-size: 9px;
-          letter-spacing: 0.18em;
-          text-transform: uppercase;
-          padding: 6px 14px;
-          border-radius: 2px;
-          border: 1px solid rgba(232,228,218,0.1);
-          background: transparent;
-          color: rgba(232,228,218,0.35);
-          cursor: pointer;
-          transition: all 0.2s;
-        }
-
-        .ad-genre-btn:hover {
-          border-color: rgba(232,228,218,0.28);
-          color: rgba(232,228,218,0.65);
-        }
-
-        .ad-genre-btn.active {
-          background: rgba(201,168,76,0.1);
-          border-color: rgba(201,168,76,0.42);
-          color: #c9a84c;
-        }
-
-        /* ── RESULTS META ── */
-        .ad-meta {
-          font-size: 10px;
-          letter-spacing: 0.15em;
-          text-transform: uppercase;
-          color: rgba(232,228,218,0.2);
-          margin-bottom: 18px;
-        }
-
-        /* ── GRID ── */
-        .ad-grid {
-          display: grid;
-          grid-template-columns: repeat(3, 1fr);
-          gap: 2px;
-        }
-
-        .ad-card {
-          display: block;
-          text-decoration: none;
-          position: relative;
-          background: rgba(255,255,255,0.03);
-          border: 1px solid rgba(232,228,218,0.07);
-          padding: 30px 26px 40px;
-          overflow: hidden;
-          transition: background 0.3s, border-color 0.3s;
-        }
-
-        .ad-card::before {
-          content: '';
-          position: absolute;
-          top: 0; left: 0;
-          width: 2px;
-          height: 0;
-          background: #c9a84c;
-          transition: height 0.35s ease;
-        }
-
-        .ad-card:hover { background: rgba(255,255,255,0.055); border-color: rgba(201,168,76,0.16); }
-        .ad-card:hover::before { height: 100%; }
-
-        .ad-card-avatar {
-          width: 46px;
-          height: 46px;
-          border-radius: 2px;
-          background: linear-gradient(135deg, #1e1e26, #2a2a38);
-          border: 1px solid rgba(201,168,76,0.16);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-family: 'Cormorant Garamond', serif;
-          font-size: 20px;
-          font-weight: 300;
-          color: #c9a84c;
-          margin-bottom: 20px;
-          transition: border-color 0.3s;
-        }
-
-        .ad-card:hover .ad-card-avatar { border-color: rgba(201,168,76,0.48); }
-
-        .ad-card-name {
-          font-family: 'Cormorant Garamond', serif;
-          font-size: 24px;
-          font-weight: 400;
-          color: #f0ece2;
-          line-height: 1.1;
-          margin-bottom: 4px;
-        }
-
-        .ad-card-role {
-          font-size: 9px;
-          letter-spacing: 0.18em;
-          text-transform: uppercase;
-          color: rgba(201,168,76,0.5);
-          margin-bottom: 14px;
-        }
-
-        .ad-card-bio {
-          font-size: 12px;
-          color: rgba(232,228,218,0.32);
-          line-height: 1.65;
-          margin-bottom: 20px;
-        }
-
-        .ad-card-footer {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-        }
-
-        .ad-card-tag {
-          font-size: 9px;
-          letter-spacing: 0.14em;
-          text-transform: uppercase;
-          color: rgba(232,228,218,0.32);
-          border: 1px solid rgba(232,228,218,0.09);
-          padding: 3px 9px;
-          transition: all 0.3s;
-        }
-
-        .ad-card:hover .ad-card-tag {
-          color: rgba(232,228,218,0.58);
-          border-color: rgba(232,228,218,0.2);
-        }
-
-        .ad-card-stories {
-          font-size: 10px;
-          color: rgba(232,228,218,0.18);
-        }
-
-        .ad-arrow {
-          position: absolute;
-          bottom: 22px;
-          right: 22px;
-          font-size: 15px;
-          color: transparent;
-          transition: color 0.3s, transform 0.3s;
-        }
-
-        .ad-card:hover .ad-arrow { color: #c9a84c; transform: translate(3px, -3px); }
-
-        /* ── EMPTY STATE ── */
-        .ad-empty {
-          grid-column: 1 / -1;
-          padding: 72px 0;
-          text-align: center;
-        }
-
-        .ad-empty-title {
-          font-family: 'Cormorant Garamond', serif;
-          font-size: 28px;
-          font-weight: 300;
-          color: rgba(232,228,218,0.25);
-          margin-bottom: 8px;
-        }
-
-        .ad-empty-sub {
-          font-size: 11px;
-          letter-spacing: 0.1em;
-          color: rgba(232,228,218,0.14);
-        }
-
-        /* ── FOOTER ── */
-        .ad-footer {
-          margin-top: 52px;
-          display: flex;
-          align-items: center;
-          gap: 16px;
-        }
-
-        .ad-footer-count {
-          font-size: 10px;
-          letter-spacing: 0.15em;
-          text-transform: uppercase;
-          color: rgba(232,228,218,0.18);
-          white-space: nowrap;
-        }
-
-        .ad-footer-line {
-          flex: 1;
-          height: 1px;
-          background: rgba(232,228,218,0.06);
-        }
-
-        /* ── RESPONSIVE ── */
-        @media (max-width: 640px) {
-          .ad-wrap { padding: 48px 20px 72px; }
-          .ad-title { font-size: 40px; }
-          .ad-grid { grid-template-columns: 1fr; }
-          .ad-spotlight-inner { flex-direction: column; align-items: flex-start; gap: 16px; }
-          .ad-stats { flex-direction: column; }
-          .ad-stat { border-right: none; border-bottom: 1px solid rgba(232,228,218,0.08); }
-          .ad-stat:last-child { border-bottom: none; }
-        }
-
-        @media (min-width: 641px) and (max-width: 860px) {
-          .ad-grid { grid-template-columns: repeat(2, 1fr); }
-        }
-      `}</style>
-
-      <div className="ad-root">
-        <div className="ad-wrap">
-
-          {/* ── Header ── */}
-          <span className="ad-eyebrow">The Reading Room</span>
-          <h1 className="ad-title">Author<br />Directory</h1>
-          <p className="ad-desc">
-            Every voice that calls TTL home. Discover the writers shaping our library — one tiny story at a time.
-          </p>
-
-          {/* ── Stats Bar ── */}
-          <div className="ad-stats">
-            <div className="ad-stat">
-              <div className="ad-stat-num">{AUTHORS.length}</div>
-              <div className="ad-stat-label">Authors</div>
+        <div className="ap-content">
+          {/* HEADER */}
+          <div className="ap-header">
+            <div className="ap-avatar-wrap">
+              <label htmlFor="avatar-upload" style={{ cursor:"pointer" }}>
+                {profilePreview
+                  ? <img className="ap-avatar" src={profilePreview} alt="Author avatar" />
+                  : <div className="ap-avatar-placeholder">{authorName.charAt(0)}</div>}
+                <div className="ap-avatar-upload"><span className="ap-avatar-icon">✎</span></div>
+              </label>
+              <input id="avatar-upload" type="file" accept="image/*" style={{ display:"none" }} onChange={e => { const f = e.target.files?.[0]; if (f) setProfilePreview(URL.createObjectURL(f)); }} />
             </div>
-            <div className="ad-stat">
-              <div className="ad-stat-num">{genreCount}</div>
-              <div className="ad-stat-label">Genres</div>
-            </div>
-            <div className="ad-stat">
-              <div className="ad-stat-num">{totalStories}</div>
-              <div className="ad-stat-label">Stories Published</div>
-            </div>
-            <div className="ad-stat">
-              <div className="ad-stat-num">∞</div>
-              <div className="ad-stat-label">Words Yet to Come</div>
+            <div className="ap-header-info">
+              <span className="ap-badge">Founding Author</span>
+              <h1 className="ap-name">{authorName}</h1>
             </div>
           </div>
 
-          {/* ── Spotlight ── */}
-          {spotlight && (
-            <>
-              <div className="ad-spotlight-label">Author Spotlight</div>
-              <Link href={`/reading-room/authors/${spotlight.slug}`} className="ad-spotlight">
-                <div className="ad-spotlight-inner">
-                  <div className="ad-spotlight-avatar">{spotlight.initial}</div>
-                  <div className="ad-spotlight-info">
-                    <div className="ad-spotlight-genre">{spotlight.genre}</div>
-                    <div className="ad-spotlight-name">{spotlight.name}</div>
-                    <div className="ad-spotlight-bio">{spotlight.bio}</div>
-                    <div className="ad-spotlight-cta">View Profile →</div>
-                  </div>
+          <div className="ap-divider" />
+
+          {/* FORM */}
+          <div className="ap-section-group">
+            <div className="ap-section">
+              <label className="ap-label">Author Bio</label>
+              <textarea className="ap-textarea" rows={4} placeholder="Tell readers about yourself — your voice, your world, your craft…" value={bio} onChange={e => setBio(e.target.value)} />
+            </div>
+
+            <div className="ap-section">
+              <label className="ap-label">Achievements</label>
+              <textarea className="ap-textarea" rows={3} placeholder="Awards, milestones, notable publications…" value={achievements} onChange={e => setAchievements(e.target.value)} />
+            </div>
+
+            <div className="ap-section">
+              <label className="ap-label">Author Links</label>
+              <div className="ap-links-grid">
+                <div className="ap-link-wrap">
+                  <span className="ap-link-icon">⊕</span>
+                  <input className="ap-input ap-link-input" placeholder="Website" value={website} onChange={e => setWebsite(e.target.value)} />
                 </div>
-              </Link>
-            </>
-          )}
-
-          {/* ── Search + Genre Filter ── */}
-          <div className="ad-controls">
-            <div className="ad-search-wrap">
-              <span className="ad-search-icon">⌕</span>
-              <input
-                className="ad-search"
-                placeholder="Search by name or genre..."
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-              />
-            </div>
-            <div className="ad-genres">
-              {GENRES.map((g) => (
-                <button
-                  key={g}
-                  className={`ad-genre-btn${activeGenre === g ? " active" : ""}`}
-                  onClick={() => setActiveGenre(g)}
-                >
-                  {g}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* ── Results meta ── */}
-          <div className="ad-meta">
-            {filtered.length} {filtered.length === 1 ? "author" : "authors"} found
-          </div>
-
-          {/* ── Author Grid ── */}
-          <div className="ad-grid">
-            {filtered.length > 0 ? (
-              filtered.map((author) => (
-                <Link
-                  key={author.slug}
-                  href={`/reading-room/authors/${author.slug}`}
-                  className="ad-card"
-                >
-                  <div className="ad-card-avatar">{author.initial}</div>
-                  <div className="ad-card-name">{author.name}</div>
-                  <div className="ad-card-role">{author.role}</div>
-                  <div className="ad-card-bio">{author.bio}</div>
-                  <div className="ad-card-footer">
-                    <span className="ad-card-tag">{author.genre}</span>
-                    <span className="ad-card-stories">
-                      {author.stories} {author.stories === 1 ? "story" : "stories"}
-                    </span>
-                  </div>
-                  <span className="ad-arrow">↗</span>
-                </Link>
-              ))
-            ) : (
-              <div className="ad-empty">
-                <div className="ad-empty-title">No authors found</div>
-                <div className="ad-empty-sub">Try a different search or genre</div>
+                <div className="ap-link-wrap">
+                  <span className="ap-link-icon">𝕏</span>
+                  <input className="ap-input ap-link-input" placeholder="Twitter / X" value={twitter} onChange={e => setTwitter(e.target.value)} />
+                </div>
+                <div className="ap-link-wrap">
+                  <span className="ap-link-icon">◎</span>
+                  <input className="ap-input ap-link-input" placeholder="Instagram" value={instagram} onChange={e => setInstagram(e.target.value)} />
+                </div>
               </div>
-            )}
+            </div>
+
+            <div className="ap-section">
+              <label className="ap-label">Monthly Prize</label>
+              <div className="ap-prize-grid">
+                <input className="ap-input" placeholder="Prize title" value={prizeTitle} onChange={e => setPrizeTitle(e.target.value)} />
+                <textarea className="ap-textarea" rows={1} placeholder="Brief description of the prize…" value={prizeDesc} onChange={e => setPrizeDesc(e.target.value)} />
+              </div>
+            </div>
           </div>
 
-          {/* ── Footer ── */}
-          <div className="ad-footer">
-            <span className="ad-footer-count">The Tiniest Library · Reading Room</span>
-            <div className="ad-footer-line" />
-          </div>
-
+          <button className={`ap-save-btn${saved ? " saved" : ""}`} onClick={handleSave}>
+            {saved ? "✓  Profile Saved" : "Save Profile"}
+          </button>
         </div>
       </div>
     </>

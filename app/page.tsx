@@ -2,6 +2,7 @@
 
 import React, { useEffect, useMemo, useState, type ReactNode } from "react";
 import { supabase } from "@/lib/supabase";
+import { startTour } from "./components/WelcomeTour";
 
 // =========================
 // CHANGELOG
@@ -12,6 +13,8 @@ import { supabase } from "@/lib/supabase";
 // ✅ V7: Author cards wired to /reading-room/authors/[slug]
 // ✅ V7: Cohesive dark background replacing cornflower blue — Reading Room feels like a real literary platform
 // ✅ Phase 2: Matched to Browse All Stories visual system — black bg, gold + cornflower blue accents, sticky navbar
+// ✅ Phase 3: WelcomeTour integrated — modal intro + spotlight tour for new users
+//             data-tour attributes added to all key elements
 
 // =========================
 // Types
@@ -231,7 +234,6 @@ const TTL_STYLES = `
     overflow-x: hidden;
   }
 
-  /* subtle grain overlay */
   .ttl-root::before {
     content: '';
     position: fixed;
@@ -242,13 +244,11 @@ const TTL_STYLES = `
     opacity: 0.35;
   }
 
-  /* ── SCROLLBAR ── */
   ::-webkit-scrollbar { width: 6px; height: 6px; }
   ::-webkit-scrollbar-track { background: #111; }
   ::-webkit-scrollbar-thumb { background: var(--gold-dim); border-radius: 3px; }
   ::-webkit-scrollbar-thumb:hover { background: var(--gold); }
 
-  /* ── NAV ── */
   .ttl-nav {
     position: fixed;
     top: 0; left: 0; right: 0;
@@ -406,10 +406,30 @@ const TTL_STYLES = `
 
   .ttl-nav-members:hover { opacity: 0.88; }
 
-  /* ── SPACER ── */
+  /* Tour replay button in nav */
+  .ttl-nav-tour-btn {
+    font-family: 'Syne', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    color: rgba(232,228,218,0.45);
+    background: transparent;
+    border: 1px solid rgba(232,228,218,0.12);
+    padding: 5px 12px;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+
+  .ttl-nav-tour-btn:hover {
+    color: var(--gold-light);
+    border-color: var(--gold-dim);
+    background: var(--gold-glow);
+  }
+
   .ttl-nav-spacer { height: 74px; }
 
-  /* ── HERO SECTION ── */
   .ttl-hero-section {
     padding: 0;
     background: linear-gradient(180deg, rgba(100,149,237,0.07) 0%, rgba(201,168,76,0.03) 60%, transparent 100%);
@@ -459,7 +479,6 @@ const TTL_STYLES = `
     gap: 12px;
   }
 
-  /* ── MAIN WRAP ── */
   .ttl-wrap {
     position: relative;
     z-index: 1;
@@ -468,7 +487,6 @@ const TTL_STYLES = `
     padding: 64px 40px 96px;
   }
 
-  /* ── BUTTONS ── */
   .ttl-btn-primary {
     font-family: 'Syne', sans-serif;
     font-size: 10px;
@@ -514,7 +532,6 @@ const TTL_STYLES = `
     background: var(--gold-glow);
   }
 
-  /* ── SECTION ── */
   .ttl-section { margin-bottom: 72px; }
 
   .ttl-section-header {
@@ -567,7 +584,6 @@ const TTL_STYLES = `
     margin: 20px 0 28px;
   }
 
-  /* ── SECTION ACCENT ── */
   .ttl-section-accent {
     display: flex;
     align-items: center;
@@ -583,11 +599,8 @@ const TTL_STYLES = `
     flex-shrink: 0;
   }
 
-  .ttl-section-bar-blue {
-    background: var(--blue);
-  }
+  .ttl-section-bar-blue { background: var(--blue); }
 
-  /* ── PANELS ── */
   .ttl-panel {
     background: var(--ink-surface);
     border: 1px solid var(--ink-border);
@@ -607,7 +620,6 @@ const TTL_STYLES = `
     margin-bottom: 10px;
   }
 
-  /* ── INK WALLET ── */
   .ttl-wallet-grid {
     display: grid;
     grid-template-columns: 1fr 2fr;
@@ -685,7 +697,6 @@ const TTL_STYLES = `
     color: var(--blue-bright);
   }
 
-  /* ── AUTHOR CARDS ── */
   .ttl-authors-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -847,7 +858,6 @@ const TTL_STYLES = `
     transform: translate(2px, -2px);
   }
 
-  /* ── STORY CARDS ── */
   .ttl-story-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -945,7 +955,6 @@ const TTL_STYLES = `
     margin-top: 10px;
   }
 
-  /* ── BADGE ── */
   .ttl-badge {
     font-family: 'Syne', sans-serif;
     font-size: 8px;
@@ -960,7 +969,6 @@ const TTL_STYLES = `
   .ttl-badge-early { border: 1px solid rgba(232,228,218,0.25); color: rgba(232,228,218,0.8); background: rgba(232,228,218,0.08); }
   .ttl-badge-serial { border: 1px solid var(--blue-dim); color: var(--blue-bright); background: var(--blue-dim); }
 
-  /* ── UNLOCK BUTTON ── */
   .ttl-unlock-btn {
     font-family: 'Syne', sans-serif;
     font-size: 9px;
@@ -979,7 +987,6 @@ const TTL_STYLES = `
   .ttl-unlock-btn:disabled { border-color: var(--ink-border); color: var(--text-faint); cursor: default; background: transparent; }
   .ttl-unlock-btn.unlocked { border-color: var(--ink-border); color: var(--text-faint); cursor: default; background: transparent; }
 
-  /* ── GENRE FILTER BAR ── */
   .ttl-filter-bar {
     background: var(--ink-surface);
     border: 1px solid var(--ink-border);
@@ -1013,7 +1020,6 @@ const TTL_STYLES = `
     color: var(--gold-light);
   }
 
-  /* ── HOW IT WORKS ── */
   .ttl-how-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -1056,7 +1062,6 @@ const TTL_STYLES = `
     line-height: 1.7;
   }
 
-  /* ── READER MODAL ── */
   .ttl-modal-overlay {
     position: fixed;
     inset: 0;
@@ -1224,7 +1229,6 @@ const TTL_STYLES = `
     white-space: pre-wrap;
   }
 
-  /* ── FOOTER ── */
   .ttl-footer {
     margin-top: 72px;
     padding: 40px 0 24px;
@@ -1283,9 +1287,9 @@ const TTL_STYLES = `
   .ttl-footer-actions {
     display: flex;
     gap: 10px;
+    align-items: center;
   }
 
-  /* ── STATUS ── */
   .ttl-status {
     font-family: 'Syne', sans-serif;
     font-size: 12px;
@@ -1304,7 +1308,6 @@ const TTL_STYLES = `
     margin-bottom: 12px;
   }
 
-  /* ── RESPONSIVE ── */
   @media (max-width: 900px) {
     .ttl-nav-inner { padding: 0 24px; }
     .ttl-nav-links { display: none; }
@@ -1548,6 +1551,9 @@ export default function ReadingRoomHome() {
     <>
       <style>{TTL_STYLES}</style>
 
+      {/* ── WELCOME TOUR — auto on first visit, replayable ── */}
+      
+
       <div className="ttl-root">
 
         {/* ── NAVBAR ── */}
@@ -1565,18 +1571,30 @@ export default function ReadingRoomHome() {
               </a>
               <div className="ttl-nav-links">
                 <a href="/reading-room" className="ttl-nav-link active">Reading Room</a>
-                <a href="/reading-room/authors" className="ttl-nav-link">Author Directory</a>
-                <a href="/reading-room/stories" className="ttl-nav-link">All Stories</a>
+                {/* data-tour: spotlight will highlight this link */}
+                <a href="/reading-room/authors" className="ttl-nav-link" data-tour="nav-authors">Author Directory</a>
+                <a href="/reading-room/stories" className="ttl-nav-link" data-tour="nav-stories">All Stories</a>
                 <a href={SQUARESPACE_READING_ROOM} target="_blank" rel="noopener noreferrer" className="ttl-nav-link">Members Site</a>
               </div>
             </div>
 
-            {/* Right — ink + members */}
+            {/* Right — ink + tour button + members */}
             <div className="ttl-nav-right">
-              <div className="ttl-nav-ink">
+              {/* data-tour: spotlight will highlight the ink balance */}
+              <div className="ttl-nav-ink" data-tour="nav-ink">
                 <span>✒️</span>
                 <span>{ink} Ink</span>
               </div>
+              <div className="ttl-nav-divider" />
+              {/* Replay tour button — always available */}
+              <button
+                type="button"
+                className="ttl-nav-tour-btn"
+                onClick={startTour}
+                title="Take the Reading Room tour"
+              >
+                📖 Tour
+              </button>
               <div className="ttl-nav-divider" />
               <a href={SQUARESPACE_READING_ROOM} target="_blank" rel="noopener noreferrer" className="ttl-nav-members">
                 Members →
@@ -1614,6 +1632,10 @@ export default function ReadingRoomHome() {
               <a href="/reading-room/authors" className="ttl-btn-ghost">
                 Author Directory
               </a>
+              {/* Tour button in hero for high visibility */}
+              <button type="button" onClick={startTour} className="ttl-btn-ghost">
+                📖 Take the Tour
+              </button>
               <a href="#how-it-works" className="ttl-btn-ghost">
                 How it works
               </a>
@@ -1624,8 +1646,8 @@ export default function ReadingRoomHome() {
         {/* ── MAIN CONTENT ── */}
         <div className="ttl-wrap">
 
-          {/* ── INK WALLET ── */}
-          <div className="ttl-section">
+          {/* ── INK WALLET — data-tour="ink-wallet" ── */}
+          <div className="ttl-section" data-tour="ink-wallet">
             <div className="ttl-section-header">
               <div>
                 <div className="ttl-section-accent">
@@ -1716,8 +1738,8 @@ export default function ReadingRoomHome() {
             </div>
           </div>
 
-          {/* ── FEATURED STORIES ── */}
-          <div className="ttl-section">
+          {/* ── FEATURED STORIES — data-tour="featured-stories" ── */}
+          <div className="ttl-section" data-tour="featured-stories">
             <div className="ttl-section-header">
               <div>
                 <div className="ttl-section-accent">
@@ -1853,6 +1875,9 @@ export default function ReadingRoomHome() {
             </div>
             <span className="ttl-footer-copy">© {new Date().getFullYear()} The Tiniest Library. All rights reserved.</span>
             <div className="ttl-footer-actions">
+              <button type="button" onClick={startTour} className="ttl-btn-ghost" style={{ fontSize: '9px', padding: '8px 18px', borderRadius: '8px' }}>
+                📖 Take the Tour
+              </button>
               <a href="/reading-room/stories" className="ttl-btn-ghost" style={{ fontSize: '9px', padding: '8px 18px', borderRadius: '8px' }}>
                 Browse Stories
               </a>

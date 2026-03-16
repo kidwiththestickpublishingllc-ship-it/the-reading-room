@@ -1,5 +1,6 @@
 import './globals.css'
 import { Playfair_Display, Inter } from 'next/font/google'
+import PageChatWidget from "./components/PageChatWidget";
 
 const playfair = Playfair_Display({
   subsets: ['latin'],
@@ -20,8 +21,8 @@ export default function RootLayout({
     <html lang="en" className={`${playfair.variable} ${inter.variable}`}>
       <body className="font-inter bg-[#FAFAF8] text-[#111111]">
         {children}
+        <PageChatWidget />
       </body>
     </html>
   )
 }
-
