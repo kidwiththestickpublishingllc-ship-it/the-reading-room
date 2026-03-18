@@ -17,10 +17,14 @@ const USE_AI = false; // ← flip to true when ready for Claude AI
 // =============================================================
 const TTL_KB = {
   greeting_new: [
-    "Welcome to The Tiniest Library! 📚 I'm Page, your Reading Room guide. I can help you find stories, understand how Ink works, or point you to your next favorite author. What can I help you with?",
+    "Welcome to The Tiniest Library! 📚 I'm Page, your Reading Room guide. You've been given 250 Ink to get started — use it to unlock stories, tip authors, and explore what's here. What can I help you discover first?",
+    "Hello and welcome! 🪶 I'm Page — I live here in the Reading Room and I know every story, author, and secret this place holds. You've got 250 Ink ready to spend. Want me to show you around?",
+    "Welcome, new reader! 📖 The Tiniest Library is a space for long stories, serialized chapters, and writers worth knowing. I'm Page, your guide. Ask me anything — genres, Ink, authors, or where to start.",
   ],
   greeting_returning: [
-    "Welcome back to The Tiniest Library! 📖 Great to see you again. You've got {ink} Ink ready to use. Want to explore new stories or check on your favorites?",
+    "Welcome back! 📚 Glad you're here again. You've got {ink} Ink in your balance — ready to unlock something new? I can recommend your next read if you tell me what you're in the mood for.",
+    "Hey, good to see you again! 🪶 Your {ink} Ink is waiting. New stories have been added since your last visit — want me to point you to something worth reading?",
+    "Welcome back to The Tiniest Library! 📖 You've got {ink} Ink and a whole Reading Room full of stories. Tell me what you're in the mood for and I'll find you something perfect.",
   ],
   fallback: [
     "Hmm, I'm not sure about that one yet — but I'm always learning! Try asking me about stories, authors, Ink, or how the Reading Room works.",
@@ -57,7 +61,12 @@ function getTime() {
 
 function isReturning(): boolean {
   if (typeof window === "undefined") return false;
-  return Boolean(window.localStorage.getItem("ttl_ink"));
+  return Boolean(window.localStorage.getItem("ttl_page_visited"));
+}
+
+function getVisitCount(): number {
+  if (typeof window === "undefined") return 0;
+  return Number(window.localStorage.getItem("ttl_visit_count") || "0");
 }
 
 function getInkBalance(): number {
@@ -73,7 +82,10 @@ function hasVisited(): boolean {
 
 function markVisited() {
   if (typeof window === "undefined") return;
+  const count = getVisitCount() + 1;
   window.localStorage.setItem("ttl_page_visited", "1");
+  window.localStorage.setItem("ttl_visit_count", String(count));
+  window.localStorage.setItem("ttl_last_visit", new Date().toISOString());
 }
 
 // Simple keyword matcher
@@ -143,6 +155,164 @@ const QUICK_REPLIES = [
 ];
 
 // =============================================================
+// Pixel Leather Book FAB — upgraded with golden glow ring + click toggle
+// =============================================================
+const PIXEL = 2;
+const BOOK_COLORS = {
+  leatherDark: '#3d2610', leather: '#5c3a1e', leatherLight: '#7a5230',
+  leatherHighlight: '#8f6538', gold: '#daa520', goldLight: '#f0d060',
+  goldDark: '#b8860b', pageCream: '#f5f0e1', pageEdge: '#e8dcc8',
+  pageShadow: '#d4c8a8', spine: '#4a2e14', spineDark: '#2e1a0a', text: '#5c4a30',
+};
+
+function PixelBook() {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const isOpenRef = useRef(false);
+  const animatingRef = useRef(false);
+  const animProgressRef = useRef(0);
+  const animDirectionRef = useRef(0);
+  const rafRef = useRef<number>(0);
+
+  function dp(ctx: CanvasRenderingContext2D, x: number, y: number, color: string) {
+    ctx.fillStyle = color;
+    ctx.fillRect(x * PIXEL, y * PIXEL, PIXEL, PIXEL);
+  }
+  function dr(ctx: CanvasRenderingContext2D, x: number, y: number, w: number, h: number, color: string) {
+    ctx.fillStyle = color;
+    ctx.fillRect(x * PIXEL, y * PIXEL, w * PIXEL, h * PIXEL);
+  }
+
+  function drawClosed(ctx: CanvasRenderingContext2D) {
+    ctx.clearRect(0, 0, 160, 120);
+    const bx = 18, by = 10, bw = 44, bh = 40;
+    dr(ctx, bx+2, by+2, bw, bh, "rgba(0,0,0,0.35)");
+    dr(ctx, bx, by, bw, bh, BOOK_COLORS.leather);
+    for (let i = 0; i < 10; i++) {
+      dp(ctx, bx+3+Math.floor((i*7+3)%(bw-6)), by+3+Math.floor((i*11+5)%(bh-6)), BOOK_COLORS.leatherDark);
+    }
+    for (let i = 0; i < 6; i++) {
+      dp(ctx, bx+3+Math.floor((i*13+7)%(bw-6)), by+3+Math.floor((i*9+3)%(bh-6)), BOOK_COLORS.leatherHighlight);
+    }
+    for (let x = bx+2; x < bx+bw-2; x++) dp(ctx, x, by+2, BOOK_COLORS.gold);
+    for (let x = bx+2; x < bx+bw-2; x++) dp(ctx, x, by+bh-3, BOOK_COLORS.gold);
+    for (let y = by+2; y < by+bh-2; y++) dp(ctx, bx+2, y, BOOK_COLORS.gold);
+    for (let y = by+2; y < by+bh-2; y++) dp(ctx, bx+bw-3, y, BOOK_COLORS.gold);
+    [[bx+3,by+3],[bx+4,by+3],[bx+3,by+4],[bx+bw-4,by+3],[bx+bw-5,by+3],[bx+bw-4,by+4],
+     [bx+3,by+bh-4],[bx+4,by+bh-4],[bx+3,by+bh-5],[bx+bw-4,by+bh-4],[bx+bw-5,by+bh-4],[bx+bw-4,by+bh-5]
+    ].forEach(([x,y]) => dp(ctx, x, y, BOOK_COLORS.goldLight));
+    const cx = bx + Math.floor(bw/2), cy = by + Math.floor(bh/2);
+    [[cx,cy-3,BOOK_COLORS.gold],[cx-1,cy-2,BOOK_COLORS.gold],[cx,cy-2,BOOK_COLORS.goldLight],[cx+1,cy-2,BOOK_COLORS.gold],
+     [cx-2,cy-1,BOOK_COLORS.gold],[cx-1,cy-1,BOOK_COLORS.goldLight],[cx,cy-1,BOOK_COLORS.goldLight],[cx+1,cy-1,BOOK_COLORS.goldLight],[cx+2,cy-1,BOOK_COLORS.gold],
+     [cx-3,cy,BOOK_COLORS.goldDark],[cx-2,cy,BOOK_COLORS.gold],[cx-1,cy,BOOK_COLORS.goldLight],[cx,cy,"#fff8dc"],[cx+1,cy,BOOK_COLORS.goldLight],[cx+2,cy,BOOK_COLORS.gold],[cx+3,cy,BOOK_COLORS.goldDark],
+     [cx-2,cy+1,BOOK_COLORS.gold],[cx-1,cy+1,BOOK_COLORS.goldLight],[cx,cy+1,BOOK_COLORS.goldLight],[cx+1,cy+1,BOOK_COLORS.goldLight],[cx+2,cy+1,BOOK_COLORS.gold],
+     [cx-1,cy+2,BOOK_COLORS.gold],[cx,cy+2,BOOK_COLORS.goldLight],[cx+1,cy+2,BOOK_COLORS.gold],[cx,cy+3,BOOK_COLORS.goldDark]
+    ].forEach(([x,y,c]) => dp(ctx, x as number, y as number, c as string));
+    for (let y = by+1; y < by+bh-1; y++) { dp(ctx, bx+bw, y, BOOK_COLORS.pageEdge); dp(ctx, bx+bw+1, y, BOOK_COLORS.pageShadow); }
+    dr(ctx, bx-2, by, 2, bh, BOOK_COLORS.spine);
+    for (let y = by; y < by+bh; y+=3) dp(ctx, bx-2, y, BOOK_COLORS.spineDark);
+    dr(ctx, bx-2, by+4, 2, 1, BOOK_COLORS.goldDark);
+    dr(ctx, bx-2, by+bh-5, 2, 1, BOOK_COLORS.goldDark);
+    for (let y = by; y < by+bh; y++) dp(ctx, bx+bw-1, y, BOOK_COLORS.leatherLight);
+    for (let x = bx; x < bx+bw; x++) dp(ctx, x, by+bh-1, BOOK_COLORS.leatherDark);
+    for (let x = bx; x < bx+bw; x++) dp(ctx, x, by, BOOK_COLORS.leatherHighlight);
+  }
+
+  function drawOpen(ctx: CanvasRenderingContext2D, progress: number) {
+    ctx.clearRect(0, 0, 160, 120);
+    const bx = 6, by = 10, bw = 34, bh = 40;
+    dr(ctx, bx+1, by+2, bw*2+10, bh, "rgba(0,0,0,0.2)");
+    dr(ctx, bx, by, bw, bh, BOOK_COLORS.leather);
+    for (let x = bx+2; x < bx+bw-2; x++) dp(ctx, x, by+2, BOOK_COLORS.gold);
+    for (let x = bx+2; x < bx+bw-2; x++) dp(ctx, x, by+bh-3, BOOK_COLORS.gold);
+    for (let y = by+2; y < by+bh-2; y++) dp(ctx, bx+2, y, BOOK_COLORS.gold);
+    for (let y = by+2; y < by+bh-2; y++) dp(ctx, bx+bw-3, y, BOOK_COLORS.gold);
+    dr(ctx, bx+bw, by, 3, bh, BOOK_COLORS.spine);
+    for (let y = by; y < by+bh; y+=3) dp(ctx, bx+bw+1, y, BOOK_COLORS.spineDark);
+    dr(ctx, bx+bw, by+4, 3, 1, BOOK_COLORS.goldDark);
+    dr(ctx, bx+bw, by+bh-5, 3, 1, BOOK_COLORS.goldDark);
+    const px = bx+bw+3, pageW = Math.floor(bw * progress);
+    if (pageW > 0) {
+      dr(ctx, px, by+1, pageW, bh-2, BOOK_COLORS.pageCream);
+      if (progress > 0.5) {
+        for (let i = 0; i < 9; i++) {
+          const lw = Math.min(pageW-4, 6+(i*5+3)%18);
+          if (lw > 2) dr(ctx, px+2, by+4+i*3, lw, 1, BOOK_COLORS.text);
+        }
+        if (pageW > 10) { dp(ctx, px+pageW-2, by+bh-4, BOOK_COLORS.pageShadow); dp(ctx, px+pageW-3, by+bh-3, BOOK_COLORS.pageShadow); }
+      }
+      for (let y = by+1; y < by+bh-1; y++) dp(ctx, px, y, BOOK_COLORS.pageShadow);
+    }
+    const rcx = px+pageW+1;
+    if (progress > 0.1) {
+      dr(ctx, rcx, by, Math.floor(bw*progress), bh, BOOK_COLORS.leatherLight);
+      if (progress > 0.6) {
+        const visW = Math.floor(bw*progress);
+        for (let x = rcx+1; x < rcx+visW-1; x++) { dp(ctx, x, by+2, BOOK_COLORS.goldDark); dp(ctx, x, by+bh-3, BOOK_COLORS.goldDark); }
+      }
+      for (let y = by; y < by+bh; y++) dp(ctx, rcx, y, BOOK_COLORS.leatherDark);
+    }
+    if (progress > 0.3) {
+      dr(ctx, bx+1, by+1, bw-1, bh-2, BOOK_COLORS.pageCream);
+      for (let i = 0; i < 7; i++) dr(ctx, bx+3, by+4+i*4, Math.min(6+i*3, bw-6), 1, "#d4c8a8");
+      dr(ctx, bx, by, 1, bh, BOOK_COLORS.leather);
+    }
+  }
+
+  function runAnim() {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+    if (animDirectionRef.current === 1) {
+      animProgressRef.current += 0.07;
+      if (animProgressRef.current >= 1) {
+        animProgressRef.current = 1; animatingRef.current = false; isOpenRef.current = true;
+        drawOpen(ctx, 1); return;
+      }
+    } else {
+      animProgressRef.current -= 0.07;
+      if (animProgressRef.current <= 0) {
+        animProgressRef.current = 0; animatingRef.current = false; isOpenRef.current = false;
+        drawClosed(ctx); return;
+      }
+    }
+    drawOpen(ctx, animProgressRef.current);
+    rafRef.current = requestAnimationFrame(runAnim);
+  }
+
+  function handleClick() {
+    if (animatingRef.current) return;
+    animatingRef.current = true;
+    if (!isOpenRef.current) {
+      animDirectionRef.current = 1; animProgressRef.current = 0;
+    } else {
+      animDirectionRef.current = -1; animProgressRef.current = 1;
+    }
+    rafRef.current = requestAnimationFrame(runAnim);
+  }
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (ctx) drawClosed(ctx);
+    return () => { if (rafRef.current) cancelAnimationFrame(rafRef.current); };
+  }, []);
+
+  return (
+    <canvas
+      ref={canvasRef}
+      width={160}
+      height={120}
+      onClick={handleClick}
+      style={{ imageRendering: "pixelated", display: "block", cursor: "pointer" }}
+    />
+  );
+}
+
+
+
+// =============================================================
 // Component
 // =============================================================
 export default function PageChatWidget() {
@@ -159,12 +329,14 @@ export default function PageChatWidget() {
   useEffect(() => {
     if (open && !hasGreeted) {
       setHasGreeted(true);
-      markVisited();
       const returning = isReturning();
       const ink = getInkBalance();
-      const template = returning
-        ? TTL_KB.greeting_returning[0].replace("{ink}", String(ink))
-        : TTL_KB.greeting_new[0];
+      const visitCount = getVisitCount();
+      markVisited();
+      const pool = returning ? TTL_KB.greeting_returning : TTL_KB.greeting_new;
+      const template = pool[Math.floor(Math.random() * pool.length)]
+        .replace("{ink}", String(ink))
+        .replace("{visits}", String(visitCount));
 
       setTimeout(() => {
         setMessages([{ role: "page", text: template, time: getTime() }]);
@@ -231,16 +403,18 @@ export default function PageChatWidget() {
     <>
       <style>{WIDGET_STYLES}</style>
 
-      {/* Floating button — data-tour="page-chat" enables the WelcomeTour spotlight */}
+      {/* Floating button — Pixel leather book (Canva) — data-tour="page-chat" enables WelcomeTour spotlight */}
       <button
         type="button"
         onClick={handleOpen}
-        className={`page-fab ${open ? "page-fab-hidden" : ""}`}
+        className={`page-fab page-fab-book ${open ? "page-fab-hidden" : ""}`}
         aria-label="Open Page chat"
         data-tour="page-chat"
+        suppressHydrationWarning
       >
-        <span className="page-fab-icon">📖</span>
-        <span className="page-fab-label">Page</span>
+        <PixelBook />
+        <span className="page-fab-book-label">PAGE</span>
+        <span className="page-fab-book-hint">~ tap to open ~</span>
         {unread > 0 && <span className="page-fab-badge">{unread}</span>}
       </button>
 
@@ -371,6 +545,84 @@ const WIDGET_STYLES = `
     cursor: pointer;
     transition: transform 0.2s, opacity 0.2s, box-shadow 0.2s;
     font-family: 'Syne', sans-serif;
+  }
+
+  /* Pixel book variant — golden glow ring + canvas */
+  .page-fab-book {
+    padding: 8px;
+    border-radius: 18px;
+    width: 180px;
+    height: 156px;
+    overflow: hidden;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: #0a0a0a;
+    border: none;
+    box-shadow: none;
+  }
+
+  .page-fab-book::before {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    border-radius: 20px;
+    background: conic-gradient(
+      from 0deg,
+      transparent 10%,
+      rgba(201,168,76,0.0) 20%,
+      rgba(201,168,76,0.6) 35%,
+      rgba(240,208,96,0.9) 50%,
+      rgba(201,168,76,0.6) 65%,
+      rgba(201,168,76,0.0) 80%,
+      transparent 90%
+    );
+    animation: pageGlowSpin 3s linear infinite;
+    z-index: -1;
+  }
+
+  .page-fab-book::after {
+    content: '';
+    position: absolute;
+    inset: 2px;
+    border-radius: 17px;
+    background: #0a0a0a;
+    z-index: -1;
+  }
+
+  @keyframes pageGlowSpin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  .page-fab-book canvas {
+    width: 160px !important;
+    height: 120px !important;
+    pointer-events: none;
+    image-rendering: pixelated;
+  }
+
+  .page-fab-book-label {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 9px;
+    color: #C9A84C;
+    letter-spacing: 0.1em;
+    margin-top: 4px;
+    text-shadow: 0 0 8px rgba(201,168,76,0.5);
+  }
+
+  .page-fab-book-hint {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 7px;
+    color: rgba(201,168,76,0.45);
+    letter-spacing: 0.05em;
+    margin-top: 2px;
+    animation: pageFabPulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pageFabPulse {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; }
   }
 
   .page-fab:hover {

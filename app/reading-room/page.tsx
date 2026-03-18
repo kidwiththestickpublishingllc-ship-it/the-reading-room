@@ -1423,7 +1423,7 @@ function ReaderModal({
 
         <div className="ttl-modal-footer">
           <span className="ttl-modal-hint">Press ESC to close</span>
-          <a href={SQUARESPACE_READING_ROOM} target="_blank" rel="noopener noreferrer" className="ttl-btn-ghost" style={{ fontSize: '9px', padding: '8px 18px', borderRadius: '8px' }}>
+          <a href={SQUARESPACE_READING_ROOM} target="_blank" rel="noopener noreferrer" className="ttl-btn-ghost" style={{ fontSize: '9px', padding: '8px 18px', borderRadius: '8px' }} suppressHydrationWarning>
             Members Site →
           </a>
         </div>
@@ -1644,7 +1644,7 @@ export default function ReadingRoomHome() {
                 <div className="ttl-panel-label">Your Balance</div>
                 <div className="ttl-ink-num">{ink}</div>
                 <p className="ttl-ink-sub">Ink is stored in your browser. It updates automatically after purchase.</p>
-                <button type="button" onClick={() => addInk(50)} className="ttl-btn-ghost" style={{ fontSize: '9px', padding: '8px 18px', borderRadius: '8px' }}>
+                <button type="button" onClick={() => addInk(50)} className="ttl-btn-ghost" style={{ fontSize: '9px', padding: '8px 18px', borderRadius: '8px' }} suppressHydrationWarning>
                   + 50 Ink (dev)
                 </button>
               </div>
@@ -1853,10 +1853,10 @@ export default function ReadingRoomHome() {
             </div>
             <span className="ttl-footer-copy">© {new Date().getFullYear()} The Tiniest Library. All rights reserved.</span>
             <div className="ttl-footer-actions">
-              <a href="/reading-room/stories" className="ttl-btn-ghost" style={{ fontSize: '9px', padding: '8px 18px', borderRadius: '8px' }}>
+              <a href="/reading-room/stories" className="ttl-btn-ghost" style={{ fontSize: '9px', padding: '8px 18px', borderRadius: '8px' }} suppressHydrationWarning>
                 Browse Stories
               </a>
-              <a href={SQUARESPACE_READING_ROOM} target="_blank" rel="noopener noreferrer" className="ttl-btn-primary" style={{ fontSize: '9px', padding: '8px 18px', borderRadius: '8px' }}>
+              <a href={SQUARESPACE_READING_ROOM} target="_blank" rel="noopener noreferrer" className="ttl-btn-primary" style={{ fontSize: '9px', padding: '8px 18px', borderRadius: '8px' }} suppressHydrationWarning>
                 Members Site →
               </a>
             </div>

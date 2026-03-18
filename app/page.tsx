@@ -1591,7 +1591,7 @@ export default function ReadingRoomHome() {
                 type="button"
                 className="ttl-nav-tour-btn"
                 onClick={startTour}
-                title="Take the Reading Room tour"
+               suppressHydrationWarning
               >
                 📖 Tour
               </button>
@@ -1633,7 +1633,7 @@ export default function ReadingRoomHome() {
                 Author Directory
               </a>
               {/* Tour button in hero for high visibility */}
-              <button type="button" onClick={startTour} className="ttl-btn-ghost">
+              <button type="button" onClick={startTour} className="ttl-btn-ghost" suppressHydrationWarning>
                 📖 Take the Tour
               </button>
               <a href="#how-it-works" className="ttl-btn-ghost">
@@ -1666,7 +1666,7 @@ export default function ReadingRoomHome() {
                 <div className="ttl-panel-label">Your Balance</div>
                 <div className="ttl-ink-num">{ink}</div>
                 <p className="ttl-ink-sub">Ink is stored in your browser. It updates automatically after purchase.</p>
-                <button type="button" onClick={() => addInk(50)} className="ttl-btn-ghost" style={{ fontSize: '9px', padding: '8px 18px', borderRadius: '8px' }}>
+                <button type="button" onClick={() => addInk(50)} className="ttl-btn-ghost" style={{ fontSize: '9px', padding: '8px 18px', borderRadius: '8px' }} suppressHydrationWarning>
                   + 50 Ink (dev)
                 </button>
               </div>
