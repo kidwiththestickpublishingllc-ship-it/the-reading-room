@@ -10,7 +10,7 @@ import { useEffect, useRef, useState } from "react";
 //   3. Add ANTHROPIC_API_KEY to your .env.local + Vercel env vars
 // =============================================================
 
-const USE_AI = false; // ← flip to true when ready for Claude AI
+const USE_AI = true; // ← flip to true when ready for Claude AI
 
 // =============================================================
 // Knowledge base — edit these to customize Page's responses
