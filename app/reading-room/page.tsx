@@ -1644,9 +1644,7 @@ export default function ReadingRoomHome() {
                 <div className="ttl-panel-label">Your Balance</div>
                 <div className="ttl-ink-num">{ink}</div>
                 <p className="ttl-ink-sub">Ink is stored in your browser. It updates automatically after purchase.</p>
-                <button type="button" onClick={() => addInk(50)} className="ttl-btn-ghost" style={{ fontSize: '9px', padding: '8px 18px', borderRadius: '8px' }} suppressHydrationWarning>
-                  + 50 Ink (dev)
-                </button>
+                
               </div>
               {/* Buy ink — Stripe links unchanged */}
               <div className="ttl-panel">
