@@ -350,7 +350,14 @@ function GenreGrid({ activeGenre, onSelect }: { activeGenre: string; onSelect: (
               <div key={panel.genre} className="flex flex-col items-center gap-2" style={{ width: W }}>
                 <button
                   type="button"
-                  onClick={() => onSelect(panel.genre)}
+                  onClick={() => {
+  const slug = panel.genre
+    .toLowerCase()
+    .replace(/\s+/g, "-")
+    .replace(/\+/g, "")
+    .replace(/&/g, "and");
+  window.location.href = `/reading-room/genres/${slug}`;
+}}
                   aria-label={`Filter by ${panel.label}`}
                   className="relative overflow-hidden rounded-xl transition-all duration-200 hover:-translate-y-1.5"
                   style={{

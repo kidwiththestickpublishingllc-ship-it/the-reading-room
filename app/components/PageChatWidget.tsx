@@ -140,7 +140,7 @@ async function getAIResponse(messages: Message[]): Promise<string> {
     }),
   });
   const data = await res.json();
-  return data.response ?? "I'm having trouble thinking right now — try again in a moment!";
+  return data.message ?? "I'm having trouble thinking right now — try again in a moment!";
 }
 
 // =============================================================
