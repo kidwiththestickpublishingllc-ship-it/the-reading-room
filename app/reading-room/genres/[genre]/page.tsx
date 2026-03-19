@@ -1753,7 +1753,6 @@ function GenrePageContent({ genreSlug }: { genreSlug: string }) {
 // Next.js Page Export
 // File goes at: app/reading-room/genres/[genre]/page.tsx
 // =========================
-export default async function GenrePage({ params }: { params: Promise<{ genre: string }> }) {
-  const { genre } = await params;
-  return <GenrePageContent genreSlug={genre} />;
+export default function GenrePage({ params }: { params: { genre: string } }) {
+  return <GenrePageContent genreSlug={params.genre} />;
 }
