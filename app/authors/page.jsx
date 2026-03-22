@@ -4,7 +4,7 @@
 
 import { supabase } from '@/lib/supabase'
 import { notFound } from 'next/navigation'
-import AuthorProfileCard from '@/components/AuthorProfileCard'
+import AuthorProfileCard from '@/app/components/AuthorProfileCard'
 
 export async function generateMetadata({ params }) {
   const { data } = await supabase
