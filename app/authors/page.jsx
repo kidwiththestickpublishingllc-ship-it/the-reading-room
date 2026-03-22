@@ -2,7 +2,7 @@
 // Fetches a writer's profile from Supabase and renders it.
 // Works as a Next.js App Router page (server component).
 
-import { supabase } from '@/lib/supabaseClient'
+import { supabase } from '@/lib/supabase'
 import { notFound } from 'next/navigation'
 import AuthorProfileCard from '@/components/AuthorProfileCard'
 
