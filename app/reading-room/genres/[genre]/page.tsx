@@ -592,10 +592,10 @@ const GENRE_PAGE_STYLES = `
     z-index: 1;
     background: linear-gradient(
       to top,
-      rgba(10,10,10,0.98) 0%,
-      rgba(10,10,10,0.75) 35%,
-      rgba(10,10,10,0.35) 70%,
-      rgba(10,10,10,0.15) 100%
+      rgba(10,10,10,0.78) 0%,
+      rgba(10,10,10,0.55) 35%,
+      rgba(10,10,10,0.15) 70%,
+      rgba(10,10,10,0.05) 100%
     );
   }
 
