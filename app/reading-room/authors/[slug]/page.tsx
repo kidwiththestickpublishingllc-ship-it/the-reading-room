@@ -1,470 +1,857 @@
 "use client";
 
-import { useState } from "react";
+import React, { useState, useMemo } from "react";
 
-export default function AuthorProfile({
-  params,
-}: {
-  params: { slug: string };
-}) {
-  const slug = params?.slug || "a-rivera";
-  const authorName = slug.replaceAll("-", " ");
+// =========================
+// Route: /reading-room/authors/[slug]/page.tsx
+// Individual author profile — reader-facing
+// =========================
 
-  const [bio, setBio] = useState("");
-  const [achievements, setAchievements] = useState("");
-  const [website, setWebsite] = useState("");
-  const [twitter, setTwitter] = useState("");
-  const [instagram, setInstagram] = useState("");
-  const [prizeTitle, setPrizeTitle] = useState("");
-  const [prizeDesc, setPrizeDesc] = useState("");
-  const [profilePreview, setProfilePreview] = useState<string | null>(null);
-  const [bannerPreview, setBannerPreview] = useState<string | null>(null);
-  const [saved, setSaved] = useState(false);
+const SQUARESPACE_READING_ROOM = "https://www.the-tiniest-library.com/the-reading-room";
+const DEFAULT_INK = 250;
 
-  const handleProfileImg = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) setProfilePreview(URL.createObjectURL(file));
-  };
+type Story = {
+  slug: string;
+  title: string;
+  badge: "Serial" | "Exclusive" | "Early Access";
+  description: string;
+  teaser: string;
+  genres: string[];
+};
 
-  const handleBannerImg = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) setBannerPreview(URL.createObjectURL(file));
-  };
+type AuthorData = {
+  slug: string;
+  name: string;
+  initial: string;
+  role: string;
+  genres: string[];
+  tagline: string;
+  bio: string;
+  achievements: string;
+  website?: string;
+  twitter?: string;
+  instagram?: string;
+  storiesCount: number;
+  inkJar: number;
+  stories: Story[];
+  accentColor: string;
+  accentDim: string;
+};
 
-  const handleSave = () => {
-    setSaved(true);
-    setTimeout(() => setSaved(false), 2500);
+const MOCK_AUTHORS: Record<string, AuthorData> = {
+  "a-rivera": {
+    slug: "a-rivera",
+    name: "A. Rivera",
+    initial: "R",
+    role: "Founding Author",
+    genres: ["Crime & Thrillers", "Cozy"],
+    tagline: "Slow-burn mystery with heart.",
+    bio: "A. Rivera writes cozy mysteries with teeth — stories set in quiet towns where nothing is ever quite what it seems. Known for morally complex detectives and endings that linger long after the last page. Rivera's fiction lives in the space between a warm mug of tea and a body nobody's claimed yet.\n\nBased in the Northeast, Rivera draws heavily from small-town New England geography and the particular silence of places with long memories.",
+    achievements: "Shortlisted for the TTL Founding Author Prize. Three serials completed with a combined 2,400+ reader unlocks. 'Lanterns Over Hartford' was TTL's most-tipped story of Q1 2026.",
+    twitter: "https://twitter.com",
+    storiesCount: 3,
+    inkJar: 140,
+    accentColor: "#fbbf24",
+    accentDim: "rgba(251,191,36,0.22)",
+    stories: [
+      {
+        slug: "lanterns-over-hartford",
+        title: "Lanterns Over Hartford",
+        badge: "Serial",
+        description: "A cozy mystery told in weekly chapters — lanterns appeared overnight across the riverwalk, each one with a name nobody claimed.",
+        teaser: "Lanterns appeared overnight across the riverwalk — each one with a name nobody claimed.",
+        genres: ["Cozy", "Crime & Thrillers", "Serialized Fiction"],
+      },
+      {
+        slug: "the-last-ferry",
+        title: "The Last Ferry",
+        badge: "Exclusive",
+        description: "A detective. A missing passenger. A ferry that runs on a route no map acknowledges.",
+        teaser: "The ferry manifest listed twenty-two passengers. Twenty-one made it to shore.",
+        genres: ["Crime & Thrillers"],
+      },
+      {
+        slug: "miss-pemberton-investigates",
+        title: "Miss Pemberton Investigates",
+        badge: "Serial",
+        description: "A retired librarian. A very small town. A suspicious number of missing antiques.",
+        teaser: "The first rule of Miss Pemberton's town: nothing goes missing unless someone wanted it to.",
+        genres: ["Cozy"],
+      },
+    ],
+  },
+  "j-holloway": {
+    slug: "j-holloway",
+    name: "J. Holloway",
+    initial: "H",
+    role: "Founding Author",
+    genres: ["Dark Academia", "Fantasy"],
+    tagline: "Dark academia + modern folklore.",
+    bio: "J. Holloway writes about secret societies, haunted libraries, and the particular madness of people who love learning too much and too personally. Their prose has been described as 'Donna Tartt with a folklore obsession' and 'the academic anxiety dream you didn't know you wanted.'\n\nHolloway's work sits at the intersection of the literary and the uncanny — places where old knowledge becomes dangerous and the past refuses to stay catalogued.",
+    achievements: "Featured in TTL's inaugural author spotlight. 'The Quiet Stairwell' accumulated 180 reader unlocks in its first week. Currently writing a three-part dark fantasy serial set in a library that exists outside of time.",
+    instagram: "https://instagram.com",
+    storiesCount: 2,
+    inkJar: 210,
+    accentColor: "#a8a29e",
+    accentDim: "rgba(168,162,158,0.22)",
+    stories: [
+      {
+        slug: "the-quiet-stairwell",
+        title: "The Quiet Stairwell",
+        badge: "Exclusive",
+        description: "A private campus, a hidden society, and a truth that changes everything about who you thought you were.",
+        teaser: "There was a stairwell no map acknowledged — yet every scholarship kid eventually heard about it.",
+        genres: ["Dark Academia", "Fantasy"],
+      },
+      {
+        slug: "the-annotated-hours",
+        title: "The Annotated Hours",
+        badge: "Serial",
+        description: "A rare books librarian discovers that the marginalia in a 16th-century manuscript is being updated in real time.",
+        teaser: "The ink in the margins was fresh. The book was five hundred years old.",
+        genres: ["Dark Academia", "Fantasy"],
+      },
+    ],
+  },
+  "m-chen": {
+    slug: "m-chen",
+    name: "M. Chen",
+    initial: "C",
+    role: "Founding Author",
+    genres: ["Sci-Fi", "Young Adult"],
+    tagline: "Soft sci-fi, big emotions.",
+    bio: "M. Chen writes science fiction that cares more about what people feel than what spaceships look like. Themes of distance, memory, and the gravity of small choices show up in everything they write.\n\nChen's fiction is often described as 'the sci-fi for people who don't think they like sci-fi' — emotionally precise, technically grounded, and deeply human. Currently serializing a YA sci-fi epic about a generation ship whose passengers are only now learning what home means.",
+    achievements: "Four completed serials. 'Stars Don't Apologize' is TTL's highest-rated story by reader score. Founding Author badge awarded for consistent output and community engagement.",
+    website: "https://example.com",
+    twitter: "https://twitter.com",
+    storiesCount: 4,
+    inkJar: 95,
+    accentColor: "#60a5fa",
+    accentDim: "rgba(96,165,250,0.22)",
+    stories: [
+      {
+        slug: "stars-dont-apologize",
+        title: "Stars Don't Apologize",
+        badge: "Serial",
+        description: "A tender sci-fi serial about distance, hope, and the gravity of choices made across eight light-minutes of space.",
+        teaser: "The message arrived late — eight minutes late — like light that had to cross a hard truth.",
+        genres: ["Sci-Fi", "Young Adult"],
+      },
+      {
+        slug: "the-last-longitude",
+        title: "The Last Longitude",
+        badge: "Exclusive",
+        description: "A generation ship. A navigation error that can't be corrected. And a teenager who knows why.",
+        teaser: "We'd been traveling for sixty years. Nobody told us we'd been going the wrong direction.",
+        genres: ["Sci-Fi", "Young Adult"],
+      },
+    ],
+  },
+  "s-gomez": {
+    slug: "s-gomez",
+    name: "S. Gomez",
+    initial: "G",
+    role: "Author",
+    genres: ["Crime & Thrillers"],
+    tagline: "Thrillers that don't let go.",
+    bio: "S. Gomez writes tightly-plotted crime fiction with an emphasis on consequence. Their stories move fast and leave marks. The moral weight of their characters' choices never quite disappears — it just changes shape.\n\nCurrently working on a serial set in a city that doesn't sleep and doesn't forgive.",
+    achievements: "Two stories published on TTL. 'The 3AM Edition' broke 100 unlocks in two weeks. Known for cold opens that readers screenshot and share.",
+    storiesCount: 2,
+    inkJar: 60,
+    accentColor: "#f87171",
+    accentDim: "rgba(248,113,113,0.22)",
+    stories: [
+      {
+        slug: "the-3am-edition",
+        title: "The 3AM Edition",
+        badge: "Serial",
+        description: "A night-desk reporter gets a tip that will either make her career or end it — and only has until dawn to decide.",
+        teaser: "The source said: 'Print it and you'll be famous. Don't print it and you'll be safe.' She printed it.",
+        genres: ["Crime & Thrillers"],
+      },
+      {
+        slug: "clean-hands",
+        title: "Clean Hands",
+        badge: "Exclusive",
+        description: "A fixer for a powerful family. One job that should have been simple. Nothing is ever simple.",
+        teaser: "They hired me to make problems disappear. This problem had a name.",
+        genres: ["Crime & Thrillers"],
+      },
+    ],
+  },
+  "d-cedeno": {
+    slug: "d-cedeno",
+    name: "Daniel Cedeno",
+    initial: "D",
+    role: "Founding Author",
+    genres: ["Sci-Fi", "Young Adult", "Serialized Fiction"],
+    tagline: "Worlds that refuse to stay quiet.",
+    bio: "Daniel Cedeno builds worlds that feel like they existed before the first page and will keep going after the last. Creator of the Fox Vs. The World universe — a serialized sci-fi saga about a teenager in Hartford, CT who discovers that reality has a seam, and that someone stitched it.\n\nCedeno's work is rooted in the specificity of place and the universality of not knowing who you are yet. The TTL platform is, in part, built around giving stories like Fox a home.",
+    achievements: "Founder of The Tiniest Library and The Reading Room. Fox Vs. The World is TTL's flagship serialized story. Five stories published. Most Ink earned of any TTL author to date.",
+    website: "https://www.the-tiniest-library.com",
+    twitter: "https://twitter.com",
+    instagram: "https://instagram.com",
+    storiesCount: 5,
+    inkJar: 380,
+    accentColor: "#C9A84C",
+    accentDim: "rgba(201,168,76,0.22)",
+    stories: [
+      {
+        slug: "fox-vs-the-world",
+        title: "Fox Vs. The World",
+        badge: "Early Access",
+        description: "A first look at a world that refuses to stay quiet — exclusive preview chapters from TTL's flagship serialized universe.",
+        teaser: "The sky above Hartford wasn't supposed to flicker like a broken screen… but tonight it did.",
+        genres: ["Sci-Fi", "Young Adult", "Serialized Fiction"],
+      },
+      {
+        slug: "the-glitch-chronicles",
+        title: "The Glitch Chronicles",
+        badge: "Serial",
+        description: "Companion stories from the Fox universe — side characters, backstories, and the moments between the main chapters.",
+        teaser: "Every glitch leaves a mark. These are the stories of the people who noticed.",
+        genres: ["Sci-Fi", "Serialized Fiction"],
+      },
+    ],
+  },
+  "e-walsh": {
+    slug: "e-walsh",
+    name: "E. Walsh",
+    initial: "W",
+    role: "Author",
+    genres: ["Romance", "Contemporary Fiction"],
+    tagline: "Love stories that don't flinch.",
+    bio: "E. Walsh writes romance that refuses to be comfortable. Their contemporary fiction is achingly honest about desire, grief, and the complicated arithmetic of two people deciding to stay.\n\nWalsh came to fiction after years of writing essays about music and memory. That background shows — their prose has a rhythm to it, and their characters always feel like they've lived before the story started.",
+    achievements: "Debut serial launching Q2 2026. Essay work published in three literary journals. Currently TTL's most-anticipated new author by reader sign-ups.",
+    instagram: "https://instagram.com",
+    storiesCount: 1,
+    inkJar: 45,
+    accentColor: "#fb7185",
+    accentDim: "rgba(251,113,133,0.22)",
+    stories: [
+      {
+        slug: "what-we-call-staying",
+        title: "What We Call Staying",
+        badge: "Serial",
+        description: "Two people. One apartment they can't afford to keep. A relationship they can't afford to lose.",
+        teaser: "We never talked about leaving. We just got very good at not talking about staying.",
+        genres: ["Romance", "Contemporary Fiction"],
+      },
+    ],
+  },
+};
+
+const STYLES = `
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Syne:wght@400;500;600;700&display=swap');
+  *, *::before, *::after { box-sizing: border-box; }
+
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #E2C97E;
+    --gold-dim: rgba(201,168,76,0.38);
+    --gold-glow: rgba(201,168,76,0.13);
+    --blue: #6495ED;
+    --blue-dim: rgba(100,149,237,0.22);
+    --blue-bright: #84b0f5;
+    --ink-bg: #0a0a0a;
+    --ink-surface: #111111;
+    --ink-surface2: #181818;
+    --ink-border: rgba(255,255,255,0.07);
+    --ink-border-gold: rgba(201,168,76,0.26);
+    --text-main: #f0ece2;
+    --text-dim: rgba(232,228,218,0.45);
+    --text-faint: rgba(232,228,218,0.25);
+    --author-accent: #C9A84C;
+    --author-accent-dim: rgba(201,168,76,0.22);
+  }
+
+  .ap-root {
+    min-height: 100vh; background: var(--ink-bg);
+    font-family: 'Syne', sans-serif; color: var(--text-main);
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  .ap-nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 40;
+    background: rgba(8,8,8,0.96); backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--ink-border-gold);
+    box-shadow: 0 2px 40px rgba(0,0,0,0.7);
+  }
+  .ap-nav-accent { height: 2px; background: linear-gradient(90deg, transparent, var(--author-accent), transparent); }
+  .ap-nav-inner {
+    max-width: 1400px; margin: 0 auto; padding: 0 40px;
+    height: 72px; display: flex; align-items: center;
+    justify-content: space-between; gap: 24px;
+  }
+  .ap-nav-left { display: flex; align-items: center; gap: 32px; }
+  .ap-nav-brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+  .ap-nav-logo {
+    width: 36px; height: 36px; border-radius: 8px;
+    background: linear-gradient(135deg, var(--gold), #8a6510);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700; color: #000;
+  }
+  .ap-nav-brand-main { font-family: 'Cormorant Garamond', serif; font-size: 17px; font-weight: 400; color: var(--gold-light); }
+  .ap-nav-brand-sub { font-family: 'Syne', sans-serif; font-size: 10px; color: rgba(255,255,255,0.32); letter-spacing: 0.1em; text-transform: uppercase; }
+  .ap-nav-links { display: flex; align-items: center; gap: 2px; }
+  .ap-nav-link {
+    font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--text-dim); text-decoration: none; padding: 6px 14px;
+    border-radius: 4px; border: 1px solid transparent; transition: all 0.2s;
+  }
+  .ap-nav-link:hover { color: var(--gold-light); border-color: var(--ink-border-gold); background: var(--gold-glow); }
+  .ap-nav-right { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+  .ap-nav-ink {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 11px; font-weight: 700; letter-spacing: 0.08em; color: var(--gold-light);
+    border: 1px solid var(--gold-dim); background: var(--gold-glow);
+    padding: 6px 14px; border-radius: 999px;
+  }
+  .ap-nav-members {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.08em; color: #fff;
+    background: var(--blue); border: none; padding: 6px 18px; border-radius: 999px;
+    text-decoration: none; transition: opacity 0.2s;
+  }
+  .ap-nav-members:hover { opacity: 0.88; }
+  .ap-spacer { height: 72px; }
+
+  /* ── HERO ── */
+  .ap-hero {
+    position: relative; border-bottom: 1px solid var(--ink-border);
+    padding: 72px 40px 56px;
+  }
+  .ap-hero::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, transparent, var(--author-accent), transparent);
+  }
+  .ap-hero-inner { max-width: 1400px; margin: 0 auto; }
+  .ap-breadcrumb {
+    display: flex; align-items: center; gap: 8px; margin-bottom: 40px; flex-wrap: wrap;
+  }
+  .ap-breadcrumb-link {
+    font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--text-faint); text-decoration: none; transition: color 0.2s;
+  }
+  .ap-breadcrumb-link:hover { color: var(--gold-light); }
+  .ap-breadcrumb-sep { font-size: 10px; color: var(--text-faint); opacity: 0.4; }
+  .ap-breadcrumb-current { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--author-accent); }
+
+  .ap-hero-layout { display: flex; gap: 48px; align-items: flex-start; flex-wrap: wrap; }
+
+  .ap-hero-left { flex-shrink: 0; }
+
+  .ap-avatar-wrap {
+    width: 120px; height: 120px; border-radius: 16px;
+    background: linear-gradient(135deg, #1a1a24, #252535);
+    border: 2px solid var(--author-accent);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 52px; font-weight: 300; color: var(--author-accent);
+    margin-bottom: 16px;
+    box-shadow: 0 0 40px var(--author-accent-dim);
+  }
+
+  .ap-role-badge {
+    font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--author-accent); border: 1px solid var(--author-accent-dim);
+    padding: 4px 12px; border-radius: 999px; display: inline-block;
+    background: var(--author-accent-dim);
+  }
+
+  .ap-hero-right { flex: 1; min-width: 280px; }
+
+  .ap-hero-eyebrow {
+    font-size: 9px; letter-spacing: 0.32em; text-transform: uppercase;
+    color: var(--author-accent); display: block; margin-bottom: 12px; opacity: 0.8;
+  }
+  .ap-hero-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(48px, 6vw, 88px); font-weight: 300; line-height: 0.92;
+    color: var(--text-main); margin-bottom: 16px;
+  }
+  .ap-hero-tagline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px; font-style: italic; font-weight: 300;
+    color: rgba(232,228,218,0.55); margin-bottom: 24px; line-height: 1.5;
+  }
+  .ap-hero-genres { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 28px; }
+  .ap-genre-tag {
+    font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--blue-bright); border: 1px solid var(--blue-dim);
+    background: var(--blue-dim); padding: 4px 12px; border-radius: 999px;
+  }
+
+  /* Tip row */
+  .ap-tip-row {
+    display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+    padding: 16px 20px; border: 1px solid var(--ink-border);
+    border-radius: 10px; background: var(--ink-surface);
+    margin-bottom: 24px;
+  }
+  .ap-tip-label { font-size: 11px; color: var(--text-faint); letter-spacing: 0.08em; margin-right: 4px; }
+  .ap-tip-btn {
+    font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--text-dim); border: 1px solid var(--ink-border);
+    background: transparent; padding: 7px 14px; border-radius: 6px;
+    cursor: pointer; transition: all 0.2s;
+  }
+  .ap-tip-btn:hover { color: var(--author-accent); border-color: var(--author-accent-dim); background: var(--author-accent-dim); }
+  .ap-tip-jar {
+    margin-left: auto; font-size: 11px; color: var(--text-faint);
+  }
+  .ap-tip-jar strong { color: var(--author-accent); }
+
+  /* Social links */
+  .ap-socials { display: flex; gap: 8px; flex-wrap: wrap; }
+  .ap-social-link {
+    font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--text-dim); border: 1px solid var(--ink-border);
+    padding: 6px 14px; border-radius: 6px; text-decoration: none;
+    transition: all 0.2s; display: inline-flex; align-items: center; gap: 6px;
+  }
+  .ap-social-link:hover { color: var(--author-accent); border-color: var(--author-accent-dim); background: var(--author-accent-dim); }
+
+  /* Hero stats */
+  .ap-hero-stats {
+    display: flex; gap: 32px; flex-wrap: wrap;
+    padding-top: 28px; margin-top: 28px;
+    border-top: 1px solid var(--ink-border);
+  }
+  .ap-hero-stat { display: flex; flex-direction: column; gap: 3px; }
+  .ap-stat-num {
+    font-family: 'Cormorant Garamond', serif; font-size: 32px;
+    font-weight: 300; color: var(--author-accent); line-height: 1;
+  }
+  .ap-stat-label { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-faint); }
+
+  /* ── MAIN ── */
+  .ap-main { max-width: 1400px; margin: 0 auto; padding: 64px 40px 96px; }
+  .ap-grid { display: grid; grid-template-columns: 1fr 380px; gap: 40px; }
+
+  /* ── SECTION ── */
+  .ap-section { margin-bottom: 56px; }
+  .ap-section-head { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
+  .ap-section-bar { width: 4px; height: 22px; border-radius: 2px; background: var(--author-accent); flex-shrink: 0; }
+  .ap-section-eyebrow { font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--author-accent); opacity: 0.75; display: block; margin-bottom: 4px; }
+  .ap-section-title { font-family: 'Cormorant Garamond', serif; font-size: 36px; font-weight: 300; color: var(--text-main); line-height: 1; }
+  .ap-divider { height: 1px; background: linear-gradient(to right, var(--author-accent-dim), transparent); margin: 18px 0 24px; }
+
+  /* Bio */
+  .ap-bio {
+    font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 300;
+    line-height: 1.9; color: rgba(232,228,218,0.78); white-space: pre-line;
+  }
+
+  /* Achievements */
+  .ap-achievements {
+    font-family: 'Syne', sans-serif; font-size: 13px; line-height: 1.8;
+    color: var(--text-dim); padding: 20px 24px;
+    border: 1px solid var(--author-accent-dim);
+    border-left: 3px solid var(--author-accent);
+    border-radius: 0 8px 8px 0; background: var(--ink-surface);
+  }
+
+  /* Story cards */
+  .ap-story-list { display: flex; flex-direction: column; gap: 12px; }
+  .ap-story-card {
+    background: var(--ink-surface); border: 1px solid var(--ink-border);
+    border-radius: 10px; padding: 20px 22px; cursor: pointer;
+    transition: background 0.2s, border-color 0.2s, transform 0.2s;
+    position: relative; overflow: hidden;
+  }
+  .ap-story-card:hover { background: var(--ink-surface2); border-color: var(--author-accent-dim); transform: translateX(4px); }
+  .ap-story-card::before {
+    content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 100%;
+    background: var(--author-accent); transform: scaleY(0); transition: transform 0.3s;
+    transform-origin: bottom;
+  }
+  .ap-story-card:hover::before { transform: scaleY(1); }
+  .ap-story-card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 8px; }
+  .ap-story-title { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 400; color: var(--text-main); line-height: 1.2; }
+  .ap-story-desc { font-size: 12px; color: var(--text-faint); line-height: 1.65; margin-bottom: 12px; }
+  .ap-story-teaser {
+    font-family: 'Cormorant Garamond', serif; font-size: 15px; font-style: italic;
+    color: rgba(232,228,218,0.45); line-height: 1.6; padding-top: 10px;
+    border-top: 1px solid var(--ink-border);
+  }
+  .ap-story-genres { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 10px; }
+
+  /* Badge */
+  .ap-badge { font-size: 8px; letter-spacing: 0.16em; text-transform: uppercase; padding: 3px 9px; border-radius: 999px; flex-shrink: 0; }
+  .ap-badge-exclusive { border: 1px solid var(--gold-dim); color: var(--gold-light); background: var(--gold-glow); }
+  .ap-badge-early { border: 1px solid rgba(232,228,218,0.25); color: rgba(232,228,218,0.8); background: rgba(232,228,218,0.08); }
+  .ap-badge-serial { border: 1px solid var(--blue-dim); color: var(--blue-bright); background: var(--blue-dim); }
+
+  /* Sidebar */
+  .ap-sidebar { display: flex; flex-direction: column; gap: 20px; }
+  .ap-sidebar-card {
+    background: var(--ink-surface); border: 1px solid var(--ink-border);
+    border-radius: 10px; padding: 22px; overflow: hidden; position: relative;
+  }
+  .ap-sidebar-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--author-accent), transparent);
+  }
+  .ap-sidebar-title { font-size: 9px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--author-accent); margin-bottom: 14px; opacity: 0.8; }
+  .ap-sidebar-stat-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--ink-border); }
+  .ap-sidebar-stat-row:last-child { border-bottom: none; padding-bottom: 0; }
+  .ap-sidebar-stat-label { font-size: 11px; color: var(--text-faint); }
+  .ap-sidebar-stat-val { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 300; color: var(--author-accent); }
+
+  /* Tip confirm */
+  .ap-tip-confirm {
+    font-size: 11px; color: var(--author-accent); letter-spacing: 0.08em;
+    padding: 8px 12px; border-radius: 6px; background: var(--author-accent-dim);
+    border: 1px solid var(--author-accent-dim); margin-top: 8px;
+    display: none;
+  }
+  .ap-tip-confirm.show { display: block; }
+
+  /* Back link */
+  .ap-back {
+    display: inline-flex; align-items: center; gap: 7px;
+    font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--text-faint); text-decoration: none; margin-bottom: 32px;
+    transition: color 0.2s;
+  }
+  .ap-back:hover { color: var(--author-accent); }
+
+  /* Footer */
+  .ap-footer {
+    max-width: 1400px; margin: 0 auto; padding: 40px 40px 32px;
+    border-top: 1px solid var(--author-accent-dim);
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 16px; flex-wrap: wrap;
+  }
+  .ap-footer-brand { display: flex; align-items: center; gap: 12px; }
+  .ap-footer-logo {
+    width: 36px; height: 36px; border-radius: 8px;
+    background: linear-gradient(135deg, var(--gold), #8a6510);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700; color: #000;
+  }
+  .ap-footer-brand-main { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 400; color: var(--gold-light); }
+  .ap-footer-brand-sub { font-size: 10px; color: var(--text-faint); letter-spacing: 0.1em; text-transform: uppercase; }
+  .ap-footer-copy { font-size: 10px; letter-spacing: 0.12em; color: var(--text-faint); text-transform: uppercase; }
+  .ap-footer-actions { display: flex; gap: 10px; }
+  .ap-btn-primary {
+    font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: #000;
+    background: linear-gradient(135deg, var(--gold), #8a6510);
+    border: none; padding: 10px 22px; border-radius: 8px; text-decoration: none;
+    cursor: pointer; font-weight: 700; transition: opacity 0.2s;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .ap-btn-primary:hover { opacity: 0.88; }
+  .ap-btn-ghost {
+    font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: rgba(232,228,218,0.6); background: transparent;
+    border: 1px solid rgba(232,228,218,0.15); padding: 10px 22px; border-radius: 8px;
+    text-decoration: none; cursor: pointer; transition: all 0.2s;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .ap-btn-ghost:hover { color: var(--gold-light); border-color: var(--gold-dim); background: var(--gold-glow); }
+
+  /* 404 */
+  .ap-not-found {
+    max-width: 600px; margin: 120px auto; text-align: center; padding: 0 40px;
+  }
+  .ap-not-found-title { font-family: 'Cormorant Garamond', serif; font-size: 48px; font-weight: 300; color: var(--text-main); margin-bottom: 16px; }
+  .ap-not-found-text { font-size: 14px; color: var(--text-dim); line-height: 1.7; margin-bottom: 32px; }
+
+  @media (max-width: 1000px) { .ap-grid { grid-template-columns: 1fr; } .ap-sidebar { flex-direction: row; flex-wrap: wrap; } .ap-sidebar-card { flex: 1; min-width: 240px; } }
+  @media (max-width: 700px) { .ap-nav-links { display: none; } .ap-hero { padding: 48px 24px 40px; } .ap-main { padding: 48px 24px 72px; } .ap-hero-layout { flex-direction: column; gap: 28px; } }
+`;
+
+function Badge({ label }: { label: Story["badge"] }) {
+  const cls = label === "Exclusive" ? "ap-badge ap-badge-exclusive" : label === "Early Access" ? "ap-badge ap-badge-early" : "ap-badge ap-badge-serial";
+  return <span className={cls}>{label}</span>;
+}
+
+function AuthorProfileContent({ slug }: { slug: string }) {
+  const author = MOCK_AUTHORS[slug];
+  const [jar, setJar] = useState(() => {
+    if (typeof window === "undefined") return author?.inkJar ?? 0;
+    const raw = window.localStorage.getItem("ttl_author_jar");
+    const parsed = raw ? JSON.parse(raw) : {};
+    return parsed[slug] ?? (author?.inkJar ?? 0);
+  });
+  const [ink, setInk] = useState(() => {
+    if (typeof window === "undefined") return DEFAULT_INK;
+    return Number(window.localStorage.getItem("ttl_ink") ?? DEFAULT_INK);
+  });
+  const [tipMsg, setTipMsg] = useState("");
+
+  if (!author) {
+    return (
+      <>
+        <style>{STYLES}</style>
+        <div className="ap-root">
+          <div className="ap-not-found">
+            <div className="ap-not-found-title">Author not found.</div>
+            <p className="ap-not-found-text">This author profile doesn't exist yet, or the link may be incorrect.</p>
+            <a href="/reading-room/authors" className="ap-btn-ghost">← Back to Authors</a>
+          </div>
+        </div>
+      </>
+    );
+  }
+
+  const tipAuthor = (amount: number) => {
+    if (ink < amount) { setTipMsg("Not enough Ink."); setTimeout(() => setTipMsg(""), 2000); return; }
+    const newInk = ink - amount;
+    const newJar = jar + amount;
+    setInk(newInk);
+    setJar(newJar);
+    if (typeof window !== "undefined") {
+      window.localStorage.setItem("ttl_ink", String(newInk));
+      const raw = window.localStorage.getItem("ttl_author_jar");
+      const parsed = raw ? JSON.parse(raw) : {};
+      parsed[slug] = newJar;
+      window.localStorage.setItem("ttl_author_jar", JSON.stringify(parsed));
+    }
+    setTipMsg(`✓ Tipped ${amount} Ink to ${author.name}!`);
+    setTimeout(() => setTipMsg(""), 3000);
   };
 
   return (
     <>
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Syne:wght@400;500;600;700&display=swap');
+      <style>{STYLES}</style>
+      <div
+        className="ap-root"
+        style={{ "--author-accent": author.accentColor, "--author-accent-dim": author.accentDim } as React.CSSProperties}
+      >
+        {/* NAV */}
+        <nav className="ap-nav">
+          <div className="ap-nav-accent" />
+          <div className="ap-nav-inner">
+            <div className="ap-nav-left">
+              <a href="/reading-room" className="ap-nav-brand">
+                <div className="ap-nav-logo">TTL</div>
+                <div style={{ display: "flex", flexDirection: "column", lineHeight: 1.15 }}>
+                  <span className="ap-nav-brand-main">The Tiniest Library</span>
+                  <span className="ap-nav-brand-sub">The Reading Room</span>
+                </div>
+              </a>
+              <div className="ap-nav-links">
+                <a href="/reading-room" className="ap-nav-link">Reading Room</a>
+                <a href="/reading-room/authors" className="ap-nav-link">Authors</a>
+                <a href="/reading-room/stories" className="ap-nav-link">All Stories</a>
+                <a href={SQUARESPACE_READING_ROOM} target="_blank" rel="noopener noreferrer" className="ap-nav-link">Members Site</a>
+              </div>
+            </div>
+            <div className="ap-nav-right">
+              <div className="ap-nav-ink"><span>✒️</span><span>{ink} Ink</span></div>
+              <a href={SQUARESPACE_READING_ROOM} target="_blank" rel="noopener noreferrer" className="ap-nav-members">Members →</a>
+            </div>
+          </div>
+        </nav>
+        <div className="ap-spacer" />
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        {/* HERO */}
+        <div className="ap-hero">
+          <div className="ap-hero-inner">
+            <div className="ap-breadcrumb">
+              <a href="/reading-room" className="ap-breadcrumb-link">Reading Room</a>
+              <span className="ap-breadcrumb-sep">›</span>
+              <a href="/reading-room/authors" className="ap-breadcrumb-link">Authors</a>
+              <span className="ap-breadcrumb-sep">›</span>
+              <span className="ap-breadcrumb-current">{author.name}</span>
+            </div>
 
-        .ap-root {
-          min-height: 100vh;
-          background: #0c0c0e;
-          font-family: 'Syne', sans-serif;
-          color: #e8e4da;
-          position: relative;
-          overflow-x: hidden;
-        }
+            <div className="ap-hero-layout">
+              <div className="ap-hero-left">
+                <div className="ap-avatar-wrap">{author.initial}</div>
+                <div className="ap-role-badge">{author.role}</div>
+              </div>
 
-        /* Subtle grain overlay */
-        .ap-root::before {
-          content: '';
-          position: fixed;
-          inset: 0;
-          background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-          pointer-events: none;
-          z-index: 0;
-          opacity: 0.4;
-        }
+              <div className="ap-hero-right">
+                <span className="ap-hero-eyebrow">The Tiniest Library — Author</span>
+                <h1 className="ap-hero-name">{author.name}</h1>
+                <p className="ap-hero-tagline">"{author.tagline}"</p>
 
-        /* Banner */
-        .ap-banner {
-          position: relative;
-          width: 100%;
-          height: 280px;
-          background: linear-gradient(135deg, #1a1a2e 0%, #16213e 40%, #0f3460 100%);
-          overflow: hidden;
-          cursor: pointer;
-        }
+                <div className="ap-hero-genres">
+                  {author.genres.map(g => <span key={g} className="ap-genre-tag">{g}</span>)}
+                </div>
 
-        .ap-banner img {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-        }
+                {/* Tip row */}
+                <div className="ap-tip-row">
+                  <span className="ap-tip-label">Tip this author</span>
+                  {[10, 25, 50].map(amt => (
+                    <button key={amt} type="button" className="ap-tip-btn" onClick={() => tipAuthor(amt)}>
+                      {amt} Ink
+                    </button>
+                  ))}
+                  <span className="ap-tip-jar">Jar: <strong>{jar}</strong> Ink</span>
+                </div>
+                {tipMsg && <div className="ap-tip-confirm show">{tipMsg}</div>}
 
-        .ap-banner-overlay {
-          position: absolute;
-          inset: 0;
-          background: linear-gradient(to bottom, transparent 40%, #0c0c0e 100%);
-        }
-
-        .ap-banner-upload {
-          position: absolute;
-          inset: 0;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          opacity: 0;
-          transition: opacity 0.3s;
-          background: rgba(0,0,0,0.5);
-          cursor: pointer;
-        }
-        .ap-banner:hover .ap-banner-upload { opacity: 1; }
-
-        .ap-upload-hint {
-          font-family: 'Syne', sans-serif;
-          font-size: 13px;
-          letter-spacing: 0.15em;
-          text-transform: uppercase;
-          color: #e8e4da;
-          border: 1px solid rgba(232,228,218,0.4);
-          padding: 10px 20px;
-          backdrop-filter: blur(4px);
-        }
-
-        /* Content container */
-        .ap-content {
-          position: relative;
-          z-index: 1;
-          max-width: 780px;
-          margin: 0 auto;
-          padding: 0 32px 80px;
-        }
-
-        /* Profile header area */
-        .ap-header {
-          display: flex;
-          align-items: flex-end;
-          gap: 28px;
-          margin-top: -64px;
-          margin-bottom: 48px;
-        }
-
-        .ap-avatar-wrap {
-          position: relative;
-          flex-shrink: 0;
-          cursor: pointer;
-        }
-
-        .ap-avatar {
-          width: 120px;
-          height: 120px;
-          border-radius: 2px;
-          background: #1e1e26;
-          border: 3px solid #0c0c0e;
-          object-fit: cover;
-          display: block;
-        }
-
-        .ap-avatar-placeholder {
-          width: 120px;
-          height: 120px;
-          border-radius: 2px;
-          background: linear-gradient(135deg, #1e1e26, #2a2a38);
-          border: 3px solid #0c0c0e;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-family: 'Cormorant Garamond', serif;
-          font-size: 44px;
-          font-weight: 300;
-          color: #5a5a7a;
-          text-transform: uppercase;
-        }
-
-        .ap-avatar-upload {
-          position: absolute;
-          inset: 3px;
-          background: rgba(0,0,0,0.6);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          opacity: 0;
-          transition: opacity 0.2s;
-          border-radius: 1px;
-        }
-        .ap-avatar-wrap:hover .ap-avatar-upload { opacity: 1; }
-
-        .ap-avatar-icon {
-          color: #e8e4da;
-          font-size: 22px;
-        }
-
-        .ap-header-info {
-          padding-bottom: 8px;
-        }
-
-        .ap-badge {
-          display: inline-block;
-          font-size: 10px;
-          letter-spacing: 0.2em;
-          text-transform: uppercase;
-          color: #c9a84c;
-          border: 1px solid rgba(201,168,76,0.35);
-          padding: 3px 10px;
-          margin-bottom: 10px;
-        }
-
-        .ap-name {
-          font-family: 'Cormorant Garamond', serif;
-          font-size: 42px;
-          font-weight: 300;
-          line-height: 1;
-          letter-spacing: 0.02em;
-          text-transform: capitalize;
-          color: #f0ece2;
-        }
-
-        /* Divider */
-        .ap-divider {
-          width: 100%;
-          height: 1px;
-          background: linear-gradient(to right, rgba(201,168,76,0.4), transparent);
-          margin: 0 0 40px;
-        }
-
-        /* Section */
-        .ap-section {
-          margin-bottom: 36px;
-        }
-
-        .ap-label {
-          font-size: 10px;
-          letter-spacing: 0.22em;
-          text-transform: uppercase;
-          color: #c9a84c;
-          margin-bottom: 10px;
-          display: block;
-        }
-
-        .ap-input, .ap-textarea {
-          width: 100%;
-          background: rgba(255,255,255,0.04);
-          border: 1px solid rgba(232,228,218,0.1);
-          border-radius: 2px;
-          color: #e8e4da;
-          font-family: 'Syne', sans-serif;
-          font-size: 14px;
-          padding: 12px 16px;
-          transition: border-color 0.2s, background 0.2s;
-          outline: none;
-          resize: none;
-        }
-
-        .ap-input::placeholder, .ap-textarea::placeholder {
-          color: rgba(232,228,218,0.25);
-        }
-
-        .ap-input:focus, .ap-textarea:focus {
-          border-color: rgba(201,168,76,0.5);
-          background: rgba(255,255,255,0.06);
-        }
-
-        /* Links grid */
-        .ap-links-grid {
-          display: grid;
-          grid-template-columns: 1fr 1fr 1fr;
-          gap: 12px;
-        }
-
-        .ap-link-wrap {
-          position: relative;
-        }
-
-        .ap-link-icon {
-          position: absolute;
-          left: 14px;
-          top: 50%;
-          transform: translateY(-50%);
-          font-size: 14px;
-          color: rgba(232,228,218,0.3);
-          pointer-events: none;
-        }
-
-        .ap-link-input {
-          padding-left: 38px !important;
-        }
-
-        /* Prize section */
-        .ap-prize-grid {
-          display: grid;
-          grid-template-columns: 1fr 2fr;
-          gap: 12px;
-        }
-
-        /* Save button */
-        .ap-save-btn {
-          width: 100%;
-          padding: 16px;
-          background: transparent;
-          border: 1px solid #c9a84c;
-          color: #c9a84c;
-          font-family: 'Syne', sans-serif;
-          font-size: 11px;
-          letter-spacing: 0.25em;
-          text-transform: uppercase;
-          cursor: pointer;
-          transition: background 0.25s, color 0.25s;
-          margin-top: 12px;
-          border-radius: 2px;
-          position: relative;
-          overflow: hidden;
-        }
-
-        .ap-save-btn:hover {
-          background: #c9a84c;
-          color: #0c0c0e;
-        }
-
-        .ap-save-btn.saved {
-          background: #c9a84c;
-          color: #0c0c0e;
-        }
-
-        /* Subtle decorative line left */
-        .ap-section-group {
-          position: relative;
-          padding-left: 20px;
-          border-left: 1px solid rgba(201,168,76,0.15);
-        }
-
-        @media (max-width: 600px) {
-          .ap-banner { height: 180px; }
-          .ap-header { flex-direction: column; align-items: flex-start; gap: 16px; margin-top: -48px; }
-          .ap-name { font-size: 30px; }
-          .ap-links-grid { grid-template-columns: 1fr; }
-          .ap-prize-grid { grid-template-columns: 1fr; }
-          .ap-content { padding: 0 20px 60px; }
-        }
-      `}</style>
-
-      <div className="ap-root">
-        {/* Banner */}
-        <div className="ap-banner">
-          {bannerPreview ? (
-            <img src={bannerPreview} alt="Profile banner" />
-          ) : null}
-          <div className="ap-banner-overlay" />
-          <label className="ap-banner-upload" htmlFor="banner-upload">
-            <span className="ap-upload-hint">Change Banner</span>
-          </label>
-          <input
-            id="banner-upload"
-            type="file"
-            accept="image/*"
-            style={{ display: "none" }}
-            onChange={handleBannerImg}
-          />
-        </div>
-
-        <div className="ap-content">
-          {/* Header */}
-          <div className="ap-header">
-            {/* Avatar */}
-            <div className="ap-avatar-wrap">
-              <label htmlFor="avatar-upload" style={{ cursor: "pointer" }}>
-                {profilePreview ? (
-                  <img className="ap-avatar" src={profilePreview} alt="Author avatar" />
-                ) : (
-                  <div className="ap-avatar-placeholder">
-                    {authorName.charAt(0)}
+                {/* Social links */}
+                {(author.website || author.twitter || author.instagram) && (
+                  <div className="ap-socials">
+                    {author.website && <a href={author.website} target="_blank" rel="noopener noreferrer" className="ap-social-link">🌐 Website</a>}
+                    {author.twitter && <a href={author.twitter} target="_blank" rel="noopener noreferrer" className="ap-social-link">𝕏 Twitter</a>}
+                    {author.instagram && <a href={author.instagram} target="_blank" rel="noopener noreferrer" className="ap-social-link">📷 Instagram</a>}
                   </div>
                 )}
-                <div className="ap-avatar-upload">
-                  <span className="ap-avatar-icon">✎</span>
-                </div>
-              </label>
-              <input
-                id="avatar-upload"
-                type="file"
-                accept="image/*"
-                style={{ display: "none" }}
-                onChange={handleProfileImg}
-              />
-            </div>
 
-            <div className="ap-header-info">
-              <span className="ap-badge">Founding Author</span>
-              <h1 className="ap-name">{authorName}</h1>
-            </div>
-          </div>
-
-          <div className="ap-divider" />
-
-          {/* Form sections */}
-          <div className="ap-section-group">
-
-            <div className="ap-section">
-              <label className="ap-label">Author Bio</label>
-              <textarea
-                className="ap-textarea"
-                rows={4}
-                placeholder="Tell readers about yourself — your voice, your world, your craft..."
-                value={bio}
-                onChange={(e) => setBio(e.target.value)}
-              />
-            </div>
-
-            <div className="ap-section">
-              <label className="ap-label">Achievements</label>
-              <textarea
-                className="ap-textarea"
-                rows={3}
-                placeholder="Awards, milestones, notable publications..."
-                value={achievements}
-                onChange={(e) => setAchievements(e.target.value)}
-              />
-            </div>
-
-            <div className="ap-section">
-              <label className="ap-label">Author Links</label>
-              <div className="ap-links-grid">
-                <div className="ap-link-wrap">
-                  <span className="ap-link-icon">⊕</span>
-                  <input
-                    className="ap-input ap-link-input"
-                    placeholder="Website"
-                    value={website}
-                    onChange={(e) => setWebsite(e.target.value)}
-                  />
-                </div>
-                <div className="ap-link-wrap">
-                  <span className="ap-link-icon">𝕏</span>
-                  <input
-                    className="ap-input ap-link-input"
-                    placeholder="Twitter / X"
-                    value={twitter}
-                    onChange={(e) => setTwitter(e.target.value)}
-                  />
-                </div>
-                <div className="ap-link-wrap">
-                  <span className="ap-link-icon">◎</span>
-                  <input
-                    className="ap-input ap-link-input"
-                    placeholder="Instagram"
-                    value={instagram}
-                    onChange={(e) => setInstagram(e.target.value)}
-                  />
+                <div className="ap-hero-stats">
+                  <div className="ap-hero-stat">
+                    <span className="ap-stat-num">{author.storiesCount}</span>
+                    <span className="ap-stat-label">Stories</span>
+                  </div>
+                  <div className="ap-hero-stat">
+                    <span className="ap-stat-num">{jar}</span>
+                    <span className="ap-stat-label">Ink Earned</span>
+                  </div>
+                  <div className="ap-hero-stat">
+                    <span className="ap-stat-num">{author.genres.length}</span>
+                    <span className="ap-stat-label">Genres</span>
+                  </div>
                 </div>
               </div>
             </div>
-
-            <div className="ap-section">
-              <label className="ap-label">Monthly Prize</label>
-              <div className="ap-prize-grid">
-                <input
-                  className="ap-input"
-                  placeholder="Prize title"
-                  value={prizeTitle}
-                  onChange={(e) => setPrizeTitle(e.target.value)}
-                />
-                <textarea
-                  className="ap-textarea"
-                  rows={1}
-                  placeholder="Brief description of the prize..."
-                  value={prizeDesc}
-                  onChange={(e) => setPrizeDesc(e.target.value)}
-                />
-              </div>
-            </div>
-
           </div>
-
-          <button
-            className={`ap-save-btn${saved ? " saved" : ""}`}
-            onClick={handleSave}
-          >
-            {saved ? "✓  Profile Saved" : "Save Profile"}
-          </button>
         </div>
+
+        {/* MAIN */}
+        <div className="ap-main">
+          <div className="ap-grid">
+
+            {/* LEFT COLUMN */}
+            <div>
+              {/* Bio */}
+              <div className="ap-section">
+                <div className="ap-section-head">
+                  <div className="ap-section-bar" />
+                  <div>
+                    <span className="ap-section-eyebrow">About</span>
+                    <h2 className="ap-section-title">Author Bio</h2>
+                  </div>
+                </div>
+                <div className="ap-divider" />
+                <p className="ap-bio">{author.bio}</p>
+              </div>
+
+              {/* Achievements */}
+              <div className="ap-section">
+                <div className="ap-section-head">
+                  <div className="ap-section-bar" />
+                  <div>
+                    <span className="ap-section-eyebrow">Recognition</span>
+                    <h2 className="ap-section-title">Achievements</h2>
+                  </div>
+                </div>
+                <div className="ap-divider" />
+                <div className="ap-achievements">{author.achievements}</div>
+              </div>
+
+              {/* Stories */}
+              <div className="ap-section">
+                <div className="ap-section-head">
+                  <div className="ap-section-bar" />
+                  <div>
+                    <span className="ap-section-eyebrow">Read</span>
+                    <h2 className="ap-section-title">Stories by {author.name}</h2>
+                  </div>
+                </div>
+                <div className="ap-divider" />
+                <div className="ap-story-list">
+                  {author.stories.map(story => (
+                    <div key={story.slug} className="ap-story-card">
+                      <div className="ap-story-card-top">
+                        <div className="ap-story-title">{story.title}</div>
+                        <Badge label={story.badge} />
+                      </div>
+                      <p className="ap-story-desc">{story.description}</p>
+                      <div className="ap-story-teaser">"{story.teaser}"</div>
+                      <div className="ap-story-genres">
+                        {story.genres.map(g => <span key={g} className="ap-genre-tag">{g}</span>)}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* SIDEBAR */}
+            <div className="ap-sidebar">
+              <div className="ap-sidebar-card">
+                <div className="ap-sidebar-title">Author at a Glance</div>
+                <div className="ap-sidebar-stat-row">
+                  <span className="ap-sidebar-stat-label">Stories published</span>
+                  <span className="ap-sidebar-stat-val">{author.storiesCount}</span>
+                </div>
+                <div className="ap-sidebar-stat-row">
+                  <span className="ap-sidebar-stat-label">Ink jar total</span>
+                  <span className="ap-sidebar-stat-val">{jar}</span>
+                </div>
+                <div className="ap-sidebar-stat-row">
+                  <span className="ap-sidebar-stat-label">Genres</span>
+                  <span className="ap-sidebar-stat-val">{author.genres.length}</span>
+                </div>
+                <div className="ap-sidebar-stat-row">
+                  <span className="ap-sidebar-stat-label">Status</span>
+                  <span className="ap-sidebar-stat-val" style={{ fontSize: 13 }}>{author.role}</span>
+                </div>
+              </div>
+
+              <div className="ap-sidebar-card">
+                <div className="ap-sidebar-title">Support this Author</div>
+                <p style={{ fontSize: 12, color: "var(--text-faint)", lineHeight: 1.7, marginBottom: 14 }}>
+                  Ink tips go directly to the author. Every drop counts.
+                </p>
+                <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                  {[10, 25, 50, 100].map(amt => (
+                    <button key={amt} type="button" className="ap-tip-btn" style={{ textAlign: "left" }} onClick={() => tipAuthor(amt)}>
+                      Tip {amt} Ink
+                    </button>
+                  ))}
+                </div>
+                {tipMsg && <div className="ap-tip-confirm show" style={{ marginTop: 10 }}>{tipMsg}</div>}
+              </div>
+
+              <div className="ap-sidebar-card">
+                <div className="ap-sidebar-title">Browse by Genre</div>
+                <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                  {author.genres.map(g => (
+                    <a
+                      key={g}
+                      href={`/reading-room/genres/${encodeURIComponent(g.toLowerCase().replace(/\s+/g, "-").replace(/[+]/g, "").replace(/&/g, "and"))}`}
+                      style={{ fontSize: 11, color: "var(--blue-bright)", textDecoration: "none", padding: "8px 12px", border: "1px solid var(--blue-dim)", borderRadius: 6, transition: "all 0.2s", display: "flex", justifyContent: "space-between", alignItems: "center" }}
+                    >
+                      {g} <span style={{ opacity: 0.5 }}>→</span>
+                    </a>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* FOOTER */}
+        <div className="ap-footer">
+          <div className="ap-footer-brand">
+            <div className="ap-footer-logo">TTL</div>
+            <div>
+              <div className="ap-footer-brand-main">The Tiniest Library</div>
+              <div className="ap-footer-brand-sub">The Reading Room</div>
+            </div>
+          </div>
+          <span className="ap-footer-copy">© {new Date().getFullYear()} The Tiniest Library</span>
+          <div className="ap-footer-actions">
+            <a href="/reading-room/authors" className="ap-btn-ghost">← All Authors</a>
+            <a href={SQUARESPACE_READING_ROOM} target="_blank" rel="noopener noreferrer" className="ap-btn-primary">Members Site →</a>
+          </div>
+        </div>
+
       </div>
     </>
   );
+}
+
+export default async function AuthorProfile({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  return <AuthorProfileContent slug={slug} />;
 }
