@@ -2,6 +2,7 @@
 
 import React, { useEffect, useMemo, useState } from "react";
 import { supabase } from "@/lib/supabase";
+import Adult18Gate from "../components/Adult18Gate";
 
 // =========================
 // Route: /reading-room/genres/[genre]/page.tsx
@@ -1451,7 +1452,13 @@ function GenrePageContent({ genreSlug }: { genreSlug: string }) {
     window.open(url, "_blank", "noopener,noreferrer");
     setTimeout(() => { setIsOpeningCheckout(false); setOpeningInk(null); }, 2500);
   };
-
+if (genreName === "Adult 18+") {
+    return (
+      <Adult18Gate>
+        <div style={{ display: "none" }} />
+      </Adult18Gate>
+    );
+  }
   return (
     <>
       <style>{GENRE_PAGE_STYLES}</style>
