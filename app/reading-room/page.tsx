@@ -2,6 +2,7 @@
 
 import React, { useEffect, useMemo, useState, type ReactNode } from "react";
 import { supabase } from "@/lib/supabase";
+import AdQueue from "./components/AdQueue";
 
 // =========================
 // CHANGELOG
@@ -1578,6 +1579,7 @@ export default function ReadingRoomHome() {
                 <span>{ink} Ink</span>
               </div>
               <div className="ttl-nav-divider" />
+              <AdQueue />
               <a href={SQUARESPACE_READING_ROOM} target="_blank" rel="noopener noreferrer" className="ttl-nav-members">
                 Members →
               </a>
