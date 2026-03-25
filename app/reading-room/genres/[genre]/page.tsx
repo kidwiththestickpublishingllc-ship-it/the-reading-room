@@ -2,7 +2,7 @@
 
 import React, { useEffect, useMemo, useState } from "react";
 import { supabase } from "@/lib/supabase";
-import Adult18Gate from "../components/Adult18Gate";
+import Adult18Gate from "@/app/reading-room/components/Adult18Gate";
 
 // =========================
 // Route: /reading-room/genres/[genre]/page.tsx
