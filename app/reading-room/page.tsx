@@ -13,6 +13,8 @@ import AdQueue from "./components/AdQueue";
 // ✅ V7: Author cards wired to /reading-room/authors/[slug]
 // ✅ V7: Cohesive dark background replacing cornflower blue — Reading Room feels like a real literary platform
 // ✅ Phase 2: Matched to Browse All Stories visual system — black bg, gold + cornflower blue accents, sticky navbar
+// ✅ Phase 3: Ink default set to 0 — populates on purchase only
+// ✅ Phase 3: Red Door card added as entry point to The Red Room
 
 // =========================
 // Types
@@ -232,7 +234,6 @@ const TTL_STYLES = `
     overflow-x: hidden;
   }
 
-  /* subtle grain overlay */
   .ttl-root::before {
     content: '';
     position: fixed;
@@ -243,13 +244,11 @@ const TTL_STYLES = `
     opacity: 0.35;
   }
 
-  /* ── SCROLLBAR ── */
   ::-webkit-scrollbar { width: 6px; height: 6px; }
   ::-webkit-scrollbar-track { background: #111; }
   ::-webkit-scrollbar-thumb { background: var(--gold-dim); border-radius: 3px; }
   ::-webkit-scrollbar-thumb:hover { background: var(--gold); }
 
-  /* ── NAV ── */
   .ttl-nav {
     position: fixed;
     top: 0; left: 0; right: 0;
@@ -407,10 +406,8 @@ const TTL_STYLES = `
 
   .ttl-nav-members:hover { opacity: 0.88; }
 
-  /* ── SPACER ── */
   .ttl-nav-spacer { height: 74px; }
 
-  /* ── HERO SECTION ── */
   .ttl-hero-section {
     padding: 0;
     background: linear-gradient(180deg, rgba(100,149,237,0.07) 0%, rgba(201,168,76,0.03) 60%, transparent 100%);
@@ -460,7 +457,6 @@ const TTL_STYLES = `
     gap: 12px;
   }
 
-  /* ── MAIN WRAP ── */
   .ttl-wrap {
     position: relative;
     z-index: 1;
@@ -469,7 +465,6 @@ const TTL_STYLES = `
     padding: 64px 40px 96px;
   }
 
-  /* ── BUTTONS ── */
   .ttl-btn-primary {
     font-family: 'Syne', sans-serif;
     font-size: 10px;
@@ -515,7 +510,6 @@ const TTL_STYLES = `
     background: var(--gold-glow);
   }
 
-  /* ── SECTION ── */
   .ttl-section { margin-bottom: 72px; }
 
   .ttl-section-header {
@@ -568,7 +562,6 @@ const TTL_STYLES = `
     margin: 20px 0 28px;
   }
 
-  /* ── SECTION ACCENT ── */
   .ttl-section-accent {
     display: flex;
     align-items: center;
@@ -584,11 +577,8 @@ const TTL_STYLES = `
     flex-shrink: 0;
   }
 
-  .ttl-section-bar-blue {
-    background: var(--blue);
-  }
+  .ttl-section-bar-blue { background: var(--blue); }
 
-  /* ── PANELS ── */
   .ttl-panel {
     background: var(--ink-surface);
     border: 1px solid var(--ink-border);
@@ -608,7 +598,6 @@ const TTL_STYLES = `
     margin-bottom: 10px;
   }
 
-  /* ── INK WALLET ── */
   .ttl-wallet-grid {
     display: grid;
     grid-template-columns: 1fr 2fr;
@@ -686,7 +675,6 @@ const TTL_STYLES = `
     color: var(--blue-bright);
   }
 
-  /* ── AUTHOR CARDS ── */
   .ttl-authors-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -848,7 +836,6 @@ const TTL_STYLES = `
     transform: translate(2px, -2px);
   }
 
-  /* ── STORY CARDS ── */
   .ttl-story-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -946,7 +933,6 @@ const TTL_STYLES = `
     margin-top: 10px;
   }
 
-  /* ── BADGE ── */
   .ttl-badge {
     font-family: 'Syne', sans-serif;
     font-size: 8px;
@@ -961,7 +947,6 @@ const TTL_STYLES = `
   .ttl-badge-early { border: 1px solid rgba(232,228,218,0.25); color: rgba(232,228,218,0.8); background: rgba(232,228,218,0.08); }
   .ttl-badge-serial { border: 1px solid var(--blue-dim); color: var(--blue-bright); background: var(--blue-dim); }
 
-  /* ── UNLOCK BUTTON ── */
   .ttl-unlock-btn {
     font-family: 'Syne', sans-serif;
     font-size: 9px;
@@ -980,7 +965,6 @@ const TTL_STYLES = `
   .ttl-unlock-btn:disabled { border-color: var(--ink-border); color: var(--text-faint); cursor: default; background: transparent; }
   .ttl-unlock-btn.unlocked { border-color: var(--ink-border); color: var(--text-faint); cursor: default; background: transparent; }
 
-  /* ── GENRE FILTER BAR ── */
   .ttl-filter-bar {
     background: var(--ink-surface);
     border: 1px solid var(--ink-border);
@@ -1014,7 +998,6 @@ const TTL_STYLES = `
     color: var(--gold-light);
   }
 
-  /* ── HOW IT WORKS ── */
   .ttl-how-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -1057,7 +1040,6 @@ const TTL_STYLES = `
     line-height: 1.7;
   }
 
-  /* ── READER MODAL ── */
   .ttl-modal-overlay {
     position: fixed;
     inset: 0;
@@ -1225,7 +1207,6 @@ const TTL_STYLES = `
     white-space: pre-wrap;
   }
 
-  /* ── FOOTER ── */
   .ttl-footer {
     margin-top: 72px;
     padding: 40px 0 24px;
@@ -1281,12 +1262,8 @@ const TTL_STYLES = `
     text-transform: uppercase;
   }
 
-  .ttl-footer-actions {
-    display: flex;
-    gap: 10px;
-  }
+  .ttl-footer-actions { display: flex; gap: 10px; }
 
-  /* ── STATUS ── */
   .ttl-status {
     font-family: 'Syne', sans-serif;
     font-size: 12px;
@@ -1305,7 +1282,6 @@ const TTL_STYLES = `
     margin-bottom: 12px;
   }
 
-  /* ── RESPONSIVE ── */
   @media (max-width: 900px) {
     .ttl-nav-inner { padding: 0 24px; }
     .ttl-nav-links { display: none; }
@@ -1390,7 +1366,6 @@ function ReaderModal({
           </div>
           <button type="button" onClick={onClose} className="ttl-modal-close">Close ✕</button>
         </div>
-
         <div className="ttl-modal-body">
           {!isUnlocked ? (
             <div className="ttl-locked-panel">
@@ -1421,7 +1396,6 @@ function ReaderModal({
             </div>
           )}
         </div>
-
         <div className="ttl-modal-footer">
           <span className="ttl-modal-hint">Press ESC to close</span>
           <a href={SQUARESPACE_READING_ROOM} target="_blank" rel="noopener noreferrer" className="ttl-btn-ghost" style={{ fontSize: '9px', padding: '8px 18px', borderRadius: '8px' }} suppressHydrationWarning>
@@ -1430,6 +1404,95 @@ function ReaderModal({
         </div>
       </div>
     </div>
+  );
+}
+
+// =========================
+// Red Door Card — entry to The Red Room
+// =========================
+function RedDoorCard() {
+  const [hovered, setHovered] = useState(false);
+  return (
+    <a
+      href="/reading-room/genres/adult-18"
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        display: "flex",
+        alignItems: "center",
+        gap: 24,
+        background: "linear-gradient(135deg, #1a0505 0%, #2d0808 50%, #1a0505 100%)",
+        border: `1px solid ${hovered ? "rgba(200,60,60,0.8)" : "rgba(180,30,30,0.5)"}`,
+        borderLeft: "4px solid #c94c4c",
+        borderRadius: 12,
+        padding: "28px 32px",
+        marginBottom: 16,
+        textDecoration: "none",
+        position: "relative",
+        overflow: "hidden",
+        transform: hovered ? "translateY(-2px)" : "translateY(0)",
+        transition: "border-color 0.3s, transform 0.2s",
+        boxShadow: "0 0 40px rgba(180,30,30,0.12), inset 0 0 60px rgba(180,30,30,0.04)",
+      }}
+    >
+      <div style={{
+        width: 64, height: 80, flexShrink: 0,
+        background: "linear-gradient(180deg, #3d0a0a, #1a0404)",
+        border: "2px solid rgba(201,168,76,0.6)",
+        borderRadius: 6,
+        display: "flex", alignItems: "center", justifyContent: "center",
+        fontSize: 28,
+        boxShadow: "0 0 20px rgba(201,168,76,0.2)",
+        position: "relative",
+      }}>
+        🚪
+        <div style={{
+          position: "absolute", right: 8, top: "50%",
+          width: 8, height: 8, borderRadius: "50%",
+          background: "#C9A84C",
+          boxShadow: "0 0 6px rgba(201,168,76,0.8)",
+        }} />
+      </div>
+      <div style={{ flex: 1 }}>
+        <div style={{
+          fontFamily: "'Syne', sans-serif",
+          fontSize: 9, letterSpacing: "0.28em",
+          textTransform: "uppercase" as const,
+          color: "rgba(200,80,80,0.8)", marginBottom: 8,
+        }}>
+          18+ · Age Verified Access Only
+        </div>
+        <div style={{
+          fontFamily: "'Cormorant Garamond', serif",
+          fontSize: 28, fontWeight: 300, color: "#f0ece2",
+          marginBottom: 6, lineHeight: 1.1,
+        }}>
+          The Red Room
+        </div>
+        <div style={{
+          fontFamily: "'Syne', sans-serif",
+          fontSize: 12, color: "rgba(232,228,218,0.4)", lineHeight: 1.6,
+        }}>
+          Adult fiction for grown readers. 29 genres. Explicit content behind a verified age gate.
+        </div>
+      </div>
+      <div style={{
+        fontFamily: "'Syne', sans-serif",
+        fontSize: 10, letterSpacing: "0.2em",
+        textTransform: "uppercase" as const,
+        color: "rgba(200,80,80,0.7)",
+        border: "1px solid rgba(200,80,80,0.3)",
+        padding: "8px 16px", borderRadius: 6,
+        flexShrink: 0,
+      }}>
+        Enter →
+      </div>
+      <div style={{
+        position: "absolute", inset: 0,
+        pointerEvents: "none" as const,
+        background: "radial-gradient(ellipse at 20% 50%, rgba(180,30,30,0.08) 0%, transparent 70%)",
+      }} />
+    </a>
   );
 }
 
@@ -1454,7 +1517,6 @@ export default function ReadingRoomHome() {
     setJarState(getJar());
   }, []);
 
-  // ── Supabase stories load ── (unchanged)
   useEffect(() => {
     async function loadStories() {
       try {
@@ -1464,7 +1526,6 @@ export default function ReadingRoomHome() {
           .select("id, slug, title, author_name, description, cover_url, badge, is_published, created_at")
           .eq("is_published", true)
           .order("created_at", { ascending: false });
-
         if (error) { setStoriesError(error.message); setStories(DEMO_STORIES); return; }
         if (data && data.length > 0) {
           setStories((data as SupabaseStoryRow[]).map(mapSupabaseStoryToStory));
@@ -1481,7 +1542,6 @@ export default function ReadingRoomHome() {
     loadStories();
   }, []);
 
-  // ── Stripe ink credit on return ── (unchanged)
   useEffect(() => {
     if (typeof window === "undefined") return;
     const params = new URLSearchParams(window.location.search);
@@ -1506,9 +1566,6 @@ export default function ReadingRoomHome() {
   useEffect(() => setUnlocks(unlocks), [unlocks]);
   useEffect(() => setJar(jar), [jar]);
 
-  const addInk = (amount: number) => setInk(v => v + amount);
-
-  // ── Stripe checkout ── (unchanged)
   const buyInk = (amount: number) => {
     const url = STRIPE_LINKS[amount];
     if (!url) { alert("Checkout link not found."); return; }
@@ -1548,14 +1605,12 @@ export default function ReadingRoomHome() {
   return (
     <>
       <style>{TTL_STYLES}</style>
-
       <div className="ttl-root">
 
         {/* ── NAVBAR ── */}
         <nav className="ttl-nav">
           <div className="ttl-nav-gold-line" />
           <div className="ttl-nav-inner">
-            {/* Left — logo + nav links */}
             <div className="ttl-nav-left">
               <a href="/reading-room" className="ttl-nav-brand">
                 <div className="ttl-nav-logo-badge">TTL</div>
@@ -1571,8 +1626,6 @@ export default function ReadingRoomHome() {
                 <a href={SQUARESPACE_READING_ROOM} target="_blank" rel="noopener noreferrer" className="ttl-nav-link">Members Site</a>
               </div>
             </div>
-
-            {/* Right — ink + members */}
             <div className="ttl-nav-right">
               <div className="ttl-nav-ink">
                 <span>✒️</span>
@@ -1587,7 +1640,6 @@ export default function ReadingRoomHome() {
           </div>
         </nav>
 
-        {/* Spacer — keeps content below fixed navbar */}
         <div className="ttl-nav-spacer" />
 
         <ReaderModal
@@ -1613,12 +1665,8 @@ export default function ReadingRoomHome() {
               <a href={SQUARESPACE_READING_ROOM} target="_blank" rel="noopener noreferrer" className="ttl-btn-primary">
                 Enter Members Room →
               </a>
-              <a href="/reading-room/authors" className="ttl-btn-ghost">
-                Author Directory
-              </a>
-              <a href="#how-it-works" className="ttl-btn-ghost">
-                How it works
-              </a>
+              <a href="/reading-room/authors" className="ttl-btn-ghost">Author Directory</a>
+              <a href="#how-it-works" className="ttl-btn-ghost">How it works</a>
             </div>
           </div>
         </div>
@@ -1641,14 +1689,11 @@ export default function ReadingRoomHome() {
             </div>
             <div className="ttl-divider" />
             <div className="ttl-wallet-grid">
-              {/* Balance */}
               <div className="ttl-panel">
                 <div className="ttl-panel-label">Your Balance</div>
                 <div className="ttl-ink-num">{ink}</div>
                 <p className="ttl-ink-sub">Ink is stored in your browser. It updates automatically after purchase.</p>
-                
               </div>
-              {/* Buy ink — Stripe links unchanged */}
               <div className="ttl-panel">
                 <div className="ttl-panel-label">Buy Ink</div>
                 <div className="ttl-ink-packs">
@@ -1697,15 +1742,9 @@ export default function ReadingRoomHome() {
                     ))}
                   </div>
                   <div className="ttl-author-tips" onClick={e => e.preventDefault()}>
-                    <button type="button" onClick={e => { e.preventDefault(); tipAuthor(author.slug, 10); }} className="ttl-tip-btn">
-                      Tip 10 Ink
-                    </button>
-                    <button type="button" onClick={e => { e.preventDefault(); tipAuthor(author.slug, 25); }} className="ttl-tip-btn">
-                      Tip 25
-                    </button>
-                    <span className="ttl-jar-count">
-                      Jar: <strong style={{ color: 'var(--text-dim)' }}>{jar[author.slug] ?? 0}</strong>
-                    </span>
+                    <button type="button" onClick={e => { e.preventDefault(); tipAuthor(author.slug, 10); }} className="ttl-tip-btn">Tip 10 Ink</button>
+                    <button type="button" onClick={e => { e.preventDefault(); tipAuthor(author.slug, 25); }} className="ttl-tip-btn">Tip 25</button>
+                    <span className="ttl-jar-count">Jar: <strong style={{ color: 'var(--text-dim)' }}>{jar[author.slug] ?? 0}</strong></span>
                   </div>
                   <div className="ttl-author-footer">
                     <span className="ttl-author-profile-link">🪶 Writer profile</span>
@@ -1732,97 +1771,8 @@ export default function ReadingRoomHome() {
             </div>
             <div className="ttl-divider" />
 
-                        {/* ── RED DOOR — Entry to The Red Room ── */}
-            
-              href="/reading-room/genres/adult-18"
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 24,
-                background: "linear-gradient(135deg, #1a0505 0%, #2d0808 50%, #1a0505 100%)",
-                border: "1px solid rgba(180,30,30,0.5)",
-                borderLeft: "4px solid #c94c4c",
-                borderRadius: 12,
-                padding: "28px 32px",
-                marginBottom: 16,
-                textDecoration: "none",
-                position: "relative",
-                overflow: "hidden",
-                transition: "border-color 0.3s, transform 0.2s",
-                boxShadow: "0 0 40px rgba(180,30,30,0.12), inset 0 0 60px rgba(180,30,30,0.04)",
-              }}
-              onMouseEnter={e => {
-                (e.currentTarget as HTMLAnchorElement).style.borderColor = "rgba(200,60,60,0.8)";
-                (e.currentTarget as HTMLAnchorElement).style.transform = "translateY(-2px)";
-              }}
-              onMouseLeave={e => {
-                (e.currentTarget as HTMLAnchorElement).style.borderColor = "rgba(180,30,30,0.5)";
-                (e.currentTarget as HTMLAnchorElement).style.transform = "translateY(0)";
-              }}
-            >
-              {/* Door icon */}
-              <div style={{
-                width: 64, height: 80, flexShrink: 0,
-                background: "linear-gradient(180deg, #3d0a0a, #1a0404)",
-                border: "2px solid rgba(201,168,76,0.6)",
-                borderRadius: 6,
-                display: "flex", alignItems: "center", justifyContent: "center",
-                fontSize: 28,
-                boxShadow: "0 0 20px rgba(201,168,76,0.2)",
-                position: "relative",
-              }}>
-                🚪
-                {/* Door knob */}
-                <div style={{
-                  position: "absolute", right: 8, top: "50%",
-                  width: 8, height: 8, borderRadius: "50%",
-                  background: "#C9A84C",
-                  boxShadow: "0 0 6px rgba(201,168,76,0.8)",
-                }} />
-              </div>
-
-              {/* Text */}
-              <div style={{ flex: 1 }}>
-                <div style={{
-                  fontFamily: "'Syne', sans-serif",
-                  fontSize: 9, letterSpacing: "0.28em", textTransform: "uppercase",
-                  color: "rgba(200,80,80,0.8)", marginBottom: 8,
-                }}>
-                  18+ · Age Verified Access Only
-                </div>
-                <div style={{
-                  fontFamily: "'Cormorant Garamond', serif",
-                  fontSize: 28, fontWeight: 300, color: "#f0ece2",
-                  marginBottom: 6, lineHeight: 1.1,
-                }}>
-                  The Red Room
-                </div>
-                <div style={{
-                  fontFamily: "'Syne', sans-serif",
-                  fontSize: 12, color: "rgba(232,228,218,0.4)", lineHeight: 1.6,
-                }}>
-                  Adult fiction for grown readers. 29 genres. Explicit content behind a verified age gate.
-                </div>
-              </div>
-
-              {/* Arrow */}
-              <div style={{
-                fontFamily: "'Syne', sans-serif",
-                fontSize: 10, letterSpacing: "0.2em", textTransform: "uppercase",
-                color: "rgba(200,80,80,0.7)",
-                border: "1px solid rgba(200,80,80,0.3)",
-                padding: "8px 16px", borderRadius: 6,
-                flexShrink: 0,
-              }}>
-                Enter →
-              </div>
-
-              {/* Glow overlay */}
-              <div style={{
-                position: "absolute", inset: 0, pointerEvents: "none",
-                background: "radial-gradient(ellipse at 20% 50%, rgba(180,30,30,0.08) 0%, transparent 70%)",
-              }} />
-            </a>
+            {/* ── RED DOOR ── */}
+            <RedDoorCard />
 
             <div className="ttl-filter-bar">
               {allGenres.map(g => (
