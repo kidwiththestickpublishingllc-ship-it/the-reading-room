@@ -346,6 +346,54 @@ function GenreGrid({ activeGenre, onSelect }: { activeGenre: string; onSelect: (
           {/* Individual genre panels */}
           {GENRE_PANELS.map((panel) => {
             const isActive = activeGenre === panel.genre;
+            if (panel.genre === "Adult 18+") {
+  return (
+    <div key={panel.genre} className="flex flex-col items-center gap-2" style={{ width: W }}>
+      <button
+        type="button"
+        onClick={() => { window.location.href = "/reading-room/genres/adult-18"; }}
+        className="relative overflow-hidden rounded-xl transition-all duration-200 hover:-translate-y-1.5"
+        style={{
+          width: W, height: H,
+          border: "2px solid rgba(201,168,76,0.8)",
+          background: "linear-gradient(160deg, #1a0404 0%, #2d0808 60%, #1a0404 100%)",
+          boxShadow: "0 0 30px rgba(201,168,76,0.35), 0 0 60px rgba(180,30,30,0.3), 0 8px 32px rgba(0,0,0,0.8)",
+        }}
+      >
+        <div style={{ position: "absolute", inset: "0 0 auto 0", height: 2, background: "linear-gradient(90deg, transparent, #C9A84C, transparent)" }} />
+        <div style={{
+          position: "absolute",
+          top: 16, left: 20, right: 20, bottom: 16,
+          border: "3px solid rgba(201,168,76,0.6)",
+          borderRadius: 4,
+          boxShadow: "0 0 16px rgba(201,168,76,0.3), inset 0 0 20px rgba(180,30,30,0.4)",
+          background: "linear-gradient(180deg, #3d0a0a 0%, #1a0404 100%)",
+        }}>
+          <div style={{ position: "absolute", top: 10, left: 10, right: 10, height: "35%", border: "2px solid rgba(201,168,76,0.3)", background: "rgba(180,30,30,0.2)" }} />
+          <div style={{ position: "absolute", bottom: 10, left: 10, right: 10, height: "35%", border: "2px solid rgba(201,168,76,0.3)", background: "rgba(180,30,30,0.2)" }} />
+          <div style={{
+            position: "absolute", right: 12, top: "50%", transform: "translateY(-50%)",
+            width: 10, height: 10, borderRadius: "50%",
+            background: "radial-gradient(circle at 35% 35%, #ffdd88, #C9A84C, #8a6510)",
+            boxShadow: "0 0 8px rgba(201,168,76,0.9), 0 0 16px rgba(201,168,76,0.5)",
+          }} />
+        </div>
+        <div style={{
+          position: "absolute", top: 8, right: 8,
+          fontSize: 9, fontWeight: 700, letterSpacing: "0.1em",
+          color: "#C9A84C", fontFamily: "monospace",
+          background: "rgba(0,0,0,0.6)", padding: "2px 5px", borderRadius: 3,
+          border: "1px solid rgba(201,168,76,0.4)",
+        }}>18+</div>
+        <div style={{ position: "absolute", inset: 0, pointerEvents: "none" as const, background: "radial-gradient(ellipse at 50% 100%, rgba(180,30,30,0.4) 0%, transparent 70%)" }} />
+      </button>
+      <p className="text-center text-xs font-bold leading-tight tracking-wider uppercase"
+        style={{ color: "#C9A84C", textShadow: "0 0 8px rgba(201,168,76,0.5)" }}>
+        Adult 18+
+      </p>
+    </div>
+  );
+}
             return (
               <div key={panel.genre} className="flex flex-col items-center gap-2" style={{ width: W }}>
                 <button
