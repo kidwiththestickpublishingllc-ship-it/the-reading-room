@@ -170,7 +170,7 @@ const GLOBAL_STYLES = `
 // Badge
 // =========================
 function Badge({ label }: { label: Story["badge"] }) {
-  const base = "inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold tracking-wide flex-shrink-0";
+  const base = "inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold tracking-wide style={{flexShrink:0}}";
   if (label === "Early Access") return (
     <span className={base} style={{ background: "rgba(255,255,255,0.1)", color: "#fff", border: "1px solid rgba(255,255,255,0.18)" }}>
       Early Access
@@ -208,9 +208,9 @@ function Navbar({ ink }: { ink: number }) {
       <div className="flex items-center justify-between px-6 sm:px-10" style={{ height: 72 }}>
         {/* Left — logo + nav links */}
         <div className="flex items-center gap-8 min-w-0">
-          <a href="/reading-room" className="flex items-center gap-3 flex-shrink-0">
+          <a href="/reading-room" className="flex items-center gap-3 style={{flexShrink:0}}">
             <div
-              className="flex h-9 w-9 items-center justify-center rounded-lg text-xs font-black flex-shrink-0"
+              className="flex h-9 w-9 items-center justify-center rounded-lg text-xs font-black style={{flexShrink:0}}"
               style={{ background: "linear-gradient(135deg, var(--gold), #8a6510)", color: "#000" }}
             >
               TTL
@@ -248,7 +248,7 @@ function Navbar({ ink }: { ink: number }) {
         </div>
 
         {/* Right — ink balance + members button */}
-        <div className="flex items-center gap-2 flex-shrink-0 ml-4">
+        <div className="flex items-center gap-2 style={{flexShrink:0}} ml-4">
           {/* Ink balance — styled as a nav pill, sits cleanly in the bar */}
           <div
             className="flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-bold"
@@ -455,7 +455,7 @@ function ReaderModal({
           </div>
           <button
             type="button" onClick={onClose}
-            className="flex-shrink-0 rounded-xl px-3 py-2 text-sm font-semibold text-white transition hover:opacity-80"
+            className="style={{flexShrink:0}} rounded-xl px-3 py-2 text-sm font-semibold text-white transition hover:opacity-80"
             style={{ background: "var(--ink-surface2)", border: "1px solid var(--ink-border)" }}
           >
             Close ✕
@@ -536,7 +536,7 @@ function StoryCard({
     >
       <div className="flex gap-4 p-5">
         <div
-          className="flex-shrink-0 overflow-hidden rounded-lg"
+          className="style={{flexShrink:0}} overflow-hidden rounded-lg"
           style={{ width: 66, height: 96, border: "1px solid rgba(255,255,255,0.08)" }}
         >
           <img
@@ -608,7 +608,7 @@ function Footer() {
         <div>
           <div className="flex items-center gap-3">
             <div
-              className="flex h-11 w-11 items-center justify-center rounded-xl text-sm font-black flex-shrink-0"
+              className="flex h-11 w-11 items-center justify-center rounded-xl text-sm font-black style={{flexShrink:0}}"
               style={{ background: "linear-gradient(135deg, var(--gold), #8a6510)", color: "#000" }}
             >
               TTL
@@ -746,7 +746,7 @@ export default function BrowseAllStoriesPage() {
                 Search by title, author, genre, or badge — then sort the grid.
               </p>
             </div>
-            <div className="flex gap-3 flex-shrink-0">
+            <div className="flex gap-3 style={{flexShrink:0}}">
               <a
                 href="/reading-room"
                 className="rounded-xl px-5 py-2.5 text-sm font-semibold transition hover:opacity-80"
