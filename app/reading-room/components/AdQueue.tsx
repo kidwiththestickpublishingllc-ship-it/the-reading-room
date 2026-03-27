@@ -368,7 +368,7 @@ export default function AdQueue() {
     setInkEarned(i => i + earned);
 
     // Credit ink to localStorage
-    const newInk = (parseInt(localStorage.getItem("ttl_ink") ?? "250")) + earned;
+    const newInk = (parseInt(localStorage.getItem("ttl_ink") ?? "0")) + earned;
     localStorage.setItem("ttl_ink", String(newInk));
 
     // Track today's ink from ads
