@@ -1623,14 +1623,15 @@ export default function ReadingRoomHome() {
                 <a href="/reading-room" className="ttl-nav-link active">Reading Room</a>
                 <a href="/reading-room/authors" className="ttl-nav-link">Author Directory</a>
                 <a href="/reading-room/stories" className="ttl-nav-link">All Stories</a>
+                <a href="/reading-room/buy-ink" className="ttl-nav-link">Buy Ink ✒️</a>
                 <a href={SQUARESPACE_READING_ROOM} target="_blank" rel="noopener noreferrer" className="ttl-nav-link">Members Site</a>
               </div>
             </div>
             <div className="ttl-nav-right">
-              <div className="ttl-nav-ink">
+              <a href="/reading-room/buy-ink" className="ttl-nav-ink" style={{ textDecoration: 'none' }}>
                 <span>✒️</span>
                 <span>{ink} Ink</span>
-              </div>
+              </a>
               <div className="ttl-nav-divider" />
               <AdQueue />
               <a href={SQUARESPACE_READING_ROOM} target="_blank" rel="noopener noreferrer" className="ttl-nav-members">
