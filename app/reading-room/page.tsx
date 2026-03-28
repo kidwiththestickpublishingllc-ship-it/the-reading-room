@@ -3,6 +3,7 @@
 import React, { useEffect, useMemo, useState, type ReactNode } from "react";
 import { supabase } from "@/lib/supabase";
 import AdQueue from "./components/AdQueue";
+import { startTour } from "@/app/components/WelcomeTour";
 
 // =========================
 // CHANGELOG
@@ -1633,7 +1634,16 @@ export default function ReadingRoomHome() {
                 <span>{ink} Ink</span>
               </a>
               <div className="ttl-nav-divider" />
-              <AdQueue />
+              <button
+              type="button"
+              className="ttl-nav-tour-btn"
+              onClick={startTour}
+              suppressHydrationWarning
+              >
+                📖 Tour
+                </button>
+                <div className="ttl-nav-divider" />
+                <AdQueue />
               <a href={SQUARESPACE_READING_ROOM} target="_blank" rel="noopener noreferrer" className="ttl-nav-members">
                 Members →
               </a>
