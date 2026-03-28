@@ -73,9 +73,9 @@ const STRIPE_LINKS: Record<number, string> = {
 
 const INK_PACKS = [
   { id: "ink-100", label: "Starter", ink: 100, price: "$1" },
-  { id: "ink-600", label: "Reader", ink: 600, price: "$5" },
+  { id: "ink-600", label: "Reader", ink: 750, price: "$5" },
   { id: "ink-1500", label: "Supporter", ink: 1500, price: "$10" },
-  { id: "ink-2500", label: "Collector", ink: 2500, price: "$15" },
+  { id: "ink-2500", label: "Collector", ink: 3000, price: "$20" },
 ];
 
 const TTL_GENRES: string[] = [
@@ -1511,6 +1511,7 @@ export default function ReadingRoomHome() {
   const [openStorySlug, setOpenStorySlug] = useState<string | null>(null);
   const [isOpeningCheckout, setIsOpeningCheckout] = useState(false);
   const [openingInk, setOpeningInk] = useState<number | null>(null);
+  const [user, setUser] = useState<any>(null);
 
   useEffect(() => {
     setInk(getInk());
@@ -1518,6 +1519,20 @@ export default function ReadingRoomHome() {
     setJarState(getJar());
   }, []);
 
+  useEffect(() => {
+    const getUser = async () => {
+      const { data: { user } } = await supabase.auth.getUser()
+      setUser(user)
+    }
+    getUser()
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null)
+    })
+
+    return () => subscription.unsubscribe()
+  }, [])
+  
   useEffect(() => {
     async function loadStories() {
       try {
