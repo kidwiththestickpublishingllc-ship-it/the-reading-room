@@ -1635,8 +1635,7 @@ export default function ReadingRoomHome() {
                   <span className="ttl-nav-brand-sub">The Reading Room</span>
                 </div>
               </a>
-              <div className="ttl-nav-links">
-                <a href="/reading-room" className="ttl-nav-link active">Reading Room</a>
+              <div className="ttl-nav-links">                
                 <a href="/reading-room/authors" className="ttl-nav-link">Author Directory</a>
                 <a href="/reading-room/stories" className="ttl-nav-link">All Stories</a>
                 <a href="/reading-room/buy-ink" className="ttl-nav-link">Buy Ink ✒️</a>                
