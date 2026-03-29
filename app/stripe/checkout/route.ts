@@ -3,7 +3,6 @@ import Stripe from 'stripe'
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!)
 
-// Your Stripe Price IDs → Ink amounts
 const INK_PACKS: Record<string, number> = {
   'price_1SnqHNDSUBBonGGSVgeIwLjY': 100,
   'price_1SnqK5DSUBBonGGSPSVyadse': 750,
@@ -15,9 +14,11 @@ export async function POST(req: NextRequest) {
   try {
     const { priceId, userId } = await req.json()
 
+    console.log('Checkout called with:', { priceId, userId })
+
     if (!priceId || !userId) {
       return NextResponse.json(
-        { error: 'Missing priceId or userId' },
+        { error: 'Missing priceId or userId', priceId, userId },
         { status: 400 }
       )
     }
@@ -35,10 +36,10 @@ export async function POST(req: NextRequest) {
     })
 
     return NextResponse.json({ url: session.url })
-  } catch (err) {
+  } catch (err: any) {
     console.error('Stripe checkout error:', err)
     return NextResponse.json(
-      { error: 'Failed to create checkout session' },
+      { error: err.message || 'Failed to create checkout session' },
       { status: 500 }
     )
   }
