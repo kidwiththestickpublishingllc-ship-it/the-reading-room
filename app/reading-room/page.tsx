@@ -1415,8 +1415,10 @@ function RedDoorCard() {
   const [hovered, setHovered] = useState(false);
   return (
     <a
-      href="/reading-room/genres/adult-18"
-      onMouseEnter={() => setHovered(true)}
+      href="https://the-red-room.vercel.app"
+  target="_blank"
+  rel="noopener noreferrer"
+  onMouseEnter={() => setHovered(true)}      
       onMouseLeave={() => setHovered(false)}
       style={{
         display: "flex",
