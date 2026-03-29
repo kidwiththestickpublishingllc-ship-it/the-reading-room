@@ -1639,8 +1639,7 @@ export default function ReadingRoomHome() {
                 <a href="/reading-room" className="ttl-nav-link active">Reading Room</a>
                 <a href="/reading-room/authors" className="ttl-nav-link">Author Directory</a>
                 <a href="/reading-room/stories" className="ttl-nav-link">All Stories</a>
-                <a href="/reading-room/buy-ink" className="ttl-nav-link">Buy Ink ✒️</a>
-                <a href={SQUARESPACE_READING_ROOM} target="_blank" rel="noopener noreferrer" className="ttl-nav-link">Members Site</a>
+                <a href="/reading-room/buy-ink" className="ttl-nav-link">Buy Ink ✒️</a>                
               </div>
             </div>
             <div className="ttl-nav-right">
@@ -1659,9 +1658,15 @@ export default function ReadingRoomHome() {
                 </button>
                 <div className="ttl-nav-divider" />
                 <AdQueue />
-              <a href={SQUARESPACE_READING_ROOM} target="_blank" rel="noopener noreferrer" className="ttl-nav-members">
-                Members →
+                {user ? (
+              <a href="/reading-room/account" className="ttl-nav-members">
+                My Account →
               </a>
+              ) : (
+  <a href="/reading-room/login" className="ttl-nav-members">
+    Sign In →
+  </a>
+)}
             </div>
           </div>
         </nav>
