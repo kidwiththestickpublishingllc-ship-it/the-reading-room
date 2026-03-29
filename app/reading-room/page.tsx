@@ -228,9 +228,9 @@ const TTL_STYLES = `
 
   .ttl-root {
     min-height: 100vh;
-    background: var(--ink-bg);
+    background: radial-gradient(ellipse at 50% 0%, #050e1f 0%, #030810 40%, #020608 70%, #000000 100%);
     font-family: 'Syne', sans-serif;
-    color: var(--text-main);
+    color: #ffffff;
     position: relative;
     overflow-x: hidden;
   }
@@ -256,8 +256,8 @@ const TTL_STYLES = `
     z-index: 40;
     background: rgba(8,8,8,0.96);
     backdrop-filter: blur(20px);
-    border-bottom: 1px solid var(--ink-border-gold);
-    box-shadow: 0 2px 40px rgba(0,0,0,0.7);
+    border-bottom: 1px solid rgba(100,149,237,0.3);
+box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
   }
 
   .ttl-nav-gold-line {
@@ -439,7 +439,7 @@ const TTL_STYLES = `
     font-size: clamp(64px, 8vw, 120px);
     font-weight: 300;
     line-height: 0.9;
-    color: var(--text-main);
+    color: #ffffff;
     margin-bottom: 28px;
   }
 
@@ -535,7 +535,7 @@ const TTL_STYLES = `
     font-family: 'Cormorant Garamond', serif;
     font-size: 40px;
     font-weight: 300;
-    color: var(--text-main);
+    color: #ffffff;
     line-height: 1;
   }
 
@@ -742,7 +742,7 @@ const TTL_STYLES = `
     font-family: 'Cormorant Garamond', serif;
     font-size: 22px;
     font-weight: 400;
-    color: var(--text-main);
+    color: #ffffff;
     line-height: 1.15;
     margin-bottom: 5px;
   }
@@ -888,7 +888,7 @@ const TTL_STYLES = `
     font-family: 'Cormorant Garamond', serif;
     font-size: 20px;
     font-weight: 400;
-    color: var(--text-main);
+    color: #ffffff;
     line-height: 1.2;
   }
 
@@ -1030,7 +1030,7 @@ const TTL_STYLES = `
     font-size: 11px;
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: var(--text-main);
+    color: #ffffff;
     margin-bottom: 10px;
   }
 
@@ -1103,7 +1103,7 @@ const TTL_STYLES = `
     font-family: 'Cormorant Garamond', serif;
     font-size: 28px;
     font-weight: 300;
-    color: var(--text-main);
+    color: #ffffff;
     margin-bottom: 4px;
   }
 
@@ -1128,7 +1128,7 @@ const TTL_STYLES = `
     transition: all 0.2s;
   }
 
-  .ttl-modal-close:hover { color: var(--text-main); border-color: var(--ink-border-gold); }
+  .ttl-modal-close:hover { color: #ffffff; border-color: var(--ink-border-gold); }
 
   .ttl-modal-body {
     flex: 1;
