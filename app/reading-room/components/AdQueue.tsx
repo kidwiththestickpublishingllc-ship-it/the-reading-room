@@ -423,8 +423,7 @@ export default function AdQueue() {
       {/* Trigger button */}
       <button className="aq-trigger" onClick={() => setOpen(true)}>
         <span>✦</span>
-        Support TTL
-        <span className="aq-trigger-ink">+Ink</span>
+        Support TTL        
       </button>
 
       {open && (
