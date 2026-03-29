@@ -216,19 +216,19 @@ const TTL_STYLES = `
     --blue: #6495ED;
     --blue-dim: rgba(100,149,237,0.22);
     --blue-bright: #84b0f5;
-    --ink-bg: #0a0a0a;
-    --ink-surface: #111111;
-    --ink-surface2: #181818;
-    --ink-border: rgba(255,255,255,0.07);
-    --ink-border-gold: rgba(201,168,76,0.26);
-    --text-main: #f0ece2;
-    --text-dim: rgba(232,228,218,0.45);
-    --text-faint: rgba(232,228,218,0.25);
+    --ink-bg: #f0e6cc;
+    --ink-surface: #f7f0e0;
+    --ink-surface2: #ede0c4;
+    --ink-border: rgba(139,100,20,0.15);
+    --ink-border-gold: rgba(201,168,76,0.45);
+    --text-main: #1a1008;
+    --text-dim: rgba(26,16,8,0.6);
+    --text-faint: rgba(26,16,8,0.35);
   }
 
   .ttl-root {
     min-height: 100vh;
-    background: radial-gradient(ellipse at 50% 0%, #050e1f 0%, #030810 40%, #020608 70%, #000000 100%);
+    background: radial-gradient(ellipse at 50% 0%, #f5edd8 0%, #ede0c4 40%, #e8d5a8 70%, #dfc98a 100%);
     font-family: 'Syne', sans-serif;
     color: #ffffff;
     position: relative;
@@ -254,7 +254,7 @@ const TTL_STYLES = `
     position: fixed;
     top: 0; left: 0; right: 0;
     z-index: 40;
-    background: rgba(8,8,8,0.96);
+    background: rgba(240,230,204,0.97);
     backdrop-filter: blur(20px);
     border-bottom: 1px solid rgba(100,149,237,0.3);
 box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
@@ -1688,7 +1688,18 @@ export default function ReadingRoomHome() {
         <div className="ttl-hero-section">
           <div className="ttl-hero-inner">
             <span className="ttl-hero-eyebrow">The Tiniest Library</span>
-            <h1 className="ttl-hero-title">The<br />Reading<br />Room</h1>
+            <h1 className="ttl-hero-title">
+  The<br />
+  <span style={{
+    background: "linear-gradient(135deg, #C9A84C 0%, #FFE066 40%, #E2C97E 60%, #C9A84C 100%)",
+    WebkitBackgroundClip: "text",
+    WebkitTextFillColor: "transparent",
+    backgroundClip: "text",
+    fontStyle: "italic",
+    filter: "drop-shadow(0 0 12px rgba(201,168,76,0.5))",
+  }}>Reading</span><br />
+  <span style={{ paddingLeft: "4rem", color: "#1a1008" }}>Room</span>
+</h1>
             <p className="ttl-hero-sub">
               A space for long stories, serialized chapters, and exclusive releases.
               Support creators with Ink and unlock what's next.
