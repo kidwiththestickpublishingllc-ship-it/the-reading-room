@@ -62,30 +62,34 @@ export default function BuyInkPage() {
   }, [router])
 
   const handleBuy = async (priceId: string) => {
-    if (!userId) return
-    setLoading(priceId)
+  if (!userId) {
+    alert('Not logged in — userId is null')
+    return
+  }
+  setLoading(priceId)
 
-    try {
-      const res = await fetch('/api/stripe/checkout', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ priceId, userId }),
-      })
+  try {
+    const res = await fetch('/api/stripe/checkout', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ priceId, userId }),
+    })
 
-      const data = await res.json()
+    const data = await res.json()
+    console.log('Checkout response:', data)
 
-      if (data.url) {
-        window.location.href = data.url
-      } else {
-        alert('Something went wrong. Please try again.')
-        setLoading(null)
-      }
-    } catch (err) {
-      console.error('Checkout error:', err)
-      alert('Something went wrong. Please try again.')
+    if (data.url) {
+      window.location.href = data.url
+    } else {
+      alert(`Error: ${JSON.stringify(data)}`)
       setLoading(null)
     }
+  } catch (err) {
+    console.error('Checkout error:', err)
+    alert(`Caught error: ${err}`)
+    setLoading(null)
   }
+}
 
   return (
     <div style={{
