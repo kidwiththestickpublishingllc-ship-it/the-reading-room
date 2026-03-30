@@ -266,24 +266,16 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
   }
 
   .ttl-nav-inner {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 0 40px;
-    height: 72px;
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-    align-items: center;
-    text-align: center;
-    justify-content: space-between;    
-  }
-
-  .ttl-nav-left {
-    display: flex;
-    align-items: center;
-    gap: 40px;
-    min-width: 0;
-  }
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 40px;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: nowrap;
+}
 
   .ttl-nav-brand {
     display: flex;
@@ -291,21 +283,19 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
     gap: 12px;
     text-decoration: none;
     flex-shrink: 0;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0;
   }
 
   .ttl-nav-logo-badge {
-    width: 36px;
-    height: 36px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    width: 36px; height: 36px;
+    display: flex; align-items: center; justify-content: center;
     border-radius: 8px;
     background: linear-gradient(135deg, var(--gold), #8a6510);
     font-family: 'Syne', sans-serif;
-    font-size: 11px;
-    font-weight: 700;
-    color: #000;
-    flex-shrink: 0;
+    font-size: 11px; font-weight: 700; color: #000;
   }
 
   .ttl-nav-brand-text {
@@ -429,7 +419,7 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
   border-color: var(--gold-dim);
   background: var(--gold-glow);
 }
-  
+
   .ttl-nav-spacer { height: 74px; }
 
   .ttl-hero-section {
