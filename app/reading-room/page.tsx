@@ -436,7 +436,7 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
 
   .ttl-hero-title {
     font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(64px, 8vw, 120px);
+    font-size: clamp(80px, 11vw, 160px);
     font-weight: 300;
     line-height: 0.9;
     color: #ffffff;
@@ -1696,7 +1696,8 @@ export default function ReadingRoomHome() {
     WebkitTextFillColor: "transparent",
     backgroundClip: "text",
     fontStyle: "italic",
-    filter: "drop-shadow(0 0 12px rgba(201,168,76,0.5))",
+    filter: "drop-shadow(0 2px 8px rgba(139,100,20,0.6)) drop-shadow(0 0 30px rgba(201,168,76,0.7))",
+textShadow: "0 2px 20px rgba(139,100,20,0.4)",
   }}>Reading</span><br />
   <span style={{ paddingLeft: "4rem", color: "#1a1008" }}>Room</span>
 </h1>
