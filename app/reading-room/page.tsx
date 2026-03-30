@@ -271,9 +271,11 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
     padding: 0 40px;
     height: 72px;
     display: flex;
+    flex-direction: column;
+    gap: 0;
     align-items: center;
-    justify-content: space-between;
-    gap: 24px;
+    text-align: center;
+    justify-content: space-between;    
   }
 
   .ttl-nav-left {
@@ -435,6 +437,7 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
   }
 
   .ttl-hero-title {
+    text-align: center;
     font-family: 'Cormorant Garamond', serif;
     font-size: clamp(80px, 11vw, 160px);
     font-weight: 300;
@@ -444,6 +447,9 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
   }
 
   .ttl-hero-sub {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
     font-family: 'Syne', sans-serif;
     font-size: 15px;
     color: var(--text-dim);
@@ -453,10 +459,11 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
   }
 
   .ttl-hero-actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-  }
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+}
 
   .ttl-wrap {
     position: relative;
@@ -1699,7 +1706,7 @@ export default function ReadingRoomHome() {
     filter: "drop-shadow(0 2px 8px rgba(139,100,20,0.6)) drop-shadow(0 0 30px rgba(201,168,76,0.7))",
 textShadow: "0 2px 20px rgba(139,100,20,0.4)",
   }}>Reading</span><br />
-  <span style={{ paddingLeft: "4rem", color: "#1a1008" }}>Room</span>
+  <span style={{ color: "#1a1008" }}>Room</span>
 </h1>
             <p className="ttl-hero-sub">
               A space for long stories, serialized chapters, and exclusive releases.
