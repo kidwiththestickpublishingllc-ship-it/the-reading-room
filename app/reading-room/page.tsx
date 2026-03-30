@@ -409,6 +409,27 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
 
   .ttl-nav-members:hover { opacity: 0.88; }
 
+  .ttl-nav-tour-btn {
+  font-family: 'Syne', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: rgba(232,228,218,0.45);
+  background: transparent;
+  border: 1px solid rgba(232,228,218,0.12);
+  padding: 5px 12px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.ttl-nav-tour-btn:hover {
+  color: var(--gold-light);
+  border-color: var(--gold-dim);
+  background: var(--gold-glow);
+}
+  
   .ttl-nav-spacer { height: 74px; }
 
   .ttl-hero-section {
