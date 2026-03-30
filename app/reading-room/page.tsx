@@ -254,7 +254,7 @@ const TTL_STYLES = `
     position: fixed;
     top: 0; left: 0; right: 0;
     z-index: 40;
-    background: rgba(240,230,204,0.97);
+    background: rgba(8,8,8,0.96);
     backdrop-filter: blur(20px);
     border-bottom: 1px solid rgba(100,149,237,0.3);
 box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
@@ -1647,6 +1647,7 @@ export default function ReadingRoomHome() {
               <div className="ttl-nav-links">                
                 <a href="/reading-room/authors" className="ttl-nav-link">Author Directory</a>
                 <a href="/reading-room/stories" className="ttl-nav-link">All Stories</a>
+                <a href="/reading-room/stories" className="ttl-nav-link">Browse Stories</a>
                 <a href="/reading-room/buy-ink" className="ttl-nav-link">Buy Ink ✒️</a>                
               </div>
             </div>
