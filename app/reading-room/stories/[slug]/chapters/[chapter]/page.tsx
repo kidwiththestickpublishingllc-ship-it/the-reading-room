@@ -91,7 +91,6 @@ const STYLES = `
   }
 
   @keyframes spin { to { transform: rotate(360deg); } }
-  nextjs-portal { display: none !important; }
 
   .fade-in { animation: fadeIn 0.5s ease forwards; }
 
