@@ -317,6 +317,7 @@ function PixelBook() {
 // =============================================================
 export default function PageChatWidget() {
   const [open, setOpen] = useState(false);
+  const [hidden, setHidden] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
@@ -404,19 +405,35 @@ export default function PageChatWidget() {
       <style>{WIDGET_STYLES}</style>
 
       {/* Floating button — Pixel leather book (Canva) — data-tour="page-chat" enables WelcomeTour spotlight */}
-      <button
-        type="button"
-        onClick={handleOpen}
-        className={`page-fab page-fab-book ${open ? "page-fab-hidden" : ""}`}
-        aria-label="Open Page chat"
-        data-tour="page-chat"
-        suppressHydrationWarning
-      >
-        <PixelBook />
-        <span className="page-fab-book-label">PAGE</span>
-        <span className="page-fab-book-hint">~ tap to open ~</span>
-        {unread > 0 && <span className="page-fab-badge">{unread}</span>}
-      </button>
+      {!hidden && (
+        <button
+          type="button"
+          onClick={handleOpen}
+          className={`page-fab page-fab-book ${open ? "page-fab-hidden" : ""}`}
+          aria-label="Open Page chat"
+          data-tour="page-chat"
+          suppressHydrationWarning
+        >
+          <PixelBook />
+          <span className="page-fab-book-label">PAGE</span>
+          <span className="page-fab-book-hint">~ tap to open ~</span>
+          {unread > 0 && <span className="page-fab-badge">{unread}</span>}
+          <button
+            type="button"
+            onClick={e => { e.stopPropagation(); setHidden(true); }}
+            style={{
+              position: 'absolute', top: 6, right: 6,
+              width: 18, height: 18, borderRadius: '50%',
+              background: '#C9A84C', border: 'none',
+              color: '#000', fontSize: 10, fontWeight: 700,
+              cursor: 'pointer', display: 'flex',
+              alignItems: 'center', justifyContent: 'center',
+              zIndex: 10, lineHeight: 1,
+            }}
+            aria-label="Hide Page"
+          >✕</button>
+        </button>
+      )}
 
       {/* Chat window */}
       <div className={`page-window ${open ? "page-window-open" : ""}`} role="dialog" aria-label="Page chat">
