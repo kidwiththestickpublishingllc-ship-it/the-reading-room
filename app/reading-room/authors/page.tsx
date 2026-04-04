@@ -8,7 +8,7 @@ import { supabase } from "@/lib/supabase";
 // Authors directory — library card grid + Supabase
 // =========================
 
-const SQUARESPACE_READING_ROOM = "https://www.the-tiniest-library.com/the-reading-room";
+const SQUARESPACE_READING_ROOM = "https://www.read.the-tiniest-library.com";
 
 type Author = {
   slug: string;

@@ -26,7 +26,7 @@ type SortKey = "newest" | "title_asc" | "author_asc" | "badge" | "unlocked_first
 // =========================
 // Constants
 // =========================
-const SQUARESPACE_READING_ROOM = "https://www.the-tiniest-library.com/the-reading-room";
+const SQUARESPACE_READING_ROOM = "https://www.read.the-tiniest-library.com";
 const DEFAULT_INK = 250;
 const DEFAULT_UNLOCK_COST = 25;
 

@@ -94,7 +94,7 @@ C:\Users\danie\the-reading-room>npm run dev !!!!!!!!!!!!!Type this code. This is
 
 
 ▲ Next.js 16.1.1 (Turbopack)
-- Local:         http://localhost:3000
+- Local:         http://read.the-tiniest-library.com
 - Network:       http://192.168.4.51:3000 —-This is good!!!!!!!!!!!
 
 

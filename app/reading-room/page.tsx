@@ -59,7 +59,7 @@ type AuthorJar = Record<string, number>;
 // Constants
 // =========================
 const SQUARESPACE_READING_ROOM =
-  "https://www.the-tiniest-library.com/the-reading-room";
+  "https://www.read.the-tiniest-library.com";
 
 const DEFAULT_INK = 0;
 const DEFAULT_UNLOCK_COST = 25;
@@ -1433,7 +1433,7 @@ function RedDoorCard() {
   const [hovered, setHovered] = useState(false);
   return (
     <a
-      href="https://the-red-room.vercel.app"
+      href="https://the-red-room.read.the-tiniest-library.com"
   target="_blank"
   rel="noopener noreferrer"
   onMouseEnter={() => setHovered(true)}      

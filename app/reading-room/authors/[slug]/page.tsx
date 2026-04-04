@@ -8,7 +8,7 @@ import { supabase } from "@/lib/supabase";
 // Individual author profile — Supabase + mock fallback
 // =========================
 
-const SQUARESPACE_READING_ROOM = "https://www.the-tiniest-library.com/the-reading-room";
+const SQUARESPACE_READING_ROOM = "https://www.read.the-tiniest-library.com";
 const DEFAULT_INK = 250;
 
 type Story = {
