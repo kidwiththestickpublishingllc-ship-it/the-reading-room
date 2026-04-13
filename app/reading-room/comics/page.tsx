@@ -176,7 +176,7 @@ function SeriesCard({ series, type, ink, onUnlock, unlocked }: {
               transition: "all 0.2s",
             }}
           >
-            {unlocked ? "Read →" : canAfford ? `${series.inkPerChapter} Ink` : "Need Ink"}
+            {unlocked ? "<a href={`/reading-room/comics/${series.slug}/read/1`} style={{ textDecoration: 'none', color: 'inherit' }}>Read →</a>" : canAfford ? `${series.inkPerChapter} Ink` : "Need Ink"}
           </button>
         </div>
       </div>
