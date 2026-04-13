@@ -1659,6 +1659,7 @@ export default function ReadingRoomHome() {
                 <a href="/reading-room/authors" className="ttl-nav-link">Author Directory</a>
                 <a href="/reading-room/stories" className="ttl-nav-link">All Stories</a>
                 <a href="/reading-room/stories" className="ttl-nav-link">Browse Stories</a>
+            <a href="/reading-room/comics" className="ttl-nav-link">Comics & Manga</a>
                 <a href="/reading-room/buy-ink" className="ttl-nav-link">Buy Ink ✒️</a>                
               </div>
             </div>
