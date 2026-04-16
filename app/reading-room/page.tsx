@@ -58,7 +58,7 @@ type AuthorJar = Record<string, number>;
 // =========================
 // Constants
 // =========================
-const SQUARESPACE_READING_ROOM =
+const SQUARESPACE_READING_ROOM = "https://read.the-tiniest-library.com";
   "https://www.read.the-tiniest-library.com";
 
 const DEFAULT_INK = 0;
