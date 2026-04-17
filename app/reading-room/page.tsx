@@ -1962,7 +1962,7 @@ textShadow: "0 2px 20px rgba(139,100,20,0.4)",
               <a href="/reading-room/stories" className="ttl-btn-ghost" style={{ fontSize: '9px', padding: '8px 18px', borderRadius: '8px' }} suppressHydrationWarning>
                 Browse Stories
               </a>
-              <a href={SQUARESPACE_READING_ROOM} target="_blank" rel="noopener noreferrer" className="ttl-btn-primary" style={{ fontSize: '9px', padding: '8px 18px', borderRadius: '8px' }} suppressHydrationWarning>
+              <a href="/members" target="_blank" rel="noopener noreferrer" className="ttl-btn-primary" style={{ fontSize: '9px', padding: '8px 18px', borderRadius: '8px' }} suppressHydrationWarning>
                 Members Site →
               </a>
             </div>
