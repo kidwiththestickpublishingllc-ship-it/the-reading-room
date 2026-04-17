@@ -1726,7 +1726,7 @@ textShadow: "0 2px 20px rgba(139,100,20,0.4)",
               Support creators with Ink and unlock what's next.
             </p>
             <div className="ttl-hero-actions">
-              <a href={SQUARESPACE_READING_ROOM} target="_blank" rel="noopener noreferrer" className="ttl-btn-primary">
+              <a href="/members" className="ttl-btn-primary">
                 Enter Members Room →
               </a>
               <a href="/reading-room/authors" className="ttl-btn-ghost">Author Directory</a>
