@@ -110,7 +110,7 @@ height: '100%',
 
         {/* Headline */}
         <div style={{
-          fontSize: 22,
+          fontSize: 16,
           fontWeight: 400,
           lineHeight: 1.2,
           color: '#1a1008',
@@ -121,7 +121,7 @@ height: '100%',
 
         {/* Body */}
         <p style={{
-          fontSize: 12,
+          fontSize: 11,
           lineHeight: 1.7,
           color: '#6b5e4a',
           fontFamily: 'var(--font-inter, sans-serif)',
