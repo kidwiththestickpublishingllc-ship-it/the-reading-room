@@ -4,6 +4,7 @@ import React, { useEffect, useMemo, useState, type ReactNode } from "react";
 import { supabase } from "@/lib/supabase";
 import AdQueue from "./components/AdQueue";
 import { startTour } from "@/app/components/WelcomeTour";
+import { LeftAdPanel, RightAdPanel } from './components/HeroPanels'
 
 // =========================
 // CHANGELOG
@@ -426,6 +427,16 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
     padding: 0;
     background: linear-gradient(180deg, rgba(100,149,237,0.07) 0%, rgba(201,168,76,0.03) 60%, transparent 100%);
     border-bottom: 1px solid var(--ink-border);
+  }.ttl-hero-three-col {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr 1fr;
+    gap: 0;
+    min-height: 540px;
+    align-items: stretch;
+  }
+  @media (max-width: 900px) {
+    .ttl-hero-three-col { grid-template-columns: 1fr; }
+    .ttl-hero-ad-panel-left, .ttl-hero-ad-panel-right { display: none; }
   }
 
   .ttl-hero-inner {
@@ -1705,33 +1716,44 @@ export default function ReadingRoomHome() {
         />
 
         {/* ── HERO ── */}
-        <div className="ttl-hero-section">
-          <div className="ttl-hero-inner">
-            <span className="ttl-hero-eyebrow">The Tiniest Library</span>
-            <h1 className="ttl-hero-title">
-  The<br />
-  <span style={{
-    background: "linear-gradient(135deg, #C9A84C 0%, #FFE066 40%, #E2C97E 60%, #C9A84C 100%)",
-    WebkitBackgroundClip: "text",
-    WebkitTextFillColor: "transparent",
-    backgroundClip: "text",
-    fontStyle: "italic",
-    filter: "drop-shadow(0 2px 8px rgba(139,100,20,0.6)) drop-shadow(0 0 30px rgba(201,168,76,0.7))",
-textShadow: "0 2px 20px rgba(139,100,20,0.4)",
-  }}>Reading</span><br />
-  <span style={{ color: "#1a1008" }}>Room</span>
-</h1>
-            <p className="ttl-hero-sub">
-              A space for long stories, serialized chapters, and exclusive releases.
-              Support creators with Ink and unlock what's next.
-            </p>
-            <div className="ttl-hero-actions">
-              <a href="/members" className="ttl-btn-primary">
-                Enter Members Room →
-              </a>
-              <a href="/reading-room/authors" className="ttl-btn-ghost">Author Directory</a>
-              <a href="#how-it-works" className="ttl-btn-ghost">How it works</a>
+       <div className="ttl-hero-section">
+          <div className="ttl-hero-three-col">
+
+            {/* LEFT AD PANEL */}
+            <LeftAdPanel />
+
+            {/* CENTER HERO */}
+            <div className="ttl-hero-inner">
+              <span className="ttl-hero-eyebrow">The Tiniest Library</span>
+              <h1 className="ttl-hero-title">
+                The<br />
+                <span style={{
+                  background: "linear-gradient(135deg, #C9A84C 0%, #FFE066 40%, #E2C97E 60%, #C9A84C 100%)",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  backgroundClip: "text",
+                  fontStyle: "italic",
+                  filter: "drop-shadow(0 2px 8px rgba(139,100,20,0.6)) drop-shadow(0 0 30px rgba(201,168,76,0.7))",
+                  textShadow: "0 2px 20px rgba(139,100,20,0.4)",
+                }}>Reading</span><br />
+                <span style={{ color: "#1a1008" }}>Room</span>
+              </h1>
+              <p className="ttl-hero-sub">
+                A space for long stories, serialized chapters, and exclusive releases.
+                Support creators with Ink and unlock what's next.
+              </p>
+              <div className="ttl-hero-actions">
+                <a href="/members" className="ttl-btn-primary">
+                  Enter Members Room →
+                </a>
+                <a href="/reading-room/authors" className="ttl-btn-ghost">Author Directory</a>
+                <a href="#how-it-works" className="ttl-btn-ghost">How it works</a>
+              </div>
             </div>
+
+            {/* RIGHT AD PANEL */}
+            <RightAdPanel />
+
           </div>
         </div>
 
