@@ -3,95 +3,93 @@ import { useState, useEffect } from 'react'
 
 const SPONSOR_ADS = [
   {
-    type: 'sponsor',
     eyebrow: 'FEATURED SPONSOR',
     headline: 'Your Brand Here',
     body: 'Reach thousands of passionate readers and writers. Premium placement on The Tiniest Library.',
     cta: 'Advertise With Us →',
     href: 'mailto:hello@the-tiniest-library.com?subject=Sponsorship',
-    bg: '#0e0c0a',
-    accent: '#C9A84C',
   },
   {
-    type: 'sponsor',
     eyebrow: 'FOR WRITERS',
     headline: 'Scrivener',
     body: 'The writing app built for long-form fiction. Trusted by novelists worldwide.',
     cta: 'Try Free →',
     href: 'https://www.literatureandlatte.com/scrivener',
-    bg: '#0e0c0a',
-    accent: '#C9A84C',
   },
 ]
 
 const HOUSE_ADS = [
   {
-    type: 'house',
-    eyebrow: 'THE WRITER\'S ROOM',
-    headline: 'Are You\nA Writer?',
-    body: 'Join the Founding 100. Keep your copyright. Earn from every chapter.',
+    eyebrow: "THE WRITER'S ROOM",
+    headline: 'Join the\nFounding 100',
+    body: 'Keep your copyright. Earn from every chapter you publish.',
     cta: 'Apply Now →',
     href: 'https://write.the-tiniest-library.com/apply',
-    bg: '#0a0e0c',
-    accent: '#6495ED',
   },
   {
-    type: 'house',
     eyebrow: 'THE RED ROOM',
     headline: 'Adult\nFiction',
     body: 'A candlelit room for stories other platforms are afraid of. 18+ only.',
     cta: 'Enter →',
     href: 'https://redroom.the-tiniest-library.com',
-    bg: '#0e0a0a',
-    accent: '#9B2335',
   },
   {
-    type: 'house',
     eyebrow: 'INK ECONOMY',
     headline: 'Support\nWriters',
     body: 'Buy Ink and unlock stories. 100% of tips go directly to the writer.',
     cta: 'Buy Ink →',
     href: '/reading-room/buy-ink',
-    bg: '#0e0c0a',
-    accent: '#C9A84C',
   },
 ]
 
-function AdPanel({ ads, side }: { ads: typeof SPONSOR_ADS, side: 'left' | 'right' }) {
+const SHELF_LINES = [0, 1, 2]
+
+function ShelfPanel({ ads, side }: { ads: typeof SPONSOR_ADS, side: 'left' | 'right' }) {
   const [idx, setIdx] = useState(0)
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setIdx(i => (i + 1) % ads.length)
-    }, 5000)
-    return () => clearInterval(timer)
+    const t = setInterval(() => setIdx(i => (i + 1) % ads.length), 5000)
+    return () => clearInterval(t)
   }, [ads.length])
 
   const ad = ads[idx]
 
   return (
     <div style={{
-      background: ad.bg,
-      border: `1px solid ${ad.accent}33`,
+      position: 'relative',
+      background: 'rgba(201,168,76,0.03)',
+      border: '1px solid rgba(201,168,76,0.25)',
       borderRadius: 12,
-      padding: '40px 28px',
+      padding: '28px 20px 20px',
       display: 'flex',
       flexDirection: 'column',
-      justifyContent: 'space-between',
-      height: '100%',
-      minHeight: 520,
-      position: 'relative',
-      overflow: 'hidden',
-      transition: 'border-color 0.6s ease',
+    justifyContent: 'flex-start',
+gap: 16,
+minHeight: 0,
+height: '100%',
     }}>
-      {/* Glow corner */}
+
+      {/* Bookshelf lines */}
+      {SHELF_LINES.map((_, i) => (
+        <div key={i} style={{
+          position: 'absolute',
+          left: 0,
+          right: 0,
+          bottom: 60 + (i * 90),
+          height: 1,
+          background: 'linear-gradient(90deg, transparent, rgba(201,168,76,0.15), rgba(100,149,237,0.1), transparent)',
+          pointerEvents: 'none',
+        }} />
+      ))}
+
+      {/* Corner accent */}
       <div style={{
         position: 'absolute',
         top: 0,
         [side === 'left' ? 'right' : 'left']: 0,
-        width: 180,
-        height: 180,
-        background: `radial-gradient(circle, ${ad.accent}18 0%, transparent 70%)`,
+        width: 60,
+        height: 60,
+        background: 'radial-gradient(circle, rgba(100,149,237,0.12) 0%, transparent 70%)',
         pointerEvents: 'none',
       }} />
 
@@ -101,65 +99,75 @@ function AdPanel({ ads, side }: { ads: typeof SPONSOR_ADS, side: 'left' | 'right
           display: 'inline-block',
           fontSize: 9,
           fontWeight: 700,
-          letterSpacing: '0.22em',
-          color: ad.accent,
-          border: `1px solid ${ad.accent}44`,
+          letterSpacing: '0.2em',
+          color: '#6495ED',
+          border: '1px solid rgba(100,149,237,0.3)',
           borderRadius: 20,
-          padding: '3px 10px',
-          marginBottom: 28,
+          padding: '2px 10px',
+          marginBottom: 16,
           fontFamily: 'var(--font-inter, sans-serif)',
         }}>{ad.eyebrow}</span>
 
         {/* Headline */}
         <div style={{
-          fontSize: 'clamp(32px, 3.5vw, 48px)',
-          fontWeight: 300,
-          lineHeight: 1.05,
-          color: '#f0ece2',
-          marginBottom: 20,
+          fontSize: 13,
+          fontWeight: 400,
+          lineHeight: 1.2,
+          color: '#1a1008',
+          marginBottom: 12,
           fontFamily: 'var(--font-playfair, serif)',
           whiteSpace: 'pre-line',
         }}>{ad.headline}</div>
 
         {/* Body */}
         <p style={{
-          fontSize: 13,
-          lineHeight: 1.75,
-          color: '#8a8070',
+          fontSize: 11,
+          lineHeight: 1.7,
+          color: '#6b5e4a',
           fontFamily: 'var(--font-inter, sans-serif)',
+          margin: 0,
         }}>{ad.body}</p>
       </div>
 
       <div>
-        {/* CTA */}
-        <a href={ad.href} target={ad.href.startsWith('http') ? '_blank' : '_self'}
+        {/* Gold shelf line above CTA */}
+        <div style={{
+          height: 1,
+          background: 'linear-gradient(90deg, rgba(201,168,76,0.4), transparent)',
+          marginBottom: 14,
+        }} />
+
+        {/* CTA button */}
+        <a href={ad.href}
+          target={ad.href.startsWith('http') ? '_blank' : '_self'}
           rel="noopener noreferrer"
           style={{
             display: 'inline-block',
-            padding: '10px 22px',
+            padding: '7px 16px',
             borderRadius: 999,
-            background: ad.accent,
-            color: '#000',
-            fontSize: 11,
+            background: 'transparent',
+            border: '1px solid rgba(201,168,76,0.5)',
+            color: '#C9A84C',
+            fontSize: 10,
             fontWeight: 700,
             textDecoration: 'none',
-            letterSpacing: '0.06em',
+            letterSpacing: '0.08em',
             fontFamily: 'var(--font-inter, sans-serif)',
-            marginBottom: 20,
+            marginBottom: 12,
           }}>{ad.cta}</a>
 
         {/* Dot indicators */}
-        <div style={{ display: 'flex', gap: 6 }}>
+        <div style={{ display: 'flex', gap: 5 }}>
           {ads.map((_, i) => (
             <button key={i} onClick={() => setIdx(i)} style={{
-              width: i === idx ? 18 : 6,
-              height: 6,
+              width: i === idx ? 16 : 5,
+              height: 5,
               borderRadius: 3,
-              background: i === idx ? ad.accent : `${ad.accent}44`,
+              background: i === idx ? '#C9A84C' : 'rgba(201,168,76,0.25)',
               border: 'none',
               cursor: 'pointer',
               padding: 0,
-              transition: 'all 0.3s ease',
+              transition: 'all 0.3s',
             }} />
           ))}
         </div>
@@ -169,9 +177,9 @@ function AdPanel({ ads, side }: { ads: typeof SPONSOR_ADS, side: 'left' | 'right
 }
 
 export function LeftAdPanel() {
-  return <AdPanel ads={SPONSOR_ADS} side="left" />
+  return <ShelfPanel ads={SPONSOR_ADS} side="left" />
 }
 
 export function RightAdPanel() {
-  return <AdPanel ads={HOUSE_ADS} side="right" />
+  return <ShelfPanel ads={HOUSE_ADS} side="right" />
 }
