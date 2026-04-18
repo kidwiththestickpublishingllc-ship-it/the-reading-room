@@ -65,7 +65,8 @@ function ShelfPanel({ ads, side }: { ads: typeof SPONSOR_ADS, side: 'left' | 'ri
       flexDirection: 'column',
       justifyContent: 'space-between',
       overflow: 'hidden',
-      minHeight: 400,
+      minHeight: 600,
+height: '100%',
     }}>
 
       {/* Bookshelf lines */}
