@@ -9,7 +9,7 @@ import { LeftAdPanel, RightAdPanel } from './components/HeroPanels'
 // =========================
 // CHANGELOG
 // =========================
-// ✅ All previous functionality preserved (Ink, Stripe, Supabase, Reader Modal, Tips)
+// ✅ All previous functionality preserved (Ink, Stripe, Sgit statusupabase, Reader Modal, Tips)
 // ✅ V7: Full aesthetic redesign — matches TTL dark editorial system (Cormorant + Syne)
 // ✅ V7: Nav bar with "Author Directory" tab linking to /reading-room/authors
 // ✅ V7: Author cards wired to /reading-room/authors/[slug]
@@ -438,7 +438,7 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
     .ttl-hero-three-col { grid-template-columns: 1fr; }
     .ttl-hero-ad-panel-left, .ttl-hero-ad-panel-right { display: none; }
   }
-
+    
   .ttl-hero-inner {
     max-width: 1400px;
     margin: 0 auto;
