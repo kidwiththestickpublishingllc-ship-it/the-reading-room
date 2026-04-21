@@ -177,9 +177,50 @@ height: '100%',
 }
 
 export function LeftAdPanel() {
-  return <ShelfPanel ads={SPONSOR_ADS} side="left" />
-}
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.src = 'https://a.magsrv.com/ad-provider.js';
+    script.async = true;
+    script.type = 'application/javascript';
+    document.head.appendChild(script);
+    return () => { document.head.removeChild(script); };
+  }, []);
 
+  return (
+    <div style={{
+      position: 'relative',
+      background: 'rgba(201,168,76,0.03)',
+      border: '1px solid rgba(201,168,76,0.25)',
+      borderRadius: 12,
+      padding: '28px 20px 20px',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
+      minHeight: 0,
+      height: '100%',
+      gap: 16,
+    }}>
+      <span style={{
+        display: 'inline-block',
+        fontSize: 9,
+        fontWeight: 700,
+        letterSpacing: '0.2em',
+        color: '#6495ED',
+        border: '1px solid rgba(100,149,237,0.3)',
+        borderRadius: 20,
+        padding: '2px 10px',
+        fontFamily: 'var(--font-inter, sans-serif)',
+      }}>SPONSORED</span>
+
+      <ins className="eas6a97888e2" data-zoneid="5906998"></ins>
+
+      <script dangerouslySetInnerHTML={{
+        __html: `(AdProvider = window.AdProvider || []).push({"serve": {}});`
+      }} />
+    </div>
+  )
+}
 export function RightAdPanel() {
   return <ShelfPanel ads={HOUSE_ADS} side="right" />
 }
