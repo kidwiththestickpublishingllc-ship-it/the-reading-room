@@ -22,6 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${playfair.variable} ${inter.variable}`}>
       <head>
+        <meta name="6a97888e-site-verification" content="00ed2aa926fd6a0c5aec0314667770e6" />
         <Script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6696631641081046"
