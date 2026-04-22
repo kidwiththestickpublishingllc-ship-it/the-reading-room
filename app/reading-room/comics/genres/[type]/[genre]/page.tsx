@@ -255,7 +255,7 @@ export default function ComicGenrePage() {
   const lore = meta?.lore || "Stories from the finest independent creators.";
   const series = DEMO_SERIES[genreSlug] || [];
   // Cover image path — swap by adding image to public/comic-genres/[genre]/hero.jpg
-  const heroCover = `/comic-genres/${genreSlug}/hero.jpg`;
+ const heroCover = `/comics-genres/${type}/${genreSlug}/hero.jpg`;
 
   if (!mounted) return null;
 

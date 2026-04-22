@@ -146,7 +146,7 @@ function GenreCard({ genre, type }: { genre: Genre; type: MediaType }) {
   overflow: "hidden", marginBottom: 18,
 }}>
   <img
-    src={`/comic-genres/${genre.slug}/cover.jpg`}
+    src={`/comics-genres/${type}/${genre.slug}/cover.jpg`}
     alt={genre.label}
     style={{ width: "100%", height: "100%", objectFit: "cover" }}
     onError={(e) => {
