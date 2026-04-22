@@ -213,7 +213,7 @@ export function LeftAdPanel() {
         fontFamily: 'var(--font-inter, sans-serif)',
       }}>SPONSORED</span>
 
-      <ins className="eas6a97888e2" data-zoneid="5906998"></ins>
+      <ins className="eas6a97888e2" data-zoneid="5907406"></ins>
 
       <script dangerouslySetInnerHTML={{
         __html: `(AdProvider = window.AdProvider || []).push({"serve": {}});`
