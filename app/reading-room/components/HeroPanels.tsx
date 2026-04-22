@@ -213,11 +213,16 @@ export function LeftAdPanel() {
         fontFamily: 'var(--font-inter, sans-serif)',
       }}>SPONSORED</span>
 
-      <ins className="eas6a97888e2" data-zoneid="5907406"></ins>
-
-      <script dangerouslySetInnerHTML={{
-        __html: `(AdProvider = window.AdProvider || []).push({"serve": {}});`
-      }} />
+      <iframe
+        src="//a.magsrv.com/iframe.php?idzone=5907426&size=300x500"
+        width="300"
+        height="500"
+        scrolling="no"
+        marginWidth={0}
+        marginHeight={0}
+        frameBorder={0}
+        style={{ position: 'relative', zIndex: 1, border: 'none' }}
+      />
     </div>
   )
 }
