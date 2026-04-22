@@ -141,25 +141,30 @@ function GenreCard({ genre, type }: { genre: Genre; type: MediaType }) {
         }} />
 
         {/* Cover image or placeholder */}
-        {genre.cover ? (
-          <div style={{
-            width: "100%", height: 140, borderRadius: 10,
-            overflow: "hidden", marginBottom: 18,
-          }}>
-            <img src={genre.cover} alt={genre.label} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-          </div>
-        ) : (
-          <div style={{
-            width: "100%", height: 140, borderRadius: 10,
-            background: "linear-gradient(145deg, rgba(45,212,191,0.06), rgba(15,118,110,0.04))",
-            border: "1px solid rgba(45,212,191,0.1)",
-            display: "flex", alignItems: "center", justifyContent: "center",
-            marginBottom: 18, fontSize: 48,
-          }}>
-            {genre.emoji}
-          </div>
-        )}
-
+        <div style={{
+  width: "100%", height: 140, borderRadius: 10,
+  overflow: "hidden", marginBottom: 18,
+}}>
+  <img
+    src={`/comic-genres/${genre.slug}/cover.jpg`}
+    alt={genre.label}
+    style={{ width: "100%", height: "100%", objectFit: "cover" }}
+    onError={(e) => {
+      const img = e.currentTarget;
+      const parent = img.parentElement;
+      if (parent) {
+        img.style.display = "none";
+        parent.style.background = "linear-gradient(145deg, rgba(45,212,191,0.06), rgba(15,118,110,0.04))";
+        parent.style.border = "1px solid rgba(45,212,191,0.1)";
+        parent.style.display = "flex";
+        parent.style.alignItems = "center";
+        parent.style.justifyContent = "center";
+        parent.style.fontSize = "48px";
+        parent.textContent = genre.emoji;
+      }
+    }}
+  />
+</div>
         {/* Label */}
         <h3 style={{
           margin: "0 0 8px",
