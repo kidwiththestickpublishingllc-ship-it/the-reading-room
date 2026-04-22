@@ -29,11 +29,24 @@ export default function RootLayout({
           crossOrigin="anonymous"
           strategy="afterInteractive"
         />
+      <Script
+          async
+          src="https://a.magsrv.com/ad-provider.js"
+          strategy="afterInteractive"
+        />
       </head>
       <body className="font-inter bg-[#FAFAF8] text-[#111111]">
         {children}
         <PageChatWidget />
         <WelcomeTour />
+        <ins className="eas6a97888e17" data-zoneid="5907410"></ins>
+        <Script
+          id="exoclick-sticky-reading"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `(AdProvider = window.AdProvider || []).push({"serve": {}});`
+          }}
+        />
       </body>
     </html>
   )
