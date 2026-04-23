@@ -60,7 +60,6 @@ type AuthorJar = Record<string, number>;
 // Constants
 // =========================
 const SQUARESPACE_READING_ROOM = "https://read.the-tiniest-library.com";
-  "https://www.read.the-tiniest-library.com";
 
 const DEFAULT_INK = 0;
 const DEFAULT_UNLOCK_COST = 25;
@@ -1312,9 +1311,87 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
     margin-bottom: 12px;
   }
 
-  @media (max-width: 900px) {
-    .ttl-nav-inner { padding: 0 24px; }
+  @media (max-width: 768px) {
+    .ttl-nav-inner { padding: 0 16px; }
     .ttl-nav-links { display: none; }
+    .ttl-nav-right { gap: 6px; }
+    .ttl-nav-tour-btn { display: none; }
+    .ttl-nav-divider { display: none; }
+    .ttl-nav-ink { padding: 5px 10px; font-size: 10px; }
+    .ttl-nav-members { padding: 5px 12px; font-size: 10px; }
+    .ttl-nav-brand-main { font-size: 14px; }
+    .ttl-nav-brand-sub { display: none; }
+    .ttl-nav-spacer { height: 74px; }
+
+    /* ── Sticky Bottom Nav Bar ── */
+    .ttl-bottom-nav {
+      display: flex !important;
+    }
+  }
+  /* ── Mobile Bottom Nav ── */
+  .ttl-bottom-nav {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background: rgba(6, 6, 10, 0.97);
+    backdrop-filter: blur(20px);
+    border-top: 1px solid rgba(201, 168, 76, 0.2);
+    padding: 8px 0 calc(8px + env(safe-area-inset-bottom));
+    height: calc(60px + env(safe-area-inset-bottom));
+  }
+  .ttl-bottom-nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 0 8px;
+  }
+  .ttl-bottom-nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    padding: 4px 12px;
+    border-radius: 8px;
+    text-decoration: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    flex: 1;
+  }
+  .ttl-bottom-nav-item:hover,
+  .ttl-bottom-nav-item.active {
+    background: rgba(201, 168, 76, 0.08);
+  }
+  .ttl-bottom-nav-icon {
+    font-size: 20px;
+    line-height: 1;
+  }
+  .ttl-bottom-nav-label {
+    font-family: 'Syne', sans-serif;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: rgba(240, 236, 226, 0.5);
+    transition: color 0.2s;
+  }
+  .ttl-bottom-nav-item:hover .ttl-bottom-nav-label,
+  .ttl-bottom-nav-item.active .ttl-bottom-nav-label {
+    color: #C9A84C;
+  }
+  .ttl-bottom-nav-spacer {
+    display: none;
+    height: calc(60px + env(safe-area-inset-bottom));
+  }
+  @media (max-width: 768px) {
+    .ttl-bottom-nav-spacer { display: block; }
+  }  
     .ttl-wrap { padding: 48px 24px 72px; }
     .ttl-hero-inner { padding: 48px 24px 40px; }
     .ttl-authors-grid { grid-template-columns: repeat(2, 1fr); }
@@ -1668,7 +1745,6 @@ export default function ReadingRoomHome() {
               </a>
               <div className="ttl-nav-links">                
                 <a href="/reading-room/authors" className="ttl-nav-link">Author Directory</a>
-                <a href="/reading-room/stories" className="ttl-nav-link">All Stories</a>
                 <a href="/reading-room/stories" className="ttl-nav-link">Browse Stories</a>
             <a href="/reading-room/comics" className="ttl-nav-link">Comics & Manga</a>
                 <a href="/reading-room/buy-ink" className="ttl-nav-link">Buy Ink ✒️</a>                
@@ -1704,7 +1780,33 @@ export default function ReadingRoomHome() {
         </nav>
 
         <div className="ttl-nav-spacer" />
-
+        
+        {/* ── Mobile Bottom Nav ── */}
+        <nav className="ttl-bottom-nav">
+          <div className="ttl-bottom-nav-inner">
+            <a href="/reading-room" className="ttl-bottom-nav-item">
+              <span className="ttl-bottom-nav-icon">🏠</span>
+              <span className="ttl-bottom-nav-label">Home</span>
+            </a>
+            <a href="/reading-room/stories" className="ttl-bottom-nav-item">
+              <span className="ttl-bottom-nav-icon">📖</span>
+              <span className="ttl-bottom-nav-label">Stories</span>
+            </a>
+            <a href="/reading-room/comics" className="ttl-bottom-nav-item">
+              <span className="ttl-bottom-nav-icon">🎨</span>
+              <span className="ttl-bottom-nav-label">Comics</span>
+            </a>
+            <a href="/reading-room/authors" className="ttl-bottom-nav-item">
+              <span className="ttl-bottom-nav-icon">🪶</span>
+              <span className="ttl-bottom-nav-label">Authors</span>
+            </a>
+            <a href="/reading-room/buy-ink" className="ttl-bottom-nav-item">
+              <span className="ttl-bottom-nav-icon">✒️</span>
+              <span className="ttl-bottom-nav-label">Ink</span>
+            </a>
+          </div>
+        </nav>
+        <div className="ttl-bottom-nav-spacer" />
         <ReaderModal
           open={Boolean(openStorySlug)}
           story={activeStory}
