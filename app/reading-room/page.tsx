@@ -1444,7 +1444,7 @@ function RedDoorCard() {
   const [hovered, setHovered] = useState(false);
   return (
     <a
-      href="https://the-red-room.read.the-tiniest-library.com"
+      href="https://redroom.the-tiniest-library.com/"
   target="_blank"
   rel="noopener noreferrer"
   onMouseEnter={() => setHovered(true)}      
