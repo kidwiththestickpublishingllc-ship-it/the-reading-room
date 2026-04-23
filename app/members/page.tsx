@@ -505,25 +505,52 @@ export default function MembersRoomV2() {
 
           {/* ── UPGRADE PANEL ── */}
           {profile.membership_tier === "free" && (
-            <div id="upgrade" style={{ marginTop: "32px", background: "#111122", border: "1px solid rgba(201,168,76,0.3)", borderRadius: "16px", padding: "40px", textAlign: "center" }}>
-              <div style={{ fontSize: "32px", marginBottom: "16px" }}>👑</div>
-              <h2 style={{ color: "#C9A84C", fontFamily: "'Cormorant Garamond', serif", fontSize: "28px", fontWeight: "600", margin: "0 0 12px" }}>Upgrade Your Membership</h2>
-              <p style={{ color: "#888", fontSize: "15px", margin: "0 0 32px", lineHeight: "1.7", maxWidth: "500px", marginLeft: "auto", marginRight: "auto" }}>Unlock The Red Room, earn bonus Ink, and get exclusive access to TTL founding content.</p>
-              <div style={{ display: "flex", gap: "16px", justifyContent: "center", flexWrap: "wrap" }}>
-                <div style={{ background: "rgba(255,215,0,0.08)", border: "1px solid rgba(255,215,0,0.3)", borderRadius: "12px", padding: "24px 32px", minWidth: "200px" }}>
-                  <p style={{ color: "#FFD700", fontSize: "13px", fontWeight: "600", margin: "0 0 8px", letterSpacing: "0.08em" }}>GOLD MEMBER</p>
-                  <p style={{ color: "#fff", fontSize: "28px", fontWeight: "700", margin: "0 0 8px" }}>$5<span style={{ fontSize: "14px", color: "#888" }}>/mo</span></p>
-                  <p style={{ color: "#888", fontSize: "12px", margin: "0 0 16px" }}>600 Ink + Red Room access</p>
-                  <button style={{ width: "100%", padding: "10px", background: "#FFD700", color: "#1a1a2e", borderRadius: "8px", border: "none", fontSize: "13px", fontWeight: "700", cursor: "pointer" }}>Upgrade to Gold</button>
+            <div id="upgrade" style={{ marginTop: "32px", background: "#111122", border: "1px solid rgba(201,168,76,0.3)", borderRadius: "16px", padding: "40px" }}>
+              <div style={{ textAlign: "center", marginBottom: "32px" }}>
+                <div style={{ fontSize: "32px", marginBottom: "12px" }}>✒️</div>
+                <h2 style={{ color: "#C9A84C", fontFamily: "'Cormorant Garamond', serif", fontSize: "28px", fontWeight: "600", margin: "0 0 12px" }}>Ink Monthly</h2>
+                <p style={{ color: "#888", fontSize: "15px", margin: "0 auto", lineHeight: "1.7", maxWidth: "500px" }}>Reading is always free. Ink Monthly lets you unlock stories without watching ads — and directly supports the writers you love.</p>
+              </div>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "16px" }}>
+                <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: "12px", padding: "24px" }}>
+                  <p style={{ color: "#6495ED", fontSize: "11px", fontWeight: "700", letterSpacing: "0.14em", textTransform: "uppercase" as const, margin: "0 0 8px" }}>Reader</p>
+                  <p style={{ color: "#fff", fontSize: "28px", fontWeight: "700", margin: "0 0 4px" }}>Free</p>
+                  <p style={{ color: "#555", fontSize: "11px", margin: "0 0 16px" }}>Always free</p>
+                  {["Full Reading Room access", "Earn Ink by watching ads", "Tip your favorite writers", "Red Room access (18+ verified)"].map((perk, i) => (
+                    <p key={i} style={{ color: "#666", fontSize: "12px", margin: "0 0 4px" }}>✦ {perk}</p>
+                  ))}
+                  <button style={{ width: "100%", padding: "10px", marginTop: "16px", background: "transparent", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "8px", color: "#888", fontSize: "12px", fontWeight: "700", cursor: "pointer" }}>Current Plan</button>
                 </div>
-                <div style={{ background: "rgba(201,168,76,0.08)", border: "2px solid rgba(201,168,76,0.5)", borderRadius: "12px", padding: "24px 32px", minWidth: "200px", position: "relative" }}>
-                  <div style={{ position: "absolute", top: "-12px", left: "50%", transform: "translateX(-50%)", background: "#C9A84C", color: "#1a1a2e", fontSize: "11px", fontWeight: "700", padding: "4px 12px", borderRadius: "99px", whiteSpace: "nowrap" }}>FOUNDING MEMBER</div>
-                  <p style={{ color: "#C9A84C", fontSize: "13px", fontWeight: "600", margin: "0 0 8px", letterSpacing: "0.08em" }}>LIMITED SPOTS</p>
-                  <p style={{ color: "#fff", fontSize: "28px", fontWeight: "700", margin: "0 0 8px" }}>$10<span style={{ fontSize: "14px", color: "#888" }}>/mo</span></p>
-                  <p style={{ color: "#888", fontSize: "12px", margin: "0 0 16px" }}>1500 Ink + All access + Badge</p>
-                  <button style={{ width: "100%", padding: "10px", background: "#C9A84C", color: "#1a1a2e", borderRadius: "8px", border: "none", fontSize: "13px", fontWeight: "700", cursor: "pointer" }}>Become a Founder</button>
+                <div style={{ background: "rgba(100,149,237,0.05)", border: "1px solid rgba(100,149,237,0.2)", borderRadius: "12px", padding: "24px" }}>
+                  <p style={{ color: "#6495ED", fontSize: "11px", fontWeight: "700", letterSpacing: "0.14em", textTransform: "uppercase" as const, margin: "0 0 8px" }}>Ink Drop</p>
+                  <p style={{ color: "#fff", fontSize: "28px", fontWeight: "700", margin: "0 0 4px" }}>$3<span style={{ fontSize: "14px", color: "#555" }}>/mo</span></p>
+                  <p style={{ color: "#555", fontSize: "11px", margin: "0 0 16px" }}>✒️ 400 Ink / month</p>
+                  {["Everything in Reader", "400 Ink every month", "Unlock up to 16 stories/mo", "No ads needed to earn Ink"].map((perk, i) => (
+                    <p key={i} style={{ color: "#666", fontSize: "12px", margin: "0 0 4px" }}>✦ {perk}</p>
+                  ))}
+                  <button style={{ width: "100%", padding: "10px", marginTop: "16px", background: "#6495ED", color: "#fff", borderRadius: "8px", border: "none", fontSize: "12px", fontWeight: "700", cursor: "pointer" }}>Start Ink Drop</button>
+                </div>
+                <div style={{ background: "rgba(201,168,76,0.06)", border: "2px solid rgba(201,168,76,0.4)", borderRadius: "12px", padding: "24px", position: "relative" }}>
+                  <div style={{ position: "absolute", top: "-12px", left: "50%", transform: "translateX(-50%)", background: "#C9A84C", color: "#000", fontSize: "10px", fontWeight: "700", padding: "3px 12px", borderRadius: "99px", whiteSpace: "nowrap" as const }}>MOST POPULAR</div>
+                  <p style={{ color: "#C9A84C", fontSize: "11px", fontWeight: "700", letterSpacing: "0.14em", textTransform: "uppercase" as const, margin: "0 0 8px" }}>Ink Flow</p>
+                  <p style={{ color: "#fff", fontSize: "28px", fontWeight: "700", margin: "0 0 4px" }}>$5<span style={{ fontSize: "14px", color: "#555" }}>/mo</span></p>
+                  <p style={{ color: "#555", fontSize: "11px", margin: "0 0 16px" }}>✒️ 1,000 Ink / month</p>
+                  {["Everything in Reader", "1,000 Ink every month", "Unlock up to 40 stories/mo", "No ads needed to earn Ink", "Founding Reader badge"].map((perk, i) => (
+                    <p key={i} style={{ color: "#666", fontSize: "12px", margin: "0 0 4px" }}>✦ {perk}</p>
+                  ))}
+                  <button style={{ width: "100%", padding: "10px", marginTop: "16px", background: "#C9A84C", color: "#000", borderRadius: "8px", border: "none", fontSize: "12px", fontWeight: "700", cursor: "pointer" }}>Start Ink Flow</button>
+                </div>
+                <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "12px", padding: "24px" }}>
+                  <p style={{ color: "#E2C97E", fontSize: "11px", fontWeight: "700", letterSpacing: "0.14em", textTransform: "uppercase" as const, margin: "0 0 8px" }}>Ink Vault</p>
+                  <p style={{ color: "#fff", fontSize: "28px", fontWeight: "700", margin: "0 0 4px" }}>$9<span style={{ fontSize: "14px", color: "#555" }}>/mo</span></p>
+                  <p style={{ color: "#555", fontSize: "11px", margin: "0 0 16px" }}>✒️ 2,500 Ink / month</p>
+                  {["Everything in Reader", "2,500 Ink every month", "Unlock up to 100 stories/mo", "No ads needed to earn Ink", "Vault Member badge", "Exclusive Vault-only stories"].map((perk, i) => (
+                    <p key={i} style={{ color: "#666", fontSize: "12px", margin: "0 0 4px" }}>✦ {perk}</p>
+                  ))}
+                  <button style={{ width: "100%", padding: "10px", marginTop: "16px", background: "linear-gradient(135deg, #C9A84C, #8a6510)", color: "#000", borderRadius: "8px", border: "none", fontSize: "12px", fontWeight: "700", cursor: "pointer" }}>Start Ink Vault</button>
                 </div>
               </div>
+              <p style={{ textAlign: "center", color: "#444", fontSize: "11px", marginTop: "24px", lineHeight: "1.7" }}>100% of tips go directly to the writer. Always. 🪶 · Cancel anytime. No contracts.</p>
             </div>
           )}
 
