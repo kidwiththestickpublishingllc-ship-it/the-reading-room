@@ -257,8 +257,8 @@ export default function MembersRoomV2() {
         <input ref={avatarInputRef} type="file" accept="image/*" onChange={handleAvatarUpload} style={{ display: "none" }} />
 
         {/* ── HEADER ── */}
-        <div style={{ background: "#0d0d1a", borderBottom: "1px solid rgba(201,168,76,0.15)", padding: "20px 32px" }}>
-          <div style={{ maxWidth: "1200px", margin: "0 auto", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "16px" }}>
+        <div style={{ background: "#0d0d1a", borderBottom: "1px solid rgba(201,168,76,0.15)", padding: "16px" }}>
+          <div style={{ maxWidth: "1200px", margin: "0 auto", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "12px" }}>
             <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
               {/* AVATAR */}
               <div style={{ position: "relative", cursor: "pointer" }} onClick={() => avatarInputRef.current?.click()}>
@@ -295,14 +295,14 @@ export default function MembersRoomV2() {
         <div style={{ background: "#0d0d1a", borderBottom: "1px solid rgba(255,255,255,0.05)", padding: "0 32px" }}>
           <div style={{ maxWidth: "1200px", margin: "0 auto", display: "flex", gap: "0" }}>
             {(["forum", "stories", "profile"] as ActiveTab[]).map(tab => (
-              <button key={tab} onClick={() => setActiveTab(tab)} style={{ padding: "16px 24px", background: "transparent", border: "none", cursor: "pointer", fontSize: "13px", fontWeight: "600", color: activeTab === tab ? "#C9A84C" : "#555", borderBottom: activeTab === tab ? "2px solid #C9A84C" : "2px solid transparent", textTransform: "uppercase", letterSpacing: "0.08em", transition: "all 0.2s" }}>
+              <button key={tab} onClick={() => setActiveTab(tab)} style={{ padding: "12px 14px", background: "transparent", border: "none", cursor: "pointer", fontSize: "11px", fontWeight: "600", color: activeTab === tab ? "#C9A84C" : "#555", borderBottom: activeTab === tab ? "2px solid #C9A84C" : "2px solid transparent", textTransform: "uppercase", letterSpacing: "0.06em", transition: "all 0.2s", whiteSpace: "nowrap" }}>
                 {tab === "forum" ? "💬 Discussions" : tab === "stories" ? "📚 Story Picks" : "👤 My Profile"}
               </button>
             ))}
           </div>
         </div>
 
-        <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "32px" }}>
+        <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "16px" }}>
 
           {/* ── PLATFORM CARDS ── */}
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "16px", marginBottom: "32px" }}>
