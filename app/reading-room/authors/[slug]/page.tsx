@@ -284,6 +284,8 @@ function AuthorProfileContent({ slug }: { slug: string }) {
           .single();
 
         if (error || !writerData) {
+          console.log("Supabase error:", error, "writerData:", writerData);
+          // Fall back to mock
           // Fall back to mock
           const mock = MOCK_AUTHORS[slug];
           if (mock) {
