@@ -28,7 +28,7 @@ type ForumPost = {
 };
 
 type AuthView = "dashboard" | "login" | "signup";
-type ActiveTab = "forum" | "stories" | "profile";
+type ActiveTab = "forum" | "stories" | "profile" | "redroom";
 
 export default function MembersRoomV2() {
   const [profile, setProfile] = useState<Profile | null>(null);
@@ -294,9 +294,9 @@ export default function MembersRoomV2() {
         {/* ── TABS ── */}
         <div style={{ background: "#0d0d1a", borderBottom: "1px solid rgba(255,255,255,0.05)", padding: "0 32px" }}>
           <div style={{ maxWidth: "1200px", margin: "0 auto", display: "flex", gap: "0" }}>
-            {(["forum", "stories", "profile"] as ActiveTab[]).map(tab => (
+            {(["forum", "stories", "profile", "redroom"] as ActiveTab[]).map(tab => (
               <button key={tab} onClick={() => setActiveTab(tab)} style={{ padding: "12px 14px", background: "transparent", border: "none", cursor: "pointer", fontSize: "11px", fontWeight: "600", color: activeTab === tab ? "#C9A84C" : "#555", borderBottom: activeTab === tab ? "2px solid #C9A84C" : "2px solid transparent", textTransform: "uppercase", letterSpacing: "0.06em", transition: "all 0.2s", whiteSpace: "nowrap" }}>
-                {tab === "forum" ? "💬 Discussions" : tab === "stories" ? "📚 Story Picks" : "👤 My Profile"}
+                {tab === "forum" ? "💬 Discussions" : tab === "stories" ? "📚 Story Picks" : tab === "redroom" ? "🖤 Red Room" : "👤 My Profile"}
               </button>
             ))}
           </div>
@@ -502,7 +502,56 @@ export default function MembersRoomV2() {
               </div>
             </div>
           )}
-
+          {/* ── RED ROOM TAB ── */}
+          {activeTab === "redroom" && (
+            <div>
+              <div style={{ background: "linear-gradient(135deg, #1a0505, #0d0202)", border: "1px solid rgba(200,68,68,0.3)", borderRadius: "16px", padding: "24px", marginBottom: "24px" }}>
+                <h2 style={{ color: "#c84444", fontSize: "16px", fontWeight: "600", margin: "0 0 8px" }}>🖤 The Red Room Community</h2>
+                <p style={{ color: "#888", fontSize: "13px", margin: "0 0 16px", lineHeight: "1.6" }}>Adult discussions, dark romance picks, and explicit story recommendations. 18+ only.</p>
+                <form onSubmit={handleSubmitPost}>
+                  <textarea value={newPost} onChange={e => setNewPost(e.target.value)} placeholder="Share your thoughts with the Red Room community..." rows={3} style={{ width: "100%", padding: "12px 16px", background: "rgba(200,68,68,0.05)", border: "1px solid rgba(200,68,68,0.2)", borderRadius: "8px", color: "#fff", fontSize: "14px", outline: "none", resize: "vertical", boxSizing: "border-box", fontFamily: "inherit" }} />
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "12px", flexWrap: "wrap", gap: 8 }}>
+                    <a href="https://redroom.the-tiniest-library.com" target="_blank" rel="noopener noreferrer" style={{ color: "#c84444", fontSize: "12px", textDecoration: "none", letterSpacing: "0.06em" }}>Browse The Red Room →</a>
+                    <button type="submit" disabled={posting || !newPost.trim()} style={{ padding: "10px 24px", background: posting || !newPost.trim() ? "rgba(200,68,68,0.3)" : "#c84444", color: "#fff", borderRadius: "8px", border: "none", fontSize: "13px", fontWeight: "700", cursor: posting || !newPost.trim() ? "not-allowed" : "pointer" }}>
+                      {posting ? "Posting..." : "Post to Red Room"}
+                    </button>
+                  </div>
+                </form>
+              </div>
+              {postsLoading ? (
+                <p style={{ color: "#555", textAlign: "center", padding: "40px" }}>Loading...</p>
+              ) : posts.length === 0 ? (
+                <div style={{ textAlign: "center", padding: "60px 20px", background: "#111122", borderRadius: "16px", border: "1px solid rgba(200,68,68,0.15)" }}>
+                  <div style={{ fontSize: "32px", marginBottom: "12px" }}>🖤</div>
+                  <p style={{ color: "#555", fontSize: "14px" }}>No Red Room discussions yet. Be the first.</p>
+                </div>
+              ) : (
+                <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+                  {posts.map(post => (
+                    <div key={post.id} style={{ background: "linear-gradient(135deg, #0d0202, #111122)", border: "1px solid rgba(200,68,68,0.15)", borderRadius: "12px", padding: "20px" }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "12px" }}>
+                        {post.author_avatar ? (
+                          <img src={post.author_avatar} alt="" style={{ width: "36px", height: "36px", borderRadius: "50%", objectFit: "cover" }} />
+                        ) : (
+                          <div style={{ width: "36px", height: "36px", borderRadius: "50%", background: "rgba(200,68,68,0.2)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                            <span style={{ color: "#c84444", fontSize: "13px", fontWeight: "700" }}>{getInitials(post.author_name)}</span>
+                          </div>
+                        )}
+                        <div>
+                          <p style={{ color: "#f0ece2", fontSize: "13px", fontWeight: "600", margin: 0 }}>{post.author_name}</p>
+                          <p style={{ color: "#555", fontSize: "11px", margin: 0 }}>{timeAgo(post.created_at)}</p>
+                        </div>
+                      </div>
+                      <p style={{ color: "#ccc", fontSize: "14px", lineHeight: "1.7", margin: "0 0 12px" }}>{post.content}</p>
+                      <button onClick={() => handleLike(post.id, post.likes)} style={{ background: "rgba(200,68,68,0.08)", border: "1px solid rgba(200,68,68,0.2)", borderRadius: "99px", padding: "4px 14px", color: "#c84444", fontSize: "12px", cursor: "pointer" }}>
+                        ♥ {post.likes}
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
           {/* ── UPGRADE PANEL ── */}
           {profile.membership_tier === "free" && (
             <div id="upgrade" style={{ marginTop: "32px", background: "#111122", border: "1px solid rgba(201,168,76,0.3)", borderRadius: "16px", padding: "40px" }}>
