@@ -536,6 +536,16 @@ export default function ComicsMangaPage() {
           </button>
         </div>
 
+        {/* 3-col ad layout */}
+        <div style={{ display: 'grid', gridTemplateColumns: '200px 1fr 200px', gap: 0, maxWidth: 1600, margin: '0 auto', alignItems: 'start' }}>
+          {/* LEFT AD */}
+          <div style={{ padding: '24px 16px', position: 'sticky', top: 80 }}>
+            <div style={{ background: 'rgba(45,212,191,0.03)', border: '1px solid rgba(45,212,191,0.2)', borderRadius: 12, padding: '16px', minHeight: 400 }}>
+              <span style={{ display: 'block', fontSize: 9, fontWeight: 700, letterSpacing: '0.2em', color: '#2DD4BF', border: '1px solid rgba(45,212,191,0.3)', borderRadius: 20, padding: '2px 10px', marginBottom: 16, fontFamily: 'sans-serif', width: 'fit-content' }}>SPONSORED</span>
+              <iframe src="//a.magsrv.com/iframe.php?idzone=5907426&size=160x600" width="160" height="600" scrolling="no" frameBorder={0} style={{ border: 'none', display: 'block', margin: '0 auto' }} />
+            </div>
+          </div>
+          <div>
         {/* Section header */}
         <div className="cm-section-header">
           <h2>
@@ -581,7 +591,24 @@ export default function ComicsMangaPage() {
             Apply to The Writer's Room →
           </a>
         </div>
-
+          </div>
+          {/* RIGHT AD */}
+          <div style={{ padding: '24px 16px', position: 'sticky', top: 80 }}>
+            <div style={{ background: 'rgba(45,212,191,0.03)', border: '1px solid rgba(45,212,191,0.2)', borderRadius: 12, padding: '16px', minHeight: 400, display: 'flex', flexDirection: 'column', gap: 16 }}>
+              <span style={{ display: 'block', fontSize: 9, fontWeight: 700, letterSpacing: '0.2em', color: '#C9A84C', border: '1px solid rgba(201,168,76,0.3)', borderRadius: 20, padding: '2px 10px', fontFamily: 'sans-serif', width: 'fit-content' }}>THE LIBRARY</span>
+              <div style={{ fontSize: 12, color: 'rgba(240,236,226,0.6)', lineHeight: 1.7, fontFamily: 'sans-serif' }}>
+                <strong style={{ color: '#C9A84C', display: 'block', marginBottom: 8 }}>Write for TTL</strong>
+                Publish your stories, earn through Ink, keep your copyright.
+              </div>
+              <a href="https://write.the-tiniest-library.com/apply" style={{ display: 'inline-block', padding: '6px 14px', borderRadius: 999, border: '1px solid rgba(201,168,76,0.5)', color: '#C9A84C', fontSize: 10, fontWeight: 700, textDecoration: 'none', fontFamily: 'sans-serif' }}>Apply Now →</a>
+              <div style={{ fontSize: 12, color: 'rgba(240,236,226,0.6)', lineHeight: 1.7, fontFamily: 'sans-serif' }}>
+                <strong style={{ color: '#FF2D78', display: 'block', marginBottom: 8 }}>Red Room Comics</strong>
+                Adult sequential art. No restrictions.
+              </div>
+              <a href="https://redroom.the-tiniest-library.com/red-room/comics" target="_blank" rel="noopener noreferrer" style={{ display: 'inline-block', padding: '6px 14px', borderRadius: 999, border: '1px solid rgba(255,45,120,0.4)', color: '#FF2D78', fontSize: 10, fontWeight: 700, textDecoration: 'none', fontFamily: 'sans-serif' }}>Enter →</a>
+            </div>
+          </div>
+        </div>
       </div>
     </>
   );
