@@ -164,6 +164,12 @@ const GLOBAL_STYLES = `
   ::-webkit-scrollbar-track { background: #111; }
   ::-webkit-scrollbar-thumb { background: var(--gold-dim); border-radius: 3px; }
   ::-webkit-scrollbar-thumb:hover { background: var(--gold); }
+  .ttl-ad-grid { display: grid; grid-template-columns: 240px 1fr 240px; }
+  @media (max-width: 1024px) {
+    .ttl-ad-grid { grid-template-columns: 1fr !important; }
+    .ttl-ad-grid > div:first-child { display: none !important; }
+    .ttl-ad-grid > div:last-child { display: none !important; }
+  }
 `;
 
 // =========================
@@ -815,7 +821,7 @@ export default function BrowseAllStoriesPage() {
         </div>
 
         {/* Main */}
-        <div style={{ display: 'grid', gridTemplateColumns: '240px 1fr 240px', gap: 0, maxWidth: 1600, margin: '0 auto', alignItems: 'start' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '240px 1fr 240px', gap: 0, maxWidth: 1600, margin: '0 auto', alignItems: 'start' }} className="ttl-ad-grid">
           {/* LEFT AD */}
           <div style={{ padding: '32px 16px', position: 'sticky', top: 80 }}>
             <div style={{ background: 'rgba(201,168,76,0.03)', border: '1px solid rgba(201,168,76,0.2)', borderRadius: 12, padding: '20px 16px', minHeight: 400 }}>
