@@ -313,14 +313,14 @@ export default function MembersRoomV2() {
                 <p style={{ color: "#555", fontSize: "12px", margin: 0 }}>Browse stories →</p>
               </div>
             </a>
-            <a href={profile.membership_tier === "free" ? "#upgrade" : "https://redroom.the-tiniest-library.com"} style={{ textDecoration: "none" }}>
-              <div style={{ background: "#111122", border: `1px solid ${profile.membership_tier === "free" ? "rgba(255,255,255,0.05)" : "rgba(139,0,0,0.3)"}`, borderRadius: "12px", padding: "20px", opacity: profile.membership_tier === "free" ? 0.5 : 1 }}>
+            <a href={profile.membership_tier === "free" ? "https://redroom.the-tiniest-library.com" : "https://redroom.the-tiniest-library.com"} style={{ textDecoration: "none" }}>
+              <div style={{ background: "#111122", border: `1px solid ${profile.membership_tier === "free" ? "rgba(255,255,255,0.05)" : "rgba(139,0,0,0.3)"}`, borderRadius: "12px", padding: "20px", opacity: 1 }}>
                 <span style={{ fontSize: "24px" }}>🖤</span>
                 <h3 style={{ color: "#8b0000", fontSize: "15px", fontWeight: "600", margin: "8px 0 4px" }}>The Red Room</h3>
                 <p style={{ color: "#555", fontSize: "12px", margin: 0 }}>{profile.membership_tier === "free" ? "Upgrade to unlock →" : "Enter now →"}</p>
               </div>
             </a>
-            <a href="https://the-writer-s-room.vercel.app" style={{ textDecoration: "none" }}>
+            <a href="https://write.the-tiniest-library.com" style={{ textDecoration: "none" }}>
               <div style={{ background: "#111122", border: "1px solid rgba(201,168,76,0.2)", borderRadius: "12px", padding: "20px" }}>
                 <span style={{ fontSize: "24px" }}>🪶</span>
                 <h3 style={{ color: "#C9A84C", fontSize: "15px", fontWeight: "600", margin: "8px 0 4px" }}>The Writer's Room</h3>
