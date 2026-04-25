@@ -1188,6 +1188,12 @@ const GENRE_PAGE_STYLES = `
   }
 
   /* ── RESPONSIVE ── */
+  .ttl-ad-grid { display: grid; grid-template-columns: 240px 1fr 240px; }
+  @media (max-width: 1024px) {
+    .ttl-ad-grid { grid-template-columns: 1fr !important; }
+    .ttl-ad-grid > div:first-child { display: none !important; }
+    .ttl-ad-grid > div:last-child { display: none !important; }
+  }
   @media (max-width: 900px) {
     .gp-nav-inner { padding: 0 24px; }
     .gp-nav-links { display: none; }
@@ -1553,7 +1559,7 @@ if (genreName === "Adult 18+") {
         </div>
 
         {/* ── MAIN CONTENT ── */}
-        <div style={{ display: 'grid', gridTemplateColumns: '240px 1fr 240px', gap: 0, maxWidth: 1600, margin: '0 auto', alignItems: 'start' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '240px 1fr 240px', gap: 0, maxWidth: 1600, margin: '0 auto', alignItems: 'start' }} className="ttl-ad-grid">
           {/* LEFT AD */}
           <div style={{ padding: '32px 16px', position: 'sticky', top: 80 }}>
             <div style={{ background: 'rgba(201,168,76,0.03)', border: '1px solid rgba(201,168,76,0.2)', borderRadius: 12, padding: '20px 16px', minHeight: 400 }}>
