@@ -564,7 +564,7 @@ function AuthorProfileContent({ slug }: { slug: string }) {
   );
 }
 
-export default async function AuthorProfile({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = await params;
+export default function AuthorProfile({ params }: { params: { slug: string } }) {
+  const { slug } = params;
   return <AuthorProfileContent slug={slug} />;
 }
