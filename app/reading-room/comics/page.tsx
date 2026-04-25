@@ -461,13 +461,19 @@ export default function ComicsMangaPage() {
         .cm-submit-btn:hover { opacity: 0.85; }
 
         @media (max-width: 640px) {
-          .cm-nav { padding: 0 20px; }
-          .cm-hero { padding: 48px 20px 40px; }
-          .cm-tabs { padding: 28px 20px 0; }
-          .cm-section-header { padding: 24px 20px 0; }
-          .cm-search-wrap { padding: 16px 20px 0; }
-          .cm-grid { padding: 20px 20px 60px; gap: 14px; }
-          .cm-submit-cta { margin: 40px 20px; padding: 36px 24px; }
+          .cm-nav { padding: 0 16px; height: 56px; }
+          .cm-nav-title { font-size: 15px; }
+          .cm-ink-badge { padding: 4px 10px; font-size: 10px; }
+          .cm-back-link { display: none; }
+          .cm-hero { padding: 48px 16px 40px; }
+          .cm-hero h1 { font-size: 36px; }
+          .cm-hero-sub { font-size: 16px; }
+          .cm-tabs { padding: 20px 16px 0; }
+          .cm-section-header { padding: 20px 16px 0; }
+          .cm-search-wrap { padding: 12px 16px 0; }
+          .cm-grid { padding: 16px 16px 80px; gap: 10px; grid-template-columns: repeat(2, 1fr); }
+          .cm-submit-cta { margin: 32px 16px; padding: 28px 20px; }
+          .cm-nav-right { gap: 8px; }
         }
       `}</style>
 
