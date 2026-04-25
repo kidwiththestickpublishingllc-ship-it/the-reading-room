@@ -125,6 +125,27 @@ const MOCK_AUTHORS: Record<string, AuthorData> = {
       { slug: "fox-vs-the-world", title: "Fox Vs. The World", badge: "Early Access", description: "A first look at a world that refuses to stay quiet.", teaser: "The sky above Hartford wasn't supposed to flicker like a broken screen… but tonight it did.", genres: ["Sci-Fi", "Young Adult", "Serialized Fiction"] },
     ],
   },
+  "kid-pub": {
+    slug: "kid-pub", name: "Kid-Pub", initial: "K", role: "Author",
+    genres: [], tagline: "A writer at The Tiniest Library.",
+    bio: "A writer at The Tiniest Library.", achievements: "",
+    storiesCount: 0, inkJar: 0, stories: [],
+    accentColor: "#C9A84C", accentDim: "rgba(201,168,76,0.22)",
+  },
+  "sergio-lastre": {
+    slug: "sergio-lastre", name: "Sergio Lastre", initial: "L", role: "Author",
+    genres: [], tagline: "A writer at The Tiniest Library.",
+    bio: "A writer at The Tiniest Library.", achievements: "",
+    storiesCount: 0, inkJar: 0, stories: [],
+    accentColor: "#6495ED", accentDim: "rgba(100,149,237,0.22)",
+  },
+  "johannes-west": {
+    slug: "johannes-west", name: "Johannes West", initial: "J", role: "Author",
+    genres: [], tagline: "A writer at The Tiniest Library.",
+    bio: "A writer at The Tiniest Library.", achievements: "",
+    storiesCount: 0, inkJar: 0, stories: [],
+    accentColor: "#a78bfa", accentDim: "rgba(167,139,250,0.22)",
+  },
   "e-walsh": {
     slug: "e-walsh", name: "E. Walsh", initial: "W", role: "Author",
     genres: ["Romance", "Contemporary Fiction"], tagline: "Love stories that don't flinch.",
