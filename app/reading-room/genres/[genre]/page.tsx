@@ -1553,6 +1553,14 @@ if (genreName === "Adult 18+") {
         </div>
 
         {/* ── MAIN CONTENT ── */}
+        <div style={{ display: 'grid', gridTemplateColumns: '240px 1fr 240px', gap: 0, maxWidth: 1600, margin: '0 auto', alignItems: 'start' }}>
+          {/* LEFT AD */}
+          <div style={{ padding: '32px 16px', position: 'sticky', top: 80 }}>
+            <div style={{ background: 'rgba(201,168,76,0.03)', border: '1px solid rgba(201,168,76,0.2)', borderRadius: 12, padding: '20px 16px', minHeight: 400 }}>
+              <span style={{ display: 'block', fontSize: 9, fontWeight: 700, letterSpacing: '0.2em', color: '#6495ED', border: '1px solid rgba(100,149,237,0.3)', borderRadius: 20, padding: '2px 10px', marginBottom: 16, fontFamily: 'sans-serif', width: 'fit-content' }}>SPONSORED</span>
+              <iframe src="//a.magsrv.com/iframe.php?idzone=5907426&size=160x600" width="160" height="600" scrolling="no" frameBorder={0} style={{ border: 'none', display: 'block', margin: '0 auto' }} />
+            </div>
+          </div>
         <div className="gp-wrap">
 
           {/* ── STORIES ── */}
@@ -1750,6 +1758,23 @@ if (genreName === "Adult 18+") {
             </div>
           </div>
 
+        </div>
+          {/* RIGHT AD */}
+          <div style={{ padding: '32px 16px', position: 'sticky', top: 80 }}>
+            <div style={{ background: 'rgba(201,168,76,0.03)', border: '1px solid rgba(201,168,76,0.2)', borderRadius: 12, padding: '20px 16px', minHeight: 400, display: 'flex', flexDirection: 'column', gap: 16 }}>
+              <span style={{ display: 'block', fontSize: 9, fontWeight: 700, letterSpacing: '0.2em', color: '#C9A84C', border: '1px solid rgba(201,168,76,0.3)', borderRadius: 20, padding: '2px 10px', fontFamily: 'sans-serif', width: 'fit-content' }}>THE LIBRARY</span>
+              <div style={{ fontSize: 13, color: 'rgba(240,236,226,0.6)', lineHeight: 1.7, fontFamily: 'sans-serif' }}>
+                <strong style={{ color: '#C9A84C', display: 'block', marginBottom: 8 }}>Write for TTL</strong>
+                Publish your stories, earn through Ink, keep your copyright.
+              </div>
+              <a href="https://write.the-tiniest-library.com/apply" style={{ display: 'inline-block', padding: '7px 16px', borderRadius: 999, background: 'transparent', border: '1px solid rgba(201,168,76,0.5)', color: '#C9A84C', fontSize: 10, fontWeight: 700, textDecoration: 'none', letterSpacing: '0.08em', fontFamily: 'sans-serif' }}>Apply Now →</a>
+              <div style={{ marginTop: 16, fontSize: 13, color: 'rgba(240,236,226,0.6)', lineHeight: 1.7, fontFamily: 'sans-serif' }}>
+                <strong style={{ color: '#6495ED', display: 'block', marginBottom: 8 }}>The Red Room</strong>
+                Adult fiction for grown readers. 29 genres. Age verified.
+              </div>
+              <a href="https://redroom.the-tiniest-library.com" target="_blank" rel="noopener noreferrer" style={{ display: 'inline-block', padding: '7px 16px', borderRadius: 999, background: 'transparent', border: '1px solid rgba(100,149,237,0.4)', color: '#6495ED', fontSize: 10, fontWeight: 700, textDecoration: 'none', letterSpacing: '0.08em', fontFamily: 'sans-serif' }}>Enter →</a>
+            </div>
+          </div>
         </div>
       </div>
     </>
