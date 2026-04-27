@@ -356,12 +356,16 @@ function AuthorProfileContent({ slug }: { slug: string }) {
           })),
         };
 
-        // Fetch badges
-        const { data: badgeData } = await supabase
-          .from('writer_badges')
-          .select('badges(emoji, name, description)')
-          .eq('writer_id', writerData.id);
-        mapped.badges = (badgeData ?? []).map((b: any) => b.badges).filter(Boolean);
+        // Fetch badges safely
+        try {
+          const { data: badgeData } = await supabase
+            .from('writer_badges')
+            .select('badges(emoji, name, description)')
+            .eq('writer_id', writerData.id);
+          mapped.badges = (badgeData ?? []).map((b: any) => b.badges).filter(Boolean);
+        } catch {
+          mapped.badges = [];
+        }
         setAuthor(mapped);
         setJar(prev => prev || 0);
       } catch {
