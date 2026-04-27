@@ -39,8 +39,8 @@ type AuthorData = {
   accentColor: string;
   accentDim: string;
   is_founding_author?: boolean;
+  badges?: { emoji: string; name: string; description: string }[];
 };
-
 // Accent colors by genre — first genre wins
 const GENRE_ACCENTS: Record<string, [string, string]> = {
   "Fantasy":              ["#a78bfa", "rgba(167,139,250,0.22)"],
@@ -356,6 +356,12 @@ function AuthorProfileContent({ slug }: { slug: string }) {
           })),
         };
 
+        // Fetch badges
+        const { data: badgeData } = await supabase
+          .from('writer_badges')
+          .select('badges(emoji, name, description)')
+          .eq('writer_id', writerData.id);
+        mapped.badges = (badgeData ?? []).map((b: any) => b.badges).filter(Boolean);
         setAuthor(mapped);
         setJar(prev => prev || 0);
       } catch {
@@ -500,7 +506,21 @@ function AuthorProfileContent({ slug }: { slug: string }) {
                   <p className="ap-bio">{author.bio}</p>
                 </div>
               )}
-              {author.achievements && (
+              {author.badges && author.badges.length > 0 && (
+                <div className="ap-section">
+                  <div className="ap-section-head"><div className="ap-section-bar" /><div><span className="ap-section-eyebrow">Recognition</span><h2 className="ap-section-title">Badges</h2></div></div>
+                  <div className="ap-divider" />
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12 }}>
+                    {author.badges.map((badge, i) => (
+                      <div key={i} title={badge.description} style={{ display: 'flex', alignItems: 'center', gap: 8, background: 'rgba(201,168,76,0.08)', border: '1px solid rgba(201,168,76,0.25)', borderRadius: 999, padding: '8px 16px', cursor: 'default' }}>
+                        <span style={{ fontSize: 20 }}>{badge.emoji}</span>
+                        <span style={{ fontFamily: "'Syne', sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#E2C97E' }}>{badge.name}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+                {author.achievements && (
                 <div className="ap-section">
                   <div className="ap-section-head"><div className="ap-section-bar" /><div><span className="ap-section-eyebrow">Recognition</span><h2 className="ap-section-title">Achievements</h2></div></div>
                   <div className="ap-divider" />

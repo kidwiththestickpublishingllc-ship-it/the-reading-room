@@ -21,6 +21,7 @@ type Author = {
   storiesCount: number;
   inkJar: number;
   is_founding_author?: boolean;
+  badges?: { emoji: string; name: string; description: string }[];
 };
 
 type SupabaseWriter = {
