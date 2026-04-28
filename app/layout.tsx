@@ -1,8 +1,9 @@
 import './globals.css'
 import { Playfair_Display, Inter } from 'next/font/google'
 import Script from 'next/script'
-import PageChatWidget from "./components/PageChatWidget";
-import WelcomeTour from "./components/WelcomeTour";
+import PageChatWidget from "./components/PageChatWidget"
+import WelcomeTour from "./components/WelcomeTour"
+import { Analytics } from '@vercel/analytics/react'
 
 const playfair = Playfair_Display({
   subsets: ['latin'],
@@ -29,7 +30,7 @@ export default function RootLayout({
           crossOrigin="anonymous"
           strategy="afterInteractive"
         />
-      <Script
+        <Script
           async
           src="https://a.magsrv.com/ad-provider.js"
           strategy="afterInteractive"
@@ -39,6 +40,7 @@ export default function RootLayout({
         {children}
         <PageChatWidget />
         <WelcomeTour />
+        <Analytics />
         <ins className="eas6a97888e17" data-zoneid="5907410"></ins>
         <Script
           id="exoclick-sticky-reading"
