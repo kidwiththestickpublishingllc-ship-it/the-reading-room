@@ -609,7 +609,13 @@ function AuthorProfileContent({ slug }: { slug: string }) {
   );
 }
 
-export default function AuthorProfile({ params }: { params: { slug: string } }) {
-  const { slug } = params;
+export default function AuthorProfile({ params }: { params: Promise<{ slug: string }> }) {
+  const [slug, setSlug] = React.useState<string>("");
+
+  React.useEffect(() => {
+    params.then(({ slug }) => setSlug(slug));
+  }, [params]);
+
+  if (!slug) return null;
   return <AuthorProfileContent slug={slug} />;
 }
