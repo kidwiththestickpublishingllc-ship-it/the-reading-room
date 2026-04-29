@@ -1012,9 +1012,9 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
     text-transform: uppercase;
     padding: 5px 12px;
     border-radius: 999px;
-    border: 1px solid var(--ink-border);
-    background: transparent;
-    color: var(--text-faint);
+    border: 1px solid rgba(232,228,218,0.2);
+    background: rgba(232,228,218,0.06);
+    color: rgba(232,228,218,0.7);
     cursor: pointer;
     transition: all 0.18s;
   }
