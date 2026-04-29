@@ -520,9 +520,9 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
     font-size: 10px;
     letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: rgba(232,228,218,0.6);
-    background: transparent;
-    border: 1px solid rgba(232,228,218,0.15);
+    color: var(--gold-light);
+    background: var(--gold-glow);
+    border: 1px solid var(--gold-dim);
     padding: 13px 28px;
     border-radius: 8px;
     text-decoration: none;
@@ -531,6 +531,14 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
     display: inline-flex;
     align-items: center;
     gap: 8px;
+    box-shadow: 0 0 12px rgba(201,168,76,0.15);
+  }
+
+  .ttl-btn-ghost:hover {
+    color: #000;
+    background: var(--gold);
+    border-color: var(--gold);
+    box-shadow: 0 0 24px rgba(201,168,76,0.4);
   }
 
 .ttl-btn-gold {
