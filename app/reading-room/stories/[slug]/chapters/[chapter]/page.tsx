@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useRef } from "react";
 import { createBrowserClient } from "@supabase/ssr";
+import ChapterUnlocks from "@/app/reading-room/components/ChapterUnlocks";
 
 const supabase = createBrowserClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -623,6 +624,14 @@ function ChapterReaderContent({ storySlug, chapterNum }: { storySlug: string; ch
         {/* Media panel */}
         <MediaPanel chapter={chapter} open={mediaPanelOpen} onClose={() => setMediaPanelOpen(false)} />
         <div className={`drawer-overlay${mediaPanelOpen ? ' open' : ''}`} onClick={() => setMediaPanelOpen(false)} />
+
+        {/* Chapter Unlocks */}
+        {unlocked && story && chapter && (
+          <ChapterUnlocks
+            bookId={story.id}
+            chapterNumber={chapter.chapter_number}
+          />
+        )}
 
         {/* Chapter drawer */}
         <div className={`drawer-overlay${drawerOpen ? ' open' : ''}`} onClick={() => setDrawerOpen(false)} />
