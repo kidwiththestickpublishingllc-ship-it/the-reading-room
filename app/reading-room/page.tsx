@@ -1955,7 +1955,7 @@ export default function ReadingRoomHome() {
                 Support creators with Ink and unlock what's next.
               </p>
               <div className="ttl-hero-actions">
-  <a href="https://read.the-tiniest-library.com/members" target="_blank" rel="noopener noreferrer" className="ttl-btn-join">
+  <a href="/reading-room/login" className="ttl-btn-join">
     ✦ Join Now — Free ✦
   </a>
   <a href="/members" className="ttl-btn-primary">
