@@ -533,6 +533,79 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
     gap: 8px;
   }
 
+.ttl-btn-gold {
+    font-family: 'Syne', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    background: var(--gold-glow);
+    border: 1px solid var(--gold-dim);
+    padding: 13px 28px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.2s;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 700;
+    box-shadow: 0 0 12px rgba(201,168,76,0.2);
+  }
+
+  .ttl-btn-gold:hover {
+    background: rgba(201,168,76,0.2);
+    box-shadow: 0 0 24px rgba(201,168,76,0.4);
+  }
+
+  @keyframes joinPulse {
+    0%, 100% { box-shadow: 0 0 20px rgba(201,168,76,0.5), 0 0 40px rgba(201,168,76,0.3), 0 0 80px rgba(201,168,76,0.15); }
+    50% { box-shadow: 0 0 30px rgba(201,168,76,0.8), 0 0 60px rgba(201,168,76,0.5), 0 0 120px rgba(201,168,76,0.25); }
+  }
+
+  @keyframes shimmerText {
+    0% { background-position: -200% center; }
+    100% { background-position: 200% center; }
+  }
+
+  .ttl-btn-join {
+    font-family: 'Syne', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    font-weight: 700;
+    padding: 15px 36px;
+    border-radius: 8px;
+    text-decoration: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid rgba(201,168,76,0.8);
+    background: linear-gradient(135deg, #8a6510, #C9A84C, #FFE066, #C9A84C, #8a6510);
+    background-size: 200% auto;
+    color: #000;
+    animation: joinPulse 2.5s ease-in-out infinite, shimmerText 3s linear infinite;
+    position: relative;
+  }
+
+  .ttl-btn-join::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #C9A84C, #FFE066, #C9A84C);
+    z-index: -1;
+    filter: blur(8px);
+    opacity: 0.6;
+    animation: joinPulse 2.5s ease-in-out infinite;
+  }
+
+  .ttl-btn-join:hover {
+    transform: scale(1.04);
+    animation: joinPulse 1.5s ease-in-out infinite, shimmerText 1.5s linear infinite;
+  }
+
   .ttl-btn-ghost:hover {
     color: var(--gold-light);
     border-color: var(--gold-dim);
@@ -1882,12 +1955,15 @@ export default function ReadingRoomHome() {
                 Support creators with Ink and unlock what's next.
               </p>
               <div className="ttl-hero-actions">
-                <a href="/members" className="ttl-btn-primary">
-                  Enter Members Room →
-                </a>
-                <a href="/reading-room/authors" className="ttl-btn-ghost">Author Directory</a>
-                <a href="#how-it-works" className="ttl-btn-ghost">How it works</a>
-              </div>
+  <a href="https://read.the-tiniest-library.com/members" target="_blank" rel="noopener noreferrer" className="ttl-btn-join">
+    ✦ Join Now — Free ✦
+  </a>
+  <a href="/members" className="ttl-btn-primary">
+    Enter Members Room →
+  </a>
+  <a href="/reading-room/authors" className="ttl-btn-gold">Author Directory</a>
+  <a href="#how-it-works" className="ttl-btn-gold">How it works</a>
+</div>
             </div>
 
             {/* RIGHT AD PANEL */}
