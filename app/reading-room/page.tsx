@@ -1393,7 +1393,17 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
   }
 
   @media (max-width: 768px) {
-    .ttl-nav-inner { padding: 0 16px; }
+    #ttl-carousel-track > a, #ttl-carousel-track > div {
+      width: 160px !important;
+      min-height: 210px !important;
+    }
+  }
+  @media (max-width: 480px) {
+    #ttl-carousel-track > a, #ttl-carousel-track > div {
+      width: 144px !important;
+      min-height: 190px !important;
+    }
+  }
     .ttl-nav-links { display: none; }
     .ttl-nav-right { gap: 6px; }
     .ttl-nav-tour-btn { display: none; }
