@@ -67,7 +67,7 @@ function LibraryShelf({ userId }: { userId?: string }) {
     { id: "mock-5", is_finished: false, stories: { title: "The Body Knows, Breathing Calms", slug: "the-body-knows-breathing-calms", cover_url: null, genre: "Literary Fiction", room: "reading-room" }},
     { id: "mock-6", is_finished: false, stories: { title: "What We Call Staying", slug: "what-we-call-staying", cover_url: null, genre: "Romance", room: "reading-room" }},
   ];
-  if (books.length === 0) return (
+  if (false) return (
     <div style={{ textAlign: "center", padding: "64px 32px", border: "1px dashed rgba(255,255,255,0.08)", borderRadius: 12 }}>
       <div style={{ fontSize: 48, marginBottom: 16 }}>📚</div>
       <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 28, fontWeight: 300, color: "#f0ece2", marginBottom: 8 }}>Your shelf is empty</div>
@@ -93,7 +93,7 @@ function LibraryShelf({ userId }: { userId?: string }) {
           {/* Shelf wood effect */}
           <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: 20, background: "linear-gradient(to bottom, #2a1f0e, #1a1008)", borderRadius: "0 0 12px 12px" }} />
           <div style={{ display: "flex", gap: 6, flexWrap: "wrap", alignItems: "flex-end", minHeight: 180 }}>
-            {books.map(book => {
+            {displayBooks.map(book => {
               const story = book.stories;
               if (!story) return null;
               const colors = ["#C9A84C", "#6495ED", "#a78bfa", "#f87171", "#4ade80", "#fb7185", "#60a5fa"];
@@ -124,7 +124,7 @@ function LibraryShelf({ userId }: { userId?: string }) {
       {/* Grid view — book covers */}
       {view === "grid" && (
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(160px, 1fr))", gap: 20 }}>
-          {books.map(book => {
+          {displayBooks.map(book => {
             const story = book.stories;
             if (!story) return null;
             const colors = ["#C9A84C", "#6495ED", "#a78bfa", "#f87171", "#4ade80", "#fb7185", "#60a5fa"];
@@ -164,15 +164,15 @@ function LibraryShelf({ userId }: { userId?: string }) {
       {/* Stats */}
       <div style={{ marginTop: 32, display: "flex", gap: 24, padding: "20px 24px", background: "rgba(201,168,76,0.04)", border: "1px solid rgba(201,168,76,0.12)", borderRadius: 12 }}>
         <div style={{ textAlign: "center" }}>
-          <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 32, fontWeight: 300, color: "#C9A84C" }}>{books.length}</div>
+          <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 32, fontWeight: 300, color: "#C9A84C" }}>{ displayBooks.length}</div>
           <div style={{ fontSize: 9, letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(232,228,218,0.3)" }}>In Collection</div>
         </div>
         <div style={{ textAlign: "center" }}>
-          <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 32, fontWeight: 300, color: "#4ade80" }}>{books.filter(b => b.is_finished).length}</div>
+          <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 32, fontWeight: 300, color: "#4ade80" }}>{displayBooks.filter(b => b.is_finished).length}</div>
           <div style={{ fontSize: 9, letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(232,228,218,0.3)" }}>Finished</div>
         </div>
         <div style={{ textAlign: "center" }}>
-          <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 32, fontWeight: 300, color: "#6495ED" }}>{books.filter(b => !b.is_finished).length}</div>
+          <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 32, fontWeight: 300, color: "#6495ED" }}>{displayBooks.filter(b => !b.is_finished).length}</div>
           <div style={{ fontSize: 9, letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(232,228,218,0.3)" }}>In Progress</div>
         </div>
       </div>
