@@ -58,7 +58,15 @@ function LibraryShelf({ userId }: { userId?: string }) {
   }
 
   if (loading) return <div style={{ textAlign: "center", padding: 48, color: "rgba(232,228,218,0.3)", fontSize: 13 }}>Loading your library…</div>;
-
+// Show mock books if library is empty for demo purposes
+  const displayBooks = books.length > 0 ? books : [
+    { id: "mock-1", is_finished: true, stories: { title: "Lanterns Over Hartford", slug: "lanterns-over-hartford", cover_url: null, genre: "Cozy Mystery", room: "reading-room" }},
+    { id: "mock-2", is_finished: false, stories: { title: "The Quiet Stairwell", slug: "the-quiet-stairwell", cover_url: null, genre: "Dark Academia", room: "reading-room" }},
+    { id: "mock-3", is_finished: false, stories: { title: "Stars Don't Apologize", slug: "stars-dont-apologize", cover_url: null, genre: "Sci-Fi", room: "reading-room" }},
+    { id: "mock-4", is_finished: true, stories: { title: "The Last Ferry", slug: "the-last-ferry", cover_url: null, genre: "Crime & Thrillers", room: "reading-room" }},
+    { id: "mock-5", is_finished: false, stories: { title: "The Body Knows, Breathing Calms", slug: "the-body-knows-breathing-calms", cover_url: null, genre: "Literary Fiction", room: "reading-room" }},
+    { id: "mock-6", is_finished: false, stories: { title: "What We Call Staying", slug: "what-we-call-staying", cover_url: null, genre: "Romance", room: "reading-room" }},
+  ];
   if (books.length === 0) return (
     <div style={{ textAlign: "center", padding: "64px 32px", border: "1px dashed rgba(255,255,255,0.08)", borderRadius: 12 }}>
       <div style={{ fontSize: 48, marginBottom: 16 }}>📚</div>
