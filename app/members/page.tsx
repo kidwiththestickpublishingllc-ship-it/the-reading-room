@@ -28,8 +28,149 @@ type ForumPost = {
 };
 
 type AuthView = "dashboard" | "login" | "signup";
-type ActiveTab = "forum" | "stories" | "profile" | "redroom";
+type ActiveTab = "forum" | "stories" | "profile" | "redroom" | "library";
 
+function LibraryShelf({ userId }: { userId?: string }) {
+  const [books, setBooks] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [view, setView] = useState<"shelf" | "grid">("shelf");
+
+  useEffect(() => {
+    if (!userId) return;
+    async function load() {
+      const { data } = await supabase
+        .from("user_library")
+        .select("*, stories(id, title, slug, cover_url, genre, room, description)")
+        .eq("user_id", userId)
+        .order("unlocked_at", { ascending: false });
+      setBooks(data ?? []);
+      setLoading(false);
+    }
+    load();
+  }, [userId]);
+
+  async function markFinished(id: string, current: boolean) {
+    await supabase.from("user_library").update({
+      is_finished: !current,
+      finished_at: !current ? new Date().toISOString() : null
+    }).eq("id", id);
+    setBooks(prev => prev.map(b => b.id === id ? { ...b, is_finished: !current } : b));
+  }
+
+  if (loading) return <div style={{ textAlign: "center", padding: 48, color: "rgba(232,228,218,0.3)", fontSize: 13 }}>Loading your library…</div>;
+
+  if (books.length === 0) return (
+    <div style={{ textAlign: "center", padding: "64px 32px", border: "1px dashed rgba(255,255,255,0.08)", borderRadius: 12 }}>
+      <div style={{ fontSize: 48, marginBottom: 16 }}>📚</div>
+      <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 28, fontWeight: 300, color: "#f0ece2", marginBottom: 8 }}>Your shelf is empty</div>
+      <p style={{ fontSize: 13, color: "rgba(232,228,218,0.4)", lineHeight: 1.7, maxWidth: 360, margin: "0 auto 24px" }}>Unlock stories in The Reading Room to start building your permanent collection.</p>
+      <a href="/reading-room/stories" style={{ fontSize: 11, letterSpacing: "0.16em", textTransform: "uppercase", color: "#C9A84C", border: "1px solid rgba(201,168,76,0.3)", padding: "10px 24px", borderRadius: 8, textDecoration: "none" }}>Browse Stories →</a>
+    </div>
+  );
+
+  return (
+    <div>
+      {/* View toggle */}
+      <div style={{ display: "flex", gap: 8, marginBottom: 24, justifyContent: "flex-end" }}>
+        {(["shelf", "grid"] as const).map(v => (
+          <button key={v} onClick={() => setView(v)} style={{ fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase", padding: "6px 14px", borderRadius: 999, cursor: "pointer", background: view === v ? "rgba(201,168,76,0.1)" : "transparent", border: view === v ? "1px solid rgba(201,168,76,0.3)" : "1px solid rgba(255,255,255,0.08)", color: view === v ? "#C9A84C" : "rgba(232,228,218,0.4)", transition: "all 0.2s" }}>
+            {v === "shelf" ? "🗂 Spine View" : "⊞ Cover View"}
+          </button>
+        ))}
+      </div>
+
+      {/* Shelf view — book spines */}
+      {view === "shelf" && (
+        <div style={{ background: "#0d0d0d", border: "1px solid rgba(255,255,255,0.06)", borderRadius: 12, padding: "32px 24px", position: "relative" }}>
+          {/* Shelf wood effect */}
+          <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: 20, background: "linear-gradient(to bottom, #2a1f0e, #1a1008)", borderRadius: "0 0 12px 12px" }} />
+          <div style={{ display: "flex", gap: 6, flexWrap: "wrap", alignItems: "flex-end", minHeight: 180 }}>
+            {books.map(book => {
+              const story = book.stories;
+              if (!story) return null;
+              const colors = ["#C9A84C", "#6495ED", "#a78bfa", "#f87171", "#4ade80", "#fb7185", "#60a5fa"];
+              const color = colors[Math.abs(story.title.charCodeAt(0)) % colors.length];
+              return (
+                <a key={book.id} href={`/reading-room/stories/${story.slug}`}
+                  title={story.title}
+                  style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", width: 40, height: book.is_finished ? 160 : 140, background: `linear-gradient(to bottom, ${color}22, ${color}44)`, border: `1px solid ${color}44`, borderBottom: `3px solid ${color}`, borderRadius: "3px 3px 0 0", cursor: "pointer", textDecoration: "none", position: "relative", transition: "all 0.2s", flexShrink: 0 }}
+                  onMouseEnter={e => (e.currentTarget.style.transform = "translateY(-8px)")}
+                  onMouseLeave={e => (e.currentTarget.style.transform = "translateY(0)")}>
+                  {/* Spine title — rotated */}
+                  <span style={{ writingMode: "vertical-rl", textOrientation: "mixed", transform: "rotate(180deg)", fontSize: 9, fontWeight: 700, letterSpacing: "0.08em", color, textTransform: "uppercase", overflow: "hidden", maxHeight: 120, textOverflow: "ellipsis", whiteSpace: "nowrap", padding: "4px 2px" }}>
+                    {story.title}
+                  </span>
+                  {/* Finished stamp */}
+                  {book.is_finished && (
+                    <div style={{ position: "absolute", top: 4, right: 2, width: 8, height: 8, borderRadius: "50%", background: "#4ade80" }} title="Finished" />
+                  )}
+                </a>
+              );
+            })}
+          </div>
+          {/* Shelf bottom */}
+          <div style={{ height: 20 }} />
+        </div>
+      )}
+
+      {/* Grid view — book covers */}
+      {view === "grid" && (
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(160px, 1fr))", gap: 20 }}>
+          {books.map(book => {
+            const story = book.stories;
+            if (!story) return null;
+            const colors = ["#C9A84C", "#6495ED", "#a78bfa", "#f87171", "#4ade80", "#fb7185", "#60a5fa"];
+            const color = colors[Math.abs(story.title.charCodeAt(0)) % colors.length];
+            return (
+              <div key={book.id} style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+                <a href={`/reading-room/stories/${story.slug}`} style={{ textDecoration: "none", display: "block" }}>
+                  {/* Book cover */}
+                  <div style={{ width: "100%", aspectRatio: "2/3", background: story.cover_url ? `url(${story.cover_url}) center/cover` : `linear-gradient(135deg, ${color}33, ${color}11)`, border: `1px solid ${color}33`, borderRadius: 6, position: "relative", overflow: "hidden", boxShadow: "4px 4px 16px rgba(0,0,0,0.5)", transition: "transform 0.2s" }}
+                    onMouseEnter={e => (e.currentTarget.style.transform = "scale(1.04)")}
+                    onMouseLeave={e => (e.currentTarget.style.transform = "scale(1)")}>
+                    {/* Book spine shadow */}
+                    <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: 8, background: "rgba(0,0,0,0.3)" }} />
+                    {!story.cover_url && (
+                      <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: 12, textAlign: "center" }}>
+                        <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 14, fontWeight: 400, color, lineHeight: 1.3 }}>{story.title}</div>
+                      </div>
+                    )}
+                    {book.is_finished && (
+                      <div style={{ position: "absolute", top: 8, right: 8, background: "#4ade80", borderRadius: 999, padding: "2px 8px", fontSize: 8, fontWeight: 700, color: "#000", letterSpacing: "0.1em" }}>READ</div>
+                    )}
+                  </div>
+                </a>
+                <div>
+                  <div style={{ fontSize: 12, fontWeight: 600, color: "#f0ece2", marginBottom: 2, lineHeight: 1.3 }}>{story.title}</div>
+                  <div style={{ fontSize: 10, color: "rgba(232,228,218,0.4)", marginBottom: 8 }}>{story.genre ?? "Fiction"}</div>
+                  <button onClick={() => markFinished(book.id, book.is_finished)} style={{ fontSize: 9, letterSpacing: "0.1em", textTransform: "uppercase", padding: "4px 10px", borderRadius: 999, cursor: "pointer", background: book.is_finished ? "rgba(74,222,128,0.1)" : "transparent", border: book.is_finished ? "1px solid rgba(74,222,128,0.3)" : "1px solid rgba(255,255,255,0.08)", color: book.is_finished ? "#4ade80" : "rgba(232,228,218,0.4)", transition: "all 0.2s" }}>
+                    {book.is_finished ? "✓ Finished" : "Mark Finished"}
+                  </button>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
+
+      {/* Stats */}
+      <div style={{ marginTop: 32, display: "flex", gap: 24, padding: "20px 24px", background: "rgba(201,168,76,0.04)", border: "1px solid rgba(201,168,76,0.12)", borderRadius: 12 }}>
+        <div style={{ textAlign: "center" }}>
+          <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 32, fontWeight: 300, color: "#C9A84C" }}>{books.length}</div>
+          <div style={{ fontSize: 9, letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(232,228,218,0.3)" }}>In Collection</div>
+        </div>
+        <div style={{ textAlign: "center" }}>
+          <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 32, fontWeight: 300, color: "#4ade80" }}>{books.filter(b => b.is_finished).length}</div>
+          <div style={{ fontSize: 9, letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(232,228,218,0.3)" }}>Finished</div>
+        </div>
+        <div style={{ textAlign: "center" }}>
+          <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 32, fontWeight: 300, color: "#6495ED" }}>{books.filter(b => !b.is_finished).length}</div>
+          <div style={{ fontSize: 9, letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(232,228,218,0.3)" }}>In Progress</div>
+        </div>
+      </div>
+    </div>
+  );
+}
 export default function MembersRoomV2() {
   const [profile, setProfile] = useState<Profile | null>(null);
   const [loading, setLoading] = useState(true);
@@ -294,9 +435,9 @@ export default function MembersRoomV2() {
         {/* ── TABS ── */}
         <div style={{ background: "#0d0d1a", borderBottom: "1px solid rgba(255,255,255,0.05)", padding: "0 32px" }}>
           <div style={{ maxWidth: "1200px", margin: "0 auto", display: "flex", gap: "0" }}>
-            {(["forum", "stories", "profile", "redroom"] as ActiveTab[]).map(tab => (
+            {(["forum", "stories", "library", "profile", "redroom"] as ActiveTab[]).map(tab => (
               <button key={tab} onClick={() => setActiveTab(tab)} style={{ padding: "12px 14px", background: "transparent", border: "none", cursor: "pointer", fontSize: "11px", fontWeight: "600", color: activeTab === tab ? "#C9A84C" : "#555", borderBottom: activeTab === tab ? "2px solid #C9A84C" : "2px solid transparent", textTransform: "uppercase", letterSpacing: "0.06em", transition: "all 0.2s", whiteSpace: "nowrap" }}>
-                {tab === "forum" ? "💬 Discussions" : tab === "stories" ? "📚 Story Picks" : tab === "redroom" ? "🖤 Red Room" : "👤 My Profile"}
+                {tab === "forum" ? "💬 Discussions" : tab === "stories" ? "📚 Story Picks" : tab === "library" ? "📖 My Library" : tab === "redroom" ? "🖤 Red Room" : "👤 My Profile"}
               </button>
             ))}
           </div>
@@ -503,6 +644,17 @@ export default function MembersRoomV2() {
             </div>
           )}
           {/* ── RED ROOM TAB ── */}
+          {activeTab === "library" && (
+            <div style={{ padding: "24px 16px" }}>
+              <div style={{ marginBottom: 28 }}>
+                <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 32, fontWeight: 300, color: "#f0ece2", marginBottom: 6 }}>My Library</h2>
+                <p style={{ fontSize: 12, color: "rgba(232,228,218,0.4)", letterSpacing: "0.06em" }}>Your permanent collection of unlocked stories.</p>
+              </div>
+
+              {/* Bookshelf */}
+              <LibraryShelf userId={profile?.id} />
+            </div>
+          )}
           {activeTab === "redroom" && (
             <div>
               <div style={{ background: "linear-gradient(135deg, #1a0505, #0d0202)", border: "1px solid rgba(200,68,68,0.3)", borderRadius: "16px", padding: "24px", marginBottom: "24px" }}>
