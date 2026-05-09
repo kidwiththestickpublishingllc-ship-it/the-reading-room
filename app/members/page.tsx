@@ -123,7 +123,7 @@ function LibraryShelf({ userId }: { userId?: string }) {
 
       {/* Grid view — book covers */}
       {view === "grid" && (
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(160px, 1fr))", gap: 20 }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(140px, 1fr))", gap: 16 }}>
           {displayBooks.map(book => {
             const story = book.stories;
             if (!story) return null;
