@@ -79,132 +79,257 @@ const STYLES = `
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
     --gold: #C9A84C; --gold-light: #8a6510; --gold-dim: rgba(201,168,76,0.5);
-    --gold-glow: rgba(201,168,76,0.12); --blue: #6495ED; --blue-dim: rgba(100,149,237,0.2);
-    --ink-bg: #ffffff; --ink-surface: #f5f8ff; --ink-surface2: #eef2fb;
-    --ink-border: rgba(100,149,237,0.15); --ink-border-gold: rgba(201,168,76,0.4);
-    --text-main: #1a1a2e; --text-dim: rgba(26,26,46,0.6); --text-faint: rgba(26,26,46,0.35);
+    --gold-glow: rgba(201,168,76,0.12); --blue: #6495ED; --blue-dim: rgba(100,149,237,0.15);
+    --blue-bright: #4a7fd4; --ink-surface: #ffffff; --ink-surface2: #f5f8ff;
+    --ink-border: rgba(100,149,237,0.12); --ink-border-gold: rgba(201,168,76,0.35);
+    --text-main: #1a1a2e; --text-dim: rgba(26,26,46,0.65); --text-faint: rgba(26,26,46,0.38);
   }
-  .wm-root { min-height: 100vh; background: #ffffff; font-family: 'Syne', sans-serif; color: var(--text-main); }
+  .wm-root { min-height: 100vh; background: #f5f8ff; font-family: 'Syne', sans-serif; color: var(--text-main); }
+
+  /* NAV */
   .wm-nav {
     position: fixed; top: 0; left: 0; right: 0; z-index: 40;
     background: rgba(255,255,255,0.97); backdrop-filter: blur(20px);
-    border-bottom: 1px solid var(--ink-border-gold);
+    border-bottom: 2px solid var(--ink-border-gold);
     height: 64px; display: flex; align-items: center;
     padding: 0 32px; justify-content: space-between;
+    box-shadow: 0 2px 20px rgba(100,149,237,0.08);
   }
   .wm-nav-left { display: flex; align-items: center; gap: 16px; }
   .wm-back {
     font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
-    color: var(--text-dim); text-decoration: none; border: 1px solid var(--ink-border);
+    color: var(--blue-bright); text-decoration: none;
+    border: 1px solid var(--blue-dim); background: var(--blue-dim);
     padding: 6px 14px; border-radius: 6px; transition: all 0.2s;
   }
-  .wm-back:hover { color: var(--gold-light); border-color: var(--gold-dim); }
-  .wm-nav-title { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 300; color: var(--gold-light); }
+  .wm-back:hover { background: rgba(100,149,237,0.25); }
+  .wm-nav-title { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 400; color: var(--gold-light); }
   .wm-nav-sub { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-faint); }
-  .wm-body { padding-top: 64px; display: grid; grid-template-columns: 1fr 340px; min-height: 100vh; }
-  .wm-map-area { position: relative; background: #f0f4ff; overflow: hidden; }
+  .wm-nav-badge {
+    font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--gold-light); border: 1px solid var(--gold-dim);
+    background: var(--gold-glow); padding: 4px 12px; border-radius: 999px;
+  }
+
+  /* BODY LAYOUT */
+  .wm-body { padding-top: 64px; display: grid; grid-template-columns: 1fr 360px; min-height: 100vh; }
+
+  /* MAP AREA */
+  .wm-map-area {
+    position: relative; overflow: hidden;
+    background: linear-gradient(135deg, #e8eeff 0%, #f0f4ff 40%, #e8f0ff 100%);
+    border-right: 1px solid var(--ink-border);
+  }
   .wm-map-canvas { width: 100%; height: 100%; position: relative; min-height: calc(100vh - 64px); }
+
+  /* MAP BACKGROUND — illustrated feel */
   .wm-map-bg {
     position: absolute; inset: 0;
     background:
-      radial-gradient(ellipse at 30% 40%, rgba(201,168,76,0.08) 0%, transparent 50%),
-      radial-gradient(ellipse at 70% 70%, rgba(100,149,237,0.1) 0%, transparent 50%),
-      repeating-linear-gradient(0deg, transparent, transparent 40px, rgba(100,149,237,0.06) 40px, rgba(100,149,237,0.06) 41px),
-      repeating-linear-gradient(90deg, transparent, transparent 40px, rgba(100,149,237,0.06) 40px, rgba(100,149,237,0.06) 41px);
+      radial-gradient(ellipse at 50% 45%, rgba(255,255,255,0.8) 0%, transparent 60%),
+      radial-gradient(ellipse at 35% 38%, rgba(201,168,76,0.08) 0%, transparent 30%),
+      radial-gradient(ellipse at 65% 60%, rgba(100,149,237,0.08) 0%, transparent 30%),
+      radial-gradient(ellipse at 42% 62%, rgba(100,149,237,0.05) 0%, transparent 20%);
   }
+
+  /* MAP GRID — subtle cartographic feel */
+  .wm-map-grid {
+    position: absolute; inset: 0; pointer-events: none;
+    background-image:
+      linear-gradient(rgba(100,149,237,0.08) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(100,149,237,0.08) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  /* TERRITORY ZONES — visual regions on the map */
+  .wm-zone {
+    position: absolute; border-radius: 50%;
+    pointer-events: none; transform: translate(-50%, -50%);
+  }
+
+  /* ROUTE */
   .wm-route-svg { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+
+  /* LOCATION PINS */
   .wm-location {
     position: absolute; transform: translate(-50%, -50%);
     cursor: pointer; z-index: 10;
   }
+  .wm-location-pin-wrap {
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+  }
   .wm-location-pin {
-    width: 14px; height: 14px; border-radius: 50%;
+    width: 16px; height: 16px; border-radius: 50%;
     border: 2px solid; transition: all 0.3s;
-    position: relative;
+    position: relative; box-shadow: 0 2px 8px rgba(0,0,0,0.15);
   }
   .wm-location-pin::after {
-    content: ''; position: absolute; inset: -6px; border-radius: 50%;
+    content: ''; position: absolute; inset: -5px; border-radius: 50%;
     background: currentColor; opacity: 0; transition: opacity 0.3s;
   }
-  .wm-location:hover .wm-location-pin::after { opacity: 0.15; }
-  .wm-location-label {
-    position: absolute; left: 50%; transform: translateX(-50%);
-    bottom: calc(100% + 8px); white-space: nowrap;
-    font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase;
-    background: rgba(255,255,255,0.95); border: 1px solid;
-    padding: 3px 8px; border-radius: 4px; pointer-events: none;
+  .wm-location:hover .wm-location-pin { transform: scale(1.3); }
+  .wm-location:hover .wm-location-pin::after { opacity: 0.12; }
+  .wm-location-name {
+    font-size: 8px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--text-main); white-space: nowrap; font-weight: 600;
+    background: rgba(255,255,255,0.9); padding: 2px 6px; border-radius: 3px;
+    border: 1px solid rgba(100,149,237,0.15);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
     opacity: 0; transition: opacity 0.2s;
+    pointer-events: none;
   }
-  .wm-location:hover .wm-location-label { opacity: 1; }
-  .wm-location.locked .wm-location-pin { opacity: 0.35; filter: grayscale(1); }
-  .wm-location.active .wm-location-pin { transform: scale(1.4); }
+  .wm-location:hover .wm-location-name { opacity: 1; }
+  .wm-location.locked .wm-location-pin { opacity: 0.3; filter: grayscale(1); box-shadow: none; }
+  .wm-location.locked { cursor: default; }
+  .wm-location.active .wm-location-pin { transform: scale(1.5); box-shadow: 0 0 0 4px rgba(201,168,76,0.25); }
+
+  /* MOVING ARROW */
   .wm-arrow {
-    position: absolute; width: 12px; height: 12px;
+    position: absolute; width: 14px; height: 14px;
     background: var(--gold); border-radius: 50%;
-    box-shadow: 0 0 12px rgba(201,168,76,0.8);
+    box-shadow: 0 0 0 4px rgba(201,168,76,0.3), 0 0 16px rgba(201,168,76,0.6);
     transform: translate(-50%, -50%);
-    transition: all 0.5s ease;
+    transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
     pointer-events: none; z-index: 20;
   }
+
+  /* LEGEND */
+  .wm-legend {
+    position: absolute; top: 20px; left: 20px;
+    background: rgba(255,255,255,0.95); border: 1px solid var(--ink-border-gold);
+    border-radius: 12px; padding: 16px 20px; z-index: 30;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  }
+  .wm-legend-title {
+    font-size: 8px; letter-spacing: 0.28em; text-transform: uppercase;
+    color: var(--gold-light); margin-bottom: 12px; font-weight: 700;
+    border-bottom: 1px solid var(--ink-border-gold); padding-bottom: 8px;
+  }
+  .wm-legend-item { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; font-size: 11px; color: var(--text-dim); }
+  .wm-legend-item:last-child { margin-bottom: 0; }
+  .wm-legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; border: 1.5px solid rgba(0,0,0,0.1); }
+
+  /* CONTROLS */
   .wm-controls {
-    position: absolute; bottom: 24px; left: 24px; display: flex; gap: 8px; z-index: 30;
+    position: absolute; bottom: 24px; left: 50%; transform: translateX(-50%);
+    display: flex; gap: 10px; z-index: 30;
   }
   .wm-ctrl-btn {
-    font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase;
-    padding: 8px 16px; border-radius: 6px; border: 1px solid var(--gold-dim);
-    background: var(--gold-glow); color: var(--gold-light); cursor: pointer;
-    transition: all 0.2s;
+    font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 700;
+    padding: 10px 20px; border-radius: 8px;
+    border: 1px solid var(--gold-dim); background: white;
+    color: var(--gold-light); cursor: pointer; transition: all 0.2s;
+    box-shadow: 0 2px 12px rgba(201,168,76,0.15);
   }
-  .wm-ctrl-btn:hover { background: rgba(201,168,76,0.2); }
-  .wm-ctrl-btn.playing { border-color: var(--gold); background: rgba(201,168,76,0.2); }
-  .wm-legend {
-    position: absolute; top: 24px; left: 24px;
-    background: rgba(255,255,255,0.92); border: 1px solid var(--ink-border-gold);
-    border-radius: 10px; padding: 14px 18px; z-index: 30;
+  .wm-ctrl-btn:hover { background: var(--gold-glow); box-shadow: 0 4px 20px rgba(201,168,76,0.25); }
+  .wm-ctrl-btn.playing { background: var(--gold-glow); border-color: var(--gold); }
+  .wm-ctrl-btn.secondary {
+    border-color: var(--blue-dim); color: var(--blue-bright); background: white;
+    box-shadow: 0 2px 12px rgba(100,149,237,0.1);
   }
-  .wm-legend-title { font-size: 8px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 10px; }
-  .wm-legend-item { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; font-size: 10px; color: var(--text-dim); }
-  .wm-legend-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .wm-ctrl-btn.secondary:hover { background: var(--blue-dim); }
+
+  /* COMPASS */
+  .wm-compass {
+    position: absolute; top: 20px; right: 20px; z-index: 30;
+    width: 48px; height: 48px; border-radius: 50%;
+    background: rgba(255,255,255,0.95); border: 1px solid var(--ink-border-gold);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px; box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  }
+
+  /* SIDEBAR */
   .wm-sidebar {
-    background: var(--ink-surface); border-left: 1px solid var(--ink-border-gold);
+    background: white; border-left: 1px solid var(--ink-border-gold);
     display: flex; flex-direction: column; overflow-y: auto;
     position: sticky; top: 64px; height: calc(100vh - 64px);
+    box-shadow: -4px 0 20px rgba(100,149,237,0.06);
   }
   .wm-sidebar-header {
-    padding: 24px; border-bottom: 1px solid var(--ink-border);
-    background: linear-gradient(180deg, rgba(201,168,76,0.05) 0%, transparent 100%);
+    padding: 28px 24px 20px;
+    border-bottom: 1px solid var(--ink-border);
+    background: linear-gradient(180deg, rgba(201,168,76,0.04) 0%, transparent 100%);
+    position: relative;
   }
-  .wm-sidebar-eyebrow { font-size: 8px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 8px; }
-  .wm-sidebar-title { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 300; color: var(--text-main); line-height: 1.1; margin-bottom: 6px; }
-  .wm-sidebar-type { font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-faint); }
-  .wm-sidebar-desc { padding: 20px 24px; font-family: 'Cormorant Garamond', serif; font-size: 16px; font-weight: 300; line-height: 1.8; color: var(--text-dim); flex: 1; }
+  .wm-sidebar-header::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--gold), rgba(201,168,76,0.3), transparent);
+  }
+  .wm-sidebar-eyebrow {
+    font-size: 8px; letter-spacing: 0.28em; text-transform: uppercase;
+    color: var(--gold-light); margin-bottom: 10px; font-weight: 700;
+  }
+  .wm-sidebar-title {
+    font-family: 'Cormorant Garamond', serif; font-size: 30px;
+    font-weight: 300; color: var(--text-main); line-height: 1.1; margin-bottom: 8px;
+  }
+  .wm-sidebar-type {
+    font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: white; background: var(--blue-bright);
+    padding: 3px 10px; border-radius: 999px; display: inline-block;
+  }
+  .wm-sidebar-desc {
+    padding: 24px; font-family: 'Cormorant Garamond', serif;
+    font-size: 17px; font-weight: 300; line-height: 1.85;
+    color: var(--text-dim); flex: 1;
+    border-bottom: 1px solid var(--ink-border);
+  }
   .wm-sidebar-locked {
-    margin: 0 24px 24px; padding: 16px; border-radius: 8px;
-    background: rgba(100,149,237,0.06); border: 1px solid rgba(100,149,237,0.2);
-    font-size: 11px; color: var(--text-faint); text-align: center; line-height: 1.6;
+    margin: 20px 24px; padding: 16px 18px; border-radius: 10px;
+    background: rgba(100,149,237,0.05); border: 1px solid var(--blue-dim);
+    font-size: 12px; color: var(--blue-bright); line-height: 1.65;
+    display: flex; align-items: center; gap: 10px;
   }
   .wm-sidebar-empty {
     flex: 1; display: flex; flex-direction: column; align-items: center;
-    justify-content: center; padding: 40px 24px; text-align: center; gap: 12px;
+    justify-content: center; padding: 48px 32px; text-align: center; gap: 16px;
   }
-  .wm-sidebar-empty-icon { font-size: 40px; opacity: 0.3; }
-  .wm-sidebar-empty-text { font-family: 'Cormorant Garamond', serif; font-size: 16px; font-weight: 300; color: var(--text-faint); line-height: 1.7; }
-  .wm-location-list { padding: 20px 24px; border-top: 1px solid var(--ink-border); }
-  .wm-location-list-title { font-size: 8px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 12px; }
+  .wm-sidebar-empty-icon { font-size: 48px; }
+  .wm-sidebar-empty-title {
+    font-family: 'Cormorant Garamond', serif; font-size: 22px;
+    font-weight: 300; color: var(--text-main);
+  }
+  .wm-sidebar-empty-text {
+    font-size: 13px; color: var(--text-faint); line-height: 1.7; max-width: 240px;
+  }
+
+  /* LOCATION LIST */
+  .wm-location-list { padding: 20px 24px; }
+  .wm-location-list-title {
+    font-size: 8px; letter-spacing: 0.28em; text-transform: uppercase;
+    color: var(--gold-light); margin-bottom: 14px; font-weight: 700;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .wm-location-list-title::after {
+    content: ''; flex: 1; height: 1px; background: var(--ink-border-gold);
+  }
   .wm-location-item {
-    display: flex; align-items: center; gap: 10px; padding: 8px 0;
-    border-bottom: 1px solid var(--ink-border); cursor: pointer; transition: all 0.2s;
+    display: flex; align-items: center; gap: 12px; padding: 10px 12px;
+    border-radius: 8px; cursor: pointer; transition: all 0.2s; margin-bottom: 4px;
   }
-  .wm-location-item:last-child { border-bottom: none; }
-  .wm-location-item:hover { padding-left: 4px; }
+  .wm-location-item:hover { background: var(--blue-dim); }
   .wm-location-item.locked { opacity: 0.4; cursor: default; }
-  .wm-location-item-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
-  .wm-location-item-name { font-size: 11px; color: var(--text-dim); flex: 1; }
-  .wm-location-item-lock { font-size: 10px; }
+  .wm-location-item.locked:hover { background: transparent; }
+  .wm-location-item-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .wm-location-item-name { font-size: 12px; color: var(--text-main); flex: 1; font-weight: 500; }
+  .wm-location-item-type { font-size: 9px; color: var(--text-faint); letter-spacing: 0.1em; text-transform: uppercase; }
+  .wm-location-item-lock { font-size: 11px; color: var(--text-faint); }
+
+  /* STATS BAR */
+  .wm-stats {
+    padding: 16px 24px; background: var(--ink-surface2);
+    border-top: 1px solid var(--ink-border);
+    display: flex; gap: 20px;
+  }
+  .wm-stat { display: flex; flex-direction: column; gap: 2px; }
+  .wm-stat-num { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 300; color: var(--gold-light); }
+  .wm-stat-label { font-size: 8px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-faint); }
+
   @media (max-width: 768px) {
     .wm-body { grid-template-columns: 1fr; }
-    .wm-sidebar { position: fixed; bottom: 0; left: 0; right: 0; top: auto; height: 50vh; border-left: none; border-top: 1px solid var(--ink-border-gold); z-index: 30; }
-    .wm-map-canvas { min-height: 50vh; }
+    .wm-sidebar { position: fixed; bottom: 0; left: 0; right: 0; top: auto; height: 45vh; border-left: none; border-top: 2px solid var(--ink-border-gold); z-index: 30; }
+    .wm-map-canvas { min-height: 55vh; }
+    .wm-controls { bottom: 48vh; }
   }
 `;
 
@@ -307,9 +432,9 @@ export default function WorldMapPage({ params }: { params: Promise<{ slug: strin
                   style={{ left: `${loc.x}%`, top: `${loc.y}%` }}
                   onClick={() => loc.unlocked && setSelected(loc)}
                 >
-                  <div className="wm-location-pin" style={{ backgroundColor: loc.unlocked ? loc.accent : "#333", borderColor: loc.unlocked ? loc.accent : "#444", color: loc.accent }} />
-                  <div className="wm-location-label" style={{ borderColor: loc.accent, color: loc.unlocked ? loc.accent : "var(--text-faint)" }}>
-                    {loc.name}
+                  <div className="wm-location-pin-wrap">
+                    <div className="wm-location-pin" style={{ backgroundColor: loc.unlocked ? loc.accent : "#ccc", borderColor: loc.unlocked ? loc.accent : "#bbb", color: loc.accent }} />
+                    <div className="wm-location-name">{loc.name}</div>
                   </div>
                 </div>
               ))}
@@ -326,7 +451,8 @@ export default function WorldMapPage({ params }: { params: Promise<{ slug: strin
                 <div className="wm-legend-item"><div className="wm-legend-dot" style={{ background: "#333" }} />Locked location</div>
                 <div className="wm-legend-item"><div className="wm-legend-dot" style={{ background: "#C9A84C", boxShadow: "0 0 6px rgba(201,168,76,0.8)" }} />Character position</div>
               </div>
-
+              {/* Compass */}
+              <div className="wm-compass">🧭</div>
               {/* Controls */}
               <div className="wm-controls">
                 <button className={`wm-ctrl-btn${playing ? " playing" : ""}`} onClick={playRoute}>
@@ -355,18 +481,34 @@ export default function WorldMapPage({ params }: { params: Promise<{ slug: strin
               </>
             ) : (
               <div className="wm-sidebar-empty">
-                <div className="wm-sidebar-empty-icon">🗺</div>
-                <div className="wm-sidebar-empty-text">Tap a location on the map to learn more about it.</div>
+                <div className="wm-sidebar-empty-icon">🗺️</div>
+                <div className="wm-sidebar-empty-title">Explore the World</div>
+                <div className="wm-sidebar-empty-text">Tap a location on the map to discover its story and lore.</div>
               </div>
             )}
-
+            {/* Stats */}
+            <div className="wm-stats">
+              <div className="wm-stat">
+                <div className="wm-stat-num">{LOCATIONS.filter(l => l.unlocked).length}</div>
+                <div className="wm-stat-label">Discovered</div>
+              </div>
+              <div className="wm-stat">
+                <div className="wm-stat-num">{LOCATIONS.filter(l => !l.unlocked).length}</div>
+                <div className="wm-stat-label">Locked</div>
+              </div>
+              <div className="wm-stat">
+                <div className="wm-stat-num">{LOCATIONS.length}</div>
+                <div className="wm-stat-label">Total</div>
+              </div>
+            </div>
             {/* Location List */}
             <div className="wm-location-list">
               <div className="wm-location-list-title">All Locations</div>
               {LOCATIONS.map(loc => (
                 <div key={loc.id} className={`wm-location-item${!loc.unlocked ? " locked" : ""}`} onClick={() => loc.unlocked && setSelected(loc)}>
-                  <div className="wm-location-item-dot" style={{ background: loc.unlocked ? loc.accent : "#333" }} />
+                  <div className="wm-location-item-dot" style={{ background: loc.unlocked ? loc.accent : "#ccc" }} />
                   <span className="wm-location-item-name">{loc.name}</span>
+                  <span className="wm-location-item-type">{loc.type}</span>
                   {!loc.unlocked && <span className="wm-location-item-lock">🔒</span>}
                 </div>
               ))}
