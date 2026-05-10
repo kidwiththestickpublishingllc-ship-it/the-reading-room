@@ -78,16 +78,16 @@ const STYLES = `
   @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Syne:wght@400;500;600;700&display=swap');
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
-    --gold: #C9A84C; --gold-light: #E2C97E; --gold-dim: rgba(201,168,76,0.35);
-    --gold-glow: rgba(201,168,76,0.12); --blue: #6495ED; --blue-dim: rgba(100,149,237,0.22);
-    --ink-bg: #0a0a0a; --ink-surface: #111; --ink-surface2: #181818;
-    --ink-border: rgba(255,255,255,0.07); --ink-border-gold: rgba(201,168,76,0.25);
-    --text-main: #f0ece2; --text-dim: rgba(232,228,218,0.5); --text-faint: rgba(232,228,218,0.25);
+    --gold: #C9A84C; --gold-light: #8a6510; --gold-dim: rgba(201,168,76,0.5);
+    --gold-glow: rgba(201,168,76,0.12); --blue: #6495ED; --blue-dim: rgba(100,149,237,0.2);
+    --ink-bg: #ffffff; --ink-surface: #f5f8ff; --ink-surface2: #eef2fb;
+    --ink-border: rgba(100,149,237,0.15); --ink-border-gold: rgba(201,168,76,0.4);
+    --text-main: #1a1a2e; --text-dim: rgba(26,26,46,0.6); --text-faint: rgba(26,26,46,0.35);
   }
-  .wm-root { min-height: 100vh; background: #0a0a0a; font-family: 'Syne', sans-serif; color: var(--text-main); }
+  .wm-root { min-height: 100vh; background: #ffffff; font-family: 'Syne', sans-serif; color: var(--text-main); }
   .wm-nav {
     position: fixed; top: 0; left: 0; right: 0; z-index: 40;
-    background: rgba(8,8,8,0.97); backdrop-filter: blur(20px);
+    background: rgba(255,255,255,0.97); backdrop-filter: blur(20px);
     border-bottom: 1px solid var(--ink-border-gold);
     height: 64px; display: flex; align-items: center;
     padding: 0 32px; justify-content: space-between;
@@ -102,15 +102,15 @@ const STYLES = `
   .wm-nav-title { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 300; color: var(--gold-light); }
   .wm-nav-sub { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-faint); }
   .wm-body { padding-top: 64px; display: grid; grid-template-columns: 1fr 340px; min-height: 100vh; }
-  .wm-map-area { position: relative; background: #0d0d12; overflow: hidden; }
+  .wm-map-area { position: relative; background: #f0f4ff; overflow: hidden; }
   .wm-map-canvas { width: 100%; height: 100%; position: relative; min-height: calc(100vh - 64px); }
   .wm-map-bg {
     position: absolute; inset: 0;
     background:
-      radial-gradient(ellipse at 30% 40%, rgba(201,168,76,0.04) 0%, transparent 50%),
-      radial-gradient(ellipse at 70% 70%, rgba(100,149,237,0.04) 0%, transparent 50%),
-      repeating-linear-gradient(0deg, transparent, transparent 40px, rgba(255,255,255,0.015) 40px, rgba(255,255,255,0.015) 41px),
-      repeating-linear-gradient(90deg, transparent, transparent 40px, rgba(255,255,255,0.015) 40px, rgba(255,255,255,0.015) 41px);
+      radial-gradient(ellipse at 30% 40%, rgba(201,168,76,0.08) 0%, transparent 50%),
+      radial-gradient(ellipse at 70% 70%, rgba(100,149,237,0.1) 0%, transparent 50%),
+      repeating-linear-gradient(0deg, transparent, transparent 40px, rgba(100,149,237,0.06) 40px, rgba(100,149,237,0.06) 41px),
+      repeating-linear-gradient(90deg, transparent, transparent 40px, rgba(100,149,237,0.06) 40px, rgba(100,149,237,0.06) 41px);
   }
   .wm-route-svg { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
   .wm-location {
@@ -131,7 +131,7 @@ const STYLES = `
     position: absolute; left: 50%; transform: translateX(-50%);
     bottom: calc(100% + 8px); white-space: nowrap;
     font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase;
-    background: rgba(10,10,10,0.9); border: 1px solid;
+    background: rgba(255,255,255,0.95); border: 1px solid;
     padding: 3px 8px; border-radius: 4px; pointer-events: none;
     opacity: 0; transition: opacity 0.2s;
   }
@@ -159,7 +159,7 @@ const STYLES = `
   .wm-ctrl-btn.playing { border-color: var(--gold); background: rgba(201,168,76,0.2); }
   .wm-legend {
     position: absolute; top: 24px; left: 24px;
-    background: rgba(10,10,10,0.85); border: 1px solid var(--ink-border-gold);
+    background: rgba(255,255,255,0.92); border: 1px solid var(--ink-border-gold);
     border-radius: 10px; padding: 14px 18px; z-index: 30;
   }
   .wm-legend-title { font-size: 8px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 10px; }
