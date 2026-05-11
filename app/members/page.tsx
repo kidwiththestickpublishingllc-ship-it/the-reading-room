@@ -477,7 +477,34 @@ export default function MembersRoomV2() {
               </div>
             </a>
           </div>
-
+          {/* ── GETTING STARTED BANNER — new members only ── */}
+          {profile.ink_balance <= 250 && posts.filter(p => p.author_id === profile.id).length === 0 && (
+            <div style={{ background: "linear-gradient(135deg, rgba(201,168,76,0.08), rgba(100,149,237,0.05))", border: "1px solid rgba(201,168,76,0.25)", borderLeft: "4px solid #C9A84C", borderRadius: 12, padding: 28, marginBottom: 24 }}>
+              <div style={{ fontSize: 9, letterSpacing: "0.28em", textTransform: "uppercase" as const, color: "#C9A84C", marginBottom: 12 }}>Welcome to TTL</div>
+              <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 24, fontWeight: 300, color: "#f0ece2", marginBottom: 8 }}>Your library starts here, {displayName.split(" ")[0]}. 🕯️</div>
+              <p style={{ fontSize: 13, color: "rgba(232,228,218,0.6)", lineHeight: 1.8, marginBottom: 20 }}>You have <strong style={{ color: "#C9A84C" }}>250 free Ink</strong> waiting. Here's how to make the most of your membership:</p>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(180px, 1fr))", gap: 12, marginBottom: 24 }}>
+                {[
+                  { step: "1", title: "Browse stories", desc: "Explore 24+ genres in The Reading Room.", action: () => window.location.href = "/reading-room/stories", cta: "Browse →" },
+                  { step: "2", title: "Unlock a chapter", desc: "Each chapter costs 25 Ink. You have 250 free.", action: () => window.location.href = "/reading-room/stories", cta: "Start reading →" },
+                  { step: "3", title: "Build your library", desc: "Every unlock saves to your permanent shelf.", action: () => setActiveTab("library"), cta: "My Library →" },
+                  { step: "4", title: "Tip a writer", desc: "100% of tips go directly to the author.", action: () => window.location.href = "/reading-room/authors", cta: "Meet authors →" },
+                ].map(s => (
+                  <div key={s.step} onClick={s.action} style={{ background: "rgba(0,0,0,0.3)", border: "1px solid rgba(201,168,76,0.15)", borderRadius: 8, padding: 16, cursor: "pointer", transition: "all 0.2s" }}
+                    onMouseEnter={e => (e.currentTarget.style.borderColor = "rgba(201,168,76,0.4)")}
+                    onMouseLeave={e => (e.currentTarget.style.borderColor = "rgba(201,168,76,0.15)")}>
+                    <div style={{ width: 28, height: 28, borderRadius: "50%", background: "rgba(201,168,76,0.15)", border: "1px solid rgba(201,168,76,0.3)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 700, color: "#C9A84C", marginBottom: 10 }}>{s.step}</div>
+                    <div style={{ fontSize: 13, fontWeight: 600, color: "#f0ece2", marginBottom: 4 }}>{s.title}</div>
+                    <div style={{ fontSize: 11, color: "rgba(232,228,218,0.5)", lineHeight: 1.6, marginBottom: 8 }}>{s.desc}</div>
+                    <div style={{ fontSize: 10, color: "#C9A84C", letterSpacing: "0.1em" }}>{s.cta}</div>
+                  </div>
+                ))}
+              </div>
+              <a href="/reading-room/stories" style={{ display: "inline-block", fontFamily: "inherit", fontSize: 11, fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase" as const, padding: "12px 28px", borderRadius: 8, background: "linear-gradient(135deg,#C9A84C,#8a6510)", color: "#000", textDecoration: "none" }}>
+                Start Reading →
+              </a>
+            </div>
+          )}
           {/* ── FORUM TAB ── */}
           {activeTab === "forum" && (
             <div>
