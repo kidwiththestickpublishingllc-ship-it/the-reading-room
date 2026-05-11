@@ -2344,7 +2344,12 @@ export default function ReadingRoomHome() {
                 <p>The Reading Room</p>
               </div>
             </div>
-            <span className="ttl-footer-copy">© {new Date().getFullYear()} The Tiniest Library. All rights reserved.</span>
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 6, textAlign: "center" }}>
+              <span className="ttl-footer-copy">© {new Date().getFullYear()} The Tiniest Library. All rights reserved.</span>
+              <a href="https://www.kidwiththestick.com" target="_blank" rel="noopener noreferrer" style={{ fontSize: 10, letterSpacing: "0.12em", color: "#C9A84C", textDecoration: "none", fontFamily: "'Syne', sans-serif" }}>
+                A company of Kid With The Stick Publishing
+              </a>
+            </div>
             <div className="ttl-footer-actions">
               <a href="/reading-room/stories" className="ttl-btn-ghost" style={{ fontSize: '9px', padding: '8px 18px', borderRadius: '8px' }} suppressHydrationWarning>
                 Browse Stories
