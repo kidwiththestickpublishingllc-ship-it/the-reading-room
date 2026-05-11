@@ -478,7 +478,7 @@ export default function MembersRoomV2() {
             </a>
           </div>
           {/* ── GETTING STARTED BANNER — new members only ── */}
-          {profile.ink_balance <= 250 && posts.filter(p => p.author_id === profile.id).length === 0 && (
+          {profile.ink_balance <= 250 && (
             <div style={{ background: "linear-gradient(135deg, rgba(201,168,76,0.08), rgba(100,149,237,0.05))", border: "1px solid rgba(201,168,76,0.25)", borderLeft: "4px solid #C9A84C", borderRadius: 12, padding: 28, marginBottom: 24 }}>
               <div style={{ fontSize: 9, letterSpacing: "0.28em", textTransform: "uppercase" as const, color: "#C9A84C", marginBottom: 12 }}>Welcome to TTL</div>
               <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 24, fontWeight: 300, color: "#f0ece2", marginBottom: 8 }}>Your library starts here, {displayName.split(" ")[0]}. 🕯️</div>
