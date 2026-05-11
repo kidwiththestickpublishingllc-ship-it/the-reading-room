@@ -2121,7 +2121,13 @@ export default function ReadingRoomHome() {
                 <button
                   key={g}
                   type="button"
-                  onClick={() => setSelectedGenre(g)}
+                  onClick={() => {
+                    if (g === "All") {
+                      setSelectedGenre("All");
+                    } else {
+                      window.location.href = `/reading-room/genres/${encodeURIComponent(g.toLowerCase().replace(/\s+/g, "-").replace(/[+]/g, "").replace(/&/g, "and"))}`;
+                    }
+                  }}
                   className={`ttl-filter-btn${selectedGenre === g ? " active" : ""}`}
                 >
                   {g}
