@@ -5,6 +5,7 @@ import { supabase } from "@/lib/supabase";
 import AdQueue from "./components/AdQueue";
 import { startTour } from "@/app/components/WelcomeTour";
 import { LeftAdPanel, RightAdPanel } from './components/HeroPanels'
+import StorySocial from "./components/StorySocial";
 
 // =========================
 // CHANGELOG
@@ -30,6 +31,7 @@ type Author = {
 };
 
 type Story = {
+  id?: string;
   slug: string;
   title: string;
   author: string;
@@ -188,6 +190,7 @@ function guessGenresFromStory(row: SupabaseStoryRow): string[] {
 }
 function mapSupabaseStoryToStory(row: SupabaseStoryRow): Story {
   return {
+    id: row.id,
     slug: row.slug,
     title: row.title,
     author: row.author_name,
@@ -2185,6 +2188,14 @@ export default function ReadingRoomHome() {
                           </div>
                         ) : null}
                         <div className="ttl-story-hint">Click to open reader →</div>
+                        {story.id && (
+  <StorySocial
+    storyId={story.id}
+    storySlug={story.slug}
+    storyTitle={story.title}
+    userId={user?.id ?? null}
+  />
+)}
                       </div>
                     </div>
                   </div>
