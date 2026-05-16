@@ -1400,7 +1400,7 @@ function GenrePageContent({ genreSlug }: { genreSlug: string }) {
       }
     }
     load();
-  }, []);
+  }, [genreName]);
 
   // Stripe ink credit on return
   useEffect(() => {
