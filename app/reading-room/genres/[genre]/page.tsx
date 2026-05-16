@@ -1795,5 +1795,6 @@ if (genreName === "Adult 18+") {
 // File goes at: app/reading-room/genres/[genre]/page.tsx
 // =========================
 export default function GenrePage({ params }: { params: { genre: string } }) {
-  return <GenrePageContent genreSlug={params.genre} />;
+  const genre = params?.genre ?? '';
+  return <GenrePageContent genreSlug={genre} />;
 }
