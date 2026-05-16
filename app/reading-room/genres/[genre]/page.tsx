@@ -382,7 +382,7 @@ function mapRow(row: SupabaseStoryRow, allGenres: string[]): Story {
     badge: normalizeBadge(row.badge),
     description: row.description ?? "A new story is waiting.",
     cover: row.cover_url || "/images/cover-1.jpg",
-    genres: guessGenres(row, allGenres),
+    genres: row.genre ? [row.genre] : guessGenres(row, allGenres),
     teaser: row.description ?? "Preview coming soon.",
     content: "Chapters load dynamically from Supabase.",
     addedAt: row.created_at ?? undefined,
