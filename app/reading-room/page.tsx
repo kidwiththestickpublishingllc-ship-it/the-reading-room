@@ -4,7 +4,7 @@ import React, { useEffect, useMemo, useState, type ReactNode } from "react";
 import { supabase } from "@/lib/supabase";
 import AdQueue from "./components/AdQueue";
 import { startTour } from "@/app/components/WelcomeTour";
-import { LeftAdPanel, RightAdPanel } from './components/HeroPanels'
+import { LeftAdPanel, RightAdPanel } from './components/HeroPanels';
 import StorySocial from "./components/StorySocial";
 
 // =========================
@@ -53,6 +53,15 @@ type SupabaseStoryRow = {
   badge: "Serial" | "Exclusive" | "Early Access" | null;
   is_published: boolean | null;
   created_at?: string | null;
+};
+
+type Chapter = {
+  id: string;
+  chapter_number: number;
+  title: string;
+  content: string;
+  is_free: boolean;
+  ink_cost: number;
 };
 
 type Unlocks = Record<string, boolean>;
@@ -1646,6 +1655,124 @@ function ReaderModal({
 }
 
 // =========================
+// Chapter Reader Modal — fetches chapters from Supabase
+// =========================
+function ChapterReaderModal({
+  open, story, ink, unlocks, onClose, onUnlock,
+}: {
+  open: boolean;
+  story: Story | null;
+  ink: number;
+  unlocks: Unlocks;
+  onClose: () => void;
+  onUnlock: (key: string, cost: number) => void;
+}) {
+  const [chapters, setChapters] = useState<Chapter[]>([]);
+  const [activeChapter, setActiveChapter] = useState<Chapter | null>(null);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (!open || !story?.id) return;
+    setChapters([]);
+    setActiveChapter(null);
+    setLoading(true);
+    supabase
+      .from("chapters")
+      .select("id, chapter_number, title, content, is_free, ink_cost")
+      .eq("story_id", story.id)
+      .order("chapter_number", { ascending: true })
+      .then(({ data }) => {
+        const chs = (data ?? []) as Chapter[];
+        setChapters(chs);
+        if (chs.length > 0) setActiveChapter(chs[0]);
+        setLoading(false);
+      });
+  }, [open, story?.id]);
+
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open, onClose]);
+
+  if (!open || !story) return null;
+
+  const isChapterUnlocked = (ch: Chapter) =>
+    ch.is_free || Boolean(unlocks[`${story.slug}-ch${ch.chapter_number}`]);
+  const canUnlockChapter = (ch: Chapter) => ink >= (ch.ink_cost || 25);
+
+  return (
+    <div className="ttl-modal-overlay" role="dialog" aria-modal="true">
+      <button type="button" onClick={onClose} className="ttl-modal-backdrop" aria-label="Close" />
+      <div className="ttl-modal" style={{ maxWidth: 800 }}>
+        <div className="ttl-modal-top-accent" />
+        <div className="ttl-modal-header">
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <div className="ttl-modal-eyebrow">The Tiniest Library — The Reading Room</div>
+            <div className="ttl-modal-title">{story.title}</div>
+            <div className="ttl-modal-author">by {story.author}</div>
+          </div>
+          <button type="button" onClick={onClose} className="ttl-modal-close">Close ✕</button>
+        </div>
+        {chapters.length > 1 && (
+          <div style={{ display: "flex", gap: 6, padding: "12px 32px", borderBottom: "1px solid rgba(255,255,255,0.06)", overflowX: "auto", flexWrap: "nowrap" }}>
+            {chapters.map(ch => {
+              const unlocked = isChapterUnlocked(ch);
+              const isActive = activeChapter?.id === ch.id;
+              return (
+                <button key={ch.id} onClick={() => setActiveChapter(ch)} style={{ flexShrink: 0, fontFamily: "'Syne', sans-serif", fontSize: 9, letterSpacing: "0.14em", textTransform: "uppercase", padding: "5px 14px", borderRadius: 999, cursor: "pointer", transition: "all 0.15s", border: isActive ? "1px solid var(--gold-dim)" : "1px solid rgba(255,255,255,0.1)", background: isActive ? "var(--gold-glow)" : "transparent", color: isActive ? "var(--gold-light)" : unlocked ? "rgba(232,228,218,0.6)" : "rgba(232,228,218,0.3)" }}>
+                  {unlocked ? "" : "🔒 "}Ch {ch.chapter_number}{!unlocked && ch.ink_cost ? ` · ${ch.ink_cost} Ink` : ""}
+                </button>
+              );
+            })}
+          </div>
+        )}
+        <div className="ttl-modal-body">
+          {loading && <div style={{ textAlign: "center", padding: 48, fontFamily: "'Syne', sans-serif", fontSize: 12, color: "rgba(232,228,218,0.3)", letterSpacing: "0.1em" }}>Loading chapters…</div>}
+          {!loading && chapters.length === 0 && <div style={{ textAlign: "center", padding: 48, fontFamily: "'Syne', sans-serif", fontSize: 12, color: "rgba(232,228,218,0.3)" }}>No chapters available yet. Check back soon.</div>}
+          {!loading && activeChapter && (() => {
+            const unlocked = isChapterUnlocked(activeChapter);
+            const canUnlock = canUnlockChapter(activeChapter);
+            const unlockKey = `${story.slug}-ch${activeChapter.chapter_number}`;
+            return unlocked ? (
+              <div>
+                <div style={{ fontFamily: "'Syne', sans-serif", fontSize: 9, letterSpacing: "0.22em", textTransform: "uppercase", color: "var(--gold-dim)", marginBottom: 20 }}>{activeChapter.title}</div>
+                <div className="ttl-full-text">{activeChapter.content}</div>
+              </div>
+            ) : (
+              <div className="ttl-locked-panel">
+                <div style={{ fontFamily: "'Syne', sans-serif", fontSize: 11, letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(232,228,218,0.35)", marginBottom: 12 }}>{activeChapter.title} — Locked</div>
+                <div className="ttl-teaser-box">
+                  <div className="ttl-teaser-label">Continue the story</div>
+                  <div className="ttl-teaser-text">Unlock this chapter to keep reading. {activeChapter.ink_cost || 25} Ink — yours forever once unlocked.</div>
+                </div>
+                <div className="ttl-unlock-row">
+                  <span className="ttl-unlock-info">Costs <strong style={{ color: "var(--gold)" }}>{activeChapter.ink_cost || 25}</strong> Ink{!canUnlock && <span style={{ color: "rgba(232,228,218,0.35)", marginLeft: 8 }}>(you have {ink})</span>}</span>
+                  <button type="button" disabled={!canUnlock} className="ttl-unlock-btn" style={!canUnlock ? { borderColor: "var(--ink-border)", color: "var(--text-faint)", cursor: "default", background: "transparent" } : {}} onClick={() => onUnlock(unlockKey, activeChapter.ink_cost || 25)}>
+                    {canUnlock ? "Unlock & Read" : "Need more Ink"}
+                  </button>
+                </div>
+                {!canUnlock && <div style={{ marginTop: 16 }}><a href="/reading-room/buy-ink" style={{ fontFamily: "'Syne', sans-serif", fontSize: 10, letterSpacing: "0.16em", textTransform: "uppercase", color: "var(--blue-bright)", textDecoration: "underline", textUnderlineOffset: 3 }}>Buy Ink →</a></div>}
+              </div>
+            );
+          })()}
+        </div>
+        <div className="ttl-modal-footer">
+          <span className="ttl-modal-hint">{chapters.length > 0 ? `${chapters.filter(ch => isChapterUnlocked(ch)).length} of ${chapters.length} chapters unlocked` : "Press ESC to close"}</span>
+          <div style={{ display: "flex", gap: 8 }}>
+            {activeChapter && chapters.indexOf(activeChapter) < chapters.length - 1 && (
+              <button className="ttl-btn-ghost" style={{ fontSize: "9px", padding: "8px 18px", borderRadius: "8px" }} onClick={() => { const idx = chapters.indexOf(activeChapter); if (idx < chapters.length - 1) setActiveChapter(chapters[idx + 1]); }}>Next Chapter →</button>
+            )}
+            <button onClick={onClose} className="ttl-btn-ghost" style={{ fontSize: "9px", padding: "8px 18px", borderRadius: "8px" }}>Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// =========================
 // Red Door Card — entry to The Red Room
 // =========================
 function RedDoorCard() {
@@ -1938,14 +2065,17 @@ export default function ReadingRoomHome() {
           </div>
         </nav>
         <div className="ttl-bottom-nav-spacer" />
-        <ReaderModal
+        <ChapterReaderModal
           open={Boolean(openStorySlug)}
           story={activeStory}
-          isUnlocked={activeUnlocked}
-          inkCost={DEFAULT_UNLOCK_COST}
-          canUnlock={activeCanUnlock}
+          ink={ink}
+          unlocks={unlocks}
           onClose={() => setOpenStorySlug(null)}
-          onUnlock={() => { if (activeStory) unlockStory(activeStory.slug, DEFAULT_UNLOCK_COST); }}
+          onUnlock={(key, cost) => {
+            if (ink < cost) { alert(`You need ${cost} Ink to unlock this.`); return; }
+            setInk(v => v - cost);
+            setUnlocksState(u => ({ ...u, [key]: true }));
+          }}
         />
 
         {/* ── HERO ── */}
@@ -2189,13 +2319,13 @@ export default function ReadingRoomHome() {
                         ) : null}
                         <div className="ttl-story-hint">Click to open reader →</div>
                         {story.id && (
-  <StorySocial
-    storyId={story.id}
-    storySlug={story.slug}
-    storyTitle={story.title}
-    userId={user?.id ?? null}
-  />
-)}
+                          <StorySocial
+                            storyId={story.id}
+                            storySlug={story.slug}
+                            storyTitle={story.title}
+                            userId={user?.id ?? null}
+                          />
+                        )}
                       </div>
                     </div>
                   </div>
