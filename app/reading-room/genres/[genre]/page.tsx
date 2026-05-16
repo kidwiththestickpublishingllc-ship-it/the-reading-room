@@ -1392,8 +1392,8 @@ function GenrePageContent({ genreSlug }: { genreSlug: string }) {
         } else {
           setStories(DEMO_STORIES);
         }
-      } catch {
-        setStoriesError("Could not reach Supabase.");
+      } catch (err) {
+        setStoriesError(String(err));
         setStories(DEMO_STORIES);
       } finally {
         setStoriesLoading(false);
