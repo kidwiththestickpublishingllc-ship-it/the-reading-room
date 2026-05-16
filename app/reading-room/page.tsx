@@ -2284,8 +2284,8 @@ export default function ReadingRoomHome() {
                     key={story.slug}
                     role="button"
                     tabIndex={0}
-                    onClick={() => setOpenStorySlug(story.slug)}
-                    onKeyDown={e => { if (e.key === "Enter" || e.key === " ") setOpenStorySlug(story.slug); }}
+                    onClick={() => window.location.href = `/reading-room/stories/${story.slug}/chapters/1`}
+                    onKeyDown={e => { if (e.key === "Enter" || e.key === " ") window.location.href = `/reading-room/stories/${story.slug}/chapters/1`; }}
                     className="ttl-story-card"
                   >
                     <div className="ttl-story-inner">
