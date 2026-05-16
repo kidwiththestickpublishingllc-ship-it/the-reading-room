@@ -44,6 +44,7 @@ type SupabaseStoryRow = {
   badge: "Serial" | "Exclusive" | "Early Access" | null;
   is_published: boolean | null;
   created_at?: string | null;
+  genre?: string | null;
 };
 
 type Unlocks = Record<string, boolean>;
@@ -1380,8 +1381,9 @@ function GenrePageContent({ genreSlug }: { genreSlug: string }) {
         setStoriesLoading(true);
         const { data, error } = await supabase
           .from("stories")
-          .select("id, slug, title, author_name, description, cover_url, badge, is_published, created_at")
+          .select("id, slug, title, author_name, description, cover_url, badge, is_published, created_at, genre")
           .eq("is_published", true)
+          .eq("genre", genreName)
           .order("created_at", { ascending: false });
 
         if (error) { setStoriesError(error.message); setStories(DEMO_STORIES); return; }
@@ -1592,8 +1594,8 @@ if (genreName === "Adult 18+") {
                     <div
                       key={story.slug}
                       role="button" tabIndex={0}
-                      onClick={() => setOpenStorySlug(story.slug)}
-                      onKeyDown={e => { if (e.key === "Enter" || e.key === " ") setOpenStorySlug(story.slug); }}
+                      onClick={() => window.location.href = `/reading-room/stories/${story.slug}/chapters/1`}
+                      onKeyDown={e => { if (e.key === "Enter" || e.key === " ") window.location.href = `/reading-room/stories/${story.slug}/chapters/1`; }}
                       className="gp-story-card"
                     >
                       <div className="gp-story-inner">
