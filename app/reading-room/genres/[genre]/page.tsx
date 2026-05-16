@@ -1379,6 +1379,7 @@ function GenrePageContent({ genreSlug }: { genreSlug: string }) {
     async function load() {
       try {
         setStoriesLoading(true);
+        console.log("Genre query:", genreName);
         const { data, error } = await supabase
           .from("stories")
           .select("id, slug, title, author_name, description, cover_url, badge, is_published, created_at, genre")
