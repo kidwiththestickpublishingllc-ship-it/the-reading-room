@@ -1418,9 +1418,9 @@ function GenrePageContent({ genreSlug }: { genreSlug: string }) {
 
   // Filter stories & authors to this genre
   const genreStories = useMemo(
-    () => stories.filter(s => (s.genres ?? []).includes(genreName)),
-    [stories, genreName]
-  );
+  () => stories,
+  [stories]
+);
 
   const genreAuthors = useMemo(
     () => DEMO_AUTHORS.filter(a => a.genres.includes(genreName)),
