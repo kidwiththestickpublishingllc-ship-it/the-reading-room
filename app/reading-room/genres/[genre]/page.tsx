@@ -1794,7 +1794,14 @@ if (genreName === "Adult 18+") {
 // Next.js Page Export
 // File goes at: app/reading-room/genres/[genre]/page.tsx
 // =========================
-export default async function GenrePage({ params }: { params: Promise<{ genre: string }> }) {
-  const { genre } = await params;
-  return <GenrePageContent genreSlug={genre} />;
+export default function GenrePage() {
+  const [genreSlug, setGenreSlug] = useState('');
+  
+  useEffect(() => {
+    const parts = window.location.pathname.split('/');
+    setGenreSlug(parts[parts.length - 1] ?? '');
+  }, []);
+
+  if (!genreSlug) return null;
+  return <GenrePageContent genreSlug={genreSlug} />;
 }
