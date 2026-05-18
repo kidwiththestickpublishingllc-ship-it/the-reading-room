@@ -661,7 +661,9 @@ function ChapterReaderContent({ storySlug, chapterNum }: { storySlug: string; ch
 // Next.js Page Export
 // File: app/reading-room/stories/[slug]/chapters/[chapter]/page.tsx
 // =========================
-export default async function ChapterPage({ params }: { params: Promise<{ slug: string; chapter: string }> }) {
-  const { slug, chapter } = await params;
+export default function ChapterPage() {
+  const parts = typeof window !== 'undefined' ? window.location.pathname.split('/') : [];
+  const slug = parts[parts.length - 3] ?? '';
+  const chapter = parts[parts.length - 1] ?? '1';
   return <ChapterReaderContent storySlug={slug} chapterNum={parseInt(chapter, 10)} />;
 }
