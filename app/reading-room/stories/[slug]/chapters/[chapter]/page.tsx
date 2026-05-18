@@ -471,7 +471,7 @@ function ChapterReaderContent({ storySlug, chapterNum }: { storySlug: string; ch
         if (thisChapter) {
           if (thisChapter.is_free) { setUnlocked(true); }
           else if (session) {
-            const { data: unlockData } = await supabase.from('chapter_unlocks').select('id').eq('user_id', session.user.id).eq('chapter_id', thisChapter.id).single();
+            const { data: unlockData } = await supabase.from('chapter_unlocks').select('id').eq('user_id', session.user.id).eq('chapter_id', thisChapter.id).maybeSingle();
             setUnlocked(!!unlockData);
           }
         }
