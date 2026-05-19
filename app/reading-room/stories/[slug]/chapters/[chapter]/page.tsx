@@ -538,7 +538,7 @@ function ChapterReaderContent({ storySlug, chapterNum }: { storySlug: string; ch
         {/* Top bar */}
         <header className={`reader-topbar${uiHidden ? ' hidden' : ''}`}>
           <div className="topbar-left">
-            <a href={`/reading-room/stories/${storySlug}`} className="topbar-back">← Back</a>
+            <a href="/reading-room" className="topbar-back">← Reading Room</a>
             <span className="topbar-story-title">{story.title}</span>
             <span className="topbar-chapter-num">Chapter {chapterNum} of {allChapters.length}</span>
           </div>
