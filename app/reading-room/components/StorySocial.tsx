@@ -462,14 +462,36 @@ export default function StorySocial({ storyId, storySlug, storyTitle, userId }: 
         <div className="ttl-social-sep" />
 
         {/* Share */}
-        <button
-          className={`ttl-social-btn${shared ? " shared" : ""}`}
-          onClick={handleShare}
-          title="Copy story link"
-        >
-          <span>{shared ? "✅" : "🔗"}</span>
-          <span>{shared ? "Copied!" : "Share"}</span>
-        </button>
+        <div style={{ position: "relative" }}>
+          <button
+            className={`ttl-social-btn${shared ? " shared" : ""}`}
+            onClick={() => setShared(s => !s)}
+            title="Share this story"
+          >
+            <span>🔗</span>
+            <span>Share</span>
+          </button>
+          {shared && (
+            <div style={{ position: "absolute", bottom: "calc(100% + 8px)", left: 0, background: "#111", border: "1px solid rgba(201,168,76,0.3)", borderRadius: 10, padding: 8, display: "flex", flexDirection: "column", gap: 4, minWidth: 180, zIndex: 50, boxShadow: "0 8px 32px rgba(0,0,0,0.6)" }}>
+              <button onClick={() => { window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(`Reading "${storyTitle}" on The Tiniest Library`)}&url=${encodeURIComponent(`https://read.the-tiniest-library.com/reading-room/stories/${storySlug}`)}`, '_blank'); setShared(false); }} style={{ display: "flex", alignItems: "center", gap: 10, padding: "8px 12px", background: "none", border: "none", color: "#f0ece2", cursor: "pointer", fontSize: 12, borderRadius: 6, textAlign: "left", width: "100%" }}
+                onMouseEnter={e => e.currentTarget.style.background = "rgba(255,255,255,0.05)"}
+                onMouseLeave={e => e.currentTarget.style.background = "none"}>
+                𝕏 Share on X / Twitter
+              </button>
+              <button onClick={() => { window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(`https://read.the-tiniest-library.com/reading-room/stories/${storySlug}`)}`, '_blank'); setShared(false); }} style={{ display: "flex", alignItems: "center", gap: 10, padding: "8px 12px", background: "none", border: "none", color: "#f0ece2", cursor: "pointer", fontSize: 12, borderRadius: 6, textAlign: "left", width: "100%" }}
+                onMouseEnter={e => e.currentTarget.style.background = "rgba(255,255,255,0.05)"}
+                onMouseLeave={e => e.currentTarget.style.background = "none"}>
+                📘 Share on Facebook
+              </button>
+              <div style={{ height: 1, background: "rgba(255,255,255,0.07)", margin: "2px 0" }} />
+              <button onClick={async () => { await handleShare(); setShared(false); setTimeout(() => setShared(false), 100); }} style={{ display: "flex", alignItems: "center", gap: 10, padding: "8px 12px", background: "none", border: "none", color: "#C9A84C", cursor: "pointer", fontSize: 12, borderRadius: 6, textAlign: "left", width: "100%" }}
+                onMouseEnter={e => e.currentTarget.style.background = "rgba(201,168,76,0.08)"}
+                onMouseLeave={e => e.currentTarget.style.background = "none"}>
+                🔗 Copy Link
+              </button>
+            </div>
+          )}
+        </div>
 
         {/* Comment drawer */}
         {showComments && (
