@@ -2398,7 +2398,7 @@ export default function ReadingRoomHome() {
                 </div>
                 <div style={{ padding: "12px 20px", display: "flex", flexDirection: "column", gap: 10 }}>
                   {stories.slice(0, 3).map(s => (
-                    <div key={s.slug} onClick={() => setOpenStorySlug(s.slug)} style={{ display: "flex", gap: 10, alignItems: "center", cursor: "pointer", padding: "8px 0", borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
+                    <div key={s.slug} onClick={() => window.location.href = `/reading-room/stories/${s.slug}/chapters/1`} style={{ display: "flex", gap: 10, alignItems: "center", cursor: "pointer", padding: "8px 0", borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
                       <div style={{ width: 36, height: 50, borderRadius: 4, background: "linear-gradient(135deg,#1e1e26,#2a2a38)", border: "1px solid rgba(201,168,76,0.2)", flexShrink: 0 }} />
                       <div>
                         <div style={{ fontSize: 12, fontWeight: 600, color: "#f0ece2", lineHeight: 1.3, marginBottom: 2 }}>{s.title}</div>
@@ -2452,7 +2452,7 @@ export default function ReadingRoomHome() {
                     `}</style>
                     <div className="now-reading-scroll">
                       {[...stories, ...stories].map((s, i) => (
-                        <div key={i} onClick={() => setOpenStorySlug(s.slug)} style={{ display: "flex", alignItems: "center", gap: 10, padding: "8px 0", borderBottom: "1px solid rgba(255,255,255,0.05)", cursor: "pointer" }}>
+                        <div key={i} onClick={() => window.location.href = `/reading-room/stories/${s.slug}/chapters/1`} style={{ display: "flex", alignItems: "center", gap: 10, padding: "8px 0", borderBottom: "1px solid rgba(255,255,255,0.05)", cursor: "pointer" }}>
                           <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#4ade80", flexShrink: 0, boxShadow: "0 0 6px #4ade80" }} />
                           <div style={{ fontSize: 12, color: "rgba(240,236,226,0.7)", lineHeight: 1.3 }}>
                             <span style={{ color: "#f0ece2", fontWeight: 600 }}>{s.title}</span>
