@@ -70,7 +70,7 @@ type AuthorJar = Record<string, number>;
 // =========================
 // Constants
 // =========================
-const SQUARESPACE_READING_ROOM = "https://read.the-tiniest-library.com";
+const SQUARESPACE_READING_ROOM = "/members";
 
 const DEFAULT_INK = 0;
 const DEFAULT_UNLOCK_COST = 25;
@@ -2469,7 +2469,7 @@ export default function ReadingRoomHome() {
               </div>
             </div>
             <div className="ttl-hero-actions">
-              <a href={SQUARESPACE_READING_ROOM} target="_blank" rel="noopener noreferrer" className="ttl-btn-primary">
+              <a href="/members" className="ttl-btn-primary">
                 Go to Members Room →
               </a>
               <span className="ttl-btn-ghost" style={{ cursor: 'default' }}>Payments by Stripe</span>
