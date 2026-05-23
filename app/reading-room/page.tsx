@@ -228,20 +228,20 @@ const TTL_STYLES = `
     --blue: #6495ED;
     --blue-dim: rgba(100,149,237,0.22);
     --blue-bright: #84b0f5;
-    --ink-bg: #f0e6cc;
-    --ink-surface: #f7f0e0;
-    --ink-surface2: #ede0c4;
-    --ink-border: rgba(139,100,20,0.15);
-    --ink-border-gold: rgba(201,168,76,0.45);
-    --text-main: #1a1008;
-    --text-dim: rgba(26,16,8,0.6);
-    --text-faint: rgba(26,16,8,0.35);
+    --ink-bg: #0f0805;
+    --ink-surface: #1a0f07;
+    --ink-surface2: #2a1508;
+    --ink-border: rgba(201,168,76,0.15);
+    --ink-border-gold: rgba(201,168,76,0.35);
+    --text-main: #ffffff;
+    --text-dim: rgba(255,255,255,0.75);
+    --text-faint: rgba(255,255,255,0.45);
   }
 
   .ttl-root {
     min-height: 100vh;
-    background: radial-gradient(ellipse at 50% 0%, #f5edd8 0%, #ede0c4 40%, #e8d5a8 70%, #dfc98a 100%);
-    font-family: 'Syne', sans-serif;
+    background: radial-gradient(ellipse at 60% 20%, #3d1a08 0%, #2C1A0E 40%, #1a0f07 70%, #0f0805 100%);
+    font-family: 'Times New Roman', Times, serif;
     color: #ffffff;
     position: relative;
     overflow-x: hidden;
