@@ -1417,7 +1417,6 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
       min-height: 190px !important;
     }
   }
-    .ttl-nav-links { display: none; }
     .ttl-nav-right { gap: 6px; }
     .ttl-nav-tour-btn { display: none; }
     .ttl-nav-divider { display: none; }
