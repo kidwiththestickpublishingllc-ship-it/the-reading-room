@@ -306,7 +306,7 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
     display: flex; align-items: center; justify-content: center;
     border-radius: 8px;
     background: linear-gradient(135deg, var(--gold), #8a6510);
-    font-family: 'Syne', sans-serif;
+    font-family: 'Times New Roman', Times, serif;
     font-size: 11px; font-weight: 700; color: #000;
   }
 
@@ -317,7 +317,7 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
   }
 
   .ttl-nav-brand-main {
-    font-family: 'Cormorant Garamond', serif;
+    font-family: 'Times New Roman', Times, serif;
     font-size: 17px;
     font-weight: 400;
     color: var(--gold-light);
@@ -325,7 +325,7 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
   }
 
   .ttl-nav-brand-sub {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Times New Roman', Times, serif;
     font-size: 10px;
     font-weight: 500;
     color: rgba(255,255,255,0.32);
@@ -341,7 +341,7 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
 
   .ttl-nav-link {
     color: rgba(240,236,226,0.95);
-    font-family: 'Syne', sans-serif;
+    font-family: 'Times New Roman', Times, serif;
     font-size: 10px;
     letter-spacing: 0.16em;
     text-transform: uppercase;
@@ -377,7 +377,7 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
     display: flex;
     align-items: center;
     gap: 6px;
-    font-family: 'Syne', sans-serif;
+    font-family: 'Times New Roman', Times, serif;
     font-size: 11px;
     font-weight: 700;
     letter-spacing: 0.08em;
@@ -396,7 +396,7 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
   }
 
   .ttl-nav-members {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Times New Roman', Times, serif;
     font-size: 11px;
     font-weight: 700;
     letter-spacing: 0.08em;
@@ -413,7 +413,7 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
   .ttl-nav-members:hover { opacity: 0.88; }
 
   .ttl-nav-tour-btn {
-  font-family: 'Syne', sans-serif;
+  font-family: 'Times New Roman', Times, serif;
   font-size: 10px;
   font-weight: 600;
   letter-spacing: 0.1em;
@@ -461,7 +461,7 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
   }
 
   .ttl-hero-eyebrow {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Times New Roman', Times, serif;
     font-size: 10px;
     letter-spacing: 0.32em;
     text-transform: uppercase;
@@ -472,7 +472,7 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
 
   .ttl-hero-title {
     text-align: center;
-    font-family: 'Cormorant Garamond', serif;
+    font-family: 'Times New Roman', Times, serif;
     font-size: clamp(80px, 11vw, 160px);
     font-weight: 300;
     line-height: 0.9;
@@ -484,7 +484,7 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
     text-align: center;
     margin-left: auto;
     margin-right: auto;
-    font-family: 'Syne', sans-serif;
+    font-family: 'Times New Roman', Times, serif;
     font-size: 15px;
     color: var(--text-dim);
     max-width: 520px;
@@ -508,7 +508,7 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
   }
 
   .ttl-btn-primary {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Times New Roman', Times, serif;
     font-size: 10px;
     letter-spacing: 0.2em;
     text-transform: uppercase;
@@ -529,7 +529,7 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
   .ttl-btn-primary:hover { opacity: 0.88; }
 
   .ttl-btn-ghost {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Times New Roman', Times, serif;
     font-size: 10px;
     letter-spacing: 0.2em;
     text-transform: uppercase;
@@ -555,13 +555,13 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
   }
 
 .ttl-btn-ghost {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Times New Roman', Times, serif;
     font-size: 10px;
     letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: #1a1008;
-    background: rgba(201,168,76,0.2);
-    border: 1px solid rgba(139,100,20,0.5);
+    color: #ffffff;
+    background: rgba(201,168,76,0.15);
+    border: 1px solid rgba(201,168,76,0.4);
     padding: 13px 28px;
     border-radius: 8px;
     text-decoration: none;
@@ -590,7 +590,7 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
   }
 
   .ttl-btn-join {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Times New Roman', Times, serif;
     font-size: 11px;
     letter-spacing: 0.24em;
     text-transform: uppercase;
@@ -644,7 +644,7 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
   }
 
   .ttl-section-eyebrow {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Times New Roman', Times, serif;
     font-size: 9px;
     letter-spacing: 0.3em;
     text-transform: uppercase;
@@ -654,7 +654,7 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
   }
 
   .ttl-section-title {
-    font-family: 'Cormorant Garamond', serif;
+    font-family: 'Times New Roman', Times, serif;
     font-size: 40px;
     font-weight: 300;
     color: #ffffff;
@@ -662,7 +662,7 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
   }
 
   .ttl-section-link {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Times New Roman', Times, serif;
     font-size: 10px;
     letter-spacing: 0.16em;
     text-transform: uppercase;
@@ -713,7 +713,7 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
   .ttl-panel:hover { border-color: var(--ink-border-gold); }
 
   .ttl-panel-label {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Times New Roman', Times, serif;
     font-size: 9px;
     letter-spacing: 0.24em;
     text-transform: uppercase;
@@ -728,7 +728,7 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
   }
 
   .ttl-ink-num {
-    font-family: 'Cormorant Garamond', serif;
+    font-family: 'Times New Roman', Times, serif;
     font-size: 60px;
     font-weight: 300;
     color: var(--gold);
@@ -737,7 +737,7 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
   }
 
   .ttl-ink-sub {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Times New Roman', Times, serif;
     font-size: 11px;
     color: var(--text-faint);
     line-height: 1.65;
@@ -758,7 +758,7 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
     cursor: pointer;
     transition: background 0.2s, border-color 0.2s, transform 0.15s;
     text-align: left;
-    font-family: 'Syne', sans-serif;
+    font-family: 'Times New Roman', Times, serif;
   }
 
   .ttl-ink-pack:hover {
@@ -776,7 +776,7 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
   }
 
   .ttl-pack-amount {
-    font-family: 'Cormorant Garamond', serif;
+    font-family: 'Times New Roman', Times, serif;
     font-size: 30px;
     font-weight: 300;
     color: var(--gold);
@@ -854,14 +854,14 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: 'Cormorant Garamond', serif;
+    font-family: 'Times New Roman', Times, serif;
     font-size: 22px;
     font-weight: 300;
     color: var(--gold);
   }
 
   .ttl-author-name {
-    font-family: 'Cormorant Garamond', serif;
+    font-family: 'Times New Roman', Times, serif;
     font-size: 22px;
     font-weight: 400;
     color: #ffffff;
@@ -870,7 +870,7 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
   }
 
   .ttl-author-tagline {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Times New Roman', Times, serif;
     font-size: 11px;
     color: var(--text-dim);
     line-height: 1.55;
@@ -885,7 +885,7 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
   }
 
   .ttl-genre-tag {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Times New Roman', Times, serif;
     font-size: 8px;
     letter-spacing: 0.14em;
     text-transform: uppercase;
@@ -906,7 +906,7 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
   }
 
   .ttl-tip-btn {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Times New Roman', Times, serif;
     font-size: 9px;
     letter-spacing: 0.14em;
     text-transform: uppercase;
@@ -926,7 +926,7 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
   }
 
   .ttl-jar-count {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Times New Roman', Times, serif;
     font-size: 10px;
     color: var(--text-faint);
     margin-left: auto;
@@ -941,7 +941,7 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
   }
 
   .ttl-author-profile-link {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Times New Roman', Times, serif;
     font-size: 9px;
     letter-spacing: 0.14em;
     text-transform: uppercase;
@@ -1007,7 +1007,7 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
   }
 
   .ttl-story-title {
-    font-family: 'Cormorant Garamond', serif;
+    font-family: 'Times New Roman', Times, serif;
     font-size: 20px;
     font-weight: 400;
     color: #ffffff;
@@ -1015,14 +1015,14 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
   }
 
   .ttl-story-author {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Times New Roman', Times, serif;
     font-size: 11px;
     color: var(--text-dim);
     margin-bottom: 10px;
   }
 
   .ttl-story-desc {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Times New Roman', Times, serif;
     font-size: 12px;
     color: var(--text-faint);
     line-height: 1.65;
@@ -1048,7 +1048,7 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
   }
 
   .ttl-story-hint {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Times New Roman', Times, serif;
     font-size: 9px;
     letter-spacing: 0.1em;
     text-transform: uppercase;
@@ -1057,7 +1057,7 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
   }
 
   .ttl-badge {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Times New Roman', Times, serif;
     font-size: 8px;
     letter-spacing: 0.16em;
     text-transform: uppercase;
@@ -1071,7 +1071,7 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
   .ttl-badge-serial { border: 1px solid var(--blue-dim); color: var(--blue-bright); background: var(--blue-dim); }
 
   .ttl-unlock-btn {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Times New Roman', Times, serif;
     font-size: 9px;
     letter-spacing: 0.14em;
     text-transform: uppercase;
@@ -1100,7 +1100,7 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
   }
 
   .ttl-filter-btn {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Times New Roman', Times, serif;
     font-size: 9px;
     letter-spacing: 0.16em;
     text-transform: uppercase;
@@ -1139,7 +1139,7 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
   .ttl-how-card:hover { border-color: var(--ink-border-gold); }
 
   .ttl-how-num {
-    font-family: 'Cormorant Garamond', serif;
+    font-family: 'Times New Roman', Times, serif;
     font-size: 52px;
     font-weight: 300;
     color: rgba(201,168,76,0.18);
@@ -1148,7 +1148,7 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
   }
 
   .ttl-how-title {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Times New Roman', Times, serif;
     font-size: 11px;
     letter-spacing: 0.18em;
     text-transform: uppercase;
@@ -1157,7 +1157,7 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
   }
 
   .ttl-how-text {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Times New Roman', Times, serif;
     font-size: 12px;
     color: var(--text-dim);
     line-height: 1.7;
@@ -1213,7 +1213,7 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
   }
 
   .ttl-modal-eyebrow {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Times New Roman', Times, serif;
     font-size: 9px;
     letter-spacing: 0.24em;
     text-transform: uppercase;
@@ -1222,7 +1222,7 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
   }
 
   .ttl-modal-title {
-    font-family: 'Cormorant Garamond', serif;
+    font-family: 'Times New Roman', Times, serif;
     font-size: 28px;
     font-weight: 300;
     color: #ffffff;
@@ -1230,13 +1230,13 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
   }
 
   .ttl-modal-author {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Times New Roman', Times, serif;
     font-size: 12px;
     color: var(--text-dim);
   }
 
   .ttl-modal-close {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Times New Roman', Times, serif;
     font-size: 9px;
     letter-spacing: 0.16em;
     text-transform: uppercase;
@@ -1268,7 +1268,7 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
   }
 
   .ttl-modal-hint {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Times New Roman', Times, serif;
     font-size: 10px;
     color: var(--text-faint);
     letter-spacing: 0.08em;
@@ -1290,7 +1290,7 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
   }
 
   .ttl-teaser-label {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Times New Roman', Times, serif;
     font-size: 9px;
     letter-spacing: 0.2em;
     text-transform: uppercase;
@@ -1299,7 +1299,7 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
   }
 
   .ttl-teaser-text {
-    font-family: 'Cormorant Garamond', serif;
+    font-family: 'Times New Roman', Times, serif;
     font-size: 17px;
     font-weight: 300;
     font-style: italic;
@@ -1316,13 +1316,13 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
   }
 
   .ttl-unlock-info {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Times New Roman', Times, serif;
     font-size: 12px;
     color: var(--text-dim);
   }
 
   .ttl-full-text {
-    font-family: 'Cormorant Garamond', serif;
+    font-family: 'Times New Roman', Times, serif;
     font-size: 18px;
     font-weight: 300;
     line-height: 1.9;
@@ -1355,7 +1355,7 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
     justify-content: center;
     border-radius: 8px;
     background: linear-gradient(135deg, var(--gold), #8a6510);
-    font-family: 'Syne', sans-serif;
+    font-family: 'Times New Roman', Times, serif;
     font-size: 11px;
     font-weight: 700;
     color: #000;
@@ -1363,14 +1363,14 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
   }
 
   .ttl-footer-brand-text p:first-child {
-    font-family: 'Cormorant Garamond', serif;
+    font-family: 'Times New Roman', Times, serif;
     font-size: 18px;
     font-weight: 400;
     color: var(--gold-light);
   }
 
   .ttl-footer-brand-text p:last-child {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Times New Roman', Times, serif;
     font-size: 10px;
     color: var(--text-faint);
     letter-spacing: 0.1em;
@@ -1378,7 +1378,7 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
   }
 
   .ttl-footer-copy {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Times New Roman', Times, serif;
     font-size: 10px;
     letter-spacing: 0.12em;
     color: var(--text-faint);
@@ -1388,7 +1388,7 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
   .ttl-footer-actions { display: flex; gap: 10px; }
 
   .ttl-status {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Times New Roman', Times, serif;
     font-size: 12px;
     color: var(--text-dim);
     padding: 20px;
@@ -1476,7 +1476,7 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
     line-height: 1;
   }
   .ttl-bottom-nav-label {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Times New Roman', Times, serif;
     font-size: 9px;
     font-weight: 600;
     letter-spacing: 0.06em;
