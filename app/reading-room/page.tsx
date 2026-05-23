@@ -340,6 +340,7 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
   }
 
   .ttl-nav-link {
+    color: rgba(240,236,226,0.95);
     font-family: 'Syne', sans-serif;
     font-size: 10px;
     letter-spacing: 0.16em;
@@ -2002,10 +2003,13 @@ export default function ReadingRoomHome() {
                 </div>
               </a>
               <div className="ttl-nav-links">                
-                <a href="/reading-room/authors" className="ttl-nav-link">Author Directory</a>
+                <a href="/reading-room/authors" className="ttl-nav-link">Authors</a>
                 <a href="/reading-room/stories" className="ttl-nav-link">Browse Stories</a>
-            <a href="/reading-room/comics" className="ttl-nav-link">Comics & Manga</a>
-                <a href="/reading-room/buy-ink" className="ttl-nav-link">Buy Ink ✒️</a>                
+                <a href="/reading-room/comics" className="ttl-nav-link">Comics & Manga</a>
+                <a href="/reading-room/buy-ink" className="ttl-nav-link">Buy Ink ✒️</a>
+                <a href="#how-it-works" className="ttl-nav-link">How It Works</a>
+                <a href="https://write.the-tiniest-library.com" className="ttl-nav-link">Writer's Room</a>
+                <a href="/members" className="ttl-nav-link" style={{ color: 'var(--gold)', border: '1px solid var(--gold-dim)', borderRadius: 6, padding: '4px 12px' }}>Members Room</a>
               </div>
             </div>
             <div className="ttl-nav-right">
@@ -2492,12 +2496,11 @@ export default function ReadingRoomHome() {
               </a>
             </div>
             <div className="ttl-footer-actions">
-              <a href="/reading-room/stories" className="ttl-btn-ghost" style={{ fontSize: '9px', padding: '8px 18px', borderRadius: '8px' }} suppressHydrationWarning>
-                Browse Stories
-              </a>
-              <a href="/members" target="_blank" rel="noopener noreferrer" className="ttl-btn-primary" style={{ fontSize: '9px', padding: '8px 18px', borderRadius: '8px' }} suppressHydrationWarning>
-                Members Site →
-              </a>
+              <a href="/reading-room/stories" className="ttl-btn-ghost" style={{ fontSize: '9px', padding: '8px 18px', borderRadius: '8px' }}>Browse Stories</a>
+              <a href="/reading-room/authors" className="ttl-btn-ghost" style={{ fontSize: '9px', padding: '8px 18px', borderRadius: '8px' }}>Authors</a>
+              <a href="https://write.the-tiniest-library.com" className="ttl-btn-ghost" style={{ fontSize: '9px', padding: '8px 18px', borderRadius: '8px' }}>Writer's Room</a>
+              <a href="https://redroom.the-tiniest-library.com" className="ttl-btn-ghost" style={{ fontSize: '9px', padding: '8px 18px', borderRadius: '8px' }}>Red Room</a>
+              <a href="/members" className="ttl-btn-primary" style={{ fontSize: '9px', padding: '8px 18px', borderRadius: '8px' }}>Members Room →</a>
             </div>
           </div>
         </div>
