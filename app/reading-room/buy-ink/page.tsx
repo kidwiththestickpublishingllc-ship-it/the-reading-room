@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
+import { TTLNav, TTLFooter } from "@/app/reading-room/components/TTLNav";
 
 const INK_PACKS = [
   {
@@ -99,6 +100,8 @@ export default function BuyInkPage() {
       fontFamily: 'Cormorant Garamond, serif',
       padding: '60px 20px',
     }}>
+      <TTLNav />
+      <div style={{ height: 74 }} />
       <div style={{ maxWidth: '900px', margin: '0 auto' }}>
 
         {/* Header */}
@@ -223,6 +226,7 @@ export default function BuyInkPage() {
         </p>
 
       </div>
+      <TTLFooter />
     </div>
   )
 }
