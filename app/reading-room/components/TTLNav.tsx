@@ -407,7 +407,7 @@ export function TTLNav() {
               <a href="https://www.the-tiniest-library.com" className="ttl-shared-logo">TTL</a>
               <div className="ttl-shared-brand-text">
                 <a href="https://www.the-tiniest-library.com" className="ttl-shared-brand-main" style={{ textDecoration: 'none' }}>The Tiniest Library</a>
-                <a href="/reading-room" className="ttl-shared-brand-sub" style={{ textDecoration: 'none' }}>The Reading Room</a>
+                <a href="https://read.the-tiniest-library.com/reading-room" className="ttl-shared-brand-sub" style={{ textDecoration: 'none' }}>The Reading Room</a>
               </div>
             </div>
 
