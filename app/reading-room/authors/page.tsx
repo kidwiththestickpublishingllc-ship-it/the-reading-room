@@ -2,6 +2,7 @@
 
 import React, { useState, useMemo, useEffect } from "react";
 import { supabase } from "@/lib/supabase";
+import { TTLNav, TTLFooter } from "@/app/reading-room/components/TTLNav";
 
 // =========================
 // Route: /reading-room/authors/page.tsx
@@ -228,30 +229,8 @@ export default function AuthorsDirectory() {
     <>
       <style>{STYLES}</style>
       <div className="ad-root">
-        <nav className="ad-nav">
-          <div className="ad-nav-inner">
-            <div className="ad-nav-left">
-              <a href="/reading-room" className="ad-nav-brand">
-                <div className="ad-nav-logo">TTL</div>
-                <div style={{ display: "flex", flexDirection: "column", lineHeight: 1.15 }}>
-                  <span className="ad-nav-brand-main">The Tiniest Library</span>
-                  <span className="ad-nav-brand-sub">The Reading Room</span>
-                </div>
-              </a>
-              <div className="ad-nav-links">
-                <a href="/reading-room" className="ad-nav-link">Reading Room</a>
-                <a href="/reading-room/authors" className="ad-nav-link active">Authors</a>
-                <a href="/reading-room/stories" className="ad-nav-link">All Stories</a>
-                <a href={SQUARESPACE_READING_ROOM} target="_blank" rel="noopener noreferrer" className="ad-nav-link">Members Site</a>
-              </div>
-            </div>
-            <div className="ad-nav-right">
-              <div className="ad-nav-ink"><span>✒️</span><span>{ink} Ink</span></div>
-              <a href={SQUARESPACE_READING_ROOM} target="_blank" rel="noopener noreferrer" className="ad-nav-members">Members →</a>
-            </div>
-          </div>
-        </nav>
-        <div className="ad-spacer" />
+        <TTLNav />
+        <div style={{ height: 74 }} />
 
         <div className="ad-hero">
           <span className="ad-hero-eyebrow">The Tiniest Library — Author Catalog</span>
@@ -320,20 +299,7 @@ export default function AuthorsDirectory() {
           </div>
         </div>
 
-        <div className="ad-footer">
-          <div className="ad-footer-brand">
-            <div className="ad-footer-logo">TTL</div>
-            <div>
-              <div className="ad-footer-brand-main">The Tiniest Library</div>
-              <div className="ad-footer-brand-sub">The Reading Room</div>
-            </div>
-          </div>
-          <span className="ad-footer-copy">© {new Date().getFullYear()} The Tiniest Library</span>
-          <div className="ad-footer-actions">
-            <a href="/reading-room" className="ad-btn-ghost">← Reading Room</a>
-            <a href="https://www.the-tiniest-library.com/new-page-1" target="_blank" rel="noopener noreferrer" className="ad-btn-primary">Apply to Write →</a>
-          </div>
-        </div>
+        <TTLFooter />
       </div>
     </>
   );
