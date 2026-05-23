@@ -554,7 +554,7 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
     box-shadow: 0 0 24px rgba(201,168,76,0.4);
   }
 
-.ttl-btn-gold {
+.ttl-btn-ghost {
     font-family: 'Syne', sans-serif;
     font-size: 10px;
     letter-spacing: 0.2em;
