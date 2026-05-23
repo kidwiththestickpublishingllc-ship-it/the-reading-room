@@ -403,13 +403,13 @@ export function TTLNav() {
         <div className="ttl-shared-nav-inner">
           <div className="ttl-shared-nav-left">
             {/* Logo → main TTL site */}
-            <a href="https://www.the-tiniest-library.com" className="ttl-shared-brand">
-              <div className="ttl-shared-logo">TTL</div>
+            <div className="ttl-shared-brand">
+              <a href="https://www.the-tiniest-library.com" className="ttl-shared-logo">TTL</a>
               <div className="ttl-shared-brand-text">
-                <span className="ttl-shared-brand-main">The Tiniest Library</span>
-                <span className="ttl-shared-brand-sub">The Reading Room</span>
+                <a href="https://www.the-tiniest-library.com" className="ttl-shared-brand-main" style={{ textDecoration: 'none' }}>The Tiniest Library</a>
+                <a href="/reading-room" className="ttl-shared-brand-sub" style={{ textDecoration: 'none' }}>The Reading Room</a>
               </div>
-            </a>
+            </div>
 
             {/* Nav links */}
             <div className="ttl-shared-links">
