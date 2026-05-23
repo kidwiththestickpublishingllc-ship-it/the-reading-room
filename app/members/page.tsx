@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useRef } from "react";
 import { supabase } from "@/lib/supabase";
+import { TTLNav, TTLFooter } from "@/app/reading-room/components/TTLNav";
 
 type Profile = {
   id: string;
@@ -349,7 +350,9 @@ export default function MembersRoomV2() {
   );
 
   if (view === "login" || view === "signup") return (
-    <div style={{ minHeight: "100vh", background: "#0a0a14", display: "flex", alignItems: "center", justifyContent: "center", padding: "24px" }}>
+    <div style={{ minHeight: "100vh", background: "#0a0a14" }}>
+      <TTLNav />
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "center", padding: "24px", paddingTop: "98px" }}>
       <div style={{ width: "100%", maxWidth: "440px" }}>
         <div style={{ textAlign: "center", marginBottom: "40px" }}>
           <div style={{ fontSize: "36px", marginBottom: "12px" }}>🕯️</div>
@@ -391,9 +394,11 @@ export default function MembersRoomV2() {
           )}
         </div>
         <div style={{ textAlign: "center", marginTop: "24px" }}>
-          <a href="/" style={{ color: "#555", fontSize: "13px", textDecoration: "none" }}>← Back to The Tiniest Library</a>
+          <a href="https://www.the-tiniest-library.com" style={{ color: "#555", fontSize: "13px", textDecoration: "none" }}>← Back to The Tiniest Library</a>
         </div>
       </div>
+      </div>
+      <TTLFooter />
     </div>
   );
 
