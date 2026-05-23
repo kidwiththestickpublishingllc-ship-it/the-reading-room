@@ -1,5 +1,6 @@
 "use client";
 
+import { TTLNav, TTLFooter } from "@/app/reading-room/components/TTLNav";
 import React, { useEffect, useMemo, useState } from "react";
 
 // =========================
@@ -767,8 +768,7 @@ export default function BrowseAllStoriesPage() {
       <style>{GLOBAL_STYLES}</style>
       <div style={{ background: "var(--ink-bg)", minHeight: "100vh" }}>
 
-        <Navbar ink={ink} />
-
+        <TTLNav />
         {/* Spacer — pushes all content below the fixed navbar. Height must match navbar (72px + 2px gold line = 74px) */}
         <div style={{ height: 74 }} />
 
@@ -936,7 +936,7 @@ export default function BrowseAllStoriesPage() {
             </div>
           </div>
         </div>
-        <Footer />
+        <TTLFooter />
       </div>
     </>
   );
