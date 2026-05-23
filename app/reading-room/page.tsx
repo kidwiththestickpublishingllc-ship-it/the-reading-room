@@ -345,7 +345,7 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
     font-size: 10px;
     letter-spacing: 0.16em;
     text-transform: uppercase;
-    color: rgba(232,228,218,0.45);
+    color: rgba(240,236,226,0.92);
     text-decoration: none;
     padding: 6px 14px;
     border-radius: 4px;
@@ -417,7 +417,7 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
   font-size: 10px;
   font-weight: 600;
   letter-spacing: 0.1em;
-  color: rgba(232,228,218,0.45);
+  color: rgba(240,236,226,0.92);
   background: transparent;
   border: 1px solid rgba(232,228,218,0.12);
   padding: 5px 12px;
@@ -2201,8 +2201,8 @@ export default function ReadingRoomHome() {
               </div>
               <div style={{ fontSize: 8, letterSpacing: "0.22em", textTransform: "uppercase" as const, color: author.accent, opacity: 0.7, marginBottom: 8 }}>{author.role}</div>
               <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 24, fontWeight: 300, color: "#f0ece2", marginBottom: 6, lineHeight: 1.1 }}>{author.name}</div>
-              <div style={{ fontSize: 11, color: "rgba(232,228,218,0.45)", marginBottom: 16, lineHeight: 1.55 }}>{author.tagline}</div>
-              <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 14, fontStyle: "italic", color: "rgba(232,228,218,0.45)", lineHeight: 1.7, borderLeft: `2px solid ${author.accent}30`, paddingLeft: 14, marginBottom: 20, flex: 1 }}>"{author.quote}"</div>
+              <div style={{ fontSize: 11, color: "rgba(240,236,226,0.92)", marginBottom: 16, lineHeight: 1.55 }}>{author.tagline}</div>
+              <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 14, fontStyle: "italic", color: "rgba(240,236,226,0.92)", lineHeight: 1.7, borderLeft: `2px solid ${author.accent}30`, paddingLeft: 14, marginBottom: 20, flex: 1 }}>"{author.quote}"</div>
               <div style={{ display: "flex", flexWrap: "wrap" as const, gap: 5, marginBottom: 20 }}>
                 {author.genres.map(g => (
                   <span key={g} style={{ fontSize: 8, letterSpacing: "0.12em", textTransform: "uppercase" as const, padding: "3px 9px", borderRadius: 999, border: "1px solid rgba(100,149,237,0.22)", color: "#84b0f5", background: "rgba(100,149,237,0.22)" }}>{g}</span>
