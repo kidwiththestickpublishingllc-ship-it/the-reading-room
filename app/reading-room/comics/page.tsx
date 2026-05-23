@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import { TTLNav, TTLFooter } from "@/app/reading-room/components/TTLNav";
 
 // =============================================================
 // COMICS & MANGA LANDING PAGE v2 — The Reading Room / TTL
@@ -484,19 +485,8 @@ export default function ComicsMangaPage() {
 
       <div className="cm-page">
 
-        {/* Nav */}
-        <nav className="cm-nav">
-          <div className="cm-nav-brand">
-            <div className="cm-nav-glyph">CM</div>
-            <span className="cm-nav-title">
-              Comics <span>&</span> Manga
-            </span>
-          </div>
-          <div className="cm-nav-right">
-            <div className="cm-ink-badge">🖋 {ink} Ink</div>
-            <a href="/reading-room" className="cm-back-link">← Reading Room</a>
-          </div>
-        </nav>
+        <TTLNav />
+        <div style={{ height: 74 }} />
 
         {/* Hero */}
         <section className="cm-hero">
@@ -614,6 +604,7 @@ export default function ComicsMangaPage() {
             </div>
           </div>
         </div>
+      <TTLFooter />
       </div>
     </>
   );
