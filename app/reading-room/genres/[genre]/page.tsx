@@ -3,6 +3,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { supabase } from "@/lib/supabase";
 import Adult18Gate from "@/app/reading-room/components/Adult18Gate";
+import { TTLNav, TTLFooter } from "@/app/reading-room/components/TTLNav";
 
 // =========================
 // Route: /reading-room/genres/[genre]/page.tsx
@@ -1478,38 +1479,8 @@ if (genreName === "Adult 18+") {
           "--genre-accent-dim": meta.accentDim,
         } as React.CSSProperties}
       >
-        {/* ── NAV ── */}
-        <nav className="gp-nav">
-          <div className="gp-nav-accent-line" />
-          <div className="gp-nav-inner">
-            <div className="gp-nav-left">
-              <a href="/reading-room" className="gp-nav-brand">
-                <div className="gp-nav-logo">TTL</div>
-                <div style={{ display: "flex", flexDirection: "column", lineHeight: 1.15 }}>
-                  <span className="gp-nav-brand-main">The Tiniest Library</span>
-                  <span className="gp-nav-brand-sub">The Reading Room</span>
-                </div>
-              </a>
-              <div className="gp-nav-links">
-                <a href="/reading-room" className="gp-nav-link">Reading Room</a>
-                <a href="/reading-room/authors" className="gp-nav-link">Authors</a>
-                <a href="/reading-room/stories" className="gp-nav-link">All Stories</a>
-                <a href={SQUARESPACE_READING_ROOM} target="_blank" rel="noopener noreferrer" className="gp-nav-link">Members Site</a>
-              </div>
-            </div>
-            <div className="gp-nav-right">
-              <div className="gp-nav-ink">
-                <span>✒️</span>
-                <span>{ink} Ink</span>
-              </div>
-              <div className="gp-nav-divider" />
-              <a href={SQUARESPACE_READING_ROOM} target="_blank" rel="noopener noreferrer" className="gp-nav-members">
-                Members →
-              </a>
-            </div>
-          </div>
-        </nav>
-        <div className="gp-nav-spacer" />
+        <TTLNav />
+        <div style={{ height: 74 }} />
 
         {/* ── MODAL ── */}
         <GPReaderModal
@@ -1747,25 +1718,7 @@ if (genreName === "Adult 18+") {
             </div>
           </div>
 
-          {/* ── FOOTER ── */}
-          <div className="gp-footer">
-            <div className="gp-footer-brand">
-              <div className="gp-footer-logo">TTL</div>
-              <div>
-                <div className="gp-footer-brand-main">The Tiniest Library</div>
-                <div className="gp-footer-brand-sub">The Reading Room</div>
-              </div>
-            </div>
-            <span className="gp-footer-copy">© {new Date().getFullYear()} The Tiniest Library. All rights reserved.</span>
-            <div className="gp-footer-actions">
-              <a href="/reading-room/stories" className="gp-btn-ghost" style={{ fontSize: "9px", padding: "8px 18px", borderRadius: 8 }}>
-                ← All Stories
-              </a>
-              <a href={SQUARESPACE_READING_ROOM} target="_blank" rel="noopener noreferrer" className="gp-btn-primary" style={{ fontSize: "9px", padding: "8px 18px", borderRadius: 8 }}>
-                Members Site →
-              </a>
-            </div>
-          </div>
+          <TTLFooter />
 
         </div>
           {/* RIGHT AD */}
