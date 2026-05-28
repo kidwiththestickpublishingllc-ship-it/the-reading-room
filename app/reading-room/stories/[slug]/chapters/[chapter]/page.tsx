@@ -361,9 +361,21 @@ function PageNarrator({ text, title, onClose }: { text: string; title: string; o
   const [speaking, setSpeaking] = useState(false);
   const [paused, setPaused] = useState(false);
   const [rate, setRate] = useState(1);
+  const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
+  const [voiceURI, setVoiceURI] = useState<string>('');
   const utterRef = useRef<SpeechSynthesisUtterance | null>(null);
 
   useEffect(() => {
+    if (!window.speechSynthesis) return;
+    const loadVoices = () => {
+      const all = window.speechSynthesis.getVoices().filter(v => v.lang.startsWith('en'));
+      setVoices(all);
+      // Default to a female voice if we can find one
+      const female = all.find(v => /female|samantha|victoria|karen|moira|tessa|fiona|serena|zira|susan|hazel/i.test(v.name));
+      setVoiceURI(prev => prev || (female?.voiceURI ?? all[0]?.voiceURI ?? ''));
+    };
+    loadVoices();
+    window.speechSynthesis.onvoiceschanged = loadVoices;
     return () => { window.speechSynthesis?.cancel(); };
   }, []);
 
@@ -373,6 +385,8 @@ function PageNarrator({ text, title, onClose }: { text: string; title: string; o
     const clean = text.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
     const u = new SpeechSynthesisUtterance(clean);
     u.rate = rate;
+    const chosen = voices.find(v => v.voiceURI === voiceURI);
+    if (chosen) u.voice = chosen;
     u.onend = () => { setSpeaking(false); setPaused(false); };
     utterRef.current = u;
     window.speechSynthesis.speak(u);
@@ -402,13 +416,25 @@ function PageNarrator({ text, title, onClose }: { text: string; title: string; o
         <div className="audio-author">{title}</div>
       </div>
       <div className="audio-progress-wrap">
-        <div style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
+        <div style={{ display: 'flex', gap: 6, alignItems: 'center', flexWrap: 'wrap' }}>
           {[0.75, 1, 1.25, 1.5].map(r => (
             <button key={r} onClick={() => changeRate(r)}
               style={{ background: rate === r ? 'var(--gold)' : 'transparent', color: rate === r ? '#000' : 'var(--text-muted)', border: '1px solid var(--border-gold)', borderRadius: 4, padding: '2px 8px', fontSize: 11, cursor: 'pointer', fontFamily: 'var(--font-ui)' }}>
               {r}×
             </button>
           ))}
+          {voices.length > 0 && (
+            <select
+              value={voiceURI}
+              onChange={e => { const v = e.target.value; setVoiceURI(v); if (speaking) { stop(); setTimeout(() => start(), 80); } }}
+              style={{ background: 'var(--bg3)', color: 'var(--text)', border: '1px solid var(--border-gold)', borderRadius: 4, padding: '3px 8px', fontSize: 11, cursor: 'pointer', fontFamily: 'var(--font-ui)', maxWidth: 140 }}
+              title="Choose Page's voice"
+            >
+              {voices.map(v => (
+                <option key={v.voiceURI} value={v.voiceURI}>{v.name.replace(/Microsoft|Google|\(.*\)/g, '').trim()}</option>
+              ))}
+            </select>
+          )}
           {speaking && <button onClick={stop} style={{ background: 'transparent', color: 'var(--text-muted)', border: '1px solid var(--border)', borderRadius: 4, padding: '2px 8px', fontSize: 11, cursor: 'pointer' }}>⏹ Stop</button>}
         </div>
       </div>
