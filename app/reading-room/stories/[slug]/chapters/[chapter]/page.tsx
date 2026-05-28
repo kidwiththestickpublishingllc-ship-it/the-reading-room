@@ -355,6 +355,69 @@ function AudioPlayer({ url, title, author, onClose }: { url: string; title: stri
 }
 
 // =========================
+// Page — Text-to-Speech narrator (browser voice)
+// =========================
+function PageNarrator({ text, title, onClose }: { text: string; title: string; onClose: () => void }) {
+  const [speaking, setSpeaking] = useState(false);
+  const [paused, setPaused] = useState(false);
+  const [rate, setRate] = useState(1);
+  const utterRef = useRef<SpeechSynthesisUtterance | null>(null);
+
+  useEffect(() => {
+    return () => { window.speechSynthesis?.cancel(); };
+  }, []);
+
+  const start = () => {
+    if (!window.speechSynthesis) return;
+    window.speechSynthesis.cancel();
+    const clean = text.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+    const u = new SpeechSynthesisUtterance(clean);
+    u.rate = rate;
+    u.onend = () => { setSpeaking(false); setPaused(false); };
+    utterRef.current = u;
+    window.speechSynthesis.speak(u);
+    setSpeaking(true);
+    setPaused(false);
+  };
+
+  const toggle = () => {
+    if (!window.speechSynthesis) return;
+    if (!speaking) { start(); return; }
+    if (paused) { window.speechSynthesis.resume(); setPaused(false); }
+    else { window.speechSynthesis.pause(); setPaused(true); }
+  };
+
+  const stop = () => { window.speechSynthesis?.cancel(); setSpeaking(false); setPaused(false); };
+
+  const changeRate = (r: number) => {
+    setRate(r);
+    if (speaking) { stop(); setTimeout(() => { const u = utterRef.current; if (u) { u.rate = r; window.speechSynthesis.speak(u); setSpeaking(true); } }, 60); }
+  };
+
+  return (
+    <div className="audio-player">
+      <button className="audio-play-btn" onClick={toggle}>{speaking && !paused ? '⏸' : '▶'}</button>
+      <div className="audio-info">
+        <div className="audio-title">📖 Page is reading</div>
+        <div className="audio-author">{title}</div>
+      </div>
+      <div className="audio-progress-wrap">
+        <div style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
+          {[0.75, 1, 1.25, 1.5].map(r => (
+            <button key={r} onClick={() => changeRate(r)}
+              style={{ background: rate === r ? 'var(--gold)' : 'transparent', color: rate === r ? '#000' : 'var(--text-muted)', border: '1px solid var(--border-gold)', borderRadius: 4, padding: '2px 8px', fontSize: 11, cursor: 'pointer', fontFamily: 'var(--font-ui)' }}>
+              {r}×
+            </button>
+          ))}
+          {speaking && <button onClick={stop} style={{ background: 'transparent', color: 'var(--text-muted)', border: '1px solid var(--border)', borderRadius: 4, padding: '2px 8px', fontSize: 11, cursor: 'pointer' }}>⏹ Stop</button>}
+        </div>
+      </div>
+      <button className="audio-close" onClick={() => { stop(); onClose(); }}>✕</button>
+    </div>
+  );
+}
+
+// =========================
 // Media Panel
 // =========================
 function MediaPanel({ chapter, open, onClose }: { chapter: Chapter; open: boolean; onClose: () => void }) {
@@ -442,6 +505,8 @@ function ChapterReaderContent({ storySlug, chapterNum }: { storySlug: string; ch
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [mediaPanelOpen, setMediaPanelOpen] = useState(false);
   const [audioVisible, setAudioVisible] = useState(false);
+  const [pageVisible, setPageVisible] = useState(false);
+  const [resumePrompt, setResumePrompt] = useState<{ chapter: number; scrollPct: number } | null>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [story, setStory] = useState<Story | null>(null);
   const [chapter, setChapter] = useState<Chapter | null>(null);
@@ -451,6 +516,20 @@ function ChapterReaderContent({ storySlug, chapterNum }: { storySlug: string; ch
   const [loading, setLoading] = useState(true);
   const [unlocking, setUnlocking] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    // Check for a saved Page-Bend on entry
+    try {
+      const raw = window.localStorage.getItem('ttl_pagebend');
+      if (raw) {
+        const bends = JSON.parse(raw);
+        const saved = bends[storySlug];
+        if (saved && (saved.chapter !== chapterNum || saved.scrollPct > 0.05)) {
+          setResumePrompt({ chapter: saved.chapter, scrollPct: saved.scrollPct });
+        }
+      }
+    } catch {}
+  }, [storySlug, chapterNum]);
 
   useEffect(() => {
     async function load() {
@@ -491,6 +570,15 @@ function ChapterReaderContent({ storySlug, chapterNum }: { storySlug: string; ch
           setScrollProgress(docH > 0 ? (scrollTop / docH) * 100 : 0);
           if (scrollTop > lastY + 10 && scrollTop > 200) setUiHidden(true);
           else if (scrollTop < lastY - 10) setUiHidden(false);
+          // Page-Bend auto-save
+          try {
+            const docH = document.documentElement.scrollHeight - window.innerHeight;
+            const pct = docH > 0 ? scrollTop / docH : 0;
+            const raw = window.localStorage.getItem('ttl_pagebend');
+            const bends = raw ? JSON.parse(raw) : {};
+            bends[storySlug] = { chapter: chapterNum, scrollPct: pct, savedAt: new Date().toISOString() };
+            window.localStorage.setItem('ttl_pagebend', JSON.stringify(bends));
+          } catch {}
           lastY = scrollTop; ticking = false;
         });
         ticking = true;
@@ -553,6 +641,9 @@ function ChapterReaderContent({ storySlug, chapterNum }: { storySlug: string; ch
                 🎵{!audioVisible && <span className="media-btn-dot" />}
               </button>
             )}
+            <button className={`media-btn${pageVisible ? ' active' : ''}`} onClick={() => setPageVisible(v => !v)} title="Have Page read aloud">
+              📖
+            </button>
             <button className={`media-btn${mediaPanelOpen ? ' active' : ''}`} onClick={() => setMediaPanelOpen(v => !v)} title="View artwork & media">
               🖼{hasMedia && !mediaPanelOpen && <span className="media-btn-dot" />}
             </button>
@@ -619,6 +710,56 @@ function ChapterReaderContent({ storySlug, chapterNum }: { storySlug: string; ch
         {/* Audio player */}
         {audioVisible && chapter.audio_url && (
           <AudioPlayer url={chapter.audio_url} title={chapter.title} author={story.author_name} onClose={() => setAudioVisible(false)} />
+        )}
+
+        {/* Page — TTS narrator */}
+        {pageVisible && chapter.content && (
+          <PageNarrator text={chapter.content} title={chapter.title} onClose={() => setPageVisible(false)} />
+        )}
+
+        {/* Page-Bend resume prompt */}
+        {resumePrompt && (
+          <div style={{ position: 'fixed', inset: 0, zIndex: 90, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(0,0,0,0.7)', backdropFilter: 'blur(8px)', padding: 24 }}>
+            <div style={{ width: '100%', maxWidth: 420, background: 'var(--bg2)', border: '1px solid var(--border-gold)', borderRadius: 14, overflow: 'hidden' }}>
+              <div style={{ height: 3, background: 'linear-gradient(90deg, transparent, var(--gold), transparent)' }} />
+              <div style={{ padding: '32px 28px', textAlign: 'center' }}>
+                <div style={{ fontSize: 32, marginBottom: 12 }}>📖</div>
+                <div style={{ fontFamily: 'var(--font-display)', fontSize: 22, color: 'var(--text)', marginBottom: 8 }}>Welcome back</div>
+                <p style={{ fontSize: 14, color: 'var(--text-muted)', lineHeight: 1.6, marginBottom: 24 }}>
+                  You left a Page-Bend in <strong style={{ color: 'var(--text)' }}>{story.title}</strong> at Chapter {resumePrompt.chapter}. Pick up where you left off?
+                </p>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                  <button
+                    onClick={() => {
+                      const target = resumePrompt;
+                      setResumePrompt(null);
+                      if (target.chapter !== chapterNum) {
+                        window.location.href = `/reading-room/stories/${storySlug}/chapters/${target.chapter}`;
+                      } else {
+                        const docH = document.documentElement.scrollHeight - window.innerHeight;
+                        window.scrollTo({ top: docH * target.scrollPct, behavior: 'smooth' });
+                      }
+                    }}
+                    style={{ fontFamily: 'var(--font-ui)', fontSize: 12, fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase', padding: '14px', borderRadius: 8, border: 'none', cursor: 'pointer', background: 'linear-gradient(135deg, var(--gold), #8a6510)', color: '#000' }}
+                  >
+                    ⟿ Resume my Page-Bend
+                  </button>
+                  <button
+                    onClick={() => setResumePrompt(null)}
+                    style={{ fontFamily: 'var(--font-ui)', fontSize: 12, letterSpacing: '0.1em', textTransform: 'uppercase', padding: '12px', borderRadius: 8, border: '1px solid var(--border)', cursor: 'pointer', background: 'transparent', color: 'var(--text-muted)' }}
+                  >
+                    Start from here
+                  </button>
+                  <a
+                    href="/reading-room"
+                    style={{ fontFamily: 'var(--font-ui)', fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', padding: '10px', color: 'var(--text-dim)', textDecoration: 'none' }}
+                  >
+                    ← Explore other stories
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
         )}
 
         {/* Media panel */}
