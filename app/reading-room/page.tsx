@@ -53,6 +53,7 @@ type SupabaseStoryRow = {
   badge: "Serial" | "Exclusive" | "Early Access" | null;
   is_published: boolean | null;
   created_at?: string | null;
+  genre?: string | null;
 };
 
 type Chapter = {
@@ -193,6 +194,7 @@ function normalizeBadge(badge: string | null | undefined): "Serial" | "Exclusive
   return "Serial";
 }
 function guessGenresFromStory(row: SupabaseStoryRow): string[] {
+  if (row.genre) return [row.genre];
   const haystack = `${row.title} ${row.description ?? ""} ${row.author_name}`.toLowerCase();
   const matches = TTL_GENRES.filter((genre) => haystack.includes(genre.toLowerCase()));
   return matches.length ? matches : ["Serialized Fiction"];
@@ -1905,7 +1907,7 @@ export default function ReadingRoomHome() {
         setStoriesLoading(true);
         const { data, error } = await supabase
           .from("stories")
-          .select("id, slug, title, author_name, description, cover_url, badge, is_published, created_at")
+          .select("id, slug, title, author_name, description, cover_url, badge, is_published, created_at, genre")
           .eq("is_published", true)
           .order("created_at", { ascending: false });
         if (error) { setStoriesError(error.message); setStories(DEMO_STORIES); return; }
