@@ -28,7 +28,7 @@ type Genre = {
 
 // ─── Ink helpers ──────────────────────────────────────────────
 const INK_KEY = "ttl_ink";
-const DEFAULT_INK = 250;
+const DEFAULT_INK = 50;
 function getInk(): number {
   if (typeof window === "undefined") return DEFAULT_INK;
   const raw = localStorage.getItem(INK_KEY);

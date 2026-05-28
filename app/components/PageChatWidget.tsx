@@ -17,8 +17,8 @@ const USE_AI = true; // ← flip to true when ready for Claude AI
 // =============================================================
 const TTL_KB = {
   greeting_new: [
-    "Welcome to The Tiniest Library! 📚 I'm Page, your Reading Room guide. You've been given 250 Ink to get started — use it to unlock stories, tip authors, and explore what's here. What can I help you discover first?",
-    "Hello and welcome! 🪶 I'm Page — I live here in the Reading Room and I know every story, author, and secret this place holds. You've got 250 Ink ready to spend. Want me to show you around?",
+    "Welcome to The Tiniest Library! 📚 I'm Page, your Reading Room guide. You've been given 50 Ink to get started — use it to unlock stories, tip authors, and explore what's here. What can I help you discover first?",
+    "Hello and welcome! 🪶 I'm Page — I live here in the Reading Room and I know every story, author, and secret this place holds. You've got 50 Ink ready to spend. Want me to show you around?",
     "Welcome, new reader! 📖 The Tiniest Library is a space for long stories, serialized chapters, and writers worth knowing. I'm Page, your guide. Ask me anything — genres, Ink, authors, or where to start.",
   ],
   greeting_returning: [
@@ -31,7 +31,7 @@ const TTL_KB = {
     "That's a great question! I don't have that answer just yet. Try asking about genres, Ink, or how to unlock stories.",
   ],
   topics: {
-    ink: "Ink is The Tiniest Library's reader currency. 🪶 You start with 250 Ink free. Use it to unlock exclusive chapters and early access stories. You can buy more Ink anytime — packs start at just $1. Your Ink balance is always shown in the top navigation bar.",
+    ink: "Ink is The Tiniest Library's reader currency. 🪶 You start with 50 Ink free. Use it to unlock exclusive chapters and early access stories. You can buy more Ink anytime — packs start at just $1. Your Ink balance is always shown in the top navigation bar.",
     unlock: "To unlock a story, click the **Unlock** button on any story card. Each unlock costs 25 Ink. Once unlocked, the full chapter is yours to read anytime — it's saved right in your browser so it'll be there next time you visit!",
     buy: "You can buy Ink packs in the Reading Room wallet section! 💰 Packs start at $1 for 100 Ink, all the way up to $15 for 2,500 Ink. Payments are handled securely by Stripe. After purchase, your Ink is added automatically.",
     stories: "The Reading Room has serials, exclusives, and early access chapters from our featured authors. 📖 Head to **Browse All Stories** to filter by genre, sort by newest, or search by title or author.",

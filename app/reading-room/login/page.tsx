@@ -37,7 +37,7 @@ export default function LoginPage() {
         email,
         full_name: fullName,
         membership_tier: 'free',
-        ink_balance: 250,
+        ink_balance: 50,
       })
       router.push('/members')
     }
@@ -106,7 +106,7 @@ export default function LoginPage() {
           {mode === 'signup' && (
             <div style={{ marginBottom: '20px', padding: '16px', background: 'rgba(201,168,76,0.05)', borderRadius: '8px', border: '1px solid rgba(201,168,76,0.15)' }}>
               <p style={{ color: '#C9A84C', fontSize: '11px', fontWeight: '600', fontFamily: 'Syne, sans-serif', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '8px' }}>Free Membership Includes</p>
-              <p style={{ color: '#888', fontSize: '12px', fontFamily: 'Syne, sans-serif', margin: '0 0 4px' }}>🪙 250 Ink to start reading</p>
+              <p style={{ color: '#888', fontSize: '12px', fontFamily: 'Syne, sans-serif', margin: '0 0 4px' }}>🪙 50 Ink to start reading</p>
               <p style={{ color: '#888', fontSize: '12px', fontFamily: 'Syne, sans-serif', margin: '0 0 4px' }}>📚 Access to The Reading Room</p>
               <p style={{ color: '#888', fontSize: '12px', fontFamily: 'Syne, sans-serif', margin: 0 }}>🪶 Support writers you love</p>
             </div>

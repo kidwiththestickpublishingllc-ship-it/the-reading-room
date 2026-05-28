@@ -20,7 +20,7 @@ The Tiniest Library (TTL) is a curated digital library of independent fiction. I
 - The Writer's Room: where authors apply, manage stories, and earn Ink
 
 INK SYSTEM:
-- Ink is TTL's currency. New readers get 250 Ink free
+- Ink is TTL's currency. New readers get 50 Ink free
 - Unlocking a chapter costs 25 Ink
 - Buy Ink packs: 100 Ink/$1, 300/$2.50, 600/$5, 1400/$10, 3000/$15
 - Authors earn 70% of every unlock. Tip jar = 100% to the author

@@ -55,7 +55,7 @@ type AuthorJar = Record<string, number>;
 // Constants
 // =========================
 const SQUARESPACE_READING_ROOM = "/members";
-const DEFAULT_INK = 250;
+const DEFAULT_INK = 50;
 const DEFAULT_UNLOCK_COST = 25;
 
 const STRIPE_LINKS: Record<number, string> = {

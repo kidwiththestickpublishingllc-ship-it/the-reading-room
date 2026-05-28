@@ -9,7 +9,7 @@ import { supabase } from "@/lib/supabase";
 // =========================
 
 const SQUARESPACE_READING_ROOM = "/members";
-const DEFAULT_INK = 250;
+const DEFAULT_INK = 50;
 
 type Story = {
   slug: string;

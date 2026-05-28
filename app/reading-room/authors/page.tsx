@@ -183,7 +183,7 @@ export default function AuthorsDirectory() {
   const [usingFallback, setUsingFallback] = useState(false);
   const [ink] = useState(() => {
     if (typeof window === "undefined") return 250;
-    return Number(window.localStorage.getItem("ttl_ink") ?? 250);
+    return Number(window.localStorage.getItem("ttl_ink") ?? 50);
   });
 
   useEffect(() => {

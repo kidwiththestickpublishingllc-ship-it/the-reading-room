@@ -31,7 +31,7 @@ type Series = {
 // ─── Ink helpers ──────────────────────────────────────────────
 const INK_KEY = "ttl_ink";
 const UNLOCKS_KEY = "ttl_comic_unlocks";
-const DEFAULT_INK = 250;
+const DEFAULT_INK = 50;
 const INK_PER_CHAPTER = 10;
 
 function getInk(): number {

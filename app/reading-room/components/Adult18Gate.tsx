@@ -127,7 +127,7 @@ export default function Adult18Gate({ children }: { children: React.ReactNode })
           email: data.user.email,
           is_age_verified: false,
           role: "reader",
-          ink_balance: 250,
+          ink_balance: 50,
         }, { onConflict: "id" });
       }
       setStatus("verify");
@@ -149,7 +149,7 @@ export default function Adult18Gate({ children }: { children: React.ReactNode })
         is_age_verified: true,
         age_verified_at: new Date().toISOString(),
         role: "reader",
-        ink_balance: 250,
+        ink_balance: 50,
       }, { onConflict: "id" });
 
       if (err) throw err;

@@ -218,10 +218,10 @@ export default function MembersRoomV2() {
     try {
       const { data, error } = await supabase.from("profiles").select("*").eq("id", userId).single();
       if (error || !data) {
-        await supabase.from("profiles").insert([{ id: userId, email: userEmail, membership_tier: "free", ink_balance: 250 }]);
-        setProfile({ id: userId, email: userEmail, full_name: null, membership_tier: "free", ink_balance: 250, avatar_url: null });
+        await supabase.from("profiles").insert([{ id: userId, email: userEmail, membership_tier: "free", ink_balance: 50 }]);
+        setProfile({ id: userId, email: userEmail, full_name: null, membership_tier: "free", ink_balance: 50, avatar_url: null });
       } else {
-        setProfile({ id: data.id, email: data.email ?? userEmail, full_name: data.full_name ?? null, membership_tier: data.membership_tier ?? "free", ink_balance: data.ink_balance ?? 250, avatar_url: data.avatar_url ?? null });
+        setProfile({ id: data.id, email: data.email ?? userEmail, full_name: data.full_name ?? null, membership_tier: data.membership_tier ?? "free", ink_balance: data.ink_balance ?? 50, avatar_url: data.avatar_url ?? null });
       }
       setView("dashboard");
     } catch { setLoading(false); }
@@ -387,7 +387,7 @@ export default function MembersRoomV2() {
           {view === "signup" && (
             <div style={{ marginTop: "24px", padding: "16px", background: "rgba(201,168,76,0.05)", borderRadius: "8px", border: "1px solid rgba(201,168,76,0.1)" }}>
               <p style={{ color: "#C9A84C", fontSize: "12px", fontWeight: "600", margin: "0 0 8px" }}>FREE MEMBERSHIP INCLUDES</p>
-              <p style={{ color: "#888", fontSize: "12px", margin: "0 0 4px" }}>🪙 250 Ink to start reading</p>
+              <p style={{ color: "#888", fontSize: "12px", margin: "0 0 4px" }}>🪙 50 Ink to start reading</p>
               <p style={{ color: "#888", fontSize: "12px", margin: "0 0 4px" }}>📚 Access to The Reading Room</p>
               <p style={{ color: "#888", fontSize: "12px", margin: 0 }}>🪶 Support writers you love</p>
             </div>
@@ -483,15 +483,15 @@ export default function MembersRoomV2() {
             </a>
           </div>
           {/* ── GETTING STARTED BANNER — new members only ── */}
-          {profile.ink_balance <= 250 && (
+          {profile.ink_balance <= 50 && (
             <div style={{ background: "linear-gradient(135deg, rgba(201,168,76,0.08), rgba(100,149,237,0.05))", border: "1px solid rgba(201,168,76,0.25)", borderLeft: "4px solid #C9A84C", borderRadius: 12, padding: 28, marginBottom: 24 }}>
               <div style={{ fontSize: 9, letterSpacing: "0.28em", textTransform: "uppercase" as const, color: "#C9A84C", marginBottom: 12 }}>Welcome to TTL</div>
               <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 24, fontWeight: 300, color: "#f0ece2", marginBottom: 8 }}>Your library starts here, {displayName.split(" ")[0]}. 🕯️</div>
-              <p style={{ fontSize: 13, color: "rgba(232,228,218,0.6)", lineHeight: 1.8, marginBottom: 20 }}>You have <strong style={{ color: "#C9A84C" }}>250 free Ink</strong> waiting. Here's how to make the most of your membership:</p>
+              <p style={{ fontSize: 13, color: "rgba(232,228,218,0.6)", lineHeight: 1.8, marginBottom: 20 }}>You have <strong style={{ color: "#C9A84C" }}>50 free Ink</strong> waiting. Here's how to make the most of your membership:</p>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(180px, 1fr))", gap: 12, marginBottom: 24 }}>
                 {[
                   { step: "1", title: "Browse stories", desc: "Explore 24+ genres in The Reading Room.", action: () => window.location.href = "/reading-room/stories", cta: "Browse →" },
-                  { step: "2", title: "Unlock a chapter", desc: "Each chapter costs 25 Ink. You have 250 free.", action: () => window.location.href = "/reading-room/stories", cta: "Start reading →" },
+                  { step: "2", title: "Unlock a chapter", desc: "Each chapter costs 25 Ink. You have 50 free.", action: () => window.location.href = "/reading-room/stories", cta: "Start reading →" },
                   { step: "3", title: "Build your library", desc: "Every unlock saves to your permanent shelf.", action: () => setActiveTab("library"), cta: "My Library →" },
                   { step: "4", title: "Tip a writer", desc: "100% of tips go directly to the author.", action: () => window.location.href = "/reading-room/authors", cta: "Meet authors →" },
                 ].map(s => (

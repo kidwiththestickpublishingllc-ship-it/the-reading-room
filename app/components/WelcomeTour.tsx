@@ -41,7 +41,7 @@ const MODAL_SLIDES = [
     emoji: "🪶",
     title: "Meet Ink",
     subtitle: "Your Reader Currency",
-    body: "Ink is how you support authors and unlock exclusive content. You start with 250 Ink free. Use it to read early-access chapters, exclusives, and members-only releases.",
+    body: "Ink is how you support authors and unlock exclusive content. You start with 50 Ink free. Use it to read early-access chapters, exclusives, and members-only releases.",
     highlight: "Buy more Ink starting at just $1 — packs go up to 2,500 Ink.",
     cta: "Got it →",
   },

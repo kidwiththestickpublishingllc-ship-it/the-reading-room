@@ -619,7 +619,7 @@ export default function HowItWorksPage() {
 
             <div className="hiw-steps">
               {[
-                { num: "01", icon: "🪶", title: "Join Free", text: "Create your free account and receive 250 Ink immediately — enough to unlock 10 chapters from any story in the library." },
+                { num: "01", icon: "🪶", title: "Join Free", text: "Create your free account and receive 50 Ink immediately — enough to unlock 2 chapters from any story in the library." },
                 { num: "02", icon: "📖", title: "Browse & Read", text: "Explore 24+ genres of prose fiction, comics, and manga from independent writers. Chapter 1 of every story is always free." },
                 { num: "03", icon: "✒️", title: "Unlock with Ink", text: "Each chapter costs 25 Ink. Once unlocked, it's yours permanently — saved to your library forever, across all devices." },
                 { num: "04", icon: "❤️", title: "Tip Writers", text: "Send Ink directly to the authors you love. 100% of every tip goes straight to the writer. No platform cut on tips." },
@@ -670,7 +670,7 @@ export default function HowItWorksPage() {
                   ))}
                 </div>
                 <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 15, fontStyle: "italic", color: "var(--text-faint)", marginTop: 20, lineHeight: 1.6 }}>
-                  New members start with 250 free Ink. No credit card required.
+                  New members start with 50 free Ink. No credit card required.
                 </p>
                 <a href="/reading-room/buy-ink" style={{ display: "inline-block", marginTop: 20, fontFamily: "'Syne', sans-serif", fontSize: 10, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "#000", background: "linear-gradient(135deg, #C9A84C, #8a6510)", padding: "10px 22px", borderRadius: 8, textDecoration: "none" }}>
                   Buy Ink →
@@ -727,7 +727,7 @@ export default function HowItWorksPage() {
                   <div className="hiw-room-feature">24+ genres of original fiction</div>
                   <div className="hiw-room-feature">Serialized chapters updated regularly</div>
                   <div className="hiw-room-feature">Author profiles and tip jars</div>
-                  <div className="hiw-room-feature">250 free Ink for new members</div>
+                  <div className="hiw-room-feature">50 free Ink for new members</div>
                 </div>
                 <div className="hiw-room-cta" style={{ color: "#C9A84C" }}>
                   Enter the Reading Room →
@@ -864,7 +864,7 @@ export default function HowItWorksPage() {
               {[
                 {
                   q: "Is TTL free to use?",
-                  a: "Yes. Reading Room access is free. Every new member receives 250 Ink to start — enough to unlock 10 chapters. You can also browse and read Chapter 1 of every story for free, forever."
+                  a: "Yes. Reading Room access is free. Every new member receives 50 Ink to start — enough to unlock 2 chapters. You can also browse and read Chapter 1 of every story for free, forever."
                 },
                 {
                   q: "What happens to my unlocked stories if I cancel?",
@@ -901,7 +901,7 @@ export default function HowItWorksPage() {
               Every story starts with a reader. Every reader starts here.
             </p>
             <div className="hiw-cta-buttons">
-              <a href="/reading-room/login" className="hiw-btn-primary">Join Free — 250 Ink →</a>
+              <a href="/reading-room/login" className="hiw-btn-primary">Join Free — 50 Ink →</a>
               <a href="/reading-room/stories" className="hiw-btn-ghost">Browse Stories</a>
             </div>
           </section>
