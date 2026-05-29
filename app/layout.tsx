@@ -22,17 +22,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${playfair.variable} ${inter.variable}`}>
-      <head>
-        <meta name="6a97888e-site-verification" content="00ed2aa926fd6a0c5aec0314667770e6" />
+      <head>        
         <Script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6696631641081046"
           crossOrigin="anonymous"
-          strategy="afterInteractive"
-        />
-        <Script
-          async
-          src="https://a.magsrv.com/ad-provider.js"
           strategy="afterInteractive"
         />
       </head>
@@ -41,14 +35,6 @@ export default function RootLayout({
         <PageChatWidget />
         <WelcomeTour />
         <Analytics />
-        <ins className="eas6a97888e17" data-zoneid="5907410"></ins>
-        <Script
-          id="exoclick-sticky-reading"
-          strategy="afterInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `(AdProvider = window.AdProvider || []).push({"serve": {}});`
-          }}
-        />
       </body>
     </html>
   )
