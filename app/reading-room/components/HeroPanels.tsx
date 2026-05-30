@@ -1,5 +1,26 @@
 'use client'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
+
+// =========================
+// Adsterra Native Banner — reusable, self-contained
+// =========================
+function AdsterraNative({ scriptSrc, containerId }: { scriptSrc: string; containerId: string }) {
+  const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (!ref.current) return;
+    // Avoid double-injecting on re-render
+    if (ref.current.querySelector('script')) return;
+    const container = document.createElement('div');
+    container.id = containerId;
+    const script = document.createElement('script');
+    script.async = true;
+    script.setAttribute('data-cfasync', 'false');
+    script.src = scriptSrc;
+    ref.current.appendChild(container);
+    ref.current.appendChild(script);
+  }, [scriptSrc, containerId]);
+  return <div ref={ref} style={{ width: '100%', display: 'flex', justifyContent: 'center' }} />;
+}
 
 const SPONSOR_ADS = [
   {
@@ -177,15 +198,6 @@ height: '100%',
 }
 
 export function LeftAdPanel() {
-  useEffect(() => {
-    const script = document.createElement('script');
-    script.src = 'https://a.magsrv.com/ad-provider.js';
-    script.async = true;
-    script.type = 'application/javascript';
-    document.head.appendChild(script);
-    return () => { document.head.removeChild(script); };
-  }, []);
-
   return (
     <div style={{
       position: 'relative',
@@ -213,15 +225,9 @@ export function LeftAdPanel() {
         fontFamily: 'var(--font-inter, sans-serif)',
       }}>SPONSORED</span>
 
-      <iframe
-        src="//a.magsrv.com/iframe.php?idzone=5907426&size=300x500"
-        width="300"
-        height="500"
-        scrolling="no"
-        marginWidth={0}
-        marginHeight={0}
-        frameBorder={0}
-        style={{ position: 'relative', zIndex: 1, border: 'none' }}
+      <AdsterraNative
+        scriptSrc="https://pl29592036.effectivecpmnetwork.com/2868155a0161be0d648fd8701020a1d7/invoke.js"
+        containerId="container-2868155a0161be0d648fd8701020a1d7"
       />
     </div>
   )
