@@ -259,3 +259,23 @@ export function LeftAdPanel() {
 export function RightAdPanel() {
   return <ShelfPanel ads={HOUSE_ADS} side="right" />
 }
+
+// Horizontal 728x90 banner — fills fastest, for section breaks
+export function ReadingRoomBanner() {
+  return (
+    <div style={{
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      padding: '24px 16px',
+      width: '100%',
+      overflow: 'hidden',
+    }}>
+      <AdsterraBanner
+        adKey="d84117be61e52783835c584c6970ff2d"
+        width={728}
+        height={90}
+      />
+    </div>
+  )
+}

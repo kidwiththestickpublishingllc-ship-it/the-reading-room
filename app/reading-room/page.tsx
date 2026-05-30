@@ -4,7 +4,7 @@ import React, { useEffect, useMemo, useState, type ReactNode } from "react";
 import { supabase } from "@/lib/supabase";
 import AdQueue from "./components/AdQueue";
 import { startTour } from "@/app/components/WelcomeTour";
-import { LeftAdPanel, RightAdPanel } from './components/HeroPanels';
+import { LeftAdPanel, RightAdPanel, ReadingRoomBanner } from './components/HeroPanels';
 import StorySocial from "./components/StorySocial";
 
 // =========================
@@ -2130,7 +2130,10 @@ export default function ReadingRoomHome() {
 
         {/* ── MAIN CONTENT ── */}
         <div className="ttl-wrap">
-        
+
+          {/* ── SPONSORED BANNER ── */}
+          <ReadingRoomBanner />
+
           {/* ── FEATURED AUTHORS ── */}
           <div className="ttl-section">
             <div className="ttl-section-header">
