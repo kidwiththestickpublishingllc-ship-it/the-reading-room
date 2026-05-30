@@ -4,10 +4,12 @@ import { useState, useEffect, useRef } from 'react'
 // =========================
 // Adsterra Banner (atOptions iframe) — reusable, any size
 // =========================
-function AdsterraBanner({ adKey, width, height }: { adKey: string; width: number; height: number }) {
+function AdsterraBanner({ adKey, width, height, onFill }: { adKey: string; width: number; height: number; onFill?: (filled: boolean) => void }) {
   const ref = useRef<HTMLDivElement>(null);
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => { setMounted(true); }, []);
   useEffect(() => {
-    if (!ref.current) return;
+    if (!mounted || !ref.current) return;
     if (ref.current.querySelector('iframe') || ref.current.querySelector('script')) return;
     const conf = document.createElement('script');
     conf.type = 'text/javascript';
@@ -15,9 +17,16 @@ function AdsterraBanner({ adKey, width, height }: { adKey: string; width: number
     const inv = document.createElement('script');
     inv.type = 'text/javascript';
     inv.src = `https://www.highperformanceformat.com/${adKey}/invoke.js`;
+    inv.onerror = () => onFill?.(false);
     ref.current.appendChild(conf);
     ref.current.appendChild(inv);
-  }, [adKey, width, height]);
+    const timer = setTimeout(() => {
+      const iframe = ref.current?.querySelector('iframe');
+      onFill?.(!!iframe && iframe.clientHeight > 10);
+    }, 4000);
+    return () => clearTimeout(timer);
+  }, [mounted, adKey, width, height, onFill]);
+  if (!mounted) return <div style={{ width, height }} />;
   return <div ref={ref} style={{ width, height, overflow: 'hidden' }} />;
 }
 
