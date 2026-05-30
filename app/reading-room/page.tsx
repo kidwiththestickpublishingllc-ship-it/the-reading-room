@@ -1847,7 +1847,7 @@ function RedDoorCard() {
       </div>
       <div style={{
         fontFamily: "'Syne', sans-serif",
-        fontSize: 10, letterSpacing: "0.2em",
+        fontSize: 9, letterSpacing: "0.2em",
         textTransform: "uppercase" as const,
         color: "rgba(200,80,80,0.7)",
         border: "1px solid rgba(200,80,80,0.3)",
