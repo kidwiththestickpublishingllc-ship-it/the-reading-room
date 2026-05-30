@@ -443,7 +443,7 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
     border-bottom: 1px solid var(--ink-border);
   }.ttl-hero-three-col {
     display: grid;
-    grid-template-columns: 0.5fr 2fr 0.5fr;
+    grid-template-columns: 340px 1fr 340px;
     gap: 0;
     min-height: 540px;
     align-items: stretch;

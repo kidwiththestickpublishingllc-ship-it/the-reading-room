@@ -2,6 +2,26 @@
 import { useState, useEffect, useRef } from 'react'
 
 // =========================
+// Adsterra Banner (atOptions iframe) — reusable, any size
+// =========================
+function AdsterraBanner({ adKey, width, height }: { adKey: string; width: number; height: number }) {
+  const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (!ref.current) return;
+    if (ref.current.querySelector('iframe') || ref.current.querySelector('script')) return;
+    const conf = document.createElement('script');
+    conf.type = 'text/javascript';
+    conf.text = `atOptions = { 'key':'${adKey}','format':'iframe','height':${height},'width':${width},'params':{} };`;
+    const inv = document.createElement('script');
+    inv.type = 'text/javascript';
+    inv.src = `https://www.highperformanceformat.com/${adKey}/invoke.js`;
+    ref.current.appendChild(conf);
+    ref.current.appendChild(inv);
+  }, [adKey, width, height]);
+  return <div ref={ref} style={{ width, height, overflow: 'hidden' }} />;
+}
+
+// =========================
 // Adsterra Native Banner — reusable, self-contained
 // =========================
 function AdsterraNative({ scriptSrc, containerId }: { scriptSrc: string; containerId: string }) {
@@ -225,9 +245,10 @@ export function LeftAdPanel() {
         fontFamily: 'var(--font-inter, sans-serif)',
       }}>SPONSORED</span>
 
-      <AdsterraNative
-        scriptSrc="https://pl29592036.effectivecpmnetwork.com/2868155a0161be0d648fd8701020a1d7/invoke.js"
-        containerId="container-2868155a0161be0d648fd8701020a1d7"
+      <AdsterraBanner
+        adKey="7bda6115e949728e7480cea4662de9ce"
+        width={300}
+        height={250}
       />
     </div>
   )
