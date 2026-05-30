@@ -5,6 +5,7 @@ import { supabase } from "@/lib/supabase";
 import AdQueue from "./components/AdQueue";
 import { startTour } from "@/app/components/WelcomeTour";
 import { RightAdPanel, ReadingRoomBanner } from './components/HeroPanels';
+import AdWindow from "./components/AdWindow";
 import StorySocial from "./components/StorySocial";
 
 // =========================
@@ -443,7 +444,7 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
     border-bottom: 1px solid var(--ink-border);
   }.ttl-hero-three-col {
     display: grid;
-    grid-template-columns: 1fr 340px;
+    grid-template-columns: 340px 1fr 340px;
     gap: 0;
     min-height: 540px;
     align-items: stretch;
@@ -2088,6 +2089,9 @@ export default function ReadingRoomHome() {
           <div className="ttl-hero-three-col">
 
            
+            {/* LEFT AD WINDOW */}
+            <AdWindow adKey="7bda6115e949728e7480cea4662de9ce" width={300} height={250} />
+
             {/* CENTER HERO */}
             <div className="ttl-hero-inner">
               <span className="ttl-hero-eyebrow">The Tiniest Library</span>
