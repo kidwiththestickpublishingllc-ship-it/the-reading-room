@@ -235,7 +235,7 @@ export function LeftAdPanel() {
     }}>
       <span style={{
         display: 'inline-block',
-        fontSize: 9,
+        fontSize: 10,
         fontWeight: 700,
         letterSpacing: '0.2em',
         color: '#6495ED',
