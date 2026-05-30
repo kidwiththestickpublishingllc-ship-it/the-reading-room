@@ -4,30 +4,24 @@ import { useState, useEffect, useRef } from 'react'
 // =========================
 // Adsterra Banner (atOptions iframe) — reusable, any size
 // =========================
-function AdsterraBanner({ adKey, width, height, onFill }: { adKey: string; width: number; height: number; onFill?: (filled: boolean) => void }) {
-  const ref = useRef<HTMLDivElement>(null);
+function AdsterraBanner({ adKey, width, height }: { adKey: string; width: number; height: number; onFill?: (filled: boolean) => void }) {
   const [mounted, setMounted] = useState(false);
   useEffect(() => { setMounted(true); }, []);
-  useEffect(() => {
-    if (!mounted || !ref.current) return;
-    if (ref.current.querySelector('iframe') || ref.current.querySelector('script')) return;
-    const conf = document.createElement('script');
-    conf.type = 'text/javascript';
-    conf.text = `atOptions = { 'key':'${adKey}','format':'iframe','height':${height},'width':${width},'params':{} };`;
-    const inv = document.createElement('script');
-    inv.type = 'text/javascript';
-    inv.src = `https://www.highperformanceformat.com/${adKey}/invoke.js`;
-    inv.onerror = () => onFill?.(false);
-    ref.current.appendChild(conf);
-    ref.current.appendChild(inv);
-    const timer = setTimeout(() => {
-      const iframe = ref.current?.querySelector('iframe');
-      onFill?.(!!iframe && iframe.clientHeight > 10);
-    }, 4000);
-    return () => clearTimeout(timer);
-  }, [mounted, adKey, width, height, onFill]);
   if (!mounted) return <div style={{ width, height }} />;
-  return <div ref={ref} style={{ width, height, overflow: 'hidden' }} />;
+  // Each slot loads in its own isolated iframe — the bulletproof way to run
+  // atOptions ad tags in React/Next without hydration conflicts.
+  const srcDoc = `<!DOCTYPE html><html><head><meta charset="utf-8"><style>html,body{margin:0;padding:0;overflow:hidden;background:transparent;}</style></head><body><script type="text/javascript">atOptions={'key':'${adKey}','format':'iframe','height':${height},'width':${width},'params':{}};<\/script><script type="text/javascript" src="https://www.highperformanceformat.com/${adKey}/invoke.js"><\/script></body></html>`;
+  return (
+    <iframe
+      srcDoc={srcDoc}
+      width={width}
+      height={height}
+      scrolling="no"
+      frameBorder={0}
+      style={{ border: 'none', overflow: 'hidden', display: 'block' }}
+      title="Sponsored"
+    />
+  );
 }
 
 // =========================
