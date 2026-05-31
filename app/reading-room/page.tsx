@@ -648,7 +648,7 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
 
   .ttl-section-eyebrow {
     font-family: 'Times New Roman', Times, serif;
-    font-size: 9px;
+    font-size: 12px;
     letter-spacing: 0.3em;
     text-transform: uppercase;
     color: var(--gold-dim);
@@ -717,7 +717,7 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
 
   .ttl-panel-label {
     font-family: 'Times New Roman', Times, serif;
-    font-size: 9px;
+    font-size: 12px;
     letter-spacing: 0.24em;
     text-transform: uppercase;
     color: var(--gold-dim);
@@ -771,7 +771,7 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
   }
 
   .ttl-pack-label {
-    font-size: 9px;
+    font-size: 12px;
     letter-spacing: 0.15em;
     text-transform: uppercase;
     color: var(--text-faint);
@@ -795,7 +795,7 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
   }
 
   .ttl-pack-cta {
-    font-size: 9px;
+    font-size: 12px;
     letter-spacing: 0.14em;
     text-transform: uppercase;
     color: var(--blue-bright);
@@ -889,7 +889,7 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
 
   .ttl-genre-tag {
     font-family: 'Times New Roman', Times, serif;
-    font-size: 8px;
+    font-size: 10px;
     letter-spacing: 0.14em;
     text-transform: uppercase;
     color: var(--blue-bright);
@@ -910,7 +910,7 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
 
   .ttl-tip-btn {
     font-family: 'Times New Roman', Times, serif;
-    font-size: 9px;
+    font-size: 12px;
     letter-spacing: 0.14em;
     text-transform: uppercase;
     color: var(--text-dim);
@@ -945,7 +945,7 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
 
   .ttl-author-profile-link {
     font-family: 'Times New Roman', Times, serif;
-    font-size: 9px;
+    font-size: 12px;
     letter-spacing: 0.14em;
     text-transform: uppercase;
     color: var(--text-faint);
@@ -1052,7 +1052,7 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
 
   .ttl-story-hint {
     font-family: 'Times New Roman', Times, serif;
-    font-size: 9px;
+    font-size: 12px;
     letter-spacing: 0.1em;
     text-transform: uppercase;
     color: rgba(232,228,218,0.18);
@@ -1061,7 +1061,7 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
 
   .ttl-badge {
     font-family: 'Times New Roman', Times, serif;
-    font-size: 8px;
+    font-size: 10px;
     letter-spacing: 0.16em;
     text-transform: uppercase;
     padding: 3px 9px;
@@ -1075,7 +1075,7 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
 
   .ttl-unlock-btn {
     font-family: 'Times New Roman', Times, serif;
-    font-size: 9px;
+    font-size: 12px;
     letter-spacing: 0.14em;
     text-transform: uppercase;
     padding: 6px 14px;
@@ -1104,7 +1104,7 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
 
   .ttl-filter-btn {
     font-family: 'Times New Roman', Times, serif;
-    font-size: 9px;
+    font-size: 12px;
     letter-spacing: 0.16em;
     text-transform: uppercase;
     padding: 5px 12px;
@@ -1217,7 +1217,7 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
 
   .ttl-modal-eyebrow {
     font-family: 'Times New Roman', Times, serif;
-    font-size: 9px;
+    font-size: 12px;
     letter-spacing: 0.24em;
     text-transform: uppercase;
     color: var(--gold-dim);
@@ -1240,7 +1240,7 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
 
   .ttl-modal-close {
     font-family: 'Times New Roman', Times, serif;
-    font-size: 9px;
+    font-size: 12px;
     letter-spacing: 0.16em;
     text-transform: uppercase;
     color: var(--text-dim);
@@ -1294,7 +1294,7 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
 
   .ttl-teaser-label {
     font-family: 'Times New Roman', Times, serif;
-    font-size: 9px;
+    font-size: 12px;
     letter-spacing: 0.2em;
     text-transform: uppercase;
     color: var(--blue-bright);
@@ -1480,7 +1480,7 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
   }
   .ttl-bottom-nav-label {
     font-family: 'Times New Roman', Times, serif;
-    font-size: 9px;
+    font-size: 12px;
     font-weight: 600;
     letter-spacing: 0.06em;
     text-transform: uppercase;
