@@ -2090,7 +2090,7 @@ export default function ReadingRoomHome() {
 
            
             {/* LEFT AD WINDOW */}
-            <AdWindow adKey="7bda6115e949728e7480cea4662de9ce" width={300} height={250} />
+            <AdWindow />
 
             {/* CENTER HERO */}
             <div className="ttl-hero-inner">
