@@ -621,8 +621,8 @@ function ChapterReaderContent({ storySlug, chapterNum }: { storySlug: string; ch
     if (ink < chapter.ink_cost) { alert(`You need ${chapter.ink_cost} Ink.`); return; }
     setUnlocking(true);
     try {
-      await supabase.rpc('increment_ink', { user_id: session.user.id, amount: -chapter.ink_cost });
-      await supabase.from('chapter_unlocks').insert({ user_id: session.user.id, chapter_id: chapter.id });
+      const { data: result, error: rpcError } = await supabase.rpc('unlock_chapter', { p_user_id: session.user.id, p_chapter_id: chapter.id });
+      if (rpcError) throw rpcError;
       setInk(v => v - chapter.ink_cost);
       setUnlocked(true);
     } catch { alert('Something went wrong. Please try again.'); }
