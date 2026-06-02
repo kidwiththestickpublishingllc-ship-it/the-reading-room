@@ -465,12 +465,27 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
 
   .ttl-hero-eyebrow {
     font-family: 'Times New Roman', Times, serif;
-    font-size: 10px;
+    font-size: 28px;
     letter-spacing: 0.32em;
     text-transform: uppercase;
-    color: var(--gold-dim);
-    margin-bottom: 20px;
+    color: #6495ED;
+    text-shadow: 0 0 1px #C9A84C, 0 0 8px rgba(201,168,76,0.5);
+    -webkit-text-stroke: 0.5px #C9A84C;
+    margin-bottom: 24px;
     display: block;
+    min-height: 38px;
+    text-align: center;
+  }
+  .ttl-eyebrow-cursor {
+    display: inline-block;
+    width: 2px;
+    margin-left: 2px;
+    background: #C9A84C;
+    animation: eyebrowBlink 0.7s step-end infinite;
+  }
+  @keyframes eyebrowBlink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
   }
 
   .ttl-hero-title {
@@ -488,7 +503,7 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
     margin-left: auto;
     margin-right: auto;
     font-family: 'Times New Roman', Times, serif;
-    font-size: 15px;
+    font-size: 20px;
     color: var(--text-dim);
     max-width: 520px;
     line-height: 1.75;
@@ -577,7 +592,29 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
     box-shadow: 0 0 12px rgba(201,168,76,0.2);
   }
 
+  .ttl-btn-gold {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 11px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    font-weight: 700;
+    padding: 15px 36px;
+    border-radius: 8px;
+    text-decoration: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid rgba(201,168,76,0.8);
+    background: linear-gradient(135deg, #8a6510, #C9A84C, #FFE066, #C9A84C, #8a6510);
+    background-size: 200% auto;
+    color: #000;
+    animation: joinPulse 2.5s ease-in-out infinite, shimmerText 3s linear infinite;
+    position: relative;
+  }
+
   .ttl-btn-gold:hover {
+    transform: scale(1.04);
     background: rgba(201,168,76,0.2);
     box-shadow: 0 0 24px rgba(201,168,76,0.4);
   }
@@ -2096,7 +2133,7 @@ export default function ReadingRoomHome() {
             <div className="ttl-hero-inner">
               <span className="ttl-hero-eyebrow">The Tiniest Library</span>
               <h1 className="ttl-hero-title">
-                The<br />
+                <span style={{ fontSize: "0.55em", color: "#ffffff" }}>The</span><br />
                 <span style={{
                   background: "linear-gradient(135deg, #C9A84C 0%, #FFE066 40%, #E2C97E 60%, #C9A84C 100%)",
                   WebkitBackgroundClip: "text",
@@ -2106,7 +2143,7 @@ export default function ReadingRoomHome() {
                   filter: "drop-shadow(0 2px 8px rgba(139,100,20,0.6)) drop-shadow(0 0 30px rgba(201,168,76,0.7))",
                   textShadow: "0 2px 20px rgba(139,100,20,0.4)",
                 }}>Reading</span><br />
-                <span style={{ color: "#1a1008" }}>Room</span>
+                <span style={{ color: "#ffffff", textShadow: "0 2px 4px rgba(0,0,0,0.9), 0 4px 12px rgba(0,0,0,0.7), 0 6px 24px rgba(0,0,0,0.5)" }}>Room</span>
               </h1>
               <p className="ttl-hero-sub">
                 A space for long stories, serialized chapters, and exclusive releases.
