@@ -1907,6 +1907,24 @@ function RedDoorCard() {
 // Page
 // =========================
 export default function ReadingRoomHome() {
+  const [typedText, setTypedText] = useState("");
+  useEffect(() => {
+    const full = "The Tiniest Library";
+    let i = 0;
+    let timeout: ReturnType<typeof setTimeout>;
+    const tick = () => {
+      if (i <= full.length) {
+        setTypedText(full.slice(0, i));
+        i++;
+        timeout = setTimeout(tick, 110);
+      } else {
+        // Hold the full text, then clear and loop.
+        timeout = setTimeout(() => { i = 0; tick(); }, 2200);
+      }
+    };
+    tick();
+    return () => clearTimeout(timeout);
+  }, []);
   const [ink, setInk] = useState<number>(DEFAULT_INK);
   const [unlocks, setUnlocksState] = useState<Unlocks>({});
   const [jar, setJarState] = useState<AuthorJar>({});
@@ -2131,7 +2149,7 @@ export default function ReadingRoomHome() {
 
             {/* CENTER HERO */}
             <div className="ttl-hero-inner">
-              <span className="ttl-hero-eyebrow">The Tiniest Library</span>
+              <span className="ttl-hero-eyebrow">{typedText}<span className="ttl-eyebrow-cursor">&nbsp;</span></span>
               <h1 className="ttl-hero-title">
                 <span style={{ fontSize: "0.55em", color: "#ffffff" }}>The</span><br />
                 <span style={{
