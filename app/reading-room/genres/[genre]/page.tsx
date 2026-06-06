@@ -404,6 +404,7 @@ function slugToGenre(slug: string): string {
 }
 const GENRE_AD_ZONES: Record<string, string> = {
   fantasy: "5942522",
+  romance: "5943930",
 };
 const FALLBACK_AD_ZONE = "5907426";
 // =========================
