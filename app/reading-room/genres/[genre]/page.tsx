@@ -405,11 +405,15 @@ function slugToGenre(slug: string): string {
 const GENRE_AD_ZONES: Record<string, string> = {
   fantasy: "5942522",
   romance: "5943930",
+  "horror-mystery": "5943938",
+  "crime-and-thrillers": "5943990",
+  "sci-fi": "5943994",
+  "young-adult": "5944000",
+  "new-adult": "5944004",
+  cozy: "5944010",
+  "poems-memoirs": "5944012",
 };
 const FALLBACK_AD_ZONE = "5907426";
-// =========================
-// Styles — extends TRR system exactly
-// =========================
 const GENRE_PAGE_STYLES = `
   @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Syne:wght@400;500;600;700&display=swap');
 
