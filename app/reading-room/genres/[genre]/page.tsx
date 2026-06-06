@@ -1540,7 +1540,7 @@ if (genreName === "Adult 18+") {
         <div style={{ display: 'grid', gridTemplateColumns: '240px 1fr 240px', gap: 0, maxWidth: 1600, margin: '0 auto', alignItems: 'start' }} className="ttl-ad-grid">
           {/* LEFT AD */}
           <div style={{ padding: '32px 16px', position: 'sticky', top: 80 }}>
-            <div style={{ background: 'rgba(201,168,76,0.03)', border: '1px solid rgba(201,168,76,0.2)', borderRadius: 12, padding: '20px 16px', minHeight: 400 }}>
+            <div style={{ background: 'rgba(201,168,76,0.03)', border: '1px solid rgba(201,168,76,0.2)', borderRadius: 12, padding: '20px 16px', minHeight: 640 }}>
               <span style={{ display: 'block', fontSize: 9, fontWeight: 700, letterSpacing: '0.2em', color: '#6495ED', border: '1px solid rgba(100,149,237,0.3)', borderRadius: 20, padding: '2px 10px', marginBottom: 16, fontFamily: 'sans-serif', width: 'fit-content' }}>SPONSORED</span>
               <iframe src={`//a.magsrv.com/iframe.php?idzone=${GENRE_AD_ZONES[genreSlug] ?? FALLBACK_AD_ZONE}&size=160x600`} width="160" height="600" scrolling="no" frameBorder={0} style={{ border: 'none', display: 'block', margin: '0 auto' }} />
             </div>
