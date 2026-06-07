@@ -2221,6 +2221,7 @@ export default function ReadingRoomHome() {
       }}
     >
       {[
+        { slug: "chris-knopf", name: "Chris Knopf", role: "Founding Author · Published", tagline: "Where the dead aren't quite done.", quote: "A ghost grows attached to someone who reminds him of himself.", genres: ["Horror Mystery", "Thriller"], accent: "#9B2335" },
         { slug: "d-cedeno", name: "Daniel Cedeno", role: "Founding Author · Creator", tagline: "Worlds that refuse to stay quiet.", quote: "The sky above Hartford wasn't supposed to flicker like a broken screen… but tonight it did.", genres: ["Sci-Fi", "Young Adult"], accent: "#C9A84C" },
         { slug: "sergio-lastre", name: "Sergio Lastre", role: "Founding Author", tagline: "Stories that live in the marrow.", quote: "Some doors don't open. They remember.", genres: ["Latin Stories", "Contemporary Fiction"], accent: "#6495ED" },
         { slug: "a-rivera", name: "A. Rivera", role: "Founding Author", tagline: "Slow-burn mystery with heart.", quote: "Lanterns appeared overnight — each one with a name nobody claimed.", genres: ["Crime & Thrillers", "Cozy"], accent: "#fbbf24" },
