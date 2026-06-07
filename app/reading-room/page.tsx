@@ -2564,7 +2564,7 @@ export default function ReadingRoomHome() {
               <a href="/reading-room/authors" className="ttl-btn-ghost" style={{ fontSize: '9px', padding: '8px 18px', borderRadius: '8px' }}>Authors</a>
               <a href="https://write.the-tiniest-library.com" className="ttl-btn-ghost" style={{ fontSize: '9px', padding: '8px 18px', borderRadius: '8px' }}>Writer's Room</a>
               <a href="https://redroom.the-tiniest-library.com" className="ttl-btn-ghost" style={{ fontSize: '9px', padding: '8px 18px', borderRadius: '8px' }}>Red Room</a>
-              <a href="/members" className="ttl-btn-primary" style={{ fontSize: '9px', padding: '8px 18px', borderRadius: '8px' }}>Members Room →</a>
+              <a href="/members" className="ttl-btn-primary" style={{ fontSize: '10px', padding: '8px 18px', borderRadius: '8px' }}>Members Room →</a>
             </div>
           </div>
         </div>
