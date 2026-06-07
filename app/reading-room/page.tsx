@@ -134,6 +134,9 @@ function setJar(next: AuthorJar) {
 // Demo Data
 // =========================
 const authors: Author[] = [
+  { slug: "chris-knopf", name: "Chris Knopf", tagline: "Where the dead aren't quite done.", genres: ["Horror Mystery", "Thriller"], image: "/images/author-chris.jpg" },
+  { slug: "d-cedeno", name: "Daniel Cedeno", tagline: "Worlds that refuse to stay quiet.", genres: ["Sci-Fi", "Young Adult", "Serialized Fiction"], image: "/images/author-5.jpg" },
+  { slug: "sergio-lastre", name: "Sergio Lastre", tagline: "Love stories that don't let go.", genres: ["Romance", "Fantasy"], image: "/images/author-sergio.jpg" },
   { slug: "a-rivera", name: "A. Rivera", tagline: "Slow-burn mystery with heart.", genres: ["Crime & Thrillers", "Cozy"], image: "/images/author-1.jpg" },
   { slug: "j-holloway", name: "J. Holloway", tagline: "Dark academia + modern folklore.", genres: ["Dark Academia", "Fantasy"], image: "/images/author-2.jpg" },
   { slug: "m-chen", name: "M. Chen", tagline: "Soft sci-fi, big emotions.", genres: ["Sci-Fi", "Young Adult"], image: "/images/author-3.jpg" },
