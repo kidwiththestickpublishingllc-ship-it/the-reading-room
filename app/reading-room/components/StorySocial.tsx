@@ -409,14 +409,31 @@ export default function StorySocial({ storyId, storySlug, storyTitle, userId }: 
     setSubmitting(false);
   }
 
-  async function handleShare() {
-    const url = `https://read.the-tiniest-library.com/reading-room/stories/${storySlug}`;
+  const shareUrl = `https://read.the-tiniest-library.com/reading-room/stories/${storySlug}/chapters/1`;
+
+  async function handleNativeShare() {
+    // On mobile, this opens the OS share sheet — includes Instagram, TikTok, Messages, etc.
+    if (typeof navigator !== "undefined" && navigator.share) {
+      try {
+        await navigator.share({
+          title: storyTitle,
+          text: `Reading "${storyTitle}" on The Tiniest Library`,
+          url: shareUrl,
+        });
+        return true;
+      } catch {
+        return false; // user cancelled or share failed — fall back to menu
+      }
+    }
+    return false; // no native share (desktop) — caller shows the menu
+  }
+
+  async function handleCopyLink() {
     try {
-      await navigator.clipboard.writeText(url);
+      await navigator.clipboard.writeText(shareUrl);
     } catch {
-      // fallback
       const el = document.createElement("textarea");
-      el.value = url;
+      el.value = shareUrl;
       document.body.appendChild(el);
       el.select();
       document.execCommand("copy");
@@ -465,7 +482,10 @@ export default function StorySocial({ storyId, storySlug, storyTitle, userId }: 
         <div style={{ position: "relative" }}>
           <button
             className={`ttl-social-btn${shared ? " shared" : ""}`}
-            onClick={() => setShared(s => !s)}
+            onClick={async () => {
+              const didNativeShare = await handleNativeShare();
+              if (!didNativeShare) setShared(s => !s);
+            }}
             title="Share this story"
           >
             <span>🔗</span>
@@ -473,18 +493,18 @@ export default function StorySocial({ storyId, storySlug, storyTitle, userId }: 
           </button>
           {shared && (
             <div style={{ position: "absolute", bottom: "calc(100% + 8px)", left: 0, background: "#111", border: "1px solid rgba(201,168,76,0.3)", borderRadius: 10, padding: 8, display: "flex", flexDirection: "column", gap: 4, minWidth: 180, zIndex: 50, boxShadow: "0 8px 32px rgba(0,0,0,0.6)" }}>
-              <button onClick={() => { window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(`Reading "${storyTitle}" on The Tiniest Library`)}&url=${encodeURIComponent(`https://read.the-tiniest-library.com/reading-room/stories/${storySlug}`)}`, '_blank'); setShared(false); }} style={{ display: "flex", alignItems: "center", gap: 10, padding: "8px 12px", background: "none", border: "none", color: "#f0ece2", cursor: "pointer", fontSize: 12, borderRadius: 6, textAlign: "left", width: "100%" }}
+              <button onClick={() => { window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(`Reading "${storyTitle}" on The Tiniest Library`)}&url=${encodeURIComponent(shareUrl)}`, '_blank'); setShared(false); }} style={{ display: "flex", alignItems: "center", gap: 10, padding: "8px 12px", background: "none", border: "none", color: "#f0ece2", cursor: "pointer", fontSize: 12, borderRadius: 6, textAlign: "left", width: "100%" }}
                 onMouseEnter={e => e.currentTarget.style.background = "rgba(255,255,255,0.05)"}
                 onMouseLeave={e => e.currentTarget.style.background = "none"}>
                 𝕏 Share on X / Twitter
               </button>
-              <button onClick={() => { window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(`https://read.the-tiniest-library.com/reading-room/stories/${storySlug}`)}`, '_blank'); setShared(false); }} style={{ display: "flex", alignItems: "center", gap: 10, padding: "8px 12px", background: "none", border: "none", color: "#f0ece2", cursor: "pointer", fontSize: 12, borderRadius: 6, textAlign: "left", width: "100%" }}
+              <button onClick={() => { window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`, '_blank'); setShared(false); }} style={{ display: "flex", alignItems: "center", gap: 10, padding: "8px 12px", background: "none", border: "none", color: "#f0ece2", cursor: "pointer", fontSize: 12, borderRadius: 6, textAlign: "left", width: "100%" }}
                 onMouseEnter={e => e.currentTarget.style.background = "rgba(255,255,255,0.05)"}
                 onMouseLeave={e => e.currentTarget.style.background = "none"}>
                 📘 Share on Facebook
               </button>
               <div style={{ height: 1, background: "rgba(255,255,255,0.07)", margin: "2px 0" }} />
-              <button onClick={async () => { await handleShare(); setShared(false); setTimeout(() => setShared(false), 100); }} style={{ display: "flex", alignItems: "center", gap: 10, padding: "8px 12px", background: "none", border: "none", color: "#C9A84C", cursor: "pointer", fontSize: 12, borderRadius: 6, textAlign: "left", width: "100%" }}
+              <button onClick={async () => { await handleCopyLink(); setShared(false); }} style={{ display: "flex", alignItems: "center", gap: 10, padding: "8px 12px", background: "none", border: "none", color: "#C9A84C", cursor: "pointer", fontSize: 12, borderRadius: 6, textAlign: "left", width: "100%" }}
                 onMouseEnter={e => e.currentTarget.style.background = "rgba(201,168,76,0.08)"}
                 onMouseLeave={e => e.currentTarget.style.background = "none"}>
                 🔗 Copy Link
