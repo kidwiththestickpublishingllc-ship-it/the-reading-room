@@ -482,7 +482,9 @@ export default function StorySocial({ storyId, storySlug, storyTitle, userId }: 
         <div style={{ position: "relative" }}>
           <button
             className={`ttl-social-btn${shared ? " shared" : ""}`}
-            onClick={async () => {
+            onClick={async (e) => {
+              e.stopPropagation();
+              e.preventDefault();
               const didNativeShare = await handleNativeShare();
               if (!didNativeShare) setShared(s => !s);
             }}
