@@ -500,7 +500,7 @@ export default function StorySocial({ storyId, storySlug, storyTitle, userId }: 
                 onMouseLeave={e => e.currentTarget.style.background = "none"}>
                 𝕏 Share on X / Twitter
               </button>
-              <button onClick={() => { window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`, '_blank'); setShared(false); }} style={{ display: "flex", alignItems: "center", gap: 10, padding: "8px 12px", background: "none", border: "none", color: "#f0ece2", cursor: "pointer", fontSize: 12, borderRadius: 6, textAlign: "left", width: "100%" }}
+              <button onClick={() => { window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`, 'fbshare', 'width=600,height=500,scrollbars=yes'); setShared(false); }} style={{ display: "flex", alignItems: "center", gap: 10, padding: "8px 12px", background: "none", border: "none", color: "#f0ece2", cursor: "pointer", fontSize: 12, borderRadius: 6, textAlign: "left", width: "100%" }}
                 onMouseEnter={e => e.currentTarget.style.background = "rgba(255,255,255,0.05)"}
                 onMouseLeave={e => e.currentTarget.style.background = "none"}>
                 📘 Share on Facebook
