@@ -541,6 +541,7 @@ function ChapterReaderContent({ storySlug, chapterNum }: { storySlug: string; ch
   const [unlocked, setUnlocked] = useState(false);
   const [loading, setLoading] = useState(true);
   const [unlocking, setUnlocking] = useState(false);
+  const [signedIn, setSignedIn] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -562,6 +563,7 @@ function ChapterReaderContent({ storySlug, chapterNum }: { storySlug: string; ch
       try {
         setLoading(true);
         const { data: { session } } = await supabase.auth.getSession();
+        setSignedIn(!!session);
         if (session) {
           const { data: profile } = await supabase.from('profiles').select('ink_balance').eq('id', session.user.id).single();
           if (profile) setInk(profile.ink_balance ?? 0);
@@ -705,16 +707,34 @@ function ChapterReaderContent({ storySlug, chapterNum }: { storySlug: string; ch
               <div className="lock-gate fade-in">
                 <span className="lock-icon">🔒</span>
                 <h3 className="lock-title">This chapter is locked</h3>
-                <p className="lock-sub">
-                  Unlock Chapter {chapterNum} for {chapter.ink_cost} Ink and continue reading uninterrupted.
-                  {ink < chapter.ink_cost && <span style={{ display:'block', marginTop:8, color:'var(--gold)', fontSize:13 }}>You have {ink} Ink — you need {chapter.ink_cost - ink} more.</span>}
-                </p>
-                <div>
-                  <button className="lock-btn" disabled={unlocking || ink < chapter.ink_cost} onClick={unlockChapter}>
-                    {unlocking ? 'Unlocking…' : `Unlock for ${chapter.ink_cost} Ink`}
-                  </button>
-                  <a href="/reading-room/buy-ink" className="lock-btn-ghost">Buy Ink</a>
-                </div>
+                {signedIn ? (
+                  <>
+                    <p className="lock-sub">
+                      Unlock Chapter {chapterNum} for {chapter.ink_cost} Ink and continue reading uninterrupted.
+                      {ink < chapter.ink_cost && <span style={{ display:'block', marginTop:8, color:'var(--gold)', fontSize:13 }}>You have {ink} Ink — you need {chapter.ink_cost - ink} more.</span>}
+                    </p>
+                    <div>
+                      <button className="lock-btn" disabled={unlocking || ink < chapter.ink_cost} onClick={unlockChapter}>
+                        {unlocking ? 'Unlocking…' : `Unlock for ${chapter.ink_cost} Ink`}
+                      </button>
+                      <a href="/reading-room/buy-ink" className="lock-btn-ghost">Buy Ink</a>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <p className="lock-sub">
+                      Join The Tiniest Library free to unlock chapters with Ink and support writers directly — they keep their copyright and earn from every unlock.
+                    </p>
+                    <div>
+                      <a href="/reading-room/login" className="lock-btn" style={{ textDecoration: 'none', display: 'inline-block' }}>
+                        Join Free →
+                      </a>
+                    </div>
+                    <p style={{ marginTop: 16, fontSize: 12, fontFamily: 'var(--font-ui)', color: 'var(--text-dim)' }}>
+                      Already a member? <a href="/reading-room/login" style={{ color: 'var(--gold)' }}>Sign in</a>
+                    </p>
+                  </>
+                )}
               </div>
             </>
           )}
