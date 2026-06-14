@@ -562,14 +562,22 @@ function MediaPanel({ chapter, story, open, onClose }: { chapter: Chapter; story
             </>
           )}
 
-          {/* Story media (artwork, character portraits, maps) */}
+          {/* Story media (artwork, character portraits, maps, video) */}
           {storyMedia.length > 0 && (
             <div className="media-gallery" style={{ marginTop: (chapter.video_url || mediaUrls.length) ? 24 : 0 }}>
-              {storyMedia.map((m, i) => (
-                <div key={i} className="media-gallery-item" onClick={() => setLightboxImg(m.url)}>
-                  <img src={m.url} alt={m.title} />
-                </div>
-              ))}
+              {storyMedia.map((m, i) => {
+                const isVideo = /\.(mp4|webm|mov|m4v)(\?|$)/i.test(m.url);
+                return (
+                  <div key={i} className="media-gallery-item">
+                    {isVideo ? (
+                      <video src={m.url} controls playsInline style={{ width: '100%', display: 'block', borderRadius: 8 }} />
+                    ) : (
+                      <img src={m.url} alt={m.title} onClick={() => setLightboxImg(m.url)} style={{ cursor: 'pointer' }} />
+                    )}
+                    {m.title && <div style={{ fontSize: 11, color: 'var(--text-muted)', padding: '6px 4px 0', fontFamily: 'var(--font-ui)' }}>{m.title}</div>}
+                  </div>
+                );
+              })}
             </div>
           )}
 
