@@ -455,7 +455,7 @@ export default function StorySocial({ storyId, storySlug, storyTitle, userId }: 
         {/* Like */}
         <button
           className={`ttl-social-btn${liked ? " liked" : ""}`}
-          onClick={handleLike}
+          onClick={(e) => { e.stopPropagation(); e.preventDefault(); handleLike(); }}
           title={userId ? (liked ? "Unlike" : "Like this story") : "Join free to like stories"}
         >
           <span>{liked ? "❤️" : "🤍"}</span>
@@ -468,7 +468,7 @@ export default function StorySocial({ storyId, storySlug, storyTitle, userId }: 
         {/* Comment */}
         <button
           className={`ttl-social-btn${showComments ? " commented" : ""}`}
-          onClick={() => setShowComments(v => !v)}
+          onClick={(e) => { e.stopPropagation(); e.preventDefault(); setShowComments(v => !v); }}
           title="Read and leave comments"
         >
           <span>💬</span>
@@ -517,7 +517,7 @@ export default function StorySocial({ storyId, storySlug, storyTitle, userId }: 
 
         {/* Comment drawer */}
         {showComments && (
-          <div className="ttl-comment-drawer">
+          <div className="ttl-comment-drawer" onClick={(e) => e.stopPropagation()}>
             <div className="ttl-comment-drawer-header">
               <span className="ttl-comment-drawer-title">
                 {commentCount} {commentCount === 1 ? "Comment" : "Comments"} — {storyTitle}
