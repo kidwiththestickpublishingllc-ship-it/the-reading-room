@@ -444,6 +444,43 @@ function PageNarrator({ text, title, onClose }: { text: string; title: string; o
   );
 }
 
+function AdGate({ onDone }: { onDone: () => void }) {
+  const [canSkip, setCanSkip] = useState(false);
+  useEffect(() => {
+    // inject magsrv provider + serve the zone
+    const s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://a.magsrv.com/ad-provider.js';
+    document.body.appendChild(s);
+    s.onload = () => {
+      try { ((window as any).AdProvider = (window as any).AdProvider || []).push({ serve: {} }); } catch {}
+    };
+    const t1 = setTimeout(() => setCanSkip(true), 2000);
+    const t2 = setTimeout(() => onDone(), 5000);
+    return () => { clearTimeout(t1); clearTimeout(t2); };
+  }, [onDone]);
+
+  return (
+    <div style={{ position: 'fixed', inset: 0, zIndex: 95, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(0,0,0,0.92)', backdropFilter: 'blur(10px)', padding: 24 }}>
+      <div style={{ textAlign: 'center', maxWidth: 340 }}>
+        <div style={{ fontSize: 28, marginBottom: 8 }}>🕯️</div>
+        <div style={{ fontFamily: 'var(--font-display)', fontSize: 18, color: 'var(--gold)', marginBottom: 4 }}>Finding your page…</div>
+        <div style={{ fontSize: 12, color: 'var(--text-dim)', marginBottom: 20 }}>The Tiniest Library</div>
+        <div style={{ width: 300, height: 250, margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(255,255,255,0.02)', borderRadius: 10, overflow: 'hidden' }}>
+          <ins className="eas6a97888e2" data-zoneid="5949872"></ins>
+        </div>
+        <button
+          onClick={onDone}
+          disabled={!canSkip}
+          style={{ marginTop: 20, fontFamily: 'var(--font-ui)', fontSize: 12, fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase', padding: '12px 28px', borderRadius: 8, border: '1px solid var(--border-gold)', cursor: canSkip ? 'pointer' : 'not-allowed', background: canSkip ? 'linear-gradient(135deg, var(--gold), #8a6510)' : 'transparent', color: canSkip ? '#000' : 'var(--text-dim)', transition: 'all 0.3s' }}
+        >
+          {canSkip ? 'Continue →' : 'Please wait…'}
+        </button>
+      </div>
+    </div>
+  );
+}
+
 // =========================
 // Media Panel
 // =========================
@@ -561,6 +598,7 @@ function ChapterReaderContent({ storySlug, chapterNum }: { storySlug: string; ch
   const [audioVisible, setAudioVisible] = useState(false);
   const [pageVisible, setPageVisible] = useState(false);
   const [resumePrompt, setResumePrompt] = useState<{ chapter: number; scrollPct: number } | null>(null);
+  const [adGate, setAdGate] = useState<null | (() => void)>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [story, setStory] = useState<Story | null>(null);
   const [chapter, setChapter] = useState<Chapter | null>(null);
@@ -807,19 +845,21 @@ function ChapterReaderContent({ storySlug, chapterNum }: { storySlug: string; ch
                     onClick={() => {
                       const target = resumePrompt;
                       setResumePrompt(null);
-                      if (target.chapter !== chapterNum) {
-                        window.location.href = `/reading-room/stories/${storySlug}/chapters/${target.chapter}`;
-                      } else {
-                        const docH = document.documentElement.scrollHeight - window.innerHeight;
-                        window.scrollTo({ top: docH * target.scrollPct, behavior: 'smooth' });
-                      }
+                      setAdGate(() => () => {
+                        if (target.chapter !== chapterNum) {
+                          window.location.href = `/reading-room/stories/${storySlug}/chapters/${target.chapter}`;
+                        } else {
+                          const docH = document.documentElement.scrollHeight - window.innerHeight;
+                          window.scrollTo({ top: docH * target.scrollPct, behavior: 'smooth' });
+                        }
+                      });
                     }}
                     style={{ fontFamily: 'var(--font-ui)', fontSize: 12, fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase', padding: '14px', borderRadius: 8, border: 'none', cursor: 'pointer', background: 'linear-gradient(135deg, var(--gold), #8a6510)', color: '#000' }}
                   >
                     ⟿ Resume my Page-Bend
                   </button>
                   <button
-                    onClick={() => setResumePrompt(null)}
+                    onClick={() => { setResumePrompt(null); setAdGate(() => () => {}); }}
                     style={{ fontFamily: 'var(--font-ui)', fontSize: 12, letterSpacing: '0.1em', textTransform: 'uppercase', padding: '12px', borderRadius: 8, border: '1px solid var(--border)', cursor: 'pointer', background: 'transparent', color: 'var(--text-muted)' }}
                   >
                     Start from here
@@ -837,6 +877,7 @@ function ChapterReaderContent({ storySlug, chapterNum }: { storySlug: string; ch
         )}
 
         {/* Media panel */}
+        {adGate && <AdGate onDone={() => { const go = adGate; setAdGate(null); go(); }} />}
         <MediaPanel chapter={chapter} story={story} open={mediaPanelOpen} onClose={() => setMediaPanelOpen(false)} />
         <div className={`drawer-overlay${mediaPanelOpen ? ' open' : ''}`} onClick={() => setMediaPanelOpen(false)} />
 
