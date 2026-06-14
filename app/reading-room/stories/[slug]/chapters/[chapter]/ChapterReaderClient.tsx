@@ -227,7 +227,7 @@ const STYLES = `
 
   /* MEDIA PANEL */
   .media-panel {
-    position:fixed; top:0; right:0; bottom:0; z-index:55; width:min(480px,95vw);
+    position:fixed; top:0; right:0; bottom:0; z-index:61; width:min(480px,95vw);
     background:var(--bg); border-left:1px solid var(--border-gold);
     transform:translateX(100%); transition:transform 0.35s ease;
     display:flex; flex-direction:column; overflow:hidden;
