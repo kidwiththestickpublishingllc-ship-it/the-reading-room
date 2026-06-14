@@ -33,6 +33,7 @@ type Story = {
   id: string;
   title: string;
   author_name: string;
+  author_id: string | null;
   slug: string;
   cover_url: string | null;
   description: string | null;
@@ -446,11 +447,27 @@ function PageNarrator({ text, title, onClose }: { text: string; title: string; o
 // =========================
 // Media Panel
 // =========================
-function MediaPanel({ chapter, open, onClose }: { chapter: Chapter; open: boolean; onClose: () => void }) {
+function MediaPanel({ chapter, story, open, onClose }: { chapter: Chapter; story: Story; open: boolean; onClose: () => void }) {
   const [lightboxImg, setLightboxImg] = useState<string | null>(null);
   const [panelIndex, setPanelIndex] = useState(0);
+  const [storyMedia, setStoryMedia] = useState<{ url: string; title: string; media_type: string }[]>([]);
   const isComic = chapter.media_type === 'comic' || chapter.media_type === 'manga';
   const mediaUrls = chapter.media_urls || [];
+
+  useEffect(() => {
+    if (!story.author_id) return;
+    supabase
+      .from('story_media')
+      .select('url, title, media_type, chapter_tag, sort_order')
+      .eq('author_id', story.author_id)
+      .order('sort_order')
+      .then(({ data }) => {
+        const shown = (data ?? []).filter((m: any) =>
+          m.chapter_tag == null || m.chapter_tag <= chapter.chapter_number
+        );
+        setStoryMedia(shown.map((m: any) => ({ url: m.url, title: m.title, media_type: m.media_type })));
+      });
+  }, [story.author_id, chapter.chapter_number]);
 
   return (
     <>
@@ -508,8 +525,19 @@ function MediaPanel({ chapter, open, onClose }: { chapter: Chapter; open: boolea
             </>
           )}
 
+          {/* Story media (artwork, character portraits, maps) */}
+          {storyMedia.length > 0 && (
+            <div className="media-gallery" style={{ marginTop: (chapter.video_url || mediaUrls.length) ? 24 : 0 }}>
+              {storyMedia.map((m, i) => (
+                <div key={i} className="media-gallery-item" onClick={() => setLightboxImg(m.url)}>
+                  <img src={m.url} alt={m.title} />
+                </div>
+              ))}
+            </div>
+          )}
+
           {/* Empty */}
-          {!chapter.video_url && mediaUrls.length === 0 && (
+          {!chapter.video_url && mediaUrls.length === 0 && storyMedia.length === 0 && (
             <div className="media-empty">
               <span className="media-empty-icon">🖼</span>
               <p className="media-empty-text">No media added to this chapter yet.<br />Writers can add artwork, comics, or video from the Writer Dashboard.</p>
@@ -809,7 +837,7 @@ function ChapterReaderContent({ storySlug, chapterNum }: { storySlug: string; ch
         )}
 
         {/* Media panel */}
-        <MediaPanel chapter={chapter} open={mediaPanelOpen} onClose={() => setMediaPanelOpen(false)} />
+        <MediaPanel chapter={chapter} story={story} open={mediaPanelOpen} onClose={() => setMediaPanelOpen(false)} />
         <div className={`drawer-overlay${mediaPanelOpen ? ' open' : ''}`} onClick={() => setMediaPanelOpen(false)} />
 
         {/* Chapter Unlocks */}
