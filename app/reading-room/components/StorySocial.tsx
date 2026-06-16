@@ -505,6 +505,19 @@ export default function StorySocial({ storyId, storySlug, storyTitle, userId }: 
                 onMouseLeave={e => e.currentTarget.style.background = "none"}>
                 📘 Share on Facebook
               </button>
+              <button onClick={async () => {
+                  if (typeof navigator !== "undefined" && navigator.share) {
+                    try { await navigator.share({ title: storyTitle, text: `Reading "${storyTitle}" on The Tiniest Library`, url: shareUrl }); } catch {}
+                  } else {
+                    await handleCopyLink();
+                    alert("Link copied! Open Instagram and paste it into your Story, bio, or DM.");
+                  }
+                  setShared(false);
+                }} style={{ display: "flex", alignItems: "center", gap: 10, padding: "8px 12px", background: "none", border: "none", color: "#E1306C", cursor: "pointer", fontSize: 12, borderRadius: 6, textAlign: "left", width: "100%" }}
+                onMouseEnter={e => e.currentTarget.style.background = "rgba(225,48,108,0.08)"}
+                onMouseLeave={e => e.currentTarget.style.background = "none"}>
+                📸 Instagram &amp; Stories
+              </button>
               <div style={{ height: 1, background: "rgba(255,255,255,0.07)", margin: "2px 0" }} />
               <button onClick={async () => { await handleCopyLink(); setShared(false); }} style={{ display: "flex", alignItems: "center", gap: 10, padding: "8px 12px", background: "none", border: "none", color: "#C9A84C", cursor: "pointer", fontSize: 12, borderRadius: 6, textAlign: "left", width: "100%" }}
                 onMouseEnter={e => e.currentTarget.style.background = "rgba(201,168,76,0.08)"}
