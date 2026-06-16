@@ -15,6 +15,28 @@ const inter = Inter({
   variable: '--font-inter',
 })
 
+export const metadata = {
+  metadataBase: new URL('https://read.the-tiniest-library.com'),
+  title: {
+    default: 'The Tiniest Library — Read Original Fiction, Support the Writers',
+    template: '%s — The Tiniest Library',
+  },
+  description:
+    'A home for original serial fiction where writers keep their copyright and earn from every chapter readers unlock. Discover new voices across every genre on The Tiniest Library.',
+  keywords: ['serial fiction', 'read stories online', 'web fiction', 'original fiction', 'support writers', 'independent authors'],
+  openGraph: {
+    siteName: 'The Tiniest Library',
+    type: 'website',
+    title: 'The Tiniest Library — Read Original Fiction, Support the Writers',
+    description: 'Original serial fiction where writers keep their copyright and earn from every unlock.',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'The Tiniest Library',
+    description: 'Original serial fiction where writers keep their copyright and earn from every unlock.',
+  },
+}
+
 export default function RootLayout({
   children,
 }: {
