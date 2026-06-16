@@ -10,7 +10,7 @@ const ANON = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 async function fetchStory(slug: string) {
   try {
     const res = await fetch(
-      `${SUPA}/rest/v1/stories?slug=eq.${encodeURIComponent(slug)}&select=title,author_name,description,cover_url&limit=1`,
+      `${SUPA}/rest/v1/stories?slug=eq.${encodeURIComponent(slug)}&select=title,author_name,description,meta_description,cover_url&limit=1`,
       {
         headers: { apikey: ANON!, Authorization: `Bearer ${ANON}` },
         next: { revalidate: 3600 },
@@ -37,6 +37,7 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
 
   const title = story.title;
   const description =
+    story.meta_description ??
     story.description ??
     `Read "${story.title}" by ${story.author_name} on The Tiniest Library.`;
   const image = story.cover_url || `${SITE}/images/ttl-og-default.jpg`;
