@@ -35,6 +35,9 @@ export const metadata = {
     title: 'The Tiniest Library',
     description: 'Original serial fiction where writers keep their copyright and earn from every unlock.',
   },
+  verification: {
+    google: 'yrXQgP9faGjXq3c2aSbfLFgvPp0gs_ZwLIs2ZjNV1iQ',
+  },
 }
 
 export default function RootLayout({
