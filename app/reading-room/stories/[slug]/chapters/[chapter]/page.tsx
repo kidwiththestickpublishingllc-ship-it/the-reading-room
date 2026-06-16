@@ -35,7 +35,7 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
     };
   }
 
-  const title = `${story.title} — The Tiniest Library`;
+  const title = story.title;
   const description =
     story.description ??
     `Read "${story.title}" by ${story.author_name} on The Tiniest Library.`;
