@@ -19,12 +19,12 @@ export default async function sitemap() {
     );
     const { data: stories } = await supabase
       .from('stories')
-      .select('slug, updated_at')
+      .select('slug, created_at')
       .eq('is_published', true);
 
     const storyPages = (stories ?? []).map((s: any) => ({
       url: `${base}/reading-room/stories/${s.slug}/chapters/1`,
-      lastModified: s.updated_at ? new Date(s.updated_at) : new Date(),
+      lastModified: s.created_at ? new Date(s.created_at) : new Date(),
       changeFrequency: 'weekly' as const,
       priority: 0.8,
     }));
