@@ -137,10 +137,6 @@ const authors: Author[] = [
   { slug: "chris-knopf", name: "Chris Knopf", tagline: "Where the dead aren't quite done.", genres: ["Horror Mystery", "Thriller"], image: "/images/author-chris.jpg" },
   { slug: "d-cedeno", name: "Daniel Cedeno", tagline: "Worlds that refuse to stay quiet.", genres: ["Sci-Fi", "Young Adult", "Serialized Fiction"], image: "/images/author-5.jpg" },
   { slug: "sergio-lastre", name: "Sergio Lastre", tagline: "Love stories that don't let go.", genres: ["Romance", "Fantasy"], image: "/images/author-sergio.jpg" },
-  { slug: "a-rivera", name: "A. Rivera", tagline: "Slow-burn mystery with heart.", genres: ["Crime & Thrillers", "Cozy"], image: "/images/author-1.jpg" },
-  { slug: "j-holloway", name: "J. Holloway", tagline: "Dark academia + modern folklore.", genres: ["Dark Academia", "Fantasy"], image: "/images/author-2.jpg" },
-  { slug: "m-chen", name: "M. Chen", tagline: "Soft sci-fi, big emotions.", genres: ["Sci-Fi", "Young Adult"], image: "/images/author-3.jpg" },
-  { slug: "s-gomez", name: "S. Gomez", tagline: "Thrillers that don't let go.", genres: ["Crime & Thrillers"], image: "/images/author-4.jpg" },
 ];
 
 const DEMO_STORIES: Story[] = [
@@ -155,40 +151,7 @@ const DEMO_STORIES: Story[] = [
     teaser: "The sky above Hartford wasn't supposed to flicker like a broken screen… but tonight it did.",
     content: `CHAPTER 0 — THE GLITCH\n\nThe first time Fox noticed it, he thought it was just fatigue.\nA blink. A stutter in the air. A streetlight repeating the same pulse.\n\nBut then the world did it again—louder.\n\nCars paused mid-roll. A dog froze mid-bark. Even the wind held its breath.\n\nFox didn't.\n\nHe ran.\n\nAnd in that sprint, he felt it—like a seam under the skin of reality.\n\nSomebody had stitched the world together.\n\nAnd tonight… the stitching was coming undone.\n`,
   },
-  {
-    slug: "the-quiet-stairwell",
-    title: "The Quiet Stairwell",
-    author: "J. Holloway",
-    badge: "Exclusive",
-    description: "A private campus, a hidden society, and a truth that changes everything.",
-    cover: "/images/cover-2.jpg",
-    genres: ["Dark Academia", "Fantasy"],
-    teaser: "There was a stairwell no map acknowledged—yet every scholarship kid eventually heard about it.",
-    content: `THE QUIET STAIRWELL\n\nThey told you it was a rumor.\nA soft myth to scare freshmen into staying out of locked doors.\n\nBut the lock was always warm.\n\nAnd the air behind it smelled like old paper, ink, and thunder.\n\nWhen I stepped inside, the campus got quieter—like it was listening.\n\nThen the stairs began to count me.\n`,
-  },
-  {
-    slug: "lanterns-over-hartford",
-    title: "Lanterns Over Hartford",
-    author: "A. Rivera",
-    badge: "Serial",
-    description: "A cozy mystery told in weekly chapters—support to unlock the next page.",
-    cover: "/images/cover-3.jpg",
-    genres: ["Cozy", "Crime & Thrillers", "Serialized Fiction"],
-    teaser: "Lanterns appeared overnight across the riverwalk—each one with a name nobody claimed.",
-    content: `LANTERNS OVER HARTFORD — EPISODE 1\n\nThe first lantern was tied to the railing outside the old café.\nIt glowed like a held secret.\n\nInside was a folded note:\n\n"RETURN WHAT WAS TAKEN."\n\nNo signature.\nNo threat.\n\nJust the kind of sentence that makes a whole city remember its sins.\n`,
-  },
-  {
-    slug: "stars-dont-apologize",
-    title: "Stars Don't Apologize",
-    author: "M. Chen",
-    badge: "Serial",
-    description: "A tender sci-fi serial about distance, hope, and the gravity of choices.",
-    cover: "/images/cover-4.jpg",
-    genres: ["Sci-Fi", "Young Adult", "Serialized Fiction"],
-    teaser: "The message arrived late—eight minutes late—like light that had to cross a hard truth.",
-    content: `STARS DON'T APOLOGIZE — PART 1\n\nEveryone thinks space is silent.\nIt isn't.\n\nIt hums.\nIt remembers.\n\nWhen the signal finally hit my receiver, it carried a voice I wasn't ready to hear.\n\n"Don't come looking for me," it said.\n\nBut the stars don't apologize.\n\nAnd neither do I.\n`,
-  },
-];
+  ];
 
 // =========================
 // Helpers
@@ -2224,13 +2187,6 @@ export default function ReadingRoomHome() {
         { slug: "chris-knopf", name: "Chris Knopf", role: "Founding Author · Published", tagline: "Where the dead aren't quite done.", quote: "A ghost grows attached to someone who reminds him of himself.", genres: ["Horror Mystery", "Thriller"], accent: "#9B2335" },
         { slug: "d-cedeno", name: "Daniel Cedeno", role: "Founding Author · Creator", tagline: "Worlds that refuse to stay quiet.", quote: "The sky above Hartford wasn't supposed to flicker like a broken screen… but tonight it did.", genres: ["Sci-Fi", "Young Adult"], accent: "#C9A84C" },
         { slug: "sergio-lastre", name: "Sergio Lastre", role: "Founding Author", tagline: "Stories that live in the marrow.", quote: "Some doors don't open. They remember.", genres: ["Latin Stories", "Contemporary Fiction"], accent: "#6495ED" },
-        { slug: "a-rivera", name: "A. Rivera", role: "Founding Author", tagline: "Slow-burn mystery with heart.", quote: "Lanterns appeared overnight — each one with a name nobody claimed.", genres: ["Crime & Thrillers", "Cozy"], accent: "#fbbf24" },
-        { slug: "j-holloway", name: "J. Holloway", role: "Founding Author", tagline: "Dark academia + modern folklore.", quote: "There was a stairwell no map acknowledged.", genres: ["Dark Academia", "Fantasy"], accent: "#a78bfa" },
-        { slug: "m-chen", name: "M. Chen", role: "Founding Author", tagline: "Soft sci-fi, big emotions.", quote: "The message arrived late — like light that had to cross a hard truth.", genres: ["Sci-Fi", "Young Adult"], accent: "#60a5fa" },
-        { slug: "e-walsh", name: "E. Walsh", role: "Author", tagline: "Love stories that don't flinch.", quote: "We never talked about leaving. We just got very good at not talking about staying.", genres: ["Romance", "Contemporary Fiction"], accent: "#fb7185" },
-        { slug: "s-gomez", name: "S. Gomez", role: "Author", tagline: "Thrillers that don't let go.", quote: "She printed it. And then everything changed.", genres: ["Crime & Thrillers"], accent: "#f87171" },
-        { slug: "k-osei", name: "K. Osei", role: "Author", tagline: "Where memory becomes myth.", quote: "My grandmother said the river remembers every name it has ever swallowed.", genres: ["Black Stories", "Historical Fiction"], accent: "#34d399" },
-        { slug: "n-park", name: "N. Park", role: "Author", tagline: "Quiet horror. Loud consequences.", quote: "The house wasn't haunted. It was just very, very tired.", genres: ["Horror Mystery", "AAPI Authors"], accent: "#e879f9" },
       ].map((author, i) => {
         const initial = author.name.split(" ").pop()?.[0] ?? author.name[0];
         return (
