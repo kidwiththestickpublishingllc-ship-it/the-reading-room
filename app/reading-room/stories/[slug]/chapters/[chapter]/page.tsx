@@ -64,5 +64,40 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
 
 export default async function ChapterPage({ params }: { params: Params }) {
   const { slug, chapter } = await params;
-  return <ChapterReaderClient storySlug={slug} chapterNum={parseInt(chapter, 10)} />;
+  const story = await fetchStory(slug);
+  const url = `${SITE}/reading-room/stories/${slug}/chapters/${chapter}`;
+
+  const jsonLd = story
+    ? {
+        "@context": "https://schema.org",
+        "@type": "Book",
+        name: story.title,
+        author: { "@type": "Person", name: story.author_name },
+        url,
+        ...(story.cover_url ? { image: story.cover_url } : {}),
+        ...(story.description ? { description: story.description } : {}),
+        publisher: {
+          "@type": "Organization",
+          name: "The Tiniest Library",
+          url: SITE,
+        },
+        workExample: {
+          "@type": "CreativeWork",
+          name: `Chapter ${chapter}`,
+          url,
+        },
+      }
+    : null;
+
+  return (
+    <>
+      {jsonLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      )}
+      <ChapterReaderClient storySlug={slug} chapterNum={parseInt(chapter, 10)} />
+    </>
+  );
 }
