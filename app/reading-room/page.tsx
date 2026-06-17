@@ -190,26 +190,26 @@ const TTL_STYLES = `
   *, *::before, *::after { box-sizing: border-box; }
 
   :root {
-    --gold: #b8860b;
-    --gold-light: #8a6510;
-    --gold-dim: rgba(138,101,16,0.45);
-    --gold-glow: rgba(138,101,16,0.10);
-    --blue: #2563eb;
-    --blue-dim: rgba(37,99,235,0.18);
-    --blue-bright: #1d4ed8;
-    --ink-bg: #eaf6fd;
-    --ink-surface: #ffffff;
-    --ink-surface2: #f0f8ff;
-    --ink-border: rgba(30,60,90,0.12);
-    --ink-border-gold: rgba(138,101,16,0.35);
-    --text-main: #0f2236;
-    --text-dim: rgba(15,34,54,0.78);
-    --text-faint: rgba(15,34,54,0.50);
+    --gold: #C9A84C;
+    --gold-light: #E2C97E;
+    --gold-dim: rgba(201,168,76,0.38);
+    --gold-glow: rgba(201,168,76,0.13);
+    --blue: #6495ED;
+    --blue-dim: rgba(100,149,237,0.22);
+    --blue-bright: #84b0f5;
+    --ink-bg: #0f1c30;
+    --ink-surface: #16263f;
+    --ink-surface2: #1f3454;
+    --ink-border: rgba(255,255,255,0.10);
+    --ink-border-gold: rgba(201,168,76,0.35);
+    --text-main: #ffffff;
+    --text-dim: rgba(255,255,255,0.82);
+    --text-faint: rgba(255,255,255,0.55);
   }
 
   .ttl-root {
     min-height: 100vh;
-    background: linear-gradient(180deg, #87CEEB 0%, #a8d8f0 45%, #cae9f7 100%);
+    background: linear-gradient(180deg, #3a5a85 0%, #28466e 38%, #1a3052 70%, #101f38 100%);
     font-family: 'Times New Roman', Times, serif;
     color: #ffffff;
     position: relative;
