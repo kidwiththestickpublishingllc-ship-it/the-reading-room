@@ -7,6 +7,7 @@ import { startTour } from "@/app/components/WelcomeTour";
 import { RightAdPanel, ReadingRoomBanner } from './components/HeroPanels';
 import AdWindow from "./components/AdWindow";
 import StorySocial from "./components/StorySocial";
+import StoryStage, { StageTheme } from "./components/StoryStage";
 
 // =========================
 // CHANGELOG
@@ -128,6 +129,13 @@ function getJar(): AuthorJar {
 function setJar(next: AuthorJar) {
   if (typeof window === "undefined") return;
   window.localStorage.setItem("ttl_author_jar", JSON.stringify(next));
+}
+function stageThemeFor(slug: string): StageTheme {
+  if (slug.startsWith("fox-vs-the-world")) return { bgFrom: "#E8741C", bgTo: "#C25A0F", mode: "light" };
+  if (slug.startsWith("when-the-spirit")) return { bgFrom: "#B0237A", bgTo: "#8A1A5E", mode: "dark" };
+  if (slug.startsWith("back-to-strangers")) return { bgFrom: "#8BC34A", bgTo: "#6BA03A", mode: "light" };
+  if (slug.startsWith("volver-a-ser")) return { bgFrom: "#6A2FB5", bgTo: "#4E1F8A", mode: "dark" };
+  return { bgFrom: "#16263f", bgTo: "#0f1c30", mode: "dark" };
 }
 
 // =========================
@@ -2300,62 +2308,29 @@ export default function ReadingRoomHome() {
               </div>
             )}
 
-            <div className="ttl-story-grid">
-              {filteredStories.map(story => {
-                const isUnlocked = Boolean(unlocks[story.slug]);
-                const canUnlock = ink >= DEFAULT_UNLOCK_COST;
-                return (
-                  <div
-                    key={story.slug}
-                    role="button"
-                    tabIndex={0}
-                    onClick={() => window.location.href = `/reading-room/stories/${story.slug}/chapters/1`}
-                    onKeyDown={e => { if (e.key === "Enter" || e.key === " ") window.location.href = `/reading-room/stories/${story.slug}/chapters/1`; }}
-                    className="ttl-story-card"
-                  >
-                    <div className="ttl-story-inner">
-                      <StoryCover story={story} />
-                      <div className="ttl-story-body">
-                        <div className="ttl-story-header">
-                          <div className="ttl-story-title">{story.title}</div>
-                          <TTLBadge label={story.badge} />
-                        </div>
-                        <div className="ttl-story-author">by {story.author}</div>
-                        <div className="ttl-story-desc">{story.description}</div>
-                        <div className="ttl-story-footer">
-                          <span style={{ fontFamily: "'Syne', sans-serif", fontSize: 11, color: 'var(--text-faint)' }}>
-                            {isUnlocked ? "✓ Unlocked" : `${DEFAULT_UNLOCK_COST} Ink to unlock`}
-                          </span>
-                          <button
-                            type="button"
-                            disabled={isUnlocked || !canUnlock}
-                            className={`ttl-unlock-btn${isUnlocked ? " unlocked" : ""}`}
-                            onClick={e => { e.stopPropagation(); unlockStory(story.slug, DEFAULT_UNLOCK_COST); }}
-                          >
-                            {isUnlocked ? "Unlocked" : canUnlock ? "Unlock" : "Need Ink"}
-                          </button>
-                        </div>
-                        {story.genres?.length ? (
-                          <div className="ttl-story-genres">
-                            {story.genres.slice(0, 3).map(g => (
-                              <span key={g} className="ttl-genre-tag">{g}</span>
-                            ))}
-                          </div>
-                        ) : null}
-                        <div className="ttl-story-hint">Click to open reader →</div>
-                        {story.id && (
-                          <StorySocial
-                            storyId={story.id}
-                            storySlug={story.slug}
-                            storyTitle={story.title}
-                            userId={user?.id ?? null}
-                          />
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
+            <div className="ttl-stage-list">
+              {filteredStories.map(story => (
+                <StoryStage
+                  key={story.slug}
+                  story={{
+                    id: story.id,
+                    slug: story.slug,
+                    title: story.title,
+                    author: story.author,
+                    description: story.description,
+                    badge: story.badge,
+                    cover: story.cover,
+                    genres: story.genres,
+                  }}
+                  ink={ink}
+                  isUnlocked={Boolean(unlocks[story.slug])}
+                  canUnlock={ink >= DEFAULT_UNLOCK_COST}
+                  unlockCost={DEFAULT_UNLOCK_COST}
+                  onUnlock={() => unlockStory(story.slug, DEFAULT_UNLOCK_COST)}
+                  userId={user?.id ?? null}
+                  theme={stageThemeFor(story.slug)}
+                />
+              ))}
             </div>
           </div>
 
