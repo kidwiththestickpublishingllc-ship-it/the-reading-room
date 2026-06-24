@@ -40,6 +40,7 @@ type GenrePanel = { genre: string; cover: string; label: string };
 
 const GENRE_PANELS: GenrePanel[] = [
   { genre: "Fantasy",               cover: "/genre-cards/FANTASY/genre-fantasy.jpg",                     label: "Fantasy" },
+  { genre: "LitRPG",                cover: "/genre-cards/LITRPG/genre-litrpg.jpg",                       label: "LIT-RPG" },
   { genre: "Sci-Fi",                cover: "/genre-cards/SCIENCE%20FICTION/genre-scifi.jpg",             label: "Sci-Fi" },
   { genre: "Horror Mystery",        cover: "/genre-cards/HORROR%20MYSTERY/genre-horror.jpg",             label: "Horror Mystery" },
   { genre: "Crime & Thrillers",     cover: "/genre-cards/CRIME%20THRILLER/genre-crime.jpg",              label: "Crime & Thrillers" },
@@ -353,6 +354,35 @@ function GenreGrid({ activeGenre, onSelect }: { activeGenre: string; onSelect: (
           {/* Individual genre panels */}
           {GENRE_PANELS.map((panel) => {
             const isActive = activeGenre === panel.genre;
+            if (panel.genre === "LitRPG") {
+              return (
+                <div key={panel.genre} className="flex flex-col items-center gap-2" style={{ width: W }}>
+                  <button
+                    type="button"
+                    onClick={() => { window.location.href = "/reading-room/genres/litrpg"; }}
+                    aria-label="LitRPG genre"
+                    className="relative overflow-hidden rounded-xl transition-all duration-200 hover:-translate-y-1.5"
+                    style={{
+                      width: W, height: H,
+                      border: "2px solid #FF1493",
+                      background: "linear-gradient(160deg, #1a0510 0%, #0a0008 60%, #1a0510 100%)",
+                      boxShadow: "0 0 24px rgba(255,20,147,0.55), 0 0 50px rgba(255,20,147,0.25), 0 8px 32px rgba(0,0,0,0.8)",
+                    }}
+                  >
+                    <div style={{ position: "absolute", inset: "0 0 auto 0", height: 2, background: "linear-gradient(90deg, transparent, #FF1493, transparent)" }} />
+                    <div className="flex h-full flex-col items-center justify-center gap-2">
+                      <span style={{ fontSize: 34 }}>⚔️</span>
+                      <span style={{ fontFamily: "'Orbitron', sans-serif", fontSize: 13, fontWeight: 900, color: "#fff", textShadow: "0 0 8px #FF1493, 0 0 16px #FF1493", letterSpacing: "0.05em" }}>LIT-RPG</span>
+                    </div>
+                    <div style={{ position: "absolute", inset: 0, pointerEvents: "none" as const, background: "radial-gradient(ellipse at 50% 100%, rgba(255,20,147,0.35) 0%, transparent 70%)" }} />
+                  </button>
+                  <p className="text-center text-xs font-bold leading-tight tracking-wider uppercase"
+                    style={{ color: "#FF69B4", textShadow: "0 0 8px rgba(255,20,147,0.6)" }}>
+                    Lit-RPG
+                  </p>
+                </div>
+              );
+            }
             if (panel.genre === "Adult 18+") {
   return (
     <div key={panel.genre} className="flex flex-col items-center gap-2" style={{ width: W }}>
