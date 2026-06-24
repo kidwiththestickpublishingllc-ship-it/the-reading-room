@@ -304,10 +304,44 @@ const STYLES = `
     .topbar-story-title { display:none; }
     .media-panel { width:100vw; }
   }
+  .statblock { position:relative; margin:28px auto; max-width:520px; border-radius:14px; overflow:hidden; background:linear-gradient(160deg,#14233b,#0b1626); border:2px solid #C9A84C; box-shadow:0 0 30px rgba(201,168,76,0.35),0 16px 40px rgba(0,0,0,0.6); animation:sbpop 0.5s cubic-bezier(0.34,1.56,0.64,1); }
+  @keyframes sbpop { 0%{transform:scale(0.92);opacity:0;} 100%{transform:scale(1);opacity:1;} }
+  .statblock::before { content:''; position:absolute; inset:0; background:linear-gradient(120deg,transparent 30%,rgba(255,224,102,0.18) 50%,transparent 70%); background-size:250% 100%; animation:sbshine 3s linear infinite; pointer-events:none; }
+  @keyframes sbshine { 0%{background-position:200% 0;} 100%{background-position:-200% 0;} }
+  .sb-header { position:relative; background:linear-gradient(90deg,#8a6510,#C9A84C,#FFE066,#C9A84C,#8a6510); background-size:200% auto; animation:sbtitle 3s linear infinite; padding:10px 18px; text-align:center; }
+  @keyframes sbtitle { 0%{background-position:0 0;} 100%{background-position:200% 0;} }
+  .sb-header-text { font-family:'Press Start 2P',monospace; font-size:13px; color:#1a1000; letter-spacing:0.04em; }
+  .sb-body { padding:14px 22px; position:relative; }
+  .sb-row { display:flex; align-items:center; justify-content:space-between; padding:8px 0; border-bottom:1px solid rgba(201,168,76,0.12); }
+  .sb-row:last-child { border-bottom:none; }
+  .sb-stat { font-family:'Source Sans 3',sans-serif; font-size:14px; font-weight:600; color:#E2C97E; letter-spacing:0.05em; text-transform:uppercase; }
+  .sb-val { font-family:'Press Start 2P',monospace; font-size:12px; color:#7CFC7C; }
+  .sb-val.up { color:#7CFC7C; text-shadow:0 0 8px rgba(124,252,124,0.5); }
+  .sb-val.down { color:#FF6B6B; text-shadow:0 0 8px rgba(255,107,107,0.5); }
+  .sb-val.new { color:#FFE066; text-shadow:0 0 10px rgba(255,224,102,0.6); }
 `;
 
 function formatContent(text: string): string {
-  return text.split(/\n\n+/).filter(p => p.trim()).map(p => `<p>${p.trim().replace(/\n/g, '<br/>')}</p>`).join('');
+  const parts = text.split(/(^===[^\n]+===\n[\s\S]*?\n===\s*$)/m);
+  return parts.map(part => {
+    const m = part.match(/^===\s*(.+?)\s*===\n([\s\S]*?)\n===\s*$/m);
+    if (m) {
+      const title = m[1].trim();
+      const rows = m[2].trim().split('\n').filter(l => l.trim()).map(line => {
+        const idx = line.indexOf(':');
+        if (idx === -1) return `<div class="sb-row"><span class="sb-stat">${line.trim()}</span></div>`;
+        const label = line.slice(0, idx).trim();
+        const value = line.slice(idx + 1).trim();
+        let cls = 'sb-val';
+        if (/^\+/.test(value) || /→|->/.test(value)) cls += ' up';
+        else if (/^-/.test(value)) cls += ' down';
+        else if (!/^\d/.test(value)) cls += ' new';
+        return `<div class="sb-row"><span class="sb-stat">${label}</span><span class="${cls}">${value}</span></div>`;
+      }).join('');
+      return `<div class="statblock"><div class="sb-header"><span class="sb-header-text">${title}</span></div><div class="sb-body">${rows}</div></div>`;
+    }
+    return part.split(/\n\n+/).filter(p => p.trim()).map(p => `<p>${p.trim().replace(/\n/g, '<br/>')}</p>`).join('');
+  }).join('');
 }
 
 function formatTime(s: number): string {

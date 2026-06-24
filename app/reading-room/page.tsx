@@ -93,7 +93,7 @@ const INK_PACKS = [
 ];
 
 const TTL_GENRES: string[] = [
-  "Fantasy", "Sci-Fi", "Horror Mystery", "Crime & Thrillers", "Romance",
+  "Fantasy", "Sci-Fi", "LitRPG", "Progression Fantasy", "Horror Mystery", "Crime & Thrillers", "Romance",
   "Young Adult", "New Adult", "Children's Literature", "Cozy", "Poems & Memoirs",
   "Adventure", "Contemporary Fiction", "Historical Fiction", "Serialized Fiction",
   "Fan Fiction", "Slice Of Life", "Dark Academia", "Multi-Cultural", "Black Stories",
