@@ -2042,7 +2042,7 @@ export default function ReadingRoomHome() {
                 <a href="/reading-room/stories" className="ttl-nav-link">Browse Stories</a>
                 <a href="/reading-room/comics" className="ttl-nav-link">Comics & Manga</a>
                 <a href="/reading-room/buy-ink" className="ttl-nav-link">Buy Ink ✒️</a>
-                <a href="#how-it-works" className="ttl-nav-link">How It Works</a>
+                <a href="/reading-room/how-it-works" className="ttl-nav-link">How It Works</a>
                 <a href="https://write.the-tiniest-library.com" className="ttl-nav-link">Writer's Room</a>
                 <a href="/members" className="ttl-nav-link" style={{ color: 'var(--gold)', border: '1px solid var(--gold-dim)', borderRadius: 6, padding: '4px 12px' }}>Members Room</a>
               </div>
