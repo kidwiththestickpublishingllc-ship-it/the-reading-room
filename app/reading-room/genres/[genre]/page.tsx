@@ -86,6 +86,14 @@ const GENRE_META: Record<string, GenreMeta> = {
     accentDim: "rgba(167,139,250,0.28)",
     lore: "Worlds where magic is real, monsters roam, and the ordinary becomes extraordinary. Fantasy at TTL spans high epic quests and quiet village folklore — from ancient wizards to chosen heroes who never asked for the title. If you've ever wanted to step through a door that shouldn't exist, this is your genre.",
   },
+  "LitRPG": {
+    label: "LIT-RPG",
+    cover: "/genre-landing/LITRPG/landing-litrpg.jpg",
+    emoji: "⚔️",
+    accent: "#FF1493",
+    accentDim: "rgba(255,20,147,0.28)",
+    lore: "Where fiction meets the game. LitRPG blends story with real progression — stats, levels, skills, and systems the characters can see. Watch heroes grind, level up, and break the rules of their own worlds. If you've ever wanted a story that levels up with you, this is your genre.",
+  },
   "Sci-Fi": {
     label: "Sci-Fi",
     cover: "/genre-landing/SCIENCE%20FICTION/landing-scifi.jpg",
@@ -397,6 +405,7 @@ function slugToGenre(slug: string): string {
     .map(w => w.charAt(0).toUpperCase() + w.slice(1))
     .join(" ")
     .replace("Sci Fi", "Sci-Fi")
+    .replace("Litrpg", "LitRPG")
     .replace("Lgbtq ", "LGBTQ+ ")
     .replace("Aapi", "AAPI")
     .replace("18 ", "18+")
@@ -415,7 +424,7 @@ const GENRE_AD_ZONES: Record<string, string> = {
 };
 const FALLBACK_AD_ZONE = "5907426";
 const GENRE_PAGE_STYLES = `
-  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Syne:wght@400;500;600;700&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Syne:wght@400;500;600;700&family=Orbitron:wght@700;900&family=Rajdhani:wght@600;700&display=swap');
 
   *, *::before, *::after { box-sizing: border-box; }
 
@@ -660,11 +669,35 @@ const GENRE_PAGE_STYLES = `
     opacity: 0.85;
   }
 
-  .gp-hero-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(56px, 8vw, 108px);
-    font-weight: 300; line-height: 0.92;
-    color: var(--text-main); margin-bottom: 24px;
+.gp-hero-title.litrpg-neon {
+    font-family: 'Orbitron', sans-serif; font-weight: 900;
+    font-size: clamp(56px, 9vw, 110px); letter-spacing: 0.02em; line-height: 1;
+    color: #fff;
+    text-shadow: 0 0 7px #fff, 0 0 14px #fff, 0 0 28px #FF1493, 0 0 56px #FF1493, 0 0 84px #FF1493;
+    animation: litrpgFlicker 4s infinite;
+  }
+
+  .litrpg-neon .neon-dash { color: #FF1493; text-shadow: 0 0 10px #FF1493, 0 0 30px #FF1493, 0 0 60px #FF69B4; }
+  @keyframes litrpgFlicker { 0%,18%,22%,25%,53%,57%,100% { opacity: 1; } 20%,24%,55% { opacity: 0.8; } }
+  .litrpg-subtitle {
+    font-family: 'Rajdhani', sans-serif; font-weight: 600; font-size: 17px;
+    letter-spacing: 0.4em; text-transform: uppercase; color: #FF69B4;
+    text-shadow: 0 0 12px rgba(255,20,147,0.6); margin: -10px 0 28px;
+  }
+
+  .gp-hero-title.litrpg-neon {
+    font-family: 'Orbitron', sans-serif; font-weight: 900;
+    font-size: clamp(56px, 9vw, 110px); letter-spacing: 0.02em; line-height: 1;
+    color: #fff; margin-bottom: 14px;
+    text-shadow: 0 0 7px #fff, 0 0 14px #fff, 0 0 28px #FF1493, 0 0 56px #FF1493, 0 0 84px #FF1493;
+    animation: litrpgFlicker 4s infinite;
+  }
+  .litrpg-neon .neon-dash { color: #FF1493; text-shadow: 0 0 10px #FF1493, 0 0 30px #FF1493, 0 0 60px #FF69B4; }
+  @keyframes litrpgFlicker { 0%,18%,22%,25%,53%,57%,100% { opacity: 1; } 20%,24%,55% { opacity: 0.8; } }
+  .litrpg-subtitle {
+    font-family: 'Rajdhani', sans-serif; font-weight: 600; font-size: 17px;
+    letter-spacing: 0.4em; text-transform: uppercase; color: #FF69B4;
+    text-shadow: 0 0 12px rgba(255,20,147,0.6); margin: 0 0 28px;
   }
 
   .gp-hero-lore {
@@ -1520,7 +1553,14 @@ if (genreName === "Adult 18+") {
 
             <span className="gp-hero-emoji">{meta.emoji}</span>
             <span className="gp-hero-eyebrow">The Tiniest Library — Genre</span>
-            <h1 className="gp-hero-title">{meta.label}</h1>
+            {genreName === "LitRPG" ? (
+              <>
+                <h1 className="gp-hero-title litrpg-neon">LIT<span className="neon-dash">-</span>RPG</h1>
+                <div className="litrpg-subtitle">Literary Role-Playing Games</div>
+              </>
+            ) : (
+              <h1 className="gp-hero-title">{meta.label}</h1>
+            )}
             <p className="gp-hero-lore">{meta.lore}</p>
 
             <div className="gp-hero-stats">
