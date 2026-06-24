@@ -71,6 +71,7 @@ const STRIPE_LINKS: Record<number, string> = {
 type GenreMeta = {
   label: string;
   cover: string;
+  video?: string;         // optional mp4 hero video (poster = cover)
   emoji: string;
   accent: string;         // CSS color for accent bar / highlights
   accentDim: string;      // dimmed version for borders
@@ -88,7 +89,8 @@ const GENRE_META: Record<string, GenreMeta> = {
   },
   "LitRPG": {
     label: "LIT-RPG",
-    cover: "/genre-landing/LITRPG/landing-litrpg.jpg",
+    cover: "/genre-landing/LIT-RPG/landing-LitRPG.jpg",
+    video: "/genre-landing/LIT-RPG/landing-LitRPG.mp4",
     emoji: "⚔️",
     accent: "#FF1493",
     accentDim: "rgba(255,20,147,0.28)",
@@ -410,6 +412,35 @@ function slugToGenre(slug: string): string {
     .replace("Aapi", "AAPI")
     .replace("18 ", "18+")
    .replace("&Amp;", "&");
+}
+function LazyHeroVideo({ poster, src, alt }: { poster: string; src: string; alt: string }) {
+  const ref = React.useRef<HTMLVideoElement | null>(null);
+  const [load, setLoad] = React.useState(false);
+  React.useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      (entries) => { if (entries[0].isIntersecting) { setLoad(true); io.disconnect(); } },
+      { rootMargin: "200px" }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+  return (
+    <video
+      ref={ref}
+      poster={poster}
+      src={load ? src : undefined}
+      muted
+      loop
+      autoPlay
+      playsInline
+      preload="none"
+      aria-label={alt}
+      style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+      onError={(e) => { (e.currentTarget as HTMLVideoElement).style.display = "none"; }}
+    />
+  );
 }
 const GENRE_AD_ZONES: Record<string, string> = {
   fantasy: "5942522",
@@ -1535,9 +1566,11 @@ if (genreName === "Adult 18+") {
         {/* ── HERO ── */}
         <div className="gp-hero">
           <div className="gp-hero-bg">
-            {meta.cover
-              ? <img src={meta.cover} alt={meta.label} onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }} />
-              : <div className="gp-hero-bg-fallback" />
+            {meta.video
+              ? <LazyHeroVideo poster={meta.cover} src={meta.video} alt={meta.label} />
+              : meta.cover
+                ? <img src={meta.cover} alt={meta.label} onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }} />
+                : <div className="gp-hero-bg-fallback" />
             }
           </div>
           <div className="gp-hero-overlay" />
