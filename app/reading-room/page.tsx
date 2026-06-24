@@ -1126,6 +1126,10 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
     cursor: pointer;
     transition: all 0.18s;
   }
+  @keyframes litrpgBtnGlow {
+    0%, 100% { box-shadow: 0 0 10px rgba(255,20,147,0.5), inset 0 0 6px rgba(255,20,147,0.12); }
+    50% { box-shadow: 0 0 18px rgba(255,20,147,0.85), inset 0 0 8px rgba(255,20,147,0.2); }
+  }
 
   .ttl-filter-btn:hover { border-color: var(--blue-dim); color: var(--blue-bright); background: var(--blue-dim); }
 
@@ -2295,6 +2299,13 @@ export default function ReadingRoomHome() {
                     }
                   }}
                   className={`ttl-filter-btn${selectedGenre === g ? " active" : ""}`}
+                  style={g === "LitRPG" ? {
+                    color: "#FF69B4",
+                    borderColor: "#FF1493",
+                    boxShadow: "0 0 10px rgba(255,20,147,0.6), inset 0 0 6px rgba(255,20,147,0.15)",
+                    textShadow: "0 0 6px rgba(255,20,147,0.5)",
+                    animation: "litrpgBtnGlow 2.5s ease-in-out infinite",
+                  } : undefined}
                 >
                   {g}
                 </button>
