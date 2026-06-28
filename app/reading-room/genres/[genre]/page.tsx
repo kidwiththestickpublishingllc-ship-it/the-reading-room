@@ -81,7 +81,7 @@ type GenreMeta = {
 const GENRE_META: Record<string, GenreMeta> = {
   "Fantasy": {
     label: "Fantasy",
-    cover: "/genre-landing/FANTASY/landing-fantasy.jpg",
+    cover: "https://dgymtdkxusdsgxmjirfl.supabase.co/storage/v1/object/public/reading-room-genre/public/genre-landing/FANTASY/landing-fantasy.jpg",
     emoji: "🧙",
     accent: "#a78bfa",
     accentDim: "rgba(167,139,250,0.28)",
@@ -89,8 +89,8 @@ const GENRE_META: Record<string, GenreMeta> = {
   },
   "LitRPG": {
     label: "LIT-RPG",
-    cover: "/genre-landing/LIT-RPG/landing-LitRPG.jpg",
-    video: "/genre-landing/LIT-RPG/landing-LitRPG.mp4",
+    cover: "https://dgymtdkxusdsgxmjirfl.supabase.co/storage/v1/object/public/reading-room-genre/public/genre-landing/LIT-RPG/landing-LitRPG.jpg",
+    video: "https://dgymtdkxusdsgxmjirfl.supabase.co/storage/v1/object/public/reading-room-genre/public/genre-landing/LIT-RPG/landing-LitRPG.mp4",
     emoji: "⚔️",
     accent: "#FF1493",
     accentDim: "rgba(255,20,147,0.28)",
@@ -98,7 +98,7 @@ const GENRE_META: Record<string, GenreMeta> = {
   },
   "Sci-Fi": {
     label: "Sci-Fi",
-    cover: "/genre-landing/SCIENCE%20FICTION/landing-scifi.jpg",
+    cover: "https://dgymtdkxusdsgxmjirfl.supabase.co/storage/v1/object/public/reading-room-genre/public/genre-landing/SCIENCE%20FICTION/landing-scifi.jpg",
     emoji: "🚀",
     accent: "#60a5fa",
     accentDim: "rgba(96,165,250,0.28)",
@@ -106,7 +106,7 @@ const GENRE_META: Record<string, GenreMeta> = {
   },
   "Horror Mystery": {
     label: "Horror Mystery",
-    cover: "/genre-landing/HORROR%20MYSTERY/landing-horror.jpg",
+    cover: "https://dgymtdkxusdsgxmjirfl.supabase.co/storage/v1/object/public/reading-room-genre/public/genre-landing/HORROR%20MYSTERY/landing-horror.jpg",
     emoji: "🕯️",
     accent: "#f87171",
     accentDim: "rgba(248,113,113,0.28)",
@@ -114,7 +114,7 @@ const GENRE_META: Record<string, GenreMeta> = {
   },
   "Crime & Thrillers": {
     label: "Crime & Thrillers",
-    cover: "/genre-landing/CRIME%20THRILLER/landing-crime.jpg",
+    cover: "https://dgymtdkxusdsgxmjirfl.supabase.co/storage/v1/object/public/reading-room-genre/public/genre-landing/CRIME%20THRILLER/landing-crime.jpg",
     emoji: "🔍",
     accent: "#fbbf24",
     accentDim: "rgba(251,191,36,0.28)",
@@ -122,7 +122,7 @@ const GENRE_META: Record<string, GenreMeta> = {
   },
   "Romance": {
     label: "Romance",
-    cover: "/genre-landing/ROMANCE/landing-romance.jpg",
+    cover: "https://dgymtdkxusdsgxmjirfl.supabase.co/storage/v1/object/public/reading-room-genre/public/genre-landing/ROMANCE/landing-romance.jpg",
     emoji: "🌹",
     accent: "#fb7185",
     accentDim: "rgba(251,113,133,0.28)",
@@ -130,7 +130,7 @@ const GENRE_META: Record<string, GenreMeta> = {
   },
   "Young Adult": {
     label: "Young Adult",
-    cover: "/genre-landing/YOUNG%20ADULT/landing-ya.jpg",
+    cover: "https://dgymtdkxusdsgxmjirfl.supabase.co/storage/v1/object/public/reading-room-genre/public/genre-landing/YOUNG%20ADULT/landing-ya.jpg",
     emoji: "🌟",
     accent: "#34d399",
     accentDim: "rgba(52,211,153,0.28)",
@@ -138,7 +138,7 @@ const GENRE_META: Record<string, GenreMeta> = {
   },
   "New Adult": {
     label: "New Adult",
-    cover: "/genre-landing/NEW%20ADULT/landing-newadult.jpg",
+    cover: "https://dgymtdkxusdsgxmjirfl.supabase.co/storage/v1/object/public/reading-room-genre/public/genre-landing/NEW%20ADULT/landing-newadult.jpg",
     emoji: "🎓",
     accent: "#818cf8",
     accentDim: "rgba(129,140,248,0.28)",
@@ -146,7 +146,7 @@ const GENRE_META: Record<string, GenreMeta> = {
   },
   "Children's Literature": {
     label: "Children's Literature",
-    cover: "/genre-landing/CHILDRENS%20STORIES/landing-childrens.jpg",
+    cover: "https://dgymtdkxusdsgxmjirfl.supabase.co/storage/v1/object/public/reading-room-genre/public/genre-landing/CHILDRENS%20STORIES/landing-childrens.jpg",
     emoji: "🌈",
     accent: "#f59e0b",
     accentDim: "rgba(245,158,11,0.28)",
@@ -154,7 +154,7 @@ const GENRE_META: Record<string, GenreMeta> = {
   },
   "Cozy": {
     label: "Cozy",
-    cover: "/genre-landing/COZY/landing-cozy.jpg",
+    cover: "https://dgymtdkxusdsgxmjirfl.supabase.co/storage/v1/object/public/reading-room-genre/public/genre-landing/COZY/landing-cozy.jpg",
     emoji: "☕",
     accent: "#d97706",
     accentDim: "rgba(217,119,6,0.28)",
@@ -162,7 +162,7 @@ const GENRE_META: Record<string, GenreMeta> = {
   },
   "Poems & Memoirs": {
     label: "Poems & Memoirs",
-    cover: "/genre-landing/POETRY/landing-poems.jpg",
+    cover: "https://dgymtdkxusdsgxmjirfl.supabase.co/storage/v1/object/public/reading-room-genre/public/genre-landing/POETRY/landing-poems.jpg",
     emoji: "🪶",
     accent: "#c084fc",
     accentDim: "rgba(192,132,252,0.28)",
@@ -170,7 +170,7 @@ const GENRE_META: Record<string, GenreMeta> = {
   },
   "Adventure": {
     label: "Adventure",
-    cover: "/genre-landing/ADVENTURE/landing-adventure.jpg",
+    cover: "https://dgymtdkxusdsgxmjirfl.supabase.co/storage/v1/object/public/reading-room-genre/public/genre-landing/ADVENTURE/landing-adventure.jpg",
     emoji: "🗺️",
     accent: "#22d3ee",
     accentDim: "rgba(34,211,238,0.28)",
@@ -178,7 +178,7 @@ const GENRE_META: Record<string, GenreMeta> = {
   },
   "Contemporary Fiction": {
     label: "Contemporary Fiction",
-    cover: "/genre-landing/CONTEMPORARY%20FICTION/landing-contemporary.jpg",
+    cover: "https://dgymtdkxusdsgxmjirfl.supabase.co/storage/v1/object/public/reading-room-genre/public/genre-landing/CONTEMPORARY%20FICTION/landing-contemporary.jpg",
     emoji: "🏙️",
     accent: "#6495ED",
     accentDim: "rgba(100,149,237,0.28)",
@@ -186,7 +186,7 @@ const GENRE_META: Record<string, GenreMeta> = {
   },
   "Historical Fiction": {
     label: "Historical Fiction",
-    cover: "/genre-landing/HISTORICAL%20FICTION/landing-historical.jpg",
+    cover: "https://dgymtdkxusdsgxmjirfl.supabase.co/storage/v1/object/public/reading-room-genre/public/genre-landing/HISTORICAL%20FICTION/landing-historical.jpg",
     emoji: "📜",
     accent: "#C9A84C",
     accentDim: "rgba(201,168,76,0.28)",
@@ -194,7 +194,7 @@ const GENRE_META: Record<string, GenreMeta> = {
   },
   "Serialized Fiction": {
     label: "Serialized Fiction",
-    cover: "/genre-landing/SERIALIZED%20FICTION/landing-serial.jpg",
+    cover: "https://dgymtdkxusdsgxmjirfl.supabase.co/storage/v1/object/public/reading-room-genre/public/genre-landing/SERIALIZED%20FICTION/landing-serial.jpg",
     emoji: "📚",
     accent: "#84b0f5",
     accentDim: "rgba(132,176,245,0.28)",
@@ -202,7 +202,7 @@ const GENRE_META: Record<string, GenreMeta> = {
   },
   "Fan Fiction": {
     label: "Fan Fiction",
-    cover: "/genre-landing/FAN%20FICTION/landing-fanfic.jpg",
+    cover: "https://dgymtdkxusdsgxmjirfl.supabase.co/storage/v1/object/public/reading-room-genre/public/genre-landing/FAN%20FICTION/landing-fanfic.jpg",
     emoji: "✨",
     accent: "#f472b6",
     accentDim: "rgba(244,114,182,0.28)",
@@ -210,7 +210,7 @@ const GENRE_META: Record<string, GenreMeta> = {
   },
   "Slice Of Life": {
     label: "Slice of Life",
-    cover: "/genre-landing/SLICE%20OF%20LIFE/landing-sliceoflife.jpg",
+    cover: "https://dgymtdkxusdsgxmjirfl.supabase.co/storage/v1/object/public/reading-room-genre/public/genre-landing/SLICE%20OF%20LIFE/landing-sliceoflife.jpg",
     emoji: "🌿",
     accent: "#4ade80",
     accentDim: "rgba(74,222,128,0.28)",
@@ -218,7 +218,7 @@ const GENRE_META: Record<string, GenreMeta> = {
   },
   "Dark Academia": {
     label: "Dark Academia",
-    cover: "/genre-landing/DARK%20ACADEMIA/landing-darkacademia.jpg",
+    cover: "https://dgymtdkxusdsgxmjirfl.supabase.co/storage/v1/object/public/reading-room-genre/public/genre-landing/DARK%20ACADEMIA/landing-darkacademia.jpg",
     emoji: "🕰️",
     accent: "#a8a29e",
     accentDim: "rgba(168,162,158,0.28)",
@@ -226,7 +226,7 @@ const GENRE_META: Record<string, GenreMeta> = {
   },
   "Multi-Cultural": {
     label: "Multi-Cultural",
-    cover: "/genre-landing/MULTICULTURAL/landing-multicultural.jpg",
+    cover: "https://dgymtdkxusdsgxmjirfl.supabase.co/storage/v1/object/public/reading-room-genre/public/genre-landing/MULTICULTURAL/landing-multicultural.jpg",
     emoji: "🌍",
     accent: "#fb923c",
     accentDim: "rgba(251,146,60,0.28)",
@@ -234,7 +234,7 @@ const GENRE_META: Record<string, GenreMeta> = {
   },
   "Black Stories": {
     label: "Black Stories",
-    cover: "/genre-landing/BLACK%20STORIES/landing-blackstories.jpg",
+    cover: "https://dgymtdkxusdsgxmjirfl.supabase.co/storage/v1/object/public/reading-room-genre/public/genre-landing/BLACK%20STORIES/landing-blackstories.jpg",
     emoji: "✊",
     accent: "#fbbf24",
     accentDim: "rgba(251,191,36,0.28)",
@@ -242,7 +242,7 @@ const GENRE_META: Record<string, GenreMeta> = {
   },
   "Latin Stories": {
     label: "Latin Stories",
-    cover: "/genre-landing/LATIN%20VOICES/landing-latin.jpg",
+    cover: "https://dgymtdkxusdsgxmjirfl.supabase.co/storage/v1/object/public/reading-room-genre/public/genre-landing/LATIN%20VOICES/landing-latin.jpg",
     emoji: "🌺",
     accent: "#f97316",
     accentDim: "rgba(249,115,22,0.28)",
@@ -250,7 +250,7 @@ const GENRE_META: Record<string, GenreMeta> = {
   },
   "AAPI Authors": {
     label: "AAPI Authors",
-    cover: "/genre-landing/AAPI/landing-aapi.jpg",
+    cover: "https://dgymtdkxusdsgxmjirfl.supabase.co/storage/v1/object/public/reading-room-genre/public/genre-landing/AAPI/landing-aapi.jpg",
     emoji: "🌸",
     accent: "#e879f9",
     accentDim: "rgba(232,121,249,0.28)",
@@ -258,7 +258,7 @@ const GENRE_META: Record<string, GenreMeta> = {
   },
   "Indigenous Stories": {
     label: "Indigenous Stories",
-    cover: "/genre-landing/INDEGINOUS%20VOICES/landing-indigenous.jpg",
+    cover: "https://dgymtdkxusdsgxmjirfl.supabase.co/storage/v1/object/public/reading-room-genre/public/genre-landing/INDEGINOUS%20VOICES/landing-indigenous.jpg",
     emoji: "🌾",
     accent: "#86efac",
     accentDim: "rgba(134,239,172,0.28)",
@@ -266,7 +266,7 @@ const GENRE_META: Record<string, GenreMeta> = {
   },
   "LGBTQ+ Fiction": {
     label: "LGBTQ+ Fiction",
-    cover: "/genre-landing/LGBTQ%2B%20VOICES/landing-lgbtq.jpg",
+    cover: "https://dgymtdkxusdsgxmjirfl.supabase.co/storage/v1/object/public/reading-room-genre/public/genre-landing/LGBTQ%2B%20VOICES/landing-lgbtq.jpg",
     emoji: "🏳️‍🌈",
     accent: "#a78bfa",
     accentDim: "rgba(167,139,250,0.28)",
@@ -274,7 +274,7 @@ const GENRE_META: Record<string, GenreMeta> = {
   },
   "Adult 18+": {
     label: "Adult 18+",
-    cover: "/genre-landing/ADULT/landing-adult.jpg",
+    cover: "https://dgymtdkxusdsgxmjirfl.supabase.co/storage/v1/object/public/reading-room-genre/public/genre-landing/ADULT/landing-adult.jpg",
     emoji: "🔞",
     accent: "#f43f5e",
     accentDim: "rgba(244,63,94,0.28)",
