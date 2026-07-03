@@ -34,36 +34,36 @@ const DEFAULT_UNLOCK_COST = 25;
 // =========================
 // Genre Panels
 // To update a genre image: change the `cover` path below.
-// Images live in /public/genre-cards/FOLDER/filename.jpg
+// Images live in /publichttps://dgymtdkxusdsgxmjirfl.supabase.co/storage/v1/object/public/reading-room-cards/FOLDER/filename.jpg
 // =========================
 type GenrePanel = { genre: string; cover: string; label: string };
 
 const GENRE_PANELS: GenrePanel[] = [
-  { genre: "Fantasy",               cover: "/genre-cards/FANTASY/genre-fantasy.jpg",                     label: "Fantasy" },
-  { genre: "LitRPG",                cover: "/genre-cards/LITRPG/genre-litrpg.jpg",                       label: "LIT-RPG" },
-  { genre: "Sci-Fi",                cover: "/genre-cards/SCIENCE%20FICTION/genre-scifi.jpg",             label: "Sci-Fi" },
-  { genre: "Horror Mystery",        cover: "/genre-cards/HORROR%20MYSTERY/genre-horror.jpg",             label: "Horror Mystery" },
-  { genre: "Crime & Thrillers",     cover: "/genre-cards/CRIME%20THRILLER/genre-crime.jpg",              label: "Crime & Thrillers" },
-  { genre: "Romance",               cover: "/genre-cards/ROMANCE/genre-romance.jpg",                     label: "Romance" },
-  { genre: "Young Adult",           cover: "/genre-cards/YOUNG%20ADULT/genre-ya.jpg",                    label: "Young Adult" },
-  { genre: "New Adult",             cover: "/genre-cards/NEW%20ADULT/genre-newadult.jpg",                label: "New Adult" },
-  { genre: "Children's Literature", cover: "/genre-cards/CHILDRENS%20STORIES/genre-childrens.jpg",       label: "Children's Lit" },
-  { genre: "Cozy",                  cover: "/genre-cards/COZY/genre-cozy.jpg",                           label: "Cozy" },
-  { genre: "Poems & Memoirs",       cover: "/genre-cards/POETRY/genre-poems.jpg",                        label: "Poems & Memoirs" },
-  { genre: "Adventure",             cover: "/genre-cards/ADVENTURE/genre-adventure.jpg",                 label: "Adventure" },
-  { genre: "Contemporary Fiction",  cover: "/genre-cards/CONTEMPORARY%20FICTION/genre-contemporary.jpg", label: "Contemporary" },
-  { genre: "Historical Fiction",    cover: "/genre-cards/HISTORICAL%20FICTION/genre-historical.jpg",     label: "Historical Fiction" },
-  { genre: "Serialized Fiction",    cover: "/genre-cards/SERIALIZED%20FICTION/genre-serial.jpg",         label: "Serialized Fiction" },
-  { genre: "Fan Fiction",           cover: "/genre-cards/FAN%20FICTION/genre-fanfic.jpg",                label: "Fan Fiction" },
-  { genre: "Slice Of Life",         cover: "/genre-cards/SLICE%20OF%20LIFE/genre-sliceoflife.jpg",       label: "Slice of Life" },
-  { genre: "Dark Academia",         cover: "/genre-cards/DARK%20ACADEMIA/genre-darkacademia.jpg",        label: "Dark Academia" },
-  { genre: "Multi-Cultural",        cover: "/genre-cards/MULTICULTURAL/genre-multicultural.jpg",         label: "Multi-Cultural" },
-  { genre: "Black Stories",         cover: "/genre-cards/BLACK%20STORIES/genre-blackstories.jpg",        label: "Black Stories" },
-  { genre: "Latin Stories",         cover: "/genre-cards/LATIN%20VOICES/genre-latin.jpg",                label: "Latin Stories" },
-  { genre: "AAPI Authors",          cover: "/genre-cards/AAPI/genre-aapi.jpg",                           label: "AAPI Authors" },
-  { genre: "Indigenous Stories",    cover: "/genre-cards/INDEGINOUS%20VOICES/genre-indigenous.jpg",      label: "Indigenous Stories" },
-  { genre: "LGBTQ+ Fiction",        cover: "/genre-cards/LGBTQ%2B%20VOICES/genre-lgbtq.jpg",            label: "LGBTQ+ Fiction" },
-  { genre: "Adult 18+",             cover: "/genre-cards/ADULT/genre-adult.jpg",                         label: "Adult 18+" },
+  { genre: "Fantasy",               cover: "https://dgymtdkxusdsgxmjirfl.supabase.co/storage/v1/object/public/reading-room-cards/FANTASY/genre-fantasy.jpg",                     label: "Fantasy" },
+  { genre: "LitRPG",                cover: "https://dgymtdkxusdsgxmjirfl.supabase.co/storage/v1/object/public/reading-room-cards/LITRPG/genre-litrpg.jpg",                       label: "LIT-RPG" },
+  { genre: "Sci-Fi",                cover: "https://dgymtdkxusdsgxmjirfl.supabase.co/storage/v1/object/public/reading-room-cards/SCIENCE%20FICTION/genre-scifi.jpg",             label: "Sci-Fi" },
+  { genre: "Horror Mystery",        cover: "https://dgymtdkxusdsgxmjirfl.supabase.co/storage/v1/object/public/reading-room-cards/HORROR%20MYSTERY/genre-horror.jpg",             label: "Horror Mystery" },
+  { genre: "Crime & Thrillers",     cover: "https://dgymtdkxusdsgxmjirfl.supabase.co/storage/v1/object/public/reading-room-cards/CRIME%20THRILLER/genre-crime.jpg",              label: "Crime & Thrillers" },
+  { genre: "Romance",               cover: "https://dgymtdkxusdsgxmjirfl.supabase.co/storage/v1/object/public/reading-room-cards/ROMANCE/genre-romance.jpg",                     label: "Romance" },
+  { genre: "Young Adult",           cover: "https://dgymtdkxusdsgxmjirfl.supabase.co/storage/v1/object/public/reading-room-cards/YOUNG%20ADULT/genre-ya.jpg",                    label: "Young Adult" },
+  { genre: "New Adult",             cover: "https://dgymtdkxusdsgxmjirfl.supabase.co/storage/v1/object/public/reading-room-cards/NEW%20ADULT/genre-newadult.jpg",                label: "New Adult" },
+  { genre: "Children's Literature", cover: "https://dgymtdkxusdsgxmjirfl.supabase.co/storage/v1/object/public/reading-room-cards/CHILDRENS%20STORIES/genre-childrens.jpg",       label: "Children's Lit" },
+  { genre: "Cozy",                  cover: "https://dgymtdkxusdsgxmjirfl.supabase.co/storage/v1/object/public/reading-room-cards/COZY/genre-cozy.jpg",                           label: "Cozy" },
+  { genre: "Poems & Memoirs",       cover: "https://dgymtdkxusdsgxmjirfl.supabase.co/storage/v1/object/public/reading-room-cards/POETRY/genre-poems.jpg",                        label: "Poems & Memoirs" },
+  { genre: "Adventure",             cover: "https://dgymtdkxusdsgxmjirfl.supabase.co/storage/v1/object/public/reading-room-cards/ADVENTURE/genre-adventure.jpg",                 label: "Adventure" },
+  { genre: "Contemporary Fiction",  cover: "https://dgymtdkxusdsgxmjirfl.supabase.co/storage/v1/object/public/reading-room-cards/CONTEMPORARY%20FICTION/genre-contemporary.jpg", label: "Contemporary" },
+  { genre: "Historical Fiction",    cover: "https://dgymtdkxusdsgxmjirfl.supabase.co/storage/v1/object/public/reading-room-cards/HISTORICAL%20FICTION/genre-historical.jpg",     label: "Historical Fiction" },
+  { genre: "Serialized Fiction",    cover: "https://dgymtdkxusdsgxmjirfl.supabase.co/storage/v1/object/public/reading-room-cards/SERIALIZED%20FICTION/genre-serial.jpg",         label: "Serialized Fiction" },
+  { genre: "Fan Fiction",           cover: "https://dgymtdkxusdsgxmjirfl.supabase.co/storage/v1/object/public/reading-room-cards/FAN%20FICTION/genre-fanfic.jpg",                label: "Fan Fiction" },
+  { genre: "Slice Of Life",         cover: "https://dgymtdkxusdsgxmjirfl.supabase.co/storage/v1/object/public/reading-room-cards/SLICE%20OF%20LIFE/genre-sliceoflife.jpg",       label: "Slice of Life" },
+  { genre: "Dark Academia",         cover: "https://dgymtdkxusdsgxmjirfl.supabase.co/storage/v1/object/public/reading-room-cards/DARK%20ACADEMIA/genre-darkacademia.jpg",        label: "Dark Academia" },
+  { genre: "Multi-Cultural",        cover: "https://dgymtdkxusdsgxmjirfl.supabase.co/storage/v1/object/public/reading-room-cards/MULTICULTURAL/genre-multicultural.jpg",         label: "Multi-Cultural" },
+  { genre: "Black Stories",         cover: "https://dgymtdkxusdsgxmjirfl.supabase.co/storage/v1/object/public/reading-room-cards/BLACK%20STORIES/genre-blackstories.jpg",        label: "Black Stories" },
+  { genre: "Latin Stories",         cover: "https://dgymtdkxusdsgxmjirfl.supabase.co/storage/v1/object/public/reading-room-cards/LATIN%20VOICES/genre-latin.jpg",                label: "Latin Stories" },
+  { genre: "AAPI Authors",          cover: "https://dgymtdkxusdsgxmjirfl.supabase.co/storage/v1/object/public/reading-room-cards/AAPI/genre-aapi.jpg",                           label: "AAPI Authors" },
+  { genre: "Indigenous Stories",    cover: "https://dgymtdkxusdsgxmjirfl.supabase.co/storage/v1/object/public/reading-room-cards/INDEGINOUS%20VOICES/genre-indigenous.jpg",      label: "Indigenous Stories" },
+  { genre: "LGBTQ+ Fiction",        cover: "https://dgymtdkxusdsgxmjirfl.supabase.co/storage/v1/object/public/reading-room-cards/LGBTQ%2B%20VOICES/genre-lgbtq.jpg",            label: "LGBTQ+ Fiction" },
+  { genre: "Adult 18+",             cover: "https://dgymtdkxusdsgxmjirfl.supabase.co/storage/v1/object/public/reading-room-cards/ADULT/genre-adult.jpg",                         label: "Adult 18+" },
 ];
 
 const TTL_GENRES: string[] = GENRE_PANELS.map((p) => p.genre);
