@@ -326,8 +326,8 @@ const DEMO_AUTHORS: Author[] = [
 
 const DEMO_STORIES: Story[] = [
   {
-    slug: "fox-vs-the-world",
-    title: "Fox Vs. The World (Preview)",
+    slug: "kings-of-sorrow",
+    title: "Kings Of Sorrow (Preview)",
     author: "Daniel Cedeno",
     badge: "Early Access",
     description: "A first look at a world that refuses to stay quiet—exclusive chapters live here.",
