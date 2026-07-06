@@ -95,8 +95,8 @@ function setUnlocks(next: Unlocks) {
 // =========================
 const stories: Story[] = [
   {
-    slug: "fox-vs-the-world",
-    title: "Fox Vs. The World (Preview)",
+    slug: "Kings of Sorrow",
+    title: "Kings of Sorrow (Preview)",
     author: "Daniel Cedeno",
     badge: "Early Access",
     description: "A first look at a world that refuses to stay quiet—exclusive chapters live here.",
