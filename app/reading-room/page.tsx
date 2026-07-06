@@ -131,7 +131,7 @@ function setJar(next: AuthorJar) {
   window.localStorage.setItem("ttl_author_jar", JSON.stringify(next));
 }
 function stageThemeFor(slug: string): StageTheme {
-  if (slug.startsWith("fox-vs-the-world")) return { bgFrom: "#E8741C", bgTo: "#C25A0F", mode: "light" };
+  if (slug.startsWith("kings-of-sorrow")) return { bgFrom: "#E8741C", bgTo: "#C25A0F", mode: "light" };
   if (slug.startsWith("when-the-spirit")) return { bgFrom: "#B0237A", bgTo: "#8A1A5E", mode: "dark" };
   if (slug.startsWith("back-to-strangers")) return { bgFrom: "#8BC34A", bgTo: "#6BA03A", mode: "light" };
   if (slug.startsWith("volver-a-ser")) return { bgFrom: "#6A2FB5", bgTo: "#4E1F8A", mode: "dark" };
@@ -149,8 +149,8 @@ const authors: Author[] = [
 
 const DEMO_STORIES: Story[] = [
   {
-    slug: "fox-vs-the-world",
-    title: "Fox Vs. The World (Preview)",
+    slug: "kings-of-sorrow",
+    title: "Kings Of Sorrow (Preview)",
     author: "Daniel Cedeno",
     badge: "Early Access",
     description: "A first look at a world that refuses to stay quiet—exclusive chapters live here.",
