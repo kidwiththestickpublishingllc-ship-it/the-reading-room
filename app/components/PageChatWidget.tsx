@@ -45,7 +45,7 @@ const TTL_KB = {
     hello: "Hey there! 👋 I'm Page, your TTL guide. Ask me anything about the Reading Room — stories, authors, Ink, genres — I'm here to help!",
     thanks: "You're so welcome! Happy reading! 📚 Let me know if you need anything else.",
     tip: "Tipping authors is a wonderful way to support independent writers! 🪶 On any author card in the Featured Authors section, you'll see tip buttons. A small tip goes a long way in keeping great stories coming.",
-    recommend: "For great starting points: if you love mystery try **Lanterns Over Hartford**, for sci-fi check out **Fox Vs. The World** or **Stars Don't Apologize**, and for dark academia try **The Quiet Stairwell**. All available in Browse Stories!",
+    recommend: "For great starting points: if you love mystery try **Lanterns Over Hartford**, for sci-fi check out **Kings Of Sorrow** or **Stars Don't Apologize**, and for dark academia try **The Quiet Stairwell**. All available in Browse Stories!",
   },
 };
 
