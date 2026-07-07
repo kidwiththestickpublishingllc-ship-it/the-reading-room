@@ -116,8 +116,8 @@ const MOCK_AUTHORS: Record<string, AuthorData> = {
   "d-cedeno": {
     slug: "d-cedeno", name: "Daniel Cedeno", initial: "D", role: "Founding Author",
     genres: ["Sci-Fi", "Young Adult", "Serialized Fiction"], tagline: "Worlds that refuse to stay quiet.",
-    bio: "Daniel Cedeno builds worlds that feel like they existed before the first page and will keep going after the last. Creator of the Fox Vs. The World universe.\n\nCedeno's work is rooted in the specificity of place and the universality of not knowing who you are yet.",
-    achievements: "Founder of The Tiniest Library and The Reading Room. Fox Vs. The World is TTL's flagship serialized story.",
+    bio: "Daniel Cedeno builds worlds that feel like they existed before the first page and will keep going after the last. Creator of the Kings Of Sorrow vampire series.\n\nCedeno's work is rooted in the specificity of place and the universality of not knowing who you are yet.",
+    achievements: "Founder of The Tiniest Library and The Reading Room. The Kings Of Sorrow is TTL's flagship serialized story.",
     website: "https://www.the-tiniest-library.com", twitter: "https://twitter.com", instagram: "https://instagram.com",
     storiesCount: 5, inkJar: 380, is_founding_author: true,
     accentColor: "#C9A84C", accentDim: "rgba(201,168,76,0.22)",
