@@ -122,7 +122,7 @@ const MOCK_AUTHORS: Record<string, AuthorData> = {
     storiesCount: 5, inkJar: 380, is_founding_author: true,
     accentColor: "#C9A84C", accentDim: "rgba(201,168,76,0.22)",
     stories: [
-      { slug: "fox-vs-the-world", title: "Fox Vs. The World", badge: "Early Access", description: "A first look at a world that refuses to stay quiet.", teaser: "The sky above Hartford wasn't supposed to flicker like a broken screen… but tonight it did.", genres: ["Sci-Fi", "Young Adult", "Serialized Fiction"] },
+      { slug: "Kings-of-sorrow", title: "Kings Of Sorrow", badge: "Early Access", description: "A first look at a world that refuses to stay quiet.", teaser: "The sky above Hartford wasn't supposed to flicker like a broken screen… but tonight it did.", genres: ["Sci-Fi", "Young Adult", "Serialized Fiction"] },
     ],
   },
   "kid-pub": {
