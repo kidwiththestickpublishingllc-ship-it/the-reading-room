@@ -354,6 +354,7 @@ const NAV_STYLES = `
 
   @media (max-width: 768px) {
     .ttl-shared-links { display: none; }
+    .ttl-get-ink-fab { display: flex; }
     .ttl-shared-nav-inner { padding: 0 20px; }
     .ttl-shared-divider { display: none; }
     .ttl-shared-brand-sub { display: none; }
@@ -469,14 +470,14 @@ export function TTLNav({ extras }: { extras?: ReactNode }) {
       </nav>
       <div className="ttl-shared-bottom-spacer" />
       {ink === 0 && (
-        <a href="/reading-room/buy-ink" style={{
+        <a href="/reading-room/buy-ink" className="ttl-get-ink-fab" style={{
           position: 'fixed', bottom: 80, right: 20, zIndex: 200,
           background: 'linear-gradient(135deg, #C9A84C, #8a6510)',
           color: '#000', fontFamily: 'Times New Roman, serif',
           fontSize: 11, fontWeight: 700, letterSpacing: '0.08em',
           padding: '10px 18px', borderRadius: 999,
           textDecoration: 'none', boxShadow: '0 4px 20px rgba(201,168,76,0.4)',
-          display: 'flex', alignItems: 'center', gap: 6
+          alignItems: 'center', gap: 6
         }}>✒️ Get Ink</a>
       )}
     </>
