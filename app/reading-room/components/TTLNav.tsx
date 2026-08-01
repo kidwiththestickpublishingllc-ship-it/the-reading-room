@@ -1,8 +1,10 @@
 "use client";
 
-import { useEffect, useState, type ReactNode } from "react";
+import { useEffect, useState, useRef, type ReactNode } from "react";
+import React from "react";
 import { usePathname } from "next/navigation";
 import { supabase } from "@/lib/supabase";
+
 
 // =========================
 // TTLNav + TTLFooter
@@ -376,6 +378,9 @@ export function TTLNav({ extras }: { extras?: ReactNode }) {
   const [ink, setInk] = useState(0);
   const [user, setUser] = useState<any>(null);
   const pathname = usePathname();
+  const [navHidden, setNavHidden] = useState(false);
+  const [dismissed, setDismissed] = useState(false);
+  const lastY = React.useRef(0);
 
   // Read ink from localStorage
   useEffect(() => {
@@ -399,10 +404,20 @@ export function TTLNav({ extras }: { extras?: ReactNode }) {
     return () => subscription.unsubscribe();
   }, []);
 
+  useEffect(() => {
+    const onScroll = () => {
+      const y = window.scrollY;
+      setNavHidden(y > 80 && y > lastY.current);
+      lastY.current = y;
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
   return (
     <>
       <style>{NAV_STYLES}</style>
-      <nav className="ttl-shared-nav">
+      <nav className="ttl-shared-nav" style={{ transform: navHidden ? 'translateY(-100%)' : 'translateY(0)', transition: 'transform 0.3s ease' }}>
         <div className="ttl-shared-nav-gold-line" />
         <div className="ttl-shared-nav-inner">
           <div className="ttl-shared-nav-left">
@@ -469,16 +484,25 @@ export function TTLNav({ extras }: { extras?: ReactNode }) {
         </div>
       </nav>
       <div className="ttl-shared-bottom-spacer" />
-      {ink === 0 && (
-        <a href="/reading-room/buy-ink" className="ttl-get-ink-fab" style={{
-          position: 'fixed', bottom: 80, right: 20, zIndex: 200,
-          background: 'linear-gradient(135deg, #C9A84C, #8a6510)',
-          color: '#000', fontFamily: 'Times New Roman, serif',
-          fontSize: 11, fontWeight: 700, letterSpacing: '0.08em',
-          padding: '10px 18px', borderRadius: 999,
-          textDecoration: 'none', boxShadow: '0 4px 20px rgba(201,168,76,0.4)',
-          alignItems: 'center', gap: 6
-        }}>✒️ Get Ink</a>
+      {ink === 0 && !dismissed && (
+        <div style={{
+          position: 'fixed', bottom: 80, left: 20, zIndex: 200,
+          display: 'flex', alignItems: 'center', gap: 6
+        }}>
+          <a href="/reading-room/buy-ink" style={{
+            background: 'linear-gradient(135deg, #C9A84C, #8a6510)',
+            color: '#000', fontFamily: 'Times New Roman, serif',
+            fontSize: 11, fontWeight: 700, letterSpacing: '0.08em',
+            padding: '10px 18px', borderRadius: 999,
+            textDecoration: 'none', boxShadow: '0 4px 20px rgba(201,168,76,0.4)',
+          }}>✒️ Get Ink</a>
+          <button onClick={() => setDismissed(true)} style={{
+            background: 'rgba(0,0,0,0.6)', border: '1px solid rgba(255,255,255,0.2)',
+            color: '#fff', borderRadius: '50%', width: 22, height: 22,
+            fontSize: 11, cursor: 'pointer', display: 'flex',
+            alignItems: 'center', justifyContent: 'center', padding: 0
+          }}>✕</button>
+        </div>
       )}
     </>
   );
