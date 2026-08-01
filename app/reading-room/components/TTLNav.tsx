@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ReactNode } from "react";
+import { usePathname } from "next/navigation";
 import { supabase } from "@/lib/supabase";
 
 // =========================
@@ -360,6 +361,7 @@ const NAV_STYLES = `
     .ttl-shared-bottom-spacer { display: block; }
     .ttl-shared-footer { padding: 32px 24px 24px; flex-direction: column; align-items: flex-start; }
     .ttl-shared-footer-actions { justify-content: flex-start; }
+    .ttl-shared-footer { display: none; }
   }
 
   @media (max-width: 480px) {
@@ -369,9 +371,10 @@ const NAV_STYLES = `
   }
 `;
 
-export function TTLNav() {
+export function TTLNav({ extras }: { extras?: ReactNode }) {
   const [ink, setInk] = useState(0);
   const [user, setUser] = useState<any>(null);
+  const pathname = usePathname();
 
   // Read ink from localStorage
   useEffect(() => {
@@ -429,6 +432,7 @@ export function TTLNav() {
               <span>{ink} Ink</span>
             </a>
             <div className="ttl-shared-divider" />
+            {extras}
             {user ? (
               <a href="/reading-room/account" className="ttl-shared-auth-btn">My Account →</a>
             ) : (
@@ -441,7 +445,7 @@ export function TTLNav() {
       {/* Mobile bottom nav */}
       <nav className="ttl-shared-bottom-nav">
         <div className="ttl-shared-bottom-nav-inner">
-          <a href="/reading-room" className="ttl-shared-bottom-item">
+          <a href="/reading-room" className="ttl-shared-bottom-item" style={pathname === '/reading-room' ? { color: '#C9A84C' } : {}}>
             <span className="ttl-shared-bottom-icon">🏠</span>
             <span className="ttl-shared-bottom-label">Home</span>
           </a>
@@ -464,6 +468,17 @@ export function TTLNav() {
         </div>
       </nav>
       <div className="ttl-shared-bottom-spacer" />
+      {ink === 0 && (
+        <a href="/reading-room/buy-ink" style={{
+          position: 'fixed', bottom: 80, right: 20, zIndex: 200,
+          background: 'linear-gradient(135deg, #C9A84C, #8a6510)',
+          color: '#000', fontFamily: 'Times New Roman, serif',
+          fontSize: 11, fontWeight: 700, letterSpacing: '0.08em',
+          padding: '10px 18px', borderRadius: 999,
+          textDecoration: 'none', boxShadow: '0 4px 20px rgba(201,168,76,0.4)',
+          display: 'flex', alignItems: 'center', gap: 6
+        }}>✒️ Get Ink</a>
+      )}
     </>
   );
 }

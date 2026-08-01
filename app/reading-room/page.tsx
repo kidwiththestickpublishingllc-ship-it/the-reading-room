@@ -2025,99 +2025,14 @@ export default function ReadingRoomHome() {
     <>
       <style>{TTL_STYLES}</style>
       <div className="ttl-root">
-
-        {/* ── NAVBAR ── */}
-        <nav className="ttl-nav">
-          <div className="ttl-nav-gold-line" />
-          <div className="ttl-nav-inner">
-            <div className="ttl-nav-left">
-              <a href="/reading-room" className="ttl-nav-brand">
-                <div className="ttl-nav-logo-badge">TTL</div>
-                <div className="ttl-nav-brand-text">
-                  <span className="ttl-nav-brand-main">The Tiniest Library</span>
-                  <span className="ttl-nav-brand-sub">The Reading Room</span>
-                </div>
-              </a>
-              <div className="ttl-nav-links">                
-                <a href="/reading-room/authors" className="ttl-nav-link">Authors</a>
-                <a href="/reading-room/stories" className="ttl-nav-link">Browse Stories</a>
-                <a href="/reading-room/comics" className="ttl-nav-link">Comics & Manga</a>
-                <a href="/reading-room/buy-ink" className="ttl-nav-link">Buy Ink ✒️</a>
-                <a href="/reading-room/how-it-works" className="ttl-nav-link">How It Works</a>
-                <a href="https://write.the-tiniest-library.com" className="ttl-nav-link">Writer's Room</a>
-                <a href="/members" className="ttl-nav-link" style={{ color: 'var(--gold)', border: '1px solid var(--gold-dim)', borderRadius: 6, padding: '4px 12px' }}>Members Room</a>
-              </div>
-            </div>
-            <div className="ttl-nav-right">
-              <a href="/reading-room/buy-ink" className="ttl-nav-ink" style={{ textDecoration: 'none' }}>
-                <span>✒️</span>
-                <span>{ink} Ink</span>
-              </a>
-              <div className="ttl-nav-divider" />
-              <button
-              type="button"
-              className="ttl-nav-tour-btn"
-              onClick={startTour}
-              suppressHydrationWarning
-              >
-                📖 Tour
-                </button>
-                <div className="ttl-nav-divider" />
-                <AdQueue />
-                {user ? (
-              <a href="/reading-room/account" className="ttl-nav-members">
-                My Account →
-              </a>
-              ) : (
-  <a href="/reading-room/login" className="ttl-nav-members">
-    Sign In →
-  </a>
-)}
-            </div>
-          </div>
-        </nav>
-
-        <div className="ttl-nav-spacer" />
-        
-        {/* ── Mobile Bottom Nav ── */}
-        <nav className="ttl-bottom-nav">
-          <div className="ttl-bottom-nav-inner">
-            <a href="/reading-room" className="ttl-bottom-nav-item">
-              <span className="ttl-bottom-nav-icon">🏠</span>
-              <span className="ttl-bottom-nav-label">Home</span>
-            </a>
-            <a href="/reading-room/stories" className="ttl-bottom-nav-item">
-              <span className="ttl-bottom-nav-icon">📖</span>
-              <span className="ttl-bottom-nav-label">Stories</span>
-            </a>
-            <a href="/reading-room/comics" className="ttl-bottom-nav-item">
-              <span className="ttl-bottom-nav-icon">🎨</span>
-              <span className="ttl-bottom-nav-label">Comics</span>
-            </a>
-            <a href="/reading-room/authors" className="ttl-bottom-nav-item">
-              <span className="ttl-bottom-nav-icon">🪶</span>
-              <span className="ttl-bottom-nav-label">Authors</span>
-            </a>
-            <a href="/reading-room/buy-ink" className="ttl-bottom-nav-item">
-              <span className="ttl-bottom-nav-icon">✒️</span>
-              <span className="ttl-bottom-nav-label">Ink</span>
-            </a>
-          </div>
-        </nav>
-        <div className="ttl-bottom-nav-spacer" />
-        <ChapterReaderModal
-          open={Boolean(openStorySlug)}
-          story={activeStory}
-          ink={ink}
-          unlocks={unlocks}
-          onClose={() => setOpenStorySlug(null)}
-          onUnlock={(key, cost) => {
-            if (ink < cost) { alert(`You need ${cost} Ink to unlock this.`); return; }
-            setInk(v => v - cost);
-            setUnlocksState(u => ({ ...u, [key]: true }));
-          }}
-        />
-
+{/* ── NAVBAR ── */}
+        <TTLNav extras={
+          <>
+            <button type="button" className="ttl-nav-tour-btn" onClick={startTour} suppressHydrationWarning>📖 Tour</button>
+            <div className="ttl-nav-divider" />
+            <AdQueue />
+          </>
+        } />
         {/* ── HERO ── */}
        <div className="ttl-hero-section">
           <div className="ttl-hero-three-col">
@@ -2487,7 +2402,6 @@ export default function ReadingRoomHome() {
               <span className="ttl-btn-ghost" style={{ cursor: 'default' }}>Payments by Stripe</span>
             </div>
           </div>
-
          {/* ── FOOTER ── */}
           <TTLFooter />
         </div>
