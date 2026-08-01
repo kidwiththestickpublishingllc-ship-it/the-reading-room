@@ -143,6 +143,8 @@ const NAV_STYLES = `
     display: flex;
     align-items: center;
     gap: 6px;
+    min-width: 80px;
+    justify-content: center;
     font-family: 'Times New Roman', Times, serif;
     font-size: 11px;
     font-weight: 700;
