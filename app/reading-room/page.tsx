@@ -8,6 +8,7 @@ import { RightAdPanel, ReadingRoomBanner } from './components/HeroPanels';
 import AdWindow from "./components/AdWindow";
 import StorySocial from "./components/StorySocial";
 import StoryStage, { StageTheme } from "./components/StoryStage";
+import { TTLNav, TTLFooter } from "./components/TTLNav";
 
 // =========================
 // CHANGELOG
@@ -2487,29 +2488,8 @@ export default function ReadingRoomHome() {
             </div>
           </div>
 
-          {/* ── FOOTER ── */}
-          <div className="ttl-footer">
-            <div className="ttl-footer-brand">
-              <div className="ttl-footer-logo">TTL</div>
-              <div className="ttl-footer-brand-text">
-                <p>The Tiniest Library</p>
-                <p>The Reading Room</p>
-              </div>
-            </div>
-            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 6, textAlign: "center" }}>
-              <span className="ttl-footer-copy">© {new Date().getFullYear()} The Tiniest Library. All rights reserved.</span>
-              <a href="https://www.kidwiththestick.com" target="_blank" rel="noopener noreferrer" style={{ fontSize: 10, letterSpacing: "0.12em", color: "#C9A84C", textDecoration: "none", fontFamily: "'Syne', sans-serif" }}>
-                A company of Kid With The Stick Publishing
-              </a>
-            </div>
-            <div className="ttl-footer-actions">
-              <a href="/reading-room/stories" className="ttl-btn-ghost" style={{ fontSize: '9px', padding: '8px 18px', borderRadius: '8px' }}>Browse Stories</a>
-              <a href="/reading-room/authors" className="ttl-btn-ghost" style={{ fontSize: '9px', padding: '8px 18px', borderRadius: '8px' }}>Authors</a>
-              <a href="https://write.the-tiniest-library.com" className="ttl-btn-ghost" style={{ fontSize: '9px', padding: '8px 18px', borderRadius: '8px' }}>Writer's Room</a>
-              <a href="https://redroom.the-tiniest-library.com" className="ttl-btn-ghost" style={{ fontSize: '9px', padding: '8px 18px', borderRadius: '8px' }}>Red Room</a>
-              <a href="/members" className="ttl-btn-primary" style={{ fontSize: '10px', padding: '8px 18px', borderRadius: '8px' }}>Members Room →</a>
-            </div>
-          </div>
+         {/* ── FOOTER ── */}
+          <TTLFooter />
         </div>
           </>
   );
