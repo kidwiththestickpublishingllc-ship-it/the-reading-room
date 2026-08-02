@@ -24,3 +24,182 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* =============================================
+   TTL MOBILE — Feed layout for all components
+   Desktop = grid, Mobile = single column feed
+   ============================================= */
+
+@media (max-width: 768px) {
+
+  /* WRAP — full width, tighter padding */
+  .ttl-wrap {
+    padding: 24px 16px 80px !important;
+  }
+
+  /* SECTIONS — more breathing room */
+  .ttl-section {
+    margin-bottom: 40px !important;
+  }
+
+  /* SECTION HEADER — stack on mobile */
+  .ttl-section-header {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 8px !important;
+  }
+
+  /* FEATURED AUTHORS — horizontal scroll carousel */
+  #ttl-carousel-track {
+    display: flex !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory !important;
+    -webkit-overflow-scrolling: touch !important;
+    gap: 12px !important;
+    padding-bottom: 12px !important;
+  }
+
+  #ttl-carousel-track > a,
+  #ttl-carousel-track > div {
+    min-width: 260px !important;
+    width: 260px !important;
+    scroll-snap-align: start !important;
+    flex-shrink: 0 !important;
+  }
+
+  /* Hide carousel controls on mobile — swipe is the control */
+  #ttl-carousel-track + div {
+    display: none !important;
+  }
+
+  /* STORY GRID — single column */
+  .ttl-story-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* AUTHORS GRID — single column */
+  .ttl-authors-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* HOW IT WORKS — single column */
+  .ttl-how-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* INK WALLET — single column */
+  .ttl-wallet-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* INK PACKS — 2 column on mobile */
+  .ttl-ink-packs {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  /* FILTER BAR — horizontal scroll */
+  .ttl-filter-bar {
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    padding-bottom: 8px !important;
+    gap: 6px !important;
+  }
+
+  .ttl-filter-btn {
+    flex-shrink: 0 !important;
+    white-space: nowrap !important;
+  }
+
+  /* HERO — tighter */
+  .ttl-hero-inner {
+    padding: 48px 20px 40px !important;
+  }
+
+  .ttl-hero-title {
+    font-size: 52px !important;
+  }
+
+  .ttl-hero-actions {
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+
+  .ttl-hero-actions a,
+  .ttl-hero-actions button,
+  .ttl-hero-actions span {
+    text-align: center !important;
+    width: 100% !important;
+  }
+
+  /* MODAL — full screen on mobile */
+  .ttl-modal {
+    max-width: 100% !important;
+    max-height: 100vh !important;
+    border-radius: 0 !important;
+  }
+
+  /* STORY CARD — comfortable tap target */
+  .ttl-story-card {
+    padding: 16px !important;
+  }
+
+  .ttl-story-inner {
+    gap: 12px !important;
+  }
+
+  /* FOOTER — stack */
+  .ttl-shared-footer {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 20px !important;
+  }
+
+  .ttl-shared-footer-actions {
+    flex-wrap: wrap !important;
+    justify-content: flex-start !important;
+  }
+
+  /* CONTINUE READING STRIP — stack */
+  .ttl-continue-strip {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 12px !important;
+  }
+
+  /* MOOD SELECTOR — wrap */
+  .ttl-mood-selector {
+    flex-wrap: wrap !important;
+  }
+
+  /* TAP TARGETS — minimum 44px */
+  button, a {
+    min-height: 44px !important;
+  }
+
+  /* HIDE desktop-only elements */
+  .ttl-hero-three-col .ttl-hero-ad-panel-left,
+  .ttl-hero-three-col .ttl-hero-ad-panel-right {
+    display: none !important;
+  }
+
+  .ttl-hero-three-col {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .ttl-hero-title {
+    font-size: 42px !important;
+  }
+
+  .ttl-section-title {
+    font-size: 28px !important;
+  }
+
+  #ttl-carousel-track > a,
+  #ttl-carousel-track > div {
+    min-width: 220px !important;
+    width: 220px !important;
+  }
+}
