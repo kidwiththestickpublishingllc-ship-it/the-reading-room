@@ -79,7 +79,7 @@ const NAV_STYLES = `
 
   .ttl-shared-brand-main {
     font-family: 'Times New Roman', Times, serif;
-    font-size: 17px;
+    font-size: 14px;
     font-weight: 400;
     color: #E2C97E;
     letter-spacing: 0.02em;
@@ -102,12 +102,12 @@ const NAV_STYLES = `
 
   .ttl-shared-link {
     font-family: 'Times New Roman', Times, serif;
-    font-size: 10px;
-    letter-spacing: 0.14em;
+    font-size: 9px;
+    letter-spacing: 0.10em;
     text-transform: uppercase;
     color: rgba(240,236,226,0.85);
     text-decoration: none;
-    padding: 6px 12px;
+    padding: 4px 8px;
     border-radius: 4px;
     border: 1px solid transparent;
     transition: all 0.2s;
