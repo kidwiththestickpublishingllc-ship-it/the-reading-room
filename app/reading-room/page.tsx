@@ -14,6 +14,7 @@ import MoodSelector from './components/MoodSelector';
 import ReadingStreak from './components/ReadingStreak';
 import NewChapterAlerts from './components/NewChapterAlerts';
 import LiveActivityFeed from './components/LiveActivityFeed';
+import CountdownDrops from './components/CountdownDrops';
 import InkWallet from './components/InkWallet';
 import AdWindow from "./components/AdWindow";
 import StorySocial from "./components/StorySocial";
@@ -2040,6 +2041,7 @@ export default function ReadingRoomHome() {
           <ReadingStreak />
           <NewChapterAlerts />
           <LiveActivityFeed />
+          <CountdownDrops />
           <MoodSelector onMoodSelect={setMoodGenres} />
           <ReadingRoomBanner />
           <FeaturedAuthors />
