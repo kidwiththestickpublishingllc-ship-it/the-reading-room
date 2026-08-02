@@ -30,7 +30,7 @@ export default function HeroSection() {
         <div className="ttl-hero-inner">
           <span className="ttl-hero-eyebrow">{typedText}<span className="ttl-eyebrow-cursor">&nbsp;</span></span>
           <h1 className="ttl-hero-title">
-            <span style={{ fontSize: "0.55em", color: "#1a1008" }}>The</span><br />
+            <span style={{ fontSize: "0.55em", color: "rgba(255,255,255,0.85)", textShadow: "0 2px 12px rgba(0,0,0,0.5)" }}>The</span><br />
             <span style={{
               background: "linear-gradient(135deg, #C9A84C 0%, #FFE066 40%, #E2C97E 60%, #C9A84C 100%)",
               WebkitBackgroundClip: "text",

@@ -46,7 +46,7 @@ const AUTHORS = [
 
 export default function FeaturedAuthors() {
   return (
-    <div className="ttl-section">
+    <div className="ttl-section" style={{ background: "linear-gradient(135deg, #1a1a2e, #16213e)", border: "1px solid rgba(201,168,76,0.25)", borderRadius: 16 }}>
       <div className="ttl-section-header">
         <div>
           <div className="ttl-section-accent">
