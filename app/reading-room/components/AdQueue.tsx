@@ -56,7 +56,12 @@ function markViewed(adId: string) {
 const STYLES = `
   @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Syne:wght@400;500;600;700&display=swap');
 
-  .aq-trigger {
+  .aq-trigger-label {
+    display: none;
+  }
+  @media (min-width: 1400px) {
+    .aq-trigger-label { display: inline; }
+  }
     font-family: 'Syne', sans-serif;
     font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
     color: rgba(232,228,218,0.55);
@@ -423,7 +428,7 @@ export default function AdQueue() {
       {/* Trigger button */}
       <button className="aq-trigger" onClick={() => setOpen(true)}>
         <span>✦</span>
-        Support TTL        
+        <span className="aq-trigger-label">Support TTL</span>
       </button>
 
       {open && (

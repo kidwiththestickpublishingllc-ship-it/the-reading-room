@@ -2016,9 +2016,9 @@ export default function ReadingRoomHome() {
             <div className="ttl-nav-divider" />
             <AdQueue />
           </>
-        } />
-
-       {/* ── HERO ── */}
+      } />
+        <div style={{ height: 90 }} />
+        {/* ── HERO ── */}
         <HeroSection />
 
         {/* ── MAIN CONTENT ── */}
