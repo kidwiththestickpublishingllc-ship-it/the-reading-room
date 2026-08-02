@@ -9,6 +9,7 @@ import HeroSection from './components/HeroSection';
 import FeaturedAuthors from './components/FeaturedAuthors';
 import FeaturedStories from './components/FeaturedStories';
 import HowItWorks from './components/HowItWorks';
+import ContinueReadingStrip from './components/ContinueReadingStrip';
 import InkWallet from './components/InkWallet';
 import AdWindow from "./components/AdWindow";
 import StorySocial from "./components/StorySocial";
@@ -2029,6 +2030,7 @@ export default function ReadingRoomHome() {
         {/* ── MAIN CONTENT ── */}
        <div className="ttl-wrap">
           {/* ── SPONSORED BANNER ── */}
+          <ContinueReadingStrip />
           <ReadingRoomBanner />
           <FeaturedAuthors />
           {/* ── FEATURED STORIES ── */}

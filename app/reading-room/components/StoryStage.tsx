@@ -135,8 +135,15 @@ export default function StoryStage({
     };
   }, [promos.length]);
 
-  const openReader = () =>
-    (window.location.href = `/reading-room/stories/${story.slug}/chapters/1`);
+  const openReader = () => {
+    localStorage.setItem("ttl_last_read", JSON.stringify({
+      slug: story.slug,
+      title: story.title,
+      author: story.author,
+      chapter: 1,
+    }));
+    window.location.href = `/reading-room/stories/${story.slug}/chapters/1`;
+  };
   const initial =
     story.author.split(" ").pop()?.[0]?.toUpperCase() ?? story.author[0] ?? "?";
   const isVideo = (t: string, u: string) =>
