@@ -212,27 +212,26 @@ const TTL_STYLES = `
 
   :root {
     --gold: #C9A84C;
-    --gold-light: #E2C97E;
-    --gold-dim: rgba(201,168,76,0.38);
-    --gold-glow: rgba(201,168,76,0.13);
-    --blue: #6495ED;
-    --blue-dim: rgba(100,149,237,0.22);
-    --blue-bright: #84b0f5;
-    --ink-bg: #0f1c30;
-    --ink-surface: #16263f;
-    --ink-surface2: #1f3454;
-    --ink-border: rgba(255,255,255,0.10);
-    --ink-border-gold: rgba(201,168,76,0.35);
-    --text-main: #ffffff;
-    --text-dim: rgba(255,255,255,0.82);
-    --text-faint: rgba(255,255,255,0.55);
+    --gold-light: #C9A84C;
+    --gold-dim: rgba(201,168,76,0.45);
+    --gold-glow: rgba(201,168,76,0.12);
+    --blue: #2B4E8C;
+    --blue-dim: rgba(43,78,140,0.15);
+    --blue-bright: #2B4E8C;
+    --ink-bg: #FAFAF8;
+    --ink-surface: #FFFFFF;
+    --ink-surface2: #F2EDE4;
+    --ink-border: rgba(0,0,0,0.08);
+    --ink-border-gold: rgba(201,168,76,0.4);
+    --text-main: #1a1008;
+    --text-dim: rgba(26,16,8,0.75);
+    --text-faint: rgba(26,16,8,0.45);
   }
-
   .ttl-root {
     min-height: 100vh;
-    background: linear-gradient(180deg, #3a5a85 0%, #28466e 38%, #1a3052 70%, #101f38 100%);
+    background: #FAFAF8;
     font-family: 'Times New Roman', Times, serif;
-    color: #ffffff;
+    color: #1a1008;
     position: relative;
     overflow-x: hidden;
   }
