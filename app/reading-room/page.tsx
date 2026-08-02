@@ -2027,14 +2027,10 @@ export default function ReadingRoomHome() {
         <HeroSection />
 
         {/* ── MAIN CONTENT ── */}
-        <div className="ttl-wrap">
-
+       <div className="ttl-wrap">
           {/* ── SPONSORED BANNER ── */}
           <ReadingRoomBanner />
-
-<FeaturedAuthors />
-          </div>
-         
+          <FeaturedAuthors />
           {/* ── FEATURED STORIES ── */}
           <FeaturedStories
             allGenres={allGenres}
@@ -2049,8 +2045,7 @@ export default function ReadingRoomHome() {
             onUnlock={unlockStory}
             DEFAULT_UNLOCK_COST={DEFAULT_UNLOCK_COST}
           />
-
-{/* ── INK WALLET ── */}
+          {/* ── INK WALLET ── */}
           <InkWallet
             ink={ink}
             inkPacks={INK_PACKS}
@@ -2058,8 +2053,9 @@ export default function ReadingRoomHome() {
             openingInk={openingInk}
             onBuyInk={buyInk}
           />
-{/* ── HOW IT WORKS ── */}
+          {/* ── HOW IT WORKS ── */}
           <HowItWorks stories={stories} />
+        </div>
          {/* ── FOOTER ── */}
           <TTLFooter />
         </div>
