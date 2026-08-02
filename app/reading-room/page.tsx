@@ -10,6 +10,7 @@ import FeaturedAuthors from './components/FeaturedAuthors';
 import FeaturedStories from './components/FeaturedStories';
 import HowItWorks from './components/HowItWorks';
 import ContinueReadingStrip from './components/ContinueReadingStrip';
+import MoodSelector from './components/MoodSelector';
 import InkWallet from './components/InkWallet';
 import AdWindow from "./components/AdWindow";
 import StorySocial from "./components/StorySocial";
@@ -1901,6 +1902,7 @@ export default function ReadingRoomHome() {
   const [storiesLoading, setStoriesLoading] = useState<boolean>(true);
   const [storiesError, setStoriesError] = useState<string | null>(null);
   const [selectedGenre, setSelectedGenre] = useState<string>("All");
+  const [moodGenres, setMoodGenres] = useState<string[]>([]);
   const [openStorySlug, setOpenStorySlug] = useState<string | null>(null);
   const [isOpeningCheckout, setIsOpeningCheckout] = useState(false);
   const [openingInk, setOpeningInk] = useState<number | null>(null);
@@ -1999,9 +2001,10 @@ export default function ReadingRoomHome() {
 
   const allGenres = useMemo(() => ["All", ...TTL_GENRES], []);
   const filteredStories = useMemo(() => {
+    if (moodGenres.length > 0) return stories.filter(s => (s.genres ?? []).some(g => moodGenres.includes(g)));
     if (selectedGenre === "All") return stories;
     return stories.filter(s => (s.genres ?? []).includes(selectedGenre));
-  }, [selectedGenre, stories]);
+  }, [selectedGenre, moodGenres, stories]);
 
   const activeStory = useMemo(() => {
     if (!openStorySlug) return null;
@@ -2031,6 +2034,7 @@ export default function ReadingRoomHome() {
        <div className="ttl-wrap">
           {/* ── SPONSORED BANNER ── */}
           <ContinueReadingStrip />
+          <MoodSelector onMoodSelect={setMoodGenres} />
           <ReadingRoomBanner />
           <FeaturedAuthors />
           {/* ── FEATURED STORIES ── */}
