@@ -221,7 +221,7 @@ const TTL_STYLES = `
     --ink-bg: #FAFAF8;
     --ink-surface: #FFFFFF;
     --ink-surface2: #F2EDE4;
-    --ink-border: rgba(0,0,0,0.08);
+    --ink-border: rgba(0,0,0,0.12);
     --ink-border-gold: rgba(201,168,76,0.4);
     --text-main: #1a1008;
     --text-dim: rgba(26,16,8,0.75);
@@ -234,6 +234,18 @@ const TTL_STYLES = `
     color: #1a1008;
     position: relative;
     overflow-x: hidden;
+  }
+  .ttl-root.dark {
+    --ink-bg: #0a0a0a;
+    --ink-surface: #111111;
+    --ink-surface2: #1a1a1a;
+    --ink-border: rgba(255,255,255,0.08);
+    --ink-border-gold: rgba(201,168,76,0.35);
+    --text-main: #f0ece2;
+    --text-dim: rgba(240,236,226,0.75);
+    --text-faint: rgba(240,236,226,0.45);
+    background: linear-gradient(180deg, #3a5a85 0%, #28466e 38%, #1a3052 70%, #101f38 100%);
+    color: #f0ece2;
   }
 
   .ttl-root::before {
@@ -1434,6 +1446,21 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
     color: var(--gold-light);
     margin-bottom: 12px;
   }
+/* Light theme card borders */
+.ttl-section {
+  border: 1px solid rgba(0,0,0,0.08);
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 24px;
+  background: #ffffff;
+}
+
+.ttl-how-card,
+.ttl-panel,
+.ttl-ink-pack {
+  border: 1px solid rgba(0,0,0,0.1) !important;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06) !important;
+}
 
   @media (max-width: 768px) {
     #ttl-carousel-track > a, #ttl-carousel-track > div {
@@ -1906,6 +1933,7 @@ export default function ReadingRoomHome() {
   const [storiesError, setStoriesError] = useState<string | null>(null);
   const [selectedGenre, setSelectedGenre] = useState<string>("All");
   const [moodGenres, setMoodGenres] = useState<string[]>([]);
+  const [darkMode, setDarkMode] = useState(false);
   const [openStorySlug, setOpenStorySlug] = useState<string | null>(null);
   const [isOpeningCheckout, setIsOpeningCheckout] = useState(false);
   const [openingInk, setOpeningInk] = useState<number | null>(null);
@@ -2020,15 +2048,17 @@ export default function ReadingRoomHome() {
   return (
     <>
       <style>{TTL_STYLES}</style>
-      <div className="ttl-root">
+      <div className={`ttl-root${darkMode ? ' dark' : ''}`}>
 {/* ── NAVBAR ── */}
         <TTLNav extras={
           <>
             <button type="button" className="ttl-nav-tour-btn" onClick={startTour} suppressHydrationWarning>📖 Tour</button>
             <div className="ttl-nav-divider" />
+            <button type="button" className="ttl-nav-tour-btn" onClick={() => setDarkMode(d => !d)} suppressHydrationWarning>{darkMode ? '☀️' : '🌙'}</button>
+            <div className="ttl-nav-divider" />
             <AdQueue />
           </>
-      } />
+        } />
         <div style={{ height: 90 }} />
         {/* ── HERO ── */}
         <HeroSection />
