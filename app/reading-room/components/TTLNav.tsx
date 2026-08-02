@@ -445,10 +445,6 @@ export function TTLNav({ extras }: { extras?: ReactNode }) {
           </div>
 
           <div className="ttl-shared-nav-right">
-            <a href="/reading-room/buy-ink" className="ttl-shared-ink">
-              <span>✒️</span>
-              <span>{ink} Ink</span>
-            </a>
             <div className="ttl-shared-divider" />
             {extras}
             {user ? (
@@ -497,7 +493,7 @@ export function TTLNav({ extras }: { extras?: ReactNode }) {
             fontSize: 11, fontWeight: 700, letterSpacing: '0.08em',
             padding: '10px 18px', borderRadius: 999,
             textDecoration: 'none', boxShadow: '0 4px 20px rgba(201,168,76,0.4)',
-          }}>✒️ Get Ink</a>
+          }}>✒️ {ink} Ink — Get More</a>
           <button onClick={() => setDismissed(true)} style={{
             background: 'rgba(0,0,0,0.6)', border: '1px solid rgba(255,255,255,0.2)',
             color: '#fff', borderRadius: '50%', width: 22, height: 22,
