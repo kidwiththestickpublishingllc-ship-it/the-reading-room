@@ -12,6 +12,7 @@ import HowItWorks from './components/HowItWorks';
 import ContinueReadingStrip from './components/ContinueReadingStrip';
 import MoodSelector from './components/MoodSelector';
 import ReadingStreak from './components/ReadingStreak';
+import NewChapterAlerts from './components/NewChapterAlerts';
 import InkWallet from './components/InkWallet';
 import AdWindow from "./components/AdWindow";
 import StorySocial from "./components/StorySocial";
@@ -2036,6 +2037,7 @@ export default function ReadingRoomHome() {
           {/* ── SPONSORED BANNER ── */}
           <ContinueReadingStrip />
           <ReadingStreak />
+          <NewChapterAlerts />
           <MoodSelector onMoodSelect={setMoodGenres} />
           <ReadingRoomBanner />
           <FeaturedAuthors />
