@@ -2052,9 +2052,9 @@ export default function ReadingRoomHome() {
 {/* ── NAVBAR ── */}
         <TTLNav extras={
           <>
-            <button type="button" className="ttl-nav-tour-btn" onClick={startTour} suppressHydrationWarning>📖 Tour</button>
+            <button type="button" onClick={startTour} suppressHydrationWarning style={{ background: 'none', border: '1px solid rgba(201,168,76,0.38)', borderRadius: 999, padding: '4px 12px', cursor: 'pointer', fontSize: 11, color: '#E2C97E', letterSpacing: '0.1em', fontFamily: 'Times New Roman, serif' }}>📖 Tour</button>
             <div className="ttl-nav-divider" />
-            <button type="button" className="ttl-nav-tour-btn" onClick={() => setDarkMode(d => !d)} suppressHydrationWarning>{darkMode ? '☀️' : '🌙'}</button>
+            <button type="button" onClick={() => setDarkMode(d => !d)} suppressHydrationWarning style={{ background: 'none', border: '1px solid rgba(201,168,76,0.38)', borderRadius: 999, padding: '4px 12px', cursor: 'pointer', fontSize: 16, color: '#E2C97E' }}>{darkMode ? '☀️' : '🌙'}</button>
             <div className="ttl-nav-divider" />
             <AdQueue />
           </>

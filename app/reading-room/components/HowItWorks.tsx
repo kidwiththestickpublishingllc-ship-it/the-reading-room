@@ -104,7 +104,7 @@ export default function HowItWorks({ stories }: HowItWorksProps) {
       </div>
       <div className="ttl-hero-actions">
         <a href="/members" className="ttl-btn-primary">Go to Members Room →</a>
-        <span className="ttl-btn-ghost" style={{ cursor: 'default' }}>Payments by Stripe</span>
+        <span className="ttl-btn-ghost" style={{ cursor: 'default', border: '1px solid rgba(201,168,76,0.5)', color: '#1a1008', background: 'rgba(201,168,76,0.08)' }}>Payments by Stripe</span>
       </div>
     </div>
   );
