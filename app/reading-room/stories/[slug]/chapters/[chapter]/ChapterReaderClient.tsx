@@ -714,6 +714,9 @@ function ChapterReaderContent({ storySlug, chapterNum }: { storySlug: string; ch
             const bends = raw ? JSON.parse(raw) : {};
             bends[storySlug] = { chapter: chapterNum, scrollPct: pct, savedAt: new Date().toISOString() };
             window.localStorage.setItem('ttl_pagebend', JSON.stringify(bends));
+            // Keep ContinueReadingStrip in sync
+            const lastRead = { slug: storySlug, title: document.title, author: '', chapter: chapterNum };
+            window.localStorage.setItem('ttl_last_read', JSON.stringify(lastRead));
           } catch {}
           lastY = scrollTop; ticking = false;
         });
