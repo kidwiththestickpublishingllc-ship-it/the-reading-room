@@ -7,6 +7,7 @@ import { startTour } from "@/app/components/WelcomeTour";
 import { RightAdPanel, ReadingRoomBanner } from './components/HeroPanels';
 import HeroSection from './components/HeroSection';
 import FeaturedAuthors from './components/FeaturedAuthors';
+import FeaturedStories from './components/FeaturedStories';
 import AdWindow from "./components/AdWindow";
 import StorySocial from "./components/StorySocial";
 import StoryStage, { StageTheme } from "./components/StoryStage";
@@ -2034,82 +2035,19 @@ export default function ReadingRoomHome() {
           {/* ── FEATURED STORIES ── */}
 
           {/* ── FEATURED STORIES ── */}
-          <div className="ttl-section">
-            <div className="ttl-section-header">
-              <div>
-                <div className="ttl-section-accent">
-                  <div className="ttl-section-bar ttl-section-bar-blue" />
-                  <div>
-                    <span className="ttl-section-eyebrow">Read</span>
-                    <h2 className="ttl-section-title">Featured Stories</h2>
-                  </div>
-                </div>
-              </div>
-              <a href="/reading-room/stories" className="ttl-section-link">Browse All →</a>
-            </div>
-            <div className="ttl-divider" />
-
-            {/* ── RED DOOR ── */}
-            <RedDoorCard />
-
-            <div className="ttl-filter-bar">
-              {allGenres.map(g => (
-                <button
-                  key={g}
-                  type="button"
-                  onClick={() => {
-                    if (g === "All") {
-                      setSelectedGenre("All");
-                    } else {
-                      window.location.href = `/reading-room/genres/${encodeURIComponent(g.toLowerCase().replace(/\s+/g, "-").replace(/[+]/g, "").replace(/&/g, "and"))}`;
-                    }
-                  }}
-                  className={`ttl-filter-btn${selectedGenre === g ? " active" : ""}`}
-                  style={g === "LitRPG" ? {
-                    color: "#FF69B4",
-                    borderColor: "#FF1493",
-                    boxShadow: "0 0 10px rgba(255,20,147,0.6), inset 0 0 6px rgba(255,20,147,0.15)",
-                    textShadow: "0 0 6px rgba(255,20,147,0.5)",
-                    animation: "litrpgBtnGlow 2.5s ease-in-out infinite",
-                  } : undefined}
-                >
-                  {g}
-                </button>
-              ))}
-            </div>
-
-            {storiesLoading && <div className="ttl-status">Loading stories from the library…</div>}
-            {storiesError && (
-              <div className="ttl-status ttl-status-warn">
-                Using fallback stories. Supabase: {storiesError}
-              </div>
-            )}
-
-            <div className="ttl-stage-list">
-              {filteredStories.map(story => (
-                <StoryStage
-                  key={story.slug}
-                  story={{
-                    id: story.id,
-                    slug: story.slug,
-                    title: story.title,
-                    author: story.author,
-                    description: story.description,
-                    badge: story.badge,
-                    cover: story.cover,
-                    genres: story.genres,
-                  }}
-                  ink={ink}
-                  isUnlocked={Boolean(unlocks[story.slug])}
-                  canUnlock={ink >= DEFAULT_UNLOCK_COST}
-                  unlockCost={DEFAULT_UNLOCK_COST}
-                  onUnlock={() => unlockStory(story.slug, DEFAULT_UNLOCK_COST)}
-                  userId={user?.id ?? null}
-                  theme={stageThemeFor(story.slug)}
-                />
-              ))}
-            </div>
-          </div>
+          <FeaturedStories
+            allGenres={allGenres}
+            selectedGenre={selectedGenre}
+            setSelectedGenre={setSelectedGenre}
+            storiesLoading={storiesLoading}
+            storiesError={storiesError}
+            filteredStories={filteredStories}
+            ink={ink}
+            unlocks={unlocks}
+            user={user}
+            onUnlock={unlockStory}
+            DEFAULT_UNLOCK_COST={DEFAULT_UNLOCK_COST}
+          />
 
 {/* ── INK WALLET ── */}
           <div className="ttl-section">
