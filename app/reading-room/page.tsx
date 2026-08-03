@@ -2005,6 +2005,24 @@ export default function ReadingRoomHome() {
   }, [openStorySlug]);
 
   useEffect(() => setInkStore(ink), [ink]);
+
+  // Sync Supabase ink balance to localStorage on login
+  useEffect(() => {
+    supabase.auth.getUser().then(async ({ data: { user } }) => {
+      if (!user) return;
+      const { data } = await supabase
+        .from('profiles')
+        .select('ink_balance, reading_history, preferences')
+        .eq('id', user.id)
+        .single();
+      if (data) {
+        if (data.ink_balance) {
+          setInk(data.ink_balance);
+          setInkStore(data.ink_balance);
+        }
+      }
+    });
+  }, []);
   useEffect(() => setUnlocks(unlocks), [unlocks]);
   useEffect(() => setJar(jar), [jar]);
 
