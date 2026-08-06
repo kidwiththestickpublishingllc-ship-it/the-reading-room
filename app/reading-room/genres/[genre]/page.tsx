@@ -2,8 +2,10 @@
 
 import React, { useEffect, useMemo, useState } from "react";
 import { supabase } from "@/lib/supabase";
+import GenreLandingPage from "@/app/components/GenreLandingPage";
 import Adult18Gate from "@/app/reading-room/components/Adult18Gate";
 import { TTLNav, TTLFooter } from "@/app/reading-room/components/TTLNav";
+
 
 // =========================
 // Route: /reading-room/genres/[genre]/page.tsx
@@ -29,6 +31,7 @@ type Story = {
 
 type Author = {
   slug: string;
+  user_id: string;
   name: string;
   tagline: string;
   genres: string[];
@@ -317,11 +320,11 @@ function setJarStore(next: AuthorJar) {
 // Demo Data
 // =========================
 const DEMO_AUTHORS: Author[] = [
-  { slug: "a-rivera",  name: "A. Rivera",  tagline: "Slow-burn mystery with heart.",     genres: ["Crime & Thrillers", "Cozy"],          image: "/images/author-1.jpg" },
-  { slug: "j-holloway",name: "J. Holloway",tagline: "Dark academia + modern folklore.",  genres: ["Dark Academia", "Fantasy"],           image: "/images/author-2.jpg" },
-  { slug: "m-chen",   name: "M. Chen",     tagline: "Soft sci-fi, big emotions.",        genres: ["Sci-Fi", "Young Adult"],              image: "/images/author-3.jpg" },
-  { slug: "s-gomez",  name: "S. Gomez",    tagline: "Thrillers that don't let go.",      genres: ["Crime & Thrillers"],                  image: "/images/author-4.jpg" },
-  { slug: "d-cedeno", name: "Daniel Cedeno",tagline: "Worlds that refuse to stay quiet.",genres: ["Sci-Fi", "Young Adult", "Serialized Fiction"], image: "/images/author-5.jpg" },
+  { slug: "a-rivera",  user_id: "", name: "A. Rivera",  tagline: "Slow-burn mystery with heart.",     genres: ["Crime & Thrillers", "Cozy"],          image: "/images/author-1.jpg" },
+  { slug: "j-holloway", user_id: "", name: "J. Holloway",tagline: "Dark academia + modern folklore.",  genres: ["Dark Academia", "Fantasy"],           image: "/images/author-2.jpg" },
+  { slug: "m-chen",   user_id: "", name: "M. Chen",     tagline: "Soft sci-fi, big emotions.",        genres: ["Sci-Fi", "Young Adult"],              image: "/images/author-3.jpg" },
+  { slug: "s-gomez",  user_id: "", name: "S. Gomez",    tagline: "Thrillers that don't let go.",      genres: ["Crime & Thrillers"],                  image: "/images/author-4.jpg" },
+  { slug: "d-cedeno", user_id: "", name: "Daniel Cedeno",tagline: "Worlds that refuse to stay quiet.",genres: ["Sci-Fi", "Young Adult", "Serialized Fiction"], image: "/images/author-5.jpg" },
 ];
 
 const DEMO_STORIES: Story[] = [
@@ -1542,6 +1545,14 @@ if (genreName === "Adult 18+") {
     );
   }
   return (
+    <GenreLandingPage
+      genre={genreName}
+      genreAccent={meta.accent}
+      genreAccentDim={meta.accentDim}
+      genreEmoji={meta.emoji}
+      ink={ink}
+      onInkSpent={(amt) => setInk(v => v - amt)}
+    >
     <>
       <style>{GENRE_PAGE_STYLES}</style>
       <div
@@ -1731,6 +1742,22 @@ if (genreName === "Adult 18+") {
                       <button type="button" onClick={e => { e.preventDefault(); tipAuthor(author.slug, 10); }} className="gp-tip-btn">Tip 10</button>
                       <button type="button" onClick={e => { e.preventDefault(); tipAuthor(author.slug, 25); }} className="gp-tip-btn">Tip 25</button>
                       <span className="gp-jar-count">Jar: <strong style={{ color: "var(--text-dim)" }}>{jar[author.slug] ?? 0}</strong></span>
+                      <button
+                        type="button"
+                        className="gp-tip-btn"
+                        onClick={e => {
+                          e.preventDefault();
+                          window.dispatchEvent(new CustomEvent('open-readers-letter', {
+                            detail: {
+                              writerId: author.user_id,
+                              writerName: author.name,
+                              writerAvatar: author.image ?? undefined,
+                            }
+                          }));
+                        }}
+                      >
+                        ✉️ Letter
+                      </button>
                     </div>
                     <div className="gp-author-footer">
                       <span className="gp-author-profile-link">🪶 Writer profile</span>
@@ -1821,6 +1848,7 @@ if (genreName === "Adult 18+") {
         </div>
       </div>
     </>
+    </GenreLandingPage>
   );
 }
 

@@ -1,0 +1,218 @@
+// =========================
+// TTL Genre Registry
+// Single source of truth — import from here everywhere
+// =========================
+type GenreMeta = {
+  label: string;
+  cover: string;
+  video?: string;         // optional mp4 hero video (poster = cover)
+  emoji: string;
+  accent: string;         // CSS color for accent bar / highlights
+  accentDim: string;      // dimmed version for borders
+  lore: string;           // the descriptive blurb shown on the page
+};
+
+const GENRE_META: Record<string, GenreMeta> = {
+  "Fantasy": {
+    label: "Fantasy",
+    cover: "https://dgymtdkxusdsgxmjirfl.supabase.co/storage/v1/object/public/reading-room-genre/FANTASY/landing-fantasy.jpg",
+    emoji: "🧙",
+    accent: "#a78bfa",
+    accentDim: "rgba(167,139,250,0.28)",
+    lore: "Worlds where magic is real, monsters roam, and the ordinary becomes extraordinary. Fantasy at TTL spans high epic quests and quiet village folklore — from ancient wizards to chosen heroes who never asked for the title. If you've ever wanted to step through a door that shouldn't exist, this is your genre.",
+  },
+  "LitRPG": {
+    label: "LIT-RPG",
+    cover: "https://dgymtdkxusdsgxmjirfl.supabase.co/storage/v1/object/public/reading-room-genre/LIT-RPG/landing-LitRPG.jpg",
+    video: "https://dgymtdkxusdsgxmjirfl.supabase.co/storage/v1/object/public/reading-room-genre/LIT-RPG/landing-LitRPG.mp4",
+    emoji: "⚔️",
+    accent: "#FF1493",
+    accentDim: "rgba(255,20,147,0.28)",
+    lore: "Where fiction meets the game. LitRPG blends story with real progression — stats, levels, skills, and systems the characters can see. Watch heroes grind, level up, and break the rules of their own worlds. If you've ever wanted a story that levels up with you, this is your genre.",
+  },
+  "Sci-Fi": {
+    label: "Sci-Fi",
+    cover: "https://dgymtdkxusdsgxmjirfl.supabase.co/storage/v1/object/public/reading-room-genre/SCIENCE%20FICTION/landing-scifi.jpg",
+    emoji: "🚀",
+    accent: "#60a5fa",
+    accentDim: "rgba(96,165,250,0.28)",
+    lore: "The future is a foreign country — and these are its dispatches. Science fiction on TTL explores what happens when humanity pushes too far, builds too fast, or finally reaches the stars. From hard sci-fi thought experiments to soft futures full of feeling, every story here dares to ask: what if?",
+  },
+  "Horror Mystery": {
+    label: "Horror Mystery",
+    cover: "https://dgymtdkxusdsgxmjirfl.supabase.co/storage/v1/object/public/reading-room-genre/HORROR%20MYSTERY/landing-horror.jpg",
+    emoji: "🕯️",
+    accent: "#f87171",
+    accentDim: "rgba(248,113,113,0.28)",
+    lore: "Something is wrong in the house at the end of the road. Something has always been wrong. Horror Mystery at TTL blends dread with detective instinct — stories where the shadows have teeth and the clues lead somewhere you're not sure you want to go. Read with the lights on.",
+  },
+  "Crime & Thrillers": {
+    label: "Crime & Thrillers",
+    cover: "https://dgymtdkxusdsgxmjirfl.supabase.co/storage/v1/object/public/reading-room-genre/CRIME%20THRILLER/landing-crime.jpg",
+    emoji: "🔍",
+    accent: "#fbbf24",
+    accentDim: "rgba(251,191,36,0.28)",
+    lore: "Lies buried under alibis. Bodies in the rain. A detective who knows more than they're telling. Crime & Thriller fiction at TTL keeps you three steps behind and desperate to catch up. These are stories of moral complexity, ticking clocks, and the kind of tension that makes your pulse do the reading.",
+  },
+  "Romance": {
+    label: "Romance",
+    cover: "https://dgymtdkxusdsgxmjirfl.supabase.co/storage/v1/object/public/reading-room-genre/ROMANCE/landing-romance.jpg",
+    emoji: "🌹",
+    accent: "#fb7185",
+    accentDim: "rgba(251,113,133,0.28)",
+    lore: "Love is never simple. Romance at TTL is raw, tender, funny, heartbreaking — and always honest about the fact that two people choosing each other is one of the most complicated things in the world. Whether it's slow burn over centuries or a single breathless weekend, these stories make you feel it.",
+  },
+  "Young Adult": {
+    label: "Young Adult",
+    cover: "https://dgymtdkxusdsgxmjirfl.supabase.co/storage/v1/object/public/reading-room-genre/YOUNG%20ADULT/landing-ya.jpg",
+    emoji: "🌟",
+    accent: "#34d399",
+    accentDim: "rgba(52,211,153,0.28)",
+    lore: "The most electric years. YA fiction at TTL captures the specific electricity of becoming — first love, first loss, first time realizing the adults don't have it figured out either. These are stories for readers who remember what it felt like when everything was still possible and nothing had set yet.",
+  },
+  "New Adult": {
+    label: "New Adult",
+    cover: "https://dgymtdkxusdsgxmjirfl.supabase.co/storage/v1/object/public/reading-room-genre/NEW%20ADULT/landing-newadult.jpg",
+    emoji: "🎓",
+    accent: "#818cf8",
+    accentDim: "rgba(129,140,248,0.28)",
+    lore: "Too old to hide under a curfew. Too young to know what they're doing. New Adult fiction lives in the gap between leaving home and figuring out who you actually are. College dorms, first jobs, complicated relationships, and the strange freedom of nobody watching — this is that chapter.",
+  },
+  "Children's Literature": {
+    label: "Children's Literature",
+    cover: "https://dgymtdkxusdsgxmjirfl.supabase.co/storage/v1/object/public/reading-room-genre/CHILDRENS%20STORIES/landing-childrens.jpg",
+    emoji: "🌈",
+    accent: "#f59e0b",
+    accentDim: "rgba(245,158,11,0.28)",
+    lore: "The stories children carry into adulthood are the ones that shaped them most. Children's Literature at TTL is crafted with the same care as any other genre — maybe more. These are tales of wonder, courage, kindness, and the kind of magic that lives in a good sentence read at exactly the right moment.",
+  },
+  "Cozy": {
+    label: "Cozy",
+    cover: "https://dgymtdkxusdsgxmjirfl.supabase.co/storage/v1/object/public/reading-room-genre/COZY/landing-cozy.jpg",
+    emoji: "☕",
+    accent: "#d97706",
+    accentDim: "rgba(217,119,6,0.28)",
+    lore: "A warm mug. A rainy window. A mystery that won't ruin your evening. Cozy fiction at TTL is a refuge — stories that feel like a favorite sweater, set in small towns or cozy bookshops where things go gently wrong and gently right again. No gore. No dread. Just charm, community, and the satisfying click of things resolving.",
+  },
+  "Poems & Memoirs": {
+    label: "Poems & Memoirs",
+    cover: "https://dgymtdkxusdsgxmjirfl.supabase.co/storage/v1/object/public/reading-room-genre/POETRY/landing-poems.jpg",
+    emoji: "🪶",
+    accent: "#c084fc",
+    accentDim: "rgba(192,132,252,0.28)",
+    lore: "The truest writing is often the shortest. Poems & Memoirs at TTL gives space to the lyric, the confessional, and the deeply personal — verse that turns on a single image, and prose that opens a whole life in a paragraph. These writers aren't hiding behind fiction. This is what they actually mean.",
+  },
+  "Adventure": {
+    label: "Adventure",
+    cover: "https://dgymtdkxusdsgxmjirfl.supabase.co/storage/v1/object/public/reading-room-genre/ADVENTURE/landing-adventure.jpg",
+    emoji: "🗺️",
+    accent: "#22d3ee",
+    accentDim: "rgba(34,211,238,0.28)",
+    lore: "The horizon is never enough — there's always another one. Adventure fiction at TTL throws characters into the unknown and watches what they're made of. Jungles, open seas, lost cities, impossible missions. These stories move fast and ask big questions: how far would you go, and what would you do when you got there?",
+  },
+  "Contemporary Fiction": {
+    label: "Contemporary Fiction",
+    cover: "https://dgymtdkxusdsgxmjirfl.supabase.co/storage/v1/object/public/reading-room-genre/CONTEMPORARY%20FICTION/landing-contemporary.jpg",
+    emoji: "🏙️",
+    accent: "#6495ED",
+    accentDim: "rgba(100,149,237,0.28)",
+    lore: "Right here. Right now. Contemporary Fiction at TTL is set in the world we actually live in — complicated, contradictory, full of screens and traffic and feeling. These are stories about people navigating real life with more grace, or less, than we expect. Literary without being cold. Human without being obvious.",
+  },
+  "Historical Fiction": {
+    label: "Historical Fiction",
+    cover: "https://dgymtdkxusdsgxmjirfl.supabase.co/storage/v1/object/public/reading-room-genre/HISTORICAL%20FICTION/landing-historical.jpg",
+    emoji: "📜",
+    accent: "#C9A84C",
+    accentDim: "rgba(201,168,76,0.28)",
+    lore: "The past was never as clean as the textbooks made it. Historical Fiction at TTL drops readers into the smell and noise of other centuries — the politics, the fashions, the violence, the beauty. These writers have done the research so you can feel the cobblestones underfoot and believe, for a chapter at a time, that you were there.",
+  },
+  "Serialized Fiction": {
+    label: "Serialized Fiction",
+    cover: "https://dgymtdkxusdsgxmjirfl.supabase.co/storage/v1/object/public/reading-room-genre/SERIALIZED%20FICTION/landing-serial.jpg",
+    emoji: "📚",
+    accent: "#84b0f5",
+    accentDim: "rgba(132,176,245,0.28)",
+    lore: "The oldest form of storytelling — delivered one chapter at a time. Serialized Fiction at TTL is written to be followed, anticipated, and discussed. These authors are building something chapter by chapter and inviting you along for the whole ride. Start from the beginning. The wait between installments is part of the experience.",
+  },
+  "Fan Fiction": {
+    label: "Fan Fiction",
+    cover: "https://dgymtdkxusdsgxmjirfl.supabase.co/storage/v1/object/public/reading-room-genre/FAN%20FICTION/landing-fanfic.jpg",
+    emoji: "✨",
+    accent: "#f472b6",
+    accentDim: "rgba(244,114,182,0.28)",
+    lore: "Love is transformative — and so is fan fiction. TTL welcomes transformative works that honor existing worlds while building something new inside them. These writers know their source material the way a composer knows a key — deeply enough to play something it's never played before. Fandoms are communities. This is where their writers live.",
+  },
+  "Slice Of Life": {
+    label: "Slice of Life",
+    cover: "https://dgymtdkxusdsgxmjirfl.supabase.co/storage/v1/object/public/reading-room-genre/SLICE%20OF%20LIFE/landing-sliceoflife.jpg",
+    emoji: "🌿",
+    accent: "#4ade80",
+    accentDim: "rgba(74,222,128,0.28)",
+    lore: "Nothing explodes. Nobody saves the world. And yet. Slice of Life fiction at TTL finds the extraordinary inside the everyday — the conversation that changed everything, the afternoon that felt like it lasted a year, the small decision that quietly redirected a life. These are stories that make you feel less alone in your own ordinary.",
+  },
+  "Dark Academia": {
+    label: "Dark Academia",
+    cover: "https://dgymtdkxusdsgxmjirfl.supabase.co/storage/v1/object/public/reading-room-genre/DARK%20ACADEMIA/landing-darkacademia.jpg",
+    emoji: "🕰️",
+    accent: "#a8a29e",
+    accentDim: "rgba(168,162,158,0.28)",
+    lore: "Old libraries. Secret societies. The dangerous idea that knowledge is worth any price. Dark Academia at TTL is drenched in candlelight, Latin mottos, and the specific madness of people who love learning too much and too personally. Something is always being buried — whether it's a body, a truth, or someone's better judgment.",
+  },
+  "Multi-Cultural": {
+    label: "Multi-Cultural",
+    cover: "https://dgymtdkxusdsgxmjirfl.supabase.co/storage/v1/object/public/reading-room-genre/MULTICULTURAL/landing-multicultural.jpg",
+    emoji: "🌍",
+    accent: "#fb923c",
+    accentDim: "rgba(251,146,60,0.28)",
+    lore: "The world is not one story — it never was. Multi-Cultural fiction at TTL amplifies the breadth of human experience: family structures that don't fit Western templates, mythologies that predate Europe, communities whose stories have been systematically overlooked. This shelf is not a footnote. It's the main text.",
+  },
+  "Black Stories": {
+    label: "Black Stories",
+    cover: "https://dgymtdkxusdsgxmjirfl.supabase.co/storage/v1/object/public/reading-room-genre/BLACK%20STORIES/landing-blackstories.jpg",
+    emoji: "✊",
+    accent: "#fbbf24",
+    accentDim: "rgba(251,191,36,0.28)",
+    lore: "Joy. Grief. Power. Survival. Black fiction at TTL is not defined by struggle alone — it is defined by the full range of Black life, told by Black writers on their own terms. These stories are not here to educate outsiders. They are here because they are extraordinary literature and because every story deserves a shelf that feels like home.",
+  },
+  "Latin Stories": {
+    label: "Latin Stories",
+    cover: "https://dgymtdkxusdsgxmjirfl.supabase.co/storage/v1/object/public/reading-room-genre/LATIN%20VOICES/landing-latin.jpg",
+    emoji: "🌺",
+    accent: "#f97316",
+    accentDim: "rgba(249,115,22,0.28)",
+    lore: "Magical realism. Immigration. Family as landscape. Latin fiction at TTL carries the weight and warmth of the Americas in both languages and the spaces between them. These stories know that home is a complicated concept and that the past is never finished with you. Bold, lyrical, specific — and impossible to put down.",
+  },
+  "AAPI Authors": {
+    label: "AAPI Authors",
+    cover: "https://dgymtdkxusdsgxmjirfl.supabase.co/storage/v1/object/public/reading-room-genre/AAPI/landing-aapi.jpg",
+    emoji: "🌸",
+    accent: "#e879f9",
+    accentDim: "rgba(232,121,249,0.28)",
+    lore: "Across fifty countries and thousands of years of storytelling tradition, AAPI authors at TTL bring a breadth that no single label can contain. Mythology and modernity. Diaspora and rootedness. Honor and rebellion. These writers are not a monolith — they are a library unto themselves, and this is where you begin.",
+  },
+  "Indigenous Stories": {
+    label: "Indigenous Stories",
+    cover: "https://dgymtdkxusdsgxmjirfl.supabase.co/storage/v1/object/public/reading-room-genre/INDEGINOUS%20VOICES/landing-indigenous.jpg",
+    emoji: "🌾",
+    accent: "#86efac",
+    accentDim: "rgba(134,239,172,0.28)",
+    lore: "The oldest stories on this continent are still being written. Indigenous fiction at TTL honors oral traditions and written ones, contemporary voices and ancient ones, the land as character and the community as protagonist. These writers are not relics — they are living authors building on living traditions. This shelf exists because silence was never the answer.",
+  },
+  "LGBTQ+ Fiction": {
+    label: "LGBTQ+ Fiction",
+    cover: "https://dgymtdkxusdsgxmjirfl.supabase.co/storage/v1/object/public/reading-room-genre/LGBTQ%2B%20VOICES/landing-lgbtq.jpg",
+    emoji: "🏳️‍🌈",
+    accent: "#a78bfa",
+    accentDim: "rgba(167,139,250,0.28)",
+    lore: "Love in all its forms. Identity in all its complexity. LGBTQ+ fiction at TTL is not defined by coming-out stories alone — though those matter too. It is defined by the full spectrum of queer experience: joy, desire, grief, chosen family, community, survival, and the particular clarity that comes from knowing exactly who you are.",
+  },
+  "Adult 18+": {
+    label: "Adult 18+",
+    cover: "https://dgymtdkxusdsgxmjirfl.supabase.co/storage/v1/object/public/reading-room-genre/ADULT/landing-adult.jpg",
+    emoji: "🔞",
+    accent: "#f43f5e",
+    accentDim: "rgba(244,63,94,0.28)",
+    lore: "Mature fiction for adult readers. This shelf contains explicit content — sexual, violent, or both — written with craft and intention. TTL's Adult 18+ section is not a loophole or an afterthought. It is a serious literary space where writers can explore the full range of adult experience without softening the edges.",
+  },
+};
+
