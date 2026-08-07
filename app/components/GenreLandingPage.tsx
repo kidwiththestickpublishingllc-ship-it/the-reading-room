@@ -379,7 +379,11 @@ const GLP_STYLES = `
 
   /* ── Lounge Section ── */
   .glp-lounge-section {
-    padding: 56px 32px 0;
+    padding: 56px 32px 72px;
+    max-width: 100%;
+    background: #0f0805;
+  }
+  .glp-lounge-section-inner {
     max-width: 1600px; margin: 0 auto;
   }
   .glp-section-accent { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 16px; }
@@ -739,6 +743,7 @@ export default function GenreLandingPage({
 
         {/* ── Genre Lounge ─────────────────────────────────────── */}
         <div className="glp-lounge-section">
+          <div className="glp-lounge-section-inner">
           <div className="glp-section-accent">
             <div className="glp-section-bar" />
             <div>
@@ -752,6 +757,7 @@ export default function GenreLandingPage({
             genreAccent={genreAccent}
             genreAccentDim={genreAccentDim}
           />
+          </div>
         </div>
 
         {/* ── Page AI FAB ───────────────────────────────────────── */}

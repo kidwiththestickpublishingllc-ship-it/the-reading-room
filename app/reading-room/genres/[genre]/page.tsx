@@ -1847,7 +1847,6 @@ if (genreName === "Adult 18+") {
           </div>
         </div>
       </div>
-    </>
     </GenreLandingPage>
   );
 }
