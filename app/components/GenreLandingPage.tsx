@@ -491,7 +491,7 @@ export default function GenreLandingPage({
   const [userId, setUserId] = useState<string | null>(null);
   const [earnedLetterWriters, setEarnedLetterWriters] = useState<Set<string>>(new Set());
   const [letterTarget, setLetterTarget] = useState<LetterTarget | null>(null);
-  const pageAI = usePageAI(genre);
+  
 
   // ── Auth ────────────────────────────────────────────────────────
   useEffect(() => {
@@ -760,64 +760,7 @@ export default function GenreLandingPage({
           </div>
         </div>
 
-        {/* ── Page AI FAB ───────────────────────────────────────── */}
-        <div className="glp-ai-fab">
-          {pageAI.open && (
-            <div className="glp-ai-panel">
-              <div className="glp-ai-panel-header">
-                <span className="glp-ai-panel-icon">📖</span>
-                <span className="glp-ai-panel-title">Page · {genre}</span>
-                <button
-                  type="button"
-                  className="glp-ai-panel-close"
-                  onClick={() => pageAI.setOpen(false)}
-                >
-                  ✕
-                </button>
-              </div>
-              <div className="glp-ai-messages">
-                {pageAI.messages.map((m, i) => (
-                  <div
-                    key={i}
-                    className={`glp-ai-msg ${m.role === "page" ? "glp-ai-msg-page" : "glp-ai-msg-user"}`}
-                  >
-                    {m.content}
-                  </div>
-                ))}
-                {pageAI.thinking && (
-                  <div className="glp-ai-msg glp-ai-msg-typing">Page is thinking…</div>
-                )}
-              </div>
-              <div className="glp-ai-input-row">
-                <input
-                  type="text"
-                  className="glp-ai-input"
-                  placeholder="Ask Page anything…"
-                  value={pageAI.draft}
-                  onChange={e => pageAI.setDraft(e.target.value)}
-                  onKeyDown={e => { if (e.key === "Enter") pageAI.send(); }}
-                />
-                <button
-                  type="button"
-                  className="glp-ai-send"
-                  onClick={pageAI.send}
-                  disabled={!pageAI.draft.trim() || pageAI.thinking}
-                >
-                  Send
-                </button>
-              </div>
-            </div>
-          )}
-          <button
-            type="button"
-            className="glp-ai-btn"
-            onClick={() => pageAI.setOpen(v => !v)}
-            title="Ask Page"
-            aria-label="Open Page AI assistant"
-          >
-            📖
-          </button>
-        </div>
+        
 
         {/* ── Reader's Letter modal ─────────────────────────────── */}
         <LetterEventListener
