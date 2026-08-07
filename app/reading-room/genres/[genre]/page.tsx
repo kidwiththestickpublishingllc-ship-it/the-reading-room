@@ -1553,8 +1553,7 @@ if (genreName === "Adult 18+") {
       ink={ink}
       onInkSpent={(amt) => setInk(v => v - amt)}
     >
-    <>
-      <style>{GENRE_PAGE_STYLES}</style>
+    <style>{GENRE_PAGE_STYLES}</style>
       <div
         className="gp-root"
         style={{
