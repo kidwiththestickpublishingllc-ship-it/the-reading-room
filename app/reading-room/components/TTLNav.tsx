@@ -415,6 +415,18 @@ const NAV_STYLES = `
 
 export function TTLNav({ extras }: { extras?: ReactNode }) {
   const [ink, setInk] = useState(0);
+  const [myTTLOpen, setMyTTLOpen] = useState(false);
+  const myTTLRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const fn = (e: MouseEvent) => {
+      if (myTTLRef.current && !myTTLRef.current.contains(e.target as Node)) {
+        setMyTTLOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", fn);
+    return () => document.removeEventListener("mousedown", fn);
+  }, []);
   const [user, setUser] = useState<any>(null);
   const pathname = usePathname();
   const [navHidden, setNavHidden] = useState(false);
@@ -480,18 +492,24 @@ export function TTLNav({ extras }: { extras?: ReactNode }) {
               <a href="/members" className="ttl-shared-link ttl-shared-link-members">Members Room</a>
 
               {/* My TTL dropdown */}
-              <div className="ttl-nav-dropdown">
-                <button type="button" className="ttl-nav-dropdown-btn">
-                  My TTL ▾
+              <div className="ttl-nav-dropdown" style={{ position: "relative" }} ref={myTTLRef}>
+                <button
+                  type="button"
+                  className="ttl-nav-dropdown-btn"
+                  onClick={() => setMyTTLOpen(v => !v)}
+                >
+                  My TTL {myTTLOpen ? "▴" : "▾"}
                 </button>
-                <div className="ttl-nav-dropdown-menu">
-                  <a href="/reading-room/discover" className="ttl-nav-dropdown-item">✨ Discover</a>
-                  <a href="/reading-room/drops" className="ttl-nav-dropdown-item">📅 Chapter Drops</a>
-                  <a href="/reading-room/inkwell" className="ttl-nav-dropdown-item">🪶 Inkwell</a>
-                  <div className="ttl-nav-dropdown-divider" />
-                  <a href="/members" className="ttl-nav-dropdown-item">🏠 Members Room</a>
-                  <a href="/reading-room/account" className="ttl-nav-dropdown-item">⚙️ My Account</a>
-                </div>
+                {myTTLOpen && (
+                  <div className="ttl-nav-dropdown-menu" style={{ display: "block" }}>
+                    <a href="/reading-room/discover" className="ttl-nav-dropdown-item">✨ Discover</a>
+                    <a href="/reading-room/drops" className="ttl-nav-dropdown-item">📅 Chapter Drops</a>
+                    <a href="/reading-room/inkwell" className="ttl-nav-dropdown-item">🪶 Inkwell</a>
+                    <div className="ttl-nav-dropdown-divider" />
+                    <a href="/members" className="ttl-nav-dropdown-item">🏠 Members Room</a>
+                    <a href="/reading-room/account" className="ttl-nav-dropdown-item">⚙️ My Account</a>
+                  </div>
+                )}
               </div>
             </div>
           </div>
