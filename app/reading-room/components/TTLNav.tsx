@@ -127,7 +127,7 @@ const NAV_STYLES = `
   }
   .ttl-nav-dropdown-btn:hover { color: #C9A84C; background: rgba(201,168,76,0.08); }
   .ttl-nav-dropdown-menu {
-    position: absolute; top: calc(100% + 10px); left: 0;
+    position: absolute; top: calc(100% + 2px); left: 0;
     min-width: 200px; z-index: 200;
     background: #1a1410;
     border: 1px solid rgba(201,168,76,0.25);
@@ -471,20 +471,13 @@ export function TTLNav({ extras }: { extras?: ReactNode }) {
 
             {/* Nav links */}
             <div className="ttl-shared-links">
-              {/* Explore dropdown */}
-              <div className="ttl-nav-dropdown">
-                <button type="button" className="ttl-nav-dropdown-btn">
-                  Explore ▾
-                </button>
-                <div className="ttl-nav-dropdown-menu">
-                  <a href="/reading-room/stories" className="ttl-nav-dropdown-item">📖 Browse Stories</a>
-                  <a href="/reading-room/discover" className="ttl-nav-dropdown-item">✨ Discover</a>
-                  <a href="/reading-room/drops" className="ttl-nav-dropdown-item">📅 Chapter Drops</a>
-                  <a href="/reading-room/authors" className="ttl-nav-dropdown-item">🪶 Authors</a>
-                  <a href="/reading-room/comics" className="ttl-nav-dropdown-item">🎨 Comics & Manga</a>
-                  <a href="/reading-room/how-it-works" className="ttl-nav-dropdown-item">💡 How It Works</a>
-                </div>
-              </div>
+              <a href="/reading-room/authors" className="ttl-shared-link">Authors</a>
+              <a href="/reading-room/stories" className="ttl-shared-link">Browse Stories</a>
+              <a href="/reading-room/comics" className="ttl-shared-link">The Galleria</a>
+              <a href="/reading-room/buy-ink" className="ttl-shared-link">Buy Ink ✒️</a>
+              <a href="/reading-room/how-it-works" className="ttl-shared-link">How It Works</a>
+              <a href="https://write.the-tiniest-library.com" className="ttl-shared-link">Writer's Room</a>
+              <a href="/members" className="ttl-shared-link ttl-shared-link-members">Members Room</a>
 
               {/* My TTL dropdown */}
               <div className="ttl-nav-dropdown">
@@ -492,15 +485,14 @@ export function TTLNav({ extras }: { extras?: ReactNode }) {
                   My TTL ▾
                 </button>
                 <div className="ttl-nav-dropdown-menu">
-                  <a href="/members" className="ttl-nav-dropdown-item">🏠 Members Room</a>
+                  <a href="/reading-room/discover" className="ttl-nav-dropdown-item">✨ Discover</a>
+                  <a href="/reading-room/drops" className="ttl-nav-dropdown-item">📅 Chapter Drops</a>
                   <a href="/reading-room/inkwell" className="ttl-nav-dropdown-item">🪶 Inkwell</a>
-                  <a href="/reading-room/buy-ink" className="ttl-nav-dropdown-item">✒️ Buy Ink</a>
                   <div className="ttl-nav-dropdown-divider" />
+                  <a href="/members" className="ttl-nav-dropdown-item">🏠 Members Room</a>
                   <a href="/reading-room/account" className="ttl-nav-dropdown-item">⚙️ My Account</a>
                 </div>
               </div>
-
-              <a href="https://write.the-tiniest-library.com" className="ttl-shared-link">Writer's Room</a>
             </div>
           </div>
 
