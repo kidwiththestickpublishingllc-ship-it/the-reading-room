@@ -114,6 +114,43 @@ const NAV_STYLES = `
     white-space: nowrap;
   }
 
+  /* ── Dropdown menus ── */
+  .ttl-nav-dropdown { position: relative; }
+  .ttl-nav-dropdown-btn {
+    font-family: 'Syne', sans-serif;
+    font-size: 11px; letter-spacing: 0.06em;
+    color: rgba(232,228,218,0.6);
+    background: transparent; border: none;
+    padding: 4px 8px; border-radius: 6px;
+    cursor: pointer; transition: all 0.2s;
+    display: flex; align-items: center; gap: 5px;
+  }
+  .ttl-nav-dropdown-btn:hover { color: #C9A84C; background: rgba(201,168,76,0.08); }
+  .ttl-nav-dropdown-menu {
+    position: absolute; top: calc(100% + 10px); left: 0;
+    min-width: 200px; z-index: 200;
+    background: #1a1410;
+    border: 1px solid rgba(201,168,76,0.25);
+    border-radius: 12px; overflow: hidden;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.6);
+    display: none;
+  }
+  .ttl-nav-dropdown:hover .ttl-nav-dropdown-menu { display: block; }
+  .ttl-nav-dropdown-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 16px; text-decoration: none;
+    font-family: 'Syne', sans-serif; font-size: 11px;
+    color: rgba(232,228,218,0.6);
+    transition: all 0.15s; border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  .ttl-nav-dropdown-item:last-child { border-bottom: none; }
+  .ttl-nav-dropdown-item:hover {
+    background: rgba(201,168,76,0.08); color: #C9A84C;
+  }
+  .ttl-nav-dropdown-divider {
+    height: 1px; background: rgba(255,255,255,0.07); margin: 4px 0;
+  }
+
   .ttl-shared-link:hover {
     color: #E2C97E;
     border-color: rgba(201,168,76,0.38);
@@ -434,13 +471,36 @@ export function TTLNav({ extras }: { extras?: ReactNode }) {
 
             {/* Nav links */}
             <div className="ttl-shared-links">
-              <a href="/reading-room/authors" className="ttl-shared-link">Authors</a>
-              <a href="/reading-room/stories" className="ttl-shared-link">Browse Stories</a>
-              <a href="/reading-room/comics" className="ttl-shared-link">Comics & Manga</a>
-              <a href="/reading-room/buy-ink" className="ttl-shared-link">Buy Ink ✒️</a>
-              <a href="/reading-room/how-it-works" className="ttl-shared-link">How It Works</a>
+              {/* Explore dropdown */}
+              <div className="ttl-nav-dropdown">
+                <button type="button" className="ttl-nav-dropdown-btn">
+                  Explore ▾
+                </button>
+                <div className="ttl-nav-dropdown-menu">
+                  <a href="/reading-room/stories" className="ttl-nav-dropdown-item">📖 Browse Stories</a>
+                  <a href="/reading-room/discover" className="ttl-nav-dropdown-item">✨ Discover</a>
+                  <a href="/reading-room/drops" className="ttl-nav-dropdown-item">📅 Chapter Drops</a>
+                  <a href="/reading-room/authors" className="ttl-nav-dropdown-item">🪶 Authors</a>
+                  <a href="/reading-room/comics" className="ttl-nav-dropdown-item">🎨 Comics & Manga</a>
+                  <a href="/reading-room/how-it-works" className="ttl-nav-dropdown-item">💡 How It Works</a>
+                </div>
+              </div>
+
+              {/* My TTL dropdown */}
+              <div className="ttl-nav-dropdown">
+                <button type="button" className="ttl-nav-dropdown-btn">
+                  My TTL ▾
+                </button>
+                <div className="ttl-nav-dropdown-menu">
+                  <a href="/members" className="ttl-nav-dropdown-item">🏠 Members Room</a>
+                  <a href="/reading-room/inkwell" className="ttl-nav-dropdown-item">🪶 Inkwell</a>
+                  <a href="/reading-room/buy-ink" className="ttl-nav-dropdown-item">✒️ Buy Ink</a>
+                  <div className="ttl-nav-dropdown-divider" />
+                  <a href="/reading-room/account" className="ttl-nav-dropdown-item">⚙️ My Account</a>
+                </div>
+              </div>
+
               <a href="https://write.the-tiniest-library.com" className="ttl-shared-link">Writer's Room</a>
-              <a href="/members" className="ttl-shared-link ttl-shared-link-members">Members Room</a>
             </div>
           </div>
 
