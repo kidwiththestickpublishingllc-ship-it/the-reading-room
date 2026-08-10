@@ -309,8 +309,15 @@ export default function MembersRoomV2() {
   }
 
   async function handleLike(postId: string, currentLikes: number) {
-    await supabase.from("forum_posts").update({ likes: currentLikes + 1 }).eq("id", postId);
-    setPosts(posts.map(p => p.id === postId ? { ...p, likes: p.likes + 1 } : p));
+    const { data: likeResult } = await supabase.rpc("toggle_post_like", {
+      p_post_id: postId,
+      p_user_id: (await supabase.auth.getUser()).data.user?.id ?? "",
+    });
+    if (likeResult) {
+      setPosts(prev => prev.map(p =>
+        p.id === postId ? { ...p, likes: likeResult.count } : p
+      ));
+    }
   }
 
   function getInitials(name: string) {

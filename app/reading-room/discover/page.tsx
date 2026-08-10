@@ -1,4 +1,5 @@
 "use client";
+import { TTLNav, TTLFooter } from "@/app/reading-room/components/TTLNav";
 
 /**
  * DiscoverPage.tsx
@@ -366,13 +367,12 @@ create plausible story titles and authors that fit the genre and mood.
 The reason field should be 1 sentence connecting this story to what the reader told you.
 Make it feel like a personal recommendation from a librarian who knows them.`;
 
-      const res = await fetch("https://api.anthropic.com/v1/messages", {
+      const res = await fetch("/api/page-chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          model: "claude-sonnet-4-6",
-          max_tokens: 1000,
           messages: [{ role: "user", content: prompt }],
+          systemPrompt: "You are Page, the TTL reading guide. Respond ONLY with valid JSON, no markdown, no preamble.",
         }),
       });
 
@@ -395,6 +395,8 @@ Make it feel like a personal recommendation from a librarian who knows them.`;
   return (
     <>
       <style>{STYLES}</style>
+      <TTLNav />
+      <div style={{ height: 74 }} />
       <div className="disc-root">
 
         {/* Progress dots */}
@@ -574,6 +576,7 @@ Make it feel like a personal recommendation from a librarian who knows them.`;
         )}
 
       </div>
+    <TTLFooter />
     </>
   );
 }
