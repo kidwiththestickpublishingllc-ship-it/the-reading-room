@@ -469,7 +469,7 @@ return (
               </div>
               <div>
                 <p style={{ color: "#666", fontSize: "11px", margin: "0 0 2px", letterSpacing: "0.08em", textTransform: "uppercase" }}>Welcome back</p>
-                <h1 style={{ color: "#f0ece2", fontFamily: "'Cormorant Garamond', serif", fontSize: "24px", fontWeight: "600", margin: "0 0 6px" }}>{displayName} 🕯️</h1>
+                <h1 style={{ color: "#1A1612", fontFamily: "'Cormorant Garamond', serif", fontSize: "24px", fontWeight: "600", margin: "0 0 6px" }}>{displayName} 🕯️</h1>
                 <div style={{ display: "inline-flex", padding: "3px 12px", borderRadius: "99px", background: badge.bg, border: `1px solid ${badge.border}` }}>
                   <span style={{ color: badge.color, fontSize: "11px", fontWeight: "600" }}>{badge.label}</span>
                 </div>
@@ -526,7 +526,7 @@ return (
           {profile.ink_balance <= 50 && (
             <div style={{ background: "linear-gradient(135deg, rgba(201,168,76,0.08), rgba(100,149,237,0.05))", border: "1px solid rgba(201,168,76,0.25)", borderLeft: "4px solid #C9A84C", borderRadius: 12, padding: 28, marginBottom: 24 }}>
               <div style={{ fontSize: 9, letterSpacing: "0.28em", textTransform: "uppercase" as const, color: "#C9A84C", marginBottom: 12 }}>Welcome to TTL</div>
-              <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 24, fontWeight: 300, color: "#f0ece2", marginBottom: 8 }}>Your library starts here, {displayName.split(" ")[0]}. 🕯️</div>
+              <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 24, fontWeight: 300, color: "#1A1612", marginBottom: 8 }}>Your library starts here, {displayName.split(" ")[0]}. 🕯️</div>
               <p style={{ fontSize: 13, color: "rgba(232,228,218,0.6)", lineHeight: 1.8, marginBottom: 20 }}>You have <strong style={{ color: "#C9A84C" }}>50 free Ink</strong> waiting. Here's how to make the most of your membership:</p>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(180px, 1fr))", gap: 12, marginBottom: 24 }}>
                 {[
