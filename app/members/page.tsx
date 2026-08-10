@@ -192,6 +192,15 @@ export default function MembersRoomV2() {
   const [authError, setAuthError] = useState("");
   const [authLoading, setAuthLoading] = useState(false);
   const [activeTab, setActiveTab] = useState<ActiveTab>("forum");
+
+  useEffect(() => {
+    const saved = localStorage.getItem("ttl-theme");
+    if (saved === "dark") {
+      document.body.classList.add("ttl-dark");
+      document.body.style.background = "#0a0807";
+      document.body.style.color = "rgba(232,228,218,0.9)";
+    }
+  }, []);
   const [posts, setPosts] = useState<ForumPost[]>([]);
   const [postsLoading, setPostsLoading] = useState(false);
   const [newPost, setNewPost] = useState("");
@@ -427,16 +436,23 @@ return (
               {/* Dark mode toggle */}
               <button
                 onClick={() => {
-                  const root = document.documentElement;
-                  const isDark = root.getAttribute("data-theme") === "dark";
-                  root.setAttribute("data-theme", isDark ? "light" : "dark");
-                  document.body.style.background = isDark ? "#FAF7F2" : "#0a0807";
-                  document.body.style.color = isDark ? "#1A1612" : "rgba(232,228,218,0.9)";
+                  const isDark = document.body.classList.contains("ttl-dark");
+                  if (isDark) {
+                    document.body.classList.remove("ttl-dark");
+                    document.body.style.background = "#FAF7F2";
+                    document.body.style.color = "#1A1612";
+                    localStorage.setItem("ttl-theme", "light");
+                  } else {
+                    document.body.classList.add("ttl-dark");
+                    document.body.style.background = "#0a0807";
+                    document.body.style.color = "rgba(232,228,218,0.9)";
+                    localStorage.setItem("ttl-theme", "dark");
+                  }
                 }}
                 style={{ background: "transparent", border: "1px solid rgba(201,168,76,0.3)", borderRadius: 8, padding: "6px 12px", cursor: "pointer", fontSize: 14, color: "#C9A84C" }}
                 title="Toggle dark mode"
               >
-                🌙
+                {typeof window !== "undefined" && localStorage.getItem("ttl-theme") === "dark" ? "☀️" : "🌙"}
               </button>
               {/* AVATAR */}
               <div style={{ position: "relative", cursor: "pointer" }} onClick={() => avatarInputRef.current?.click()}>
