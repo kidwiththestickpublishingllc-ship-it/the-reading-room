@@ -1635,7 +1635,7 @@ if (genreName === "Adult 18+") {
         <div className="gp-wrap">
 
           {/* ── STORIES ── */}
-          <div className="gp-section">
+          <div className="gp-section" id="genre-stories">
             <div className="gp-section-accent">
               <div className="gp-section-bar" />
               <div>
@@ -1715,7 +1715,7 @@ if (genreName === "Adult 18+") {
           </div>
 
           {/* ── AUTHORS ── */}
-          <div className="gp-section">
+          <div className="gp-section" id="genre-authors">
             <div className="gp-section-accent">
               <div className="gp-section-bar" />
               <div>

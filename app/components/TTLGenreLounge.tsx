@@ -94,6 +94,7 @@
 
 import { useEffect, useState, useRef, useCallback } from "react";
 import { supabase } from "@/lib/supabase";
+import WritersCorner from "@/app/components/WritersCorner";
 
 // ─── Types ────────────────────────────────────────────────────────
 interface Post {
@@ -525,6 +526,11 @@ export default function TTLGenreLounge({
           </>
         )}
 
+        <WritersCorner
+          genre={genre}
+          genreAccent={genreAccent}
+          genreAccentDim={genreAccentDim}
+        />
         {/* Feed */}
         {loading ? (
           <div className="lounge-loading">Loading the lounge…</div>

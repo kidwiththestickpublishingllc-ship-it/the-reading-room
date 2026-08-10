@@ -90,6 +90,7 @@ import { useEffect, useState, useCallback, ReactNode } from "react";
 import { supabase } from "@/lib/supabase";
 import TTLGenreLounge from "@/app/components/TTLGenreLounge";
 import ReadersLetter from "@/app/components/ReadersLetter";
+import GenreScrollNav from "@/app/components/GenreScrollNav";
 
 // ─── Types ────────────────────────────────────────────────────────
 interface GenreLandingPageProps {
@@ -739,6 +740,11 @@ export default function GenreLandingPage({
           
           This component listens for that event below.
         */}
+        <GenreScrollNav
+          genre={genre}
+          genreAccent={genreAccent}
+          genreAccentDim={genreAccentDim}
+        />
         {children}
 
         {/* ── Genre Lounge ─────────────────────────────────────── */}
