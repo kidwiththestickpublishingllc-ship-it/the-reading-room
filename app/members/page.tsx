@@ -192,15 +192,18 @@ export default function MembersRoomV2() {
   const [authError, setAuthError] = useState("");
   const [authLoading, setAuthLoading] = useState(false);
   const [activeTab, setActiveTab] = useState<ActiveTab>("forum");
+  const [isDark, setIsDark] = useState(false);
 
   useEffect(() => {
     const saved = localStorage.getItem("ttl-theme");
-    if (saved === "dark") {
-      document.body.classList.add("ttl-dark");
-      document.body.style.background = "#0a0807";
-      document.body.style.color = "rgba(232,228,218,0.9)";
-    }
+    if (saved === "dark") setIsDark(true);
   }, []);
+
+  const bg = isDark ? "#0a0807" : "#FAF7F2";
+  const cardBg = isDark ? "#111122" : "#FFFFFF";
+  const textColor = isDark ? "rgba(232,228,218,0.9)" : "#1A1612";
+  const textSub = isDark ? "rgba(232,228,218,0.5)" : "#5C4F3A";
+  const borderColor = isDark ? "rgba(255,255,255,0.08)" : "rgba(201,168,76,0.2)";
   const [posts, setPosts] = useState<ForumPost[]>([]);
   const [postsLoading, setPostsLoading] = useState(false);
   const [newPost, setNewPost] = useState("");
@@ -425,34 +428,25 @@ export default function MembersRoomV2() {
     const displayName = profile.full_name ?? profile.email.split("@")[0];
 
 return (
-      <div style={{ minHeight: "100vh", background: "#FAF7F2", color: "#1A1612" }}>
+      <div style={{ minHeight: "100vh", background: bg, color: textColor, transition: "background 0.3s, color 0.3s" }}>
         <TTLNav />
         <div style={{ height: 74 }} />
         <input ref={avatarInputRef} type="file" accept="image/*" onChange={handleAvatarUpload} style={{ display: "none" }} />
         {/* ── HEADER ── */}
-        <div style={{ background: "#FFFFFF", borderBottom: "1px solid rgba(201,168,76,0.25)", padding: "16px", boxShadow: "0 2px 8px rgba(201,168,76,0.06)" }}>
+        <div style={{ background: cardBg, borderBottom: `1px solid ${borderColor}`, padding: "16px", boxShadow: "0 2px 8px rgba(201,168,76,0.06)" }}>
           <div style={{ maxWidth: "1200px", margin: "0 auto", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "12px" }}>
             <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
               {/* Dark mode toggle */}
               <button
                 onClick={() => {
-                  const isDark = document.body.classList.contains("ttl-dark");
-                  if (isDark) {
-                    document.body.classList.remove("ttl-dark");
-                    document.body.style.background = "#FAF7F2";
-                    document.body.style.color = "#1A1612";
-                    localStorage.setItem("ttl-theme", "light");
-                  } else {
-                    document.body.classList.add("ttl-dark");
-                    document.body.style.background = "#0a0807";
-                    document.body.style.color = "rgba(232,228,218,0.9)";
-                    localStorage.setItem("ttl-theme", "dark");
-                  }
+                  const next = !isDark;
+                  setIsDark(next);
+                  localStorage.setItem("ttl-theme", next ? "dark" : "light");
                 }}
                 style={{ background: "transparent", border: "1px solid rgba(201,168,76,0.3)", borderRadius: 8, padding: "6px 12px", cursor: "pointer", fontSize: 14, color: "#C9A84C" }}
                 title="Toggle dark mode"
               >
-                {typeof window !== "undefined" && localStorage.getItem("ttl-theme") === "dark" ? "☀️" : "🌙"}
+                {isDark ? "☀️" : "🌙"}
               </button>
               {/* AVATAR */}
               <div style={{ position: "relative", cursor: "pointer" }} onClick={() => avatarInputRef.current?.click()}>
