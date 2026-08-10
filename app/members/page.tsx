@@ -415,12 +415,13 @@ export default function MembersRoomV2() {
     const badge = getTierBadge(profile.membership_tier);
     const displayName = profile.full_name ?? profile.email.split("@")[0];
 
-    return (
-      <div style={{ minHeight: "100vh", background: "#0a0a14", color: "#fff" }}>
+return (
+      <div style={{ minHeight: "100vh", background: "#FAF7F2", color: "#1A1612" }}>
+        <TTLNav />
+        <div style={{ height: 74 }} />
         <input ref={avatarInputRef} type="file" accept="image/*" onChange={handleAvatarUpload} style={{ display: "none" }} />
-
         {/* ── HEADER ── */}
-        <div style={{ background: "#0d0d1a", borderBottom: "1px solid rgba(201,168,76,0.15)", padding: "16px" }}>
+        <div style={{ background: "#FFFFFF", borderBottom: "1px solid rgba(201,168,76,0.2)", padding: "16px" }}>
           <div style={{ maxWidth: "1200px", margin: "0 auto", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "12px" }}>
             <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
               {/* AVATAR */}
@@ -470,7 +471,7 @@ export default function MembersRoomV2() {
           {/* ── PLATFORM CARDS ── */}
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "16px", marginBottom: "32px" }}>
             <a href="/reading-room" style={{ textDecoration: "none" }}>
-              <div style={{ background: "#111122", border: "1px solid rgba(100,149,237,0.2)", borderRadius: "12px", padding: "20px", cursor: "pointer" }}>
+              <div style={{ background: "#FFFFFF", border: "1px solid rgba(100,149,237,0.2)", borderRadius: "12px", padding: "20px", cursor: "pointer" }}>
                 <span style={{ fontSize: "24px" }}>📚</span>
                 <h3 style={{ color: "#6495ED", fontSize: "15px", fontWeight: "600", margin: "8px 0 4px" }}>The Reading Room</h3>
                 <p style={{ color: "#555", fontSize: "12px", margin: 0 }}>Browse stories →</p>
