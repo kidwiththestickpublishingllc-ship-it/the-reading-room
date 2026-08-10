@@ -421,7 +421,7 @@ return (
         <div style={{ height: 74 }} />
         <input ref={avatarInputRef} type="file" accept="image/*" onChange={handleAvatarUpload} style={{ display: "none" }} />
         {/* ── HEADER ── */}
-        <div style={{ background: "#FFFFFF", borderBottom: "1px solid rgba(201,168,76,0.2)", padding: "16px" }}>
+        <div style={{ background: "#FFFFFF", borderBottom: "1px solid rgba(201,168,76,0.25)", padding: "16px", boxShadow: "0 2px 8px rgba(201,168,76,0.06)" }}>
           <div style={{ maxWidth: "1200px", margin: "0 auto", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "12px" }}>
             <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
               {/* AVATAR */}
@@ -474,21 +474,21 @@ return (
               <div style={{ background: "#FFFFFF", border: "1px solid rgba(100,149,237,0.2)", borderRadius: "12px", padding: "20px", cursor: "pointer" }}>
                 <span style={{ fontSize: "24px" }}>📚</span>
                 <h3 style={{ color: "#6495ED", fontSize: "15px", fontWeight: "600", margin: "8px 0 4px" }}>The Reading Room</h3>
-                <p style={{ color: "#555", fontSize: "12px", margin: 0 }}>Browse stories →</p>
+                <p style={{ color: "#5C4F3A", fontSize: "12px", margin: 0 }}>Browse stories →</p>
               </div>
             </a>
             <a href={profile.membership_tier === "free" ? "https://redroom.the-tiniest-library.com" : "https://redroom.the-tiniest-library.com"} style={{ textDecoration: "none" }}>
-              <div style={{ background: "#111122", border: `1px solid ${profile.membership_tier === "free" ? "rgba(255,255,255,0.05)" : "rgba(139,0,0,0.3)"}`, borderRadius: "12px", padding: "20px", opacity: 1 }}>
+              <div style={{ background: "#FFFFFF", border: `1px solid ${profile.membership_tier === "free" ? "rgba(139,0,0,0.2)" : "rgba(139,0,0,0.3)"}`, borderRadius: "12px", padding: "20px", opacity: 1, boxShadow: "0 2px 8px rgba(139,0,0,0.06)" }}>
                 <span style={{ fontSize: "24px" }}>🖤</span>
                 <h3 style={{ color: "#8b0000", fontSize: "15px", fontWeight: "600", margin: "8px 0 4px" }}>The Red Room</h3>
-                <p style={{ color: "#555", fontSize: "12px", margin: 0 }}>{profile.membership_tier === "free" ? "Upgrade to unlock →" : "Enter now →"}</p>
+                <p style={{ color: "#5C4F3A", fontSize: "12px", margin: 0 }}>{profile.membership_tier === "free" ? "Upgrade to unlock →" : "Enter now →"}</p>
               </div>
             </a>
             <a href="https://write.the-tiniest-library.com" style={{ textDecoration: "none" }}>
-              <div style={{ background: "#111122", border: "1px solid rgba(201,168,76,0.2)", borderRadius: "12px", padding: "20px" }}>
+              <div style={{ background: "#FFFFFF", border: "1px solid rgba(201,168,76,0.3)", borderRadius: "12px", padding: "20px", boxShadow: "0 2px 8px rgba(201,168,76,0.08)" }}>
                 <span style={{ fontSize: "24px" }}>🪶</span>
                 <h3 style={{ color: "#C9A84C", fontSize: "15px", fontWeight: "600", margin: "8px 0 4px" }}>The Writer's Room</h3>
-                <p style={{ color: "#555", fontSize: "12px", margin: 0 }}>Apply to write →</p>
+                <p style={{ color: "#5C4F3A", fontSize: "12px", margin: 0 }}>Apply to write →</p>
               </div>
             </a>
           </div>
@@ -526,7 +526,7 @@ return (
               profileId={profile.id}
               profileName={displayName}
               profileAvatar={profile.avatar_url ?? null}
-              theme="dark"
+              theme="light"
             />
           )}
           {false && (
