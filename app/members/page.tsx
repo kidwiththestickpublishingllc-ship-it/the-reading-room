@@ -1,4 +1,6 @@
 "use client";
+import MembersRoomFeed from "@/app/components/MembersRoomFeed";
+import MembersRoomShelf from "@/app/components/MembersRoomShelf";
 
 import { useEffect, useState, useRef } from "react";
 import { supabase } from "@/lib/supabase";
@@ -519,6 +521,14 @@ export default function MembersRoomV2() {
           )}
           {/* ── FORUM TAB ── */}
           {activeTab === "forum" && (
+            <MembersRoomFeed
+              profileId={profile.id}
+              profileName={displayName}
+              profileAvatar={profile.avatar_url ?? null}
+              theme="dark"
+            />
+          )}
+          {false && (
             <div>
               <div style={{ background: "#111122", border: "1px solid rgba(201,168,76,0.15)", borderRadius: "16px", padding: "24px", marginBottom: "24px" }}>
                 <h2 style={{ color: "#C9A84C", fontSize: "16px", fontWeight: "600", margin: "0 0 16px" }}>💬 Start a Discussion</h2>
