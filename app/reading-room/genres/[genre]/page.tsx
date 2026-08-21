@@ -1514,8 +1514,8 @@ function GenrePageContent({ genreSlug }: { genreSlug: string }) {
   useEffect(() => {
     supabase
       .from("writers")
-      .select("name, slug, avatar_url, genres, user_id, status")
-      .eq("status", "approved")
+      .select("name, slug, photo_url, genres, user_id, is_approved, tagline")
+      .eq("is_approved", true)
       .then(({ data }) => {
         if (data && data.length > 0) {
           const mapped: Author[] = data.map((w: any) => ({
@@ -1524,7 +1524,7 @@ function GenrePageContent({ genreSlug }: { genreSlug: string }) {
             name: w.name,
             tagline: w.tagline ?? "Writer at The Tiniest Library",
             genres: w.genres ?? [],
-            image: w.avatar_url ?? null,
+            image: w.photo_url ?? null,
           }));
           setRealAuthors(mapped);
         }
