@@ -409,12 +409,22 @@ function slugToGenre(slug: string): string {
     .split("-")
     .map(w => w.charAt(0).toUpperCase() + w.slice(1))
     .join(" ")
+    .replace("&Amp;", "&")
     .replace("Sci Fi", "Sci-Fi")
     .replace("Litrpg", "LitRPG")
     .replace("Lgbtq ", "LGBTQ+ ")
     .replace("Aapi", "AAPI")
     .replace("18 ", "18+")
-   .replace("&Amp;", "&");
+   .replace("Crime Thrillers", "Crime & Thrillers")
+   .replace("Poems Memoirs", "Poems & Memoirs")
+   .replace("Lgbtq Fiction", "LGBTQ+ Fiction")
+   .replace("Dark Academia", "Dark Academia")
+   .replace("Slice Of Life", "Slice of Life")
+   .replace("Fan Fiction", "Fan Fiction")
+   .replace("Black Stories", "Black Stories")
+   .replace("Latin Stories", "Latin Stories")
+   .replace("Aapi Authors", "AAPI Authors")
+   .replace("Indigenous Stories", "Indigenous Stories");
 }
 function LazyHeroVideo({ poster, src, alt }: { poster: string; src: string; alt: string }) {
   const ref = React.useRef<HTMLVideoElement | null>(null);
