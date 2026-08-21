@@ -1,7 +1,9 @@
 "use client";
 import MembersRoomFeed from "@/app/components/MembersRoomFeed";
 import MembersRoomShelf from "@/app/components/MembersRoomShelf";
-
+import DiscoverPanel from "@/app/components/DiscoverPanel";
+import InkwellPanel from "@/app/components/InkwellPanel";
+import ChapterDropCalendar from "@/app/components/ChapterDropCalendar";
 import { useEffect, useState, useRef } from "react";
 import { supabase } from "@/lib/supabase";
 import { TTLNav, TTLFooter } from "@/app/reading-room/components/TTLNav";
@@ -31,7 +33,7 @@ type ForumPost = {
 };
 
 type AuthView = "dashboard" | "login" | "signup";
-type ActiveTab = "forum" | "stories" | "profile" | "redroom" | "library";
+type ActiveTab = "forum" | "stories" | "profile" | "redroom" | "library" | "discover" | "inkwell" | "drops";
 
 function LibraryShelf({ userId }: { userId?: string }) {
   const [books, setBooks] = useState<any[]>([]);
@@ -482,9 +484,9 @@ return (
         {/* ── TABS ── */}
         <div style={{ background: "#0d0d1a", borderBottom: "1px solid rgba(255,255,255,0.05)", padding: "0 32px" }}>
           <div style={{ maxWidth: "1200px", margin: "0 auto", display: "flex", gap: "0" }}>
-            {(["forum", "stories", "library", "profile", "redroom"] as ActiveTab[]).map(tab => (
+            {(["forum", "stories", "library", "discover", "inkwell", "drops", "profile", "redroom"] as ActiveTab[]).map(tab => (
               <button key={tab} onClick={() => setActiveTab(tab)} style={{ padding: "12px 14px", background: "transparent", border: "none", cursor: "pointer", fontSize: "11px", fontWeight: "600", color: activeTab === tab ? "#C9A84C" : "#555", borderBottom: activeTab === tab ? "2px solid #C9A84C" : "2px solid transparent", textTransform: "uppercase", letterSpacing: "0.06em", transition: "all 0.2s", whiteSpace: "nowrap" }}>
-                {tab === "forum" ? "💬 Discussions" : tab === "stories" ? "📚 Story Picks" : tab === "library" ? "📖 My Library" : tab === "redroom" ? "🖤 Red Room" : "👤 My Profile"}
+                {tab === "forum" ? "💬 Discussions" : tab === "stories" ? "📚 Story Picks" : tab === "library" ? "📖 My Library" : tab === "discover" ? "✨ Discover" : tab === "inkwell" ? "🪶 Inkwell" : tab === "drops" ? "📅 Drops" : tab === "redroom" ? "🖤 Red Room" : "👤 My Profile"}
               </button>
             ))}
           </div>
@@ -726,6 +728,19 @@ return (
             </div>
           )}
           {/* ── RED ROOM TAB ── */}
+          
+          {activeTab === "discover" && (
+            <DiscoverPanel />
+          )}
+
+          {activeTab === "inkwell" && (
+            <InkwellPanel />
+          )}
+
+          {activeTab === "drops" && (
+            <ChapterDropCalendar />
+          )}
+
           {activeTab === "library" && (
             <div style={{ padding: "24px 16px" }}>
               <div style={{ marginBottom: 28 }}>
