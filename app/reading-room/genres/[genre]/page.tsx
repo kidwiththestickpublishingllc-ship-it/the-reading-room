@@ -1499,10 +1499,32 @@ function GenrePageContent({ genreSlug }: { genreSlug: string }) {
   [stories]
 );
 
-  const genreAuthors = useMemo(
-    () => DEMO_AUTHORS.filter(a => a.genres.includes(genreName)),
-    [genreName]
-  );
+  const [realAuthors, setRealAuthors] = useState<Author[]>([]);
+
+  useEffect(() => {
+    supabase
+      .from("writers")
+      .select("name, slug, avatar_url, genres, user_id, status")
+      .eq("status", "approved")
+      .then(({ data }) => {
+        if (data && data.length > 0) {
+          const mapped: Author[] = data.map((w: any) => ({
+            slug: w.slug ?? w.user_id,
+            user_id: w.user_id,
+            name: w.name,
+            tagline: w.tagline ?? "Writer at The Tiniest Library",
+            genres: w.genres ?? [],
+            image: w.avatar_url ?? null,
+          }));
+          setRealAuthors(mapped);
+        }
+      });
+  }, []);
+
+  const genreAuthors = useMemo(() => {
+    const source = realAuthors.length > 0 ? realAuthors : DEMO_AUTHORS;
+    return source.filter(a => a.genres.includes(genreName));
+  }, [realAuthors, genreName]);
 
   const activeStory = useMemo(
     () => openStorySlug ? stories.find(s => s.slug === openStorySlug) ?? null : null,
