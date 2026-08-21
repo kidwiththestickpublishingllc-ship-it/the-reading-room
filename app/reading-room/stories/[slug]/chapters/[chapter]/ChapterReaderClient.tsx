@@ -1,5 +1,5 @@
 "use client";
-
+import AskTheWriter from "@/app/components/AskTheWriter";
 import { useEffect, useState, useRef } from "react";
 import { createBrowserClient } from "@supabase/ssr";
 import ChapterUnlocks from "@/app/reading-room/components/ChapterUnlocks";
@@ -932,6 +932,22 @@ function ChapterReaderContent({ storySlug, chapterNum }: { storySlug: string; ch
             bookId={story.id}
             chapterNumber={chapter.chapter_number}
           />
+        )}
+
+        {/* ── Ask The Writer ── */}
+        {story?.author_id && (
+          <div style={{ maxWidth: 720, margin: "0 auto", padding: "0 24px 48px" }}>
+            <AskTheWriter
+              storyId={story.id}
+              storySlug={storySlug}
+              storyTitle={story.title}
+              writerId={story.author_id}
+              writerName={story.author_name}
+              writerAvatar={null}
+              genreAccent="#C9A84C"
+              genreAccentDim="rgba(201,168,76,0.2)"
+            />
+          </div>
         )}
 
         {/* Chapter drawer */}
