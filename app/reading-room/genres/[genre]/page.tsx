@@ -1554,11 +1554,25 @@ function GenrePageContent({ genreSlug }: { genreSlug: string }) {
     setUnlocksState(u => ({ ...u, [slug]: true }));
   };
 
-  const tipAuthor = (authorSlug: string, amount: number) => {
+  const tipAuthor = async (authorSlug: string, amount: number, writerId?: string, writerName?: string) => {
     if (ink < amount) { alert("Not enough Ink."); return; }
-    setInk(v => v - amount);
+    if (!writerId) { alert("Cannot find writer."); return; }
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) { alert("Sign in to tip writers."); return; }
+    const { data, error } = await supabase.rpc("tip_writer", {
+      p_tipper_id: user.id,
+      p_writer_id: writerId,
+      p_writer_name: writerName ?? authorSlug,
+      p_amount: amount,
+      p_story_slug: null,
+    });
+    if (error || !data?.success) {
+      alert(data?.error === "insufficient_ink" ? "Not enough Ink." : "Tip failed. Try again.");
+      return;
+    }
+    setInk(data.new_balance);
     setJarState(j => ({ ...j, [authorSlug]: (j[authorSlug] ?? 0) + amount }));
-    alert(`Tipped ${amount} Ink!`);
+    alert(`Tipped ${amount} Ink to ${writerName ?? authorSlug}! 🪶`);
   };
 
   const buyInk = (amount: number) => {
@@ -1770,8 +1784,8 @@ if (genreName === "Adult 18+") {
                       ))}
                     </div>
                     <div className="gp-author-tips" onClick={e => e.preventDefault()}>
-                      <button type="button" onClick={e => { e.preventDefault(); tipAuthor(author.slug, 10); }} className="gp-tip-btn">Tip 10</button>
-                      <button type="button" onClick={e => { e.preventDefault(); tipAuthor(author.slug, 25); }} className="gp-tip-btn">Tip 25</button>
+                      <button type="button" onClick={e => { e.preventDefault(); tipAuthor(author.slug, 10, author.user_id, author.name); }} className="gp-tip-btn">Tip 10</button>
+                      <button type="button" onClick={e => { e.preventDefault(); tipAuthor(author.slug, 25, author.user_id, author.name); }} className="gp-tip-btn">Tip 25</button>
                       <span className="gp-jar-count">Jar: <strong style={{ color: "var(--text-dim)" }}>{jar[author.slug] ?? 0}</strong></span>
                       <button
                         type="button"
