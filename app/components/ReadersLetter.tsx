@@ -396,38 +396,21 @@ export default function ReadersLetter({
 
   const canSend = body.trim().length >= MIN_CHARS && !sending && (tip === 0 || readerInk >= tip);
 
-  const handleSend = async () => {
+   const handleSend = async () => {
     if (!canSend || !userId) return;
     setSending(true);
     try {
-      // 1. Deduct tip ink if applicable
+      const { data, error } = await supabase.rpc("send_reader_letter", {
+        p_reader_id: userId,
+        p_writer_id: writerId,
+        p_story_id: null,
+        p_message: body.trim(),
+        p_tip_amount: tip,
+      });
+      if (error) throw new Error(error.message);
+      if (!data?.success) throw new Error(data?.error ?? "Send failed");
+      // Update local ink balance
       if (tip > 0 && onInkSpent) onInkSpent(tip);
-
-      // 2. Insert letter record
-      const { data: letter, error: letterErr } = await supabase
-        .from("reader_letters")
-        .insert({
-          reader_id: userId,
-          writer_id: writerId,
-          status: "queued",
-          tip_amount: tip,
-        })
-        .select("id")
-        .single();
-
-      if (letterErr || !letter) throw new Error(letterErr?.message ?? "Insert failed");
-
-      // 3. Insert first message
-      const { error: msgErr } = await supabase
-        .from("letter_messages")
-        .insert({
-          letter_id: letter.id,
-          sender_id: userId,
-          body: body.trim(),
-        });
-
-      if (msgErr) throw new Error(msgErr.message);
-
       setStep("sent");
     } catch (err) {
       console.error("ReadersLetter send error:", err);
