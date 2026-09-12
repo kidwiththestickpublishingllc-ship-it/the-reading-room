@@ -1573,6 +1573,7 @@ function GenrePageContent({ genreSlug }: { genreSlug: string }) {
     setInk(data.new_balance);
     setJarState(j => ({ ...j, [authorSlug]: (j[authorSlug] ?? 0) + amount }));
     alert(`Tipped ${amount} Ink to ${writerName ?? authorSlug}! 🪶`);
+
   };
 
   const buyInk = (amount: number) => {
