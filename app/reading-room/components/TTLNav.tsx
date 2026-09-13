@@ -485,7 +485,7 @@ export function TTLNav({ extras }: { extras?: ReactNode }) {
             <div className="ttl-shared-links">
               <a href="/reading-room/authors" className="ttl-shared-link">Authors</a>
               <a href="/reading-room/stories" className="ttl-shared-link">Browse Stories</a>
-              <a href="/reading-room/comics" className="ttl-shared-link">The Galleria</a>
+              <a href="https://artists.the-tiniest-library.com" className="ttl-shared-link">The Galleria</a>
               <a href="/reading-room/buy-ink" className="ttl-shared-link">Buy Ink ✒️</a>
               <a href="/reading-room/how-it-works" className="ttl-shared-link">How It Works</a>
               <a href="https://write.the-tiniest-library.com" className="ttl-shared-link">Writer's Room</a>
@@ -537,7 +537,7 @@ export function TTLNav({ extras }: { extras?: ReactNode }) {
             <span className="ttl-shared-bottom-icon">📖</span>
             <span className="ttl-shared-bottom-label">Stories</span>
           </a>
-          <a href="/reading-room/comics" className="ttl-shared-bottom-item">
+          <a href="https://artists.the-tiniest-library.com" className="ttl-shared-bottom-item">
             <span className="ttl-shared-bottom-icon">🎨</span>
             <span className="ttl-shared-bottom-label">Comics</span>
           </a>
