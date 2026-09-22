@@ -35,6 +35,7 @@ type AuthorData = {
   photo_url?: string;
   storiesCount: number;
   inkJar: number;
+  userId?: string | null;
   stories: Story[];
   accentColor: string;
   accentDim: string;
@@ -285,13 +286,22 @@ function AuthorProfileContent({ slug }: { slug: string }) {
   const [jar, setJar] = useState(0);
   const [ink, setInk] = useState(DEFAULT_INK);
   const [tipMsg, setTipMsg] = useState("");
+  const [userId, setUserId] = useState<string | null>(null);
 
   useEffect(() => {
-    setInk(Number(window.localStorage.getItem("ttl_ink") ?? DEFAULT_INK));
-    const raw = window.localStorage.getItem("ttl_author_jar");
-    const parsed = raw ? JSON.parse(raw) : {};
-    setJar(parsed[slug] ?? 0);
-  }, [slug]);
+    async function loadReader() {
+      const { data: userData } = await supabase.auth.getUser();
+      if (!userData?.user) return;
+      setUserId(userData.user.id);
+      const { data: profileData } = await supabase
+        .from("profiles")
+        .select("ink_balance")
+        .eq("id", userData.user.id)
+        .single();
+      setInk(profileData?.ink_balance ?? 0);
+    }
+    loadReader();
+  }, []);
 
   useEffect(() => {
     async function load() {
@@ -343,6 +353,7 @@ function AuthorProfileContent({ slug }: { slug: string }) {
           photo_url: writerData.photo_url,
           storiesCount: storiesData?.length ?? 0,
           inkJar: jar,
+          userId: writerData.user_id ?? null,
           is_founding_author: writerData.is_founding_author,
           accentColor,
           accentDim,
@@ -379,17 +390,26 @@ function AuthorProfileContent({ slug }: { slug: string }) {
     load();
   }, [slug]);
 
-  const tipAuthor = (amount: number) => {
+  const tipAuthor = async (amount: number) => {
+    if (!userId) { setTipMsg("Sign in to tip this author."); setTimeout(() => setTipMsg(""), 2000); return; }
+    if (!author?.userId) { setTipMsg("This author can't be tipped yet."); setTimeout(() => setTipMsg(""), 2000); return; }
     if (ink < amount) { setTipMsg("Not enough Ink."); setTimeout(() => setTipMsg(""), 2000); return; }
-    const newInk = ink - amount;
-    const newJar = jar + amount;
-    setInk(newInk);
-    setJar(newJar);
-    window.localStorage.setItem("ttl_ink", String(newInk));
-    const raw = window.localStorage.getItem("ttl_author_jar");
-    const parsed = raw ? JSON.parse(raw) : {};
-    parsed[slug] = newJar;
-    window.localStorage.setItem("ttl_author_jar", JSON.stringify(parsed));
+
+    const { data, error } = await supabase.rpc("tip_writer", {
+      p_tipper_id: userId,
+      p_writer_id: author.userId,
+      p_writer_name: author.name,
+      p_amount: amount,
+      p_story_slug: null,
+    });
+
+    if (error || !data?.success) {
+      setTipMsg(data?.error === "insufficient_ink" ? "Not enough Ink." : "Tip failed. Try again.");
+      setTimeout(() => setTipMsg(""), 2000);
+      return;
+    }
+
+    setInk(data.new_balance);
     setTipMsg(`✓ Tipped ${amount} Ink to ${author?.name}!`);
     setTimeout(() => setTipMsg(""), 3000);
   };
