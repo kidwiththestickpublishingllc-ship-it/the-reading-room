@@ -605,7 +605,6 @@ export function TTLFooter() {
         <a href="/reading-room/stories" className="ttl-shared-footer-btn">Browse Stories</a>
         <a href="/reading-room/authors" className="ttl-shared-footer-btn">Authors</a>
         <a href="https://write.the-tiniest-library.com" className="ttl-shared-footer-btn">Writer's Room</a>
-        <a href="https://redroom.the-tiniest-library.com" className="ttl-shared-footer-btn">Red Room</a>
         <a href="/members" className="ttl-shared-footer-btn-primary">Members Room →</a>
       </div>
     </footer>
