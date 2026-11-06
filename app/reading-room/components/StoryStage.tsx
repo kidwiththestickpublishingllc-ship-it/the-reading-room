@@ -49,7 +49,6 @@ const DEFAULT_THEME: StageTheme = { bgFrom: "#16263f", bgTo: "#0f1c30", mode: "d
 
 const DEFAULT_PROMOS: PromoCard[] = [
   { label: "Featured", title: "Your story could live here", sub: "Promote your work in the Reading Room.", href: "/reading-room/authors" },
-  { label: "18+", title: "Enter the Red Room", sub: "Adult fiction behind a verified gate.", href: "https://redroom.the-tiniest-library.com" },
   { label: "Support", title: "Buy Ink, back a writer", sub: "Every unlock pays the author directly.", href: "/reading-room/buy-ink" },
 ];
 
