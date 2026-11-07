@@ -32,7 +32,7 @@ import { TTLNav, TTLFooter } from "./components/TTLNav";
 // ✅ V7: Cohesive dark background replacing cornflower blue — Reading Room feels like a real literary platform
 // ✅ Phase 2: Matched to Browse All Stories visual system — black bg, gold + cornflower blue accents, sticky navbar
 // ✅ Phase 3: Ink default set to 0 — populates on purchase only
-// ✅ Phase 3: Red Door card added as entry point to The Red Room
+
 
 // =========================
 // Types
@@ -1829,100 +1829,6 @@ function ChapterReaderModal({
   );
 }
 
-// =========================
-// Red Door Card — entry to The Red Room
-// =========================
-function RedDoorCard() {
-  const [hovered, setHovered] = useState(false);
-  return (
-    <a
-      href="https://redroom.the-tiniest-library.com/"
-  target="_blank"
-  rel="noopener noreferrer"
-  onMouseEnter={() => setHovered(true)}      
-      onMouseLeave={() => setHovered(false)}
-      style={{
-        display: "flex",
-        alignItems: "center",
-        gap: 24,
-        background: "linear-gradient(135deg, #1a0505 0%, #2d0808 50%, #1a0505 100%)",
-        border: `1px solid ${hovered ? "rgba(200,60,60,0.8)" : "rgba(180,30,30,0.5)"}`,
-        borderLeft: "4px solid #c94c4c",
-        borderRadius: 12,
-        padding: "28px 32px",
-        marginBottom: 16,
-        textDecoration: "none",
-        position: "relative",
-        overflow: "hidden",
-        transform: hovered ? "translateY(-2px)" : "translateY(0)",
-        transition: "border-color 0.3s, transform 0.2s",
-        boxShadow: "0 0 40px rgba(180,30,30,0.12), inset 0 0 60px rgba(180,30,30,0.04)",
-      }}
-    >
-      <div style={{
-        width: 64, height: 80, flexShrink: 0,
-        background: "linear-gradient(180deg, #3d0a0a, #1a0404)",
-        border: "2px solid rgba(201,168,76,0.6)",
-        borderRadius: 6,
-        display: "flex", alignItems: "center", justifyContent: "center",
-        fontSize: 28,
-        boxShadow: "0 0 20px rgba(201,168,76,0.2)",
-        position: "relative",
-      }}>
-        🚪
-        <div style={{
-          position: "absolute", right: 8, top: "50%",
-          width: 8, height: 8, borderRadius: "50%",
-          background: "#C9A84C",
-          boxShadow: "0 0 6px rgba(201,168,76,0.8)",
-        }} />
-      </div>
-      <div style={{ flex: 1 }}>
-        <div style={{
-          fontFamily: "'Syne', sans-serif",
-          fontSize: 9, letterSpacing: "0.28em",
-          textTransform: "uppercase" as const,
-          color: "rgba(200,80,80,0.8)", marginBottom: 8,
-        }}>
-          18+ · Age Verified Access Only
-        </div>
-        <div style={{
-          fontFamily: "'Cormorant Garamond', serif",
-          fontSize: 28, fontWeight: 300, color: "#f0ece2",
-          marginBottom: 6, lineHeight: 1.1,
-        }}>
-          The Red Room
-        </div>
-        <div style={{
-          fontFamily: "'Syne', sans-serif",
-          fontSize: 12, color: "rgba(232,228,218,0.4)", lineHeight: 1.6,
-        }}>
-          Adult fiction for grown readers. 29 genres. Explicit content behind a verified age gate.
-        </div>
-      </div>
-      <div style={{
-        fontFamily: "'Syne', sans-serif",
-        fontSize: 9, letterSpacing: "0.2em",
-        textTransform: "uppercase" as const,
-        color: "rgba(200,80,80,0.7)",
-        border: "1px solid rgba(200,80,80,0.3)",
-        padding: "8px 16px", borderRadius: 6,
-        flexShrink: 0,
-      }}>
-        Enter →
-      </div>
-      <div style={{
-        position: "absolute", inset: 0,
-        pointerEvents: "none" as const,
-        background: "radial-gradient(ellipse at 20% 50%, rgba(180,30,30,0.08) 0%, transparent 70%)",
-      }} />
-    </a>
-  );
-}
-
-// =========================
-// Page
-// =========================
 export default function ReadingRoomHome() {
   
   const [ink, setInk] = useState<number>(DEFAULT_INK);

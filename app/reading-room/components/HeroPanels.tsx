@@ -71,13 +71,6 @@ const HOUSE_ADS = [
     href: 'https://write.the-tiniest-library.com/apply',
   },
   {
-    eyebrow: 'THE RED ROOM',
-    headline: 'Adult\nFiction',
-    body: 'A candlelit room for stories other platforms are afraid of. 18+ only.',
-    cta: 'Enter →',
-    href: 'https://redroom.the-tiniest-library.com',
-  },
-  {
     eyebrow: 'INK ECONOMY',
     headline: 'Support\nWriters',
     body: 'Buy Ink and unlock stories. 100% of tips go directly to the writer.',

@@ -750,23 +750,6 @@ export default function HowItWorksPage() {
                   Enter the Writer's Room →
                 </div>
               </a>
-
-              <a href="https://redroom.the-tiniest-library.com" className="hiw-room-card hiw-room-red">
-                <span className="hiw-room-emoji">🚪</span>
-                <div className="hiw-room-name">The Red Room</div>
-                <div className="hiw-room-desc">
-                  Adult fiction for grown readers. 29 genres of explicit content behind a verified age gate. Serious literary space, no softening of edges.
-                </div>
-                <div className="hiw-room-features">
-                  <div className="hiw-room-feature">18+ age verified access only</div>
-                  <div className="hiw-room-feature">29 adult genres</div>
-                  <div className="hiw-room-feature">Same Ink economy applies</div>
-                  <div className="hiw-room-feature">Separate community space</div>
-                </div>
-                <div className="hiw-room-cta" style={{ color: "#f87171" }}>
-                  Enter the Red Room →
-                </div>
-              </a>
             </div>
           </section>
 
@@ -877,10 +860,6 @@ export default function HowItWorksPage() {
                 {
                   q: "Can I submit my comics or manga to TTL?",
                   a: "Yes — TTL is actively looking for comics artists and manga creators. Apply through The Writer's Room. You keep your copyright and earn through the same Ink economy as prose writers."
-                },
-                {
-                  q: "What is the Red Room?",
-                  a: "The Red Room is TTL's adult fiction platform — 29 genres of explicit content behind a verified age gate. It uses the same Ink economy and writer support model as the Reading Room, but for 18+ content."
                 },
                 {
                   q: "How do I apply to write for TTL?",

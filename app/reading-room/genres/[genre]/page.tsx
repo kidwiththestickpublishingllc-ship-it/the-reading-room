@@ -1884,11 +1884,6 @@ if (genreName === "Adult 18+") {
                 Publish your stories, earn through Ink, keep your copyright.
               </div>
               <a href="https://write.the-tiniest-library.com/apply" style={{ display: 'inline-block', padding: '7px 16px', borderRadius: 999, background: 'transparent', border: '1px solid rgba(201,168,76,0.5)', color: '#C9A84C', fontSize: 10, fontWeight: 700, textDecoration: 'none', letterSpacing: '0.08em', fontFamily: 'sans-serif' }}>Apply Now →</a>
-              <div style={{ marginTop: 16, fontSize: 13, color: 'rgba(240,236,226,0.6)', lineHeight: 1.7, fontFamily: 'sans-serif' }}>
-                <strong style={{ color: '#6495ED', display: 'block', marginBottom: 8 }}>The Red Room</strong>
-                Adult fiction for grown readers. 29 genres. Age verified.
-              </div>
-              <a href="https://redroom.the-tiniest-library.com" target="_blank" rel="noopener noreferrer" style={{ display: 'inline-block', padding: '7px 16px', borderRadius: 999, background: 'transparent', border: '1px solid rgba(100,149,237,0.4)', color: '#6495ED', fontSize: 10, fontWeight: 700, textDecoration: 'none', letterSpacing: '0.08em', fontFamily: 'sans-serif' }}>Enter →</a>
             </div>
           </div>
         </div>

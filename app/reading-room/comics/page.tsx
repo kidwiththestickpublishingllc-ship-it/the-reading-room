@@ -596,11 +596,6 @@ export default function ComicsMangaPage() {
                 Publish your stories, earn through Ink, keep your copyright.
               </div>
               <a href="https://write.the-tiniest-library.com/apply" style={{ display: 'inline-block', padding: '6px 14px', borderRadius: 999, border: '1px solid rgba(201,168,76,0.5)', color: '#C9A84C', fontSize: 10, fontWeight: 700, textDecoration: 'none', fontFamily: 'sans-serif' }}>Apply Now →</a>
-              <div style={{ fontSize: 12, color: 'rgba(240,236,226,0.6)', lineHeight: 1.7, fontFamily: 'sans-serif' }}>
-                <strong style={{ color: '#FF2D78', display: 'block', marginBottom: 8 }}>Red Room Comics</strong>
-                Adult sequential art. No restrictions.
-              </div>
-              <a href="https://redroom.the-tiniest-library.com/red-room/comics" target="_blank" rel="noopener noreferrer" style={{ display: 'inline-block', padding: '6px 14px', borderRadius: 999, border: '1px solid rgba(255,45,120,0.4)', color: '#FF2D78', fontSize: 10, fontWeight: 700, textDecoration: 'none', fontFamily: 'sans-serif' }}>Enter →</a>
             </div>
           </div>
         </div>
