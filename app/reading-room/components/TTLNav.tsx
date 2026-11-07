@@ -599,6 +599,11 @@ export function TTLFooter() {
         >
           A company of Kid With The Stick Publishing
         </a>
+        <div style={{ marginTop: 10, display: "flex", gap: 14, flexWrap: "wrap", fontSize: 11, letterSpacing: "0.04em" }}>
+          <a href="/privacy" style={{ color: "rgba(201,168,76,0.75)", textDecoration: "none" }}>Privacy</a>
+          <a href="/terms" style={{ color: "rgba(201,168,76,0.75)", textDecoration: "none" }}>Terms</a>
+          <a href="/contact" style={{ color: "rgba(201,168,76,0.75)", textDecoration: "none" }}>Contact</a>
+        </div>
       </div>
 
       <div className="ttl-shared-footer-actions">
