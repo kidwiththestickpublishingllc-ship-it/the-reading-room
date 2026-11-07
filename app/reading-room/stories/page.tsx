@@ -63,7 +63,6 @@ const GENRE_PANELS: GenrePanel[] = [
   { genre: "AAPI Authors",          cover: "https://dgymtdkxusdsgxmjirfl.supabase.co/storage/v1/object/public/reading-room-cards/AAPI/genre-aapi.jpg",                           label: "AAPI Authors" },
   { genre: "Indigenous Stories",    cover: "https://dgymtdkxusdsgxmjirfl.supabase.co/storage/v1/object/public/reading-room-cards/INDEGINOUS%20VOICES/genre-indigenous.jpg",      label: "Indigenous Stories" },
   { genre: "LGBTQ+ Fiction",        cover: "https://dgymtdkxusdsgxmjirfl.supabase.co/storage/v1/object/public/reading-room-cards/LGBTQ%2B%20VOICES/genre-lgbtq.jpg",            label: "LGBTQ+ Fiction" },
-  { genre: "Adult 18+",             cover: "https://dgymtdkxusdsgxmjirfl.supabase.co/storage/v1/object/public/reading-room-cards/ADULT/genre-adult.jpg",                         label: "Adult 18+" },
 ];
 
 const TTL_GENRES: string[] = GENRE_PANELS.map((p) => p.genre);
