@@ -30,8 +30,8 @@ export default async function sitemap() {
     );
 
     const [{ data: stories }, { data: writers }] = await Promise.all([
-      supabase.from('stories').select('slug, genre, created_at').eq('is_published', true),
-      supabase.from('writers').select('slug, updated_at').eq('is_approved', true),
+      supabase.from('stories').select('slug, genre, created_at, author_name').eq('is_published', true),
+      supabase.from('writers').select('slug, name, updated_at').eq('is_approved', true),
     ]);
 
     const storyPages = (stories ?? []).map((s: any) => ({
