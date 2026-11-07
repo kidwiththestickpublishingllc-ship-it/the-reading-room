@@ -52,7 +52,13 @@ export default async function sitemap() {
       priority: 0.75,
     }));
 
-    const authorPages = (writers ?? []).filter((w: any) => w.slug).map((w: any) => ({
+    const publishedAuthors = new Set(
+      (stories ?? []).map((s: any) => (s.author_name ?? '').trim().toLowerCase()).filter(Boolean),
+    );
+
+    const authorPages = (writers ?? [])
+      .filter((w: any) => w.slug && publishedAuthors.has((w.name ?? '').trim().toLowerCase()))
+      .map((w: any) => ({
       url: `${base}/reading-room/authors/${w.slug}`,
       lastModified: w.updated_at ? new Date(w.updated_at) : now,
       changeFrequency: 'monthly' as const,
