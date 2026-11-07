@@ -42,7 +42,7 @@ type Author = {
   name: string;
   tagline: string;
   genres: string[];
-  image: string;
+  image: string | null;
 };
 
 type Story = {
