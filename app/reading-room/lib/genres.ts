@@ -206,13 +206,6 @@ const GENRE_META: Record<string, GenreMeta> = {
     accentDim: "rgba(167,139,250,0.28)",
     lore: "Love in all its forms. Identity in all its complexity. LGBTQ+ fiction at TTL is not defined by coming-out stories alone — though those matter too. It is defined by the full spectrum of queer experience: joy, desire, grief, chosen family, community, survival, and the particular clarity that comes from knowing exactly who you are.",
   },
-  "Adult 18+": {
-    label: "Adult 18+",
-    cover: "https://dgymtdkxusdsgxmjirfl.supabase.co/storage/v1/object/public/reading-room-genre/ADULT/landing-adult.jpg",
-    emoji: "🔞",
-    accent: "#f43f5e",
-    accentDim: "rgba(244,63,94,0.28)",
-    lore: "Mature fiction for adult readers. This shelf contains explicit content — sexual, violent, or both — written with craft and intention. TTL's Adult 18+ section is not a loophole or an afterthought. It is a serious literary space where writers can explore the full range of adult experience without softening the edges.",
-  },
+
 };
 

@@ -3,7 +3,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { supabase } from "@/lib/supabase";
 import GenreLandingPage from "@/app/components/GenreLandingPage";
-import Adult18Gate from "@/app/reading-room/components/Adult18Gate";
 import { TTLNav, TTLFooter } from "@/app/reading-room/components/TTLNav";
 
 
@@ -274,14 +273,6 @@ const GENRE_META: Record<string, GenreMeta> = {
     accent: "#a78bfa",
     accentDim: "rgba(167,139,250,0.28)",
     lore: "Love in all its forms. Identity in all its complexity. LGBTQ+ fiction at TTL is not defined by coming-out stories alone — though those matter too. It is defined by the full spectrum of queer experience: joy, desire, grief, chosen family, community, survival, and the particular clarity that comes from knowing exactly who you are.",
-  },
-  "Adult 18+": {
-    label: "Adult 18+",
-    cover: "https://dgymtdkxusdsgxmjirfl.supabase.co/storage/v1/object/public/reading-room-genre/ADULT/landing-adult.jpg",
-    emoji: "🔞",
-    accent: "#f43f5e",
-    accentDim: "rgba(244,63,94,0.28)",
-    lore: "Mature fiction for adult readers. This shelf contains explicit content — sexual, violent, or both — written with craft and intention. TTL's Adult 18+ section is not a loophole or an afterthought. It is a serious literary space where writers can explore the full range of adult experience without softening the edges.",
   },
 };
 
@@ -1584,13 +1575,7 @@ function GenrePageContent({ genreSlug }: { genreSlug: string }) {
     window.open(url, "_blank", "noopener,noreferrer");
     setTimeout(() => { setIsOpeningCheckout(false); setOpeningInk(null); }, 2500);
   };
-if (genreName === "Adult 18+") {
-    return (
-      <Adult18Gate>
-        <div style={{ display: "none" }} />
-      </Adult18Gate>
-    );
-  }
+
   return (
     <GenreLandingPage
       genre={genreName}
