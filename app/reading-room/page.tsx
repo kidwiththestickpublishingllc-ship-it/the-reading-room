@@ -5,7 +5,7 @@ import { supabase } from "@/lib/supabase";
 import AdQueue from "./components/AdQueue";
 import { startTour } from "@/app/components/WelcomeTour";
 import { RightAdPanel, ReadingRoomBanner } from './components/HeroPanels';
-import HeroSection from './components/HeroSection';
+import GroundFloor from '@/app/components/GroundFloor';
 import FeaturedAuthors from './components/FeaturedAuthors';
 import FeaturedStories from './components/FeaturedStories';
 import HowItWorks from './components/HowItWorks';
@@ -1999,7 +1999,7 @@ export default function ReadingRoomHome() {
         } />
         <div style={{ height: 90 }} />
         {/* ── HERO ── */}
-        <HeroSection />
+        <GroundFloor />
 
         {/* ── MAIN CONTENT ── */}
        <div className="ttl-wrap">
