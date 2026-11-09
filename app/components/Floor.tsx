@@ -16,6 +16,7 @@ type Props = {
 };
 
 const STYLES = `
+  @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&display=swap');
   .flr {
     position: relative;
     background: var(--paper, #FAF6EC);

@@ -1,5 +1,5 @@
 import './globals.css'
-import { Playfair_Display, Inter } from 'next/font/google'
+import { Playfair_Display, Inter, Cormorant_Garamond, Syne, Caveat } from 'next/font/google'
 import Script from 'next/script'
 import PageChatWidget from "./components/PageChatWidget"
 import WelcomeTour from "./components/WelcomeTour"
@@ -13,6 +13,25 @@ const playfair = Playfair_Display({
 const inter = Inter({
   subsets: ['latin'],
   variable: '--font-inter',
+})
+
+const cormorant = Cormorant_Garamond({
+  subsets: ['latin'],
+  weight: ['300', '400', '600'],
+  style: ['normal', 'italic'],
+  variable: '--font-cormorant',
+})
+
+const syne = Syne({
+  subsets: ['latin'],
+  weight: ['400', '600', '700', '800'],
+  variable: '--font-syne',
+})
+
+const caveat = Caveat({
+  subsets: ['latin'],
+  weight: ['500', '600', '700'],
+  variable: '--font-caveat',
 })
 
 export const metadata = {

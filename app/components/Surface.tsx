@@ -26,6 +26,7 @@ type Props = {
 };
 
 const STYLES = `
+  @import url('https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&display=swap');
   .srf { position: relative; min-width: 0; }
   .srf-label {
     font: 800 10px 'Syne', sans-serif;

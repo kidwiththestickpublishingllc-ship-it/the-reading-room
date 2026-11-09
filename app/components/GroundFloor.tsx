@@ -29,6 +29,7 @@ type Chapter = {
 };
 
 const STYLES = `
+  @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&display=swap');
   .gf-row { display: flex; flex-wrap: wrap; gap: 48px; align-items: flex-start; }
   .gf-coverwrap { flex: 0 0 270px; max-width: 100%; position: relative; transform: rotate(-1.4deg); }
   .gf-tape {
