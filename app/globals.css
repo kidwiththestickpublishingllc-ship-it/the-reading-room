@@ -220,10 +220,10 @@ body {
   --text-faint: rgba(26,16,8,0.45);
 
   /* notebook surfaces */
-  --paper:        #FAF6EC;
+  --paper:        #F0E7D2;
   --paper-rule:   rgba(90,130,170,0.17);
   --margin-rule:  rgba(190,60,60,0.42);
-  --plate:        #FFFDF7;
+  --plate:        #F8F2E2;
   --edge:         rgba(46,41,34,0.14);
   --bind-trough:  #DED6C4;
   --bind-ring:    #9A8F7A;

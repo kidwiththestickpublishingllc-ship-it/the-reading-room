@@ -229,7 +229,7 @@ const TTL_STYLES = `
   }
   .ttl-root {
     min-height: 100vh;
-    background: #FAFAF8;
+    background: var(--paper, #F0E7D2);
     font-family: 'Times New Roman', Times, serif;
     color: #1a1008;
     position: relative;
