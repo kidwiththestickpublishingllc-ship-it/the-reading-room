@@ -203,3 +203,59 @@ body {
     width: 220px !important;
   }
 }
+/* =============================================
+   TTL SURFACES — document-wide theme tokens
+   Light on :root, dark under [data-theme="dark"]
+   ============================================= */
+
+:root {
+  /* existing ink scale, lifted to document scope */
+  --ink-bg: #FAFAF8;
+  --ink-surface: #FFFFFF;
+  --ink-surface2: #F2EDE4;
+  --ink-border: rgba(0,0,0,0.12);
+  --ink-border-gold: rgba(201,168,76,0.4);
+  --text-main: #1a1008;
+  --text-dim: rgba(26,16,8,0.75);
+  --text-faint: rgba(26,16,8,0.45);
+
+  /* notebook surfaces */
+  --paper:        #FAF6EC;
+  --paper-rule:   rgba(90,130,170,0.17);
+  --margin-rule:  rgba(190,60,60,0.42);
+  --plate:        #FFFDF7;
+  --edge:         rgba(46,41,34,0.14);
+  --bind-trough:  #DED6C4;
+  --bind-ring:    #9A8F7A;
+  --note:         #FBE88C;
+  --note-text:    #3A3312;
+  --board-face:   #C9A371;
+  --board-frame:  #B5833F;
+  --board-text:   #4A3A22;
+  --surface-shadow: rgba(46,41,34,0.18);
+}
+
+:root[data-theme="dark"] {
+  --ink-bg: #0a0a0a;
+  --ink-surface: #111111;
+  --ink-surface2: #1a1a1a;
+  --ink-border: rgba(255,255,255,0.08);
+  --ink-border-gold: rgba(201,168,76,0.35);
+  --text-main: #f0ece2;
+  --text-dim: rgba(240,236,226,0.75);
+  --text-faint: rgba(240,236,226,0.45);
+
+  --paper:        #1C1A17;
+  --paper-rule:   rgba(150,180,210,0.13);
+  --margin-rule:  #C4555F;
+  --plate:        #23201C;
+  --edge:         rgba(232,226,212,0.16);
+  --bind-trough:  #272420;
+  --bind-ring:    #8A7F6A;
+  --note:         #C9A94A;
+  --note-text:    #2A2308;
+  --board-face:   #22312B;
+  --board-frame:  #4A3A22;
+  --board-text:   #D9E4DC;
+  --surface-shadow: rgba(0,0,0,0.55);
+}

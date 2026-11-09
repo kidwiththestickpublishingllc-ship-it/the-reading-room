@@ -1840,6 +1840,20 @@ export default function ReadingRoomHome() {
   const [selectedGenre, setSelectedGenre] = useState<string>("All");
   const [moodGenres, setMoodGenres] = useState<string[]>([]);
   const [darkMode, setDarkMode] = useState(false);
+
+  // Theme: restore the saved choice, then keep <html data-theme> and
+  // localStorage in sync. The .dark class on ttl-root is left alone.
+  useEffect(() => {
+    try {
+      if (localStorage.getItem('ttl-theme') === 'dark') setDarkMode(true);
+    } catch {}
+  }, []);
+
+  useEffect(() => {
+    const mode = darkMode ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', mode);
+    try { localStorage.setItem('ttl-theme', mode); } catch {}
+  }, [darkMode]);
   const [openStorySlug, setOpenStorySlug] = useState<string | null>(null);
   const [isOpeningCheckout, setIsOpeningCheckout] = useState(false);
   const [openingInk, setOpeningInk] = useState<number | null>(null);
