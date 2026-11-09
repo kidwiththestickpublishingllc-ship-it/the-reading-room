@@ -22,6 +22,8 @@ import StoryStage, { StageTheme } from "./components/StoryStage";
 import { TTLNav, TTLFooter } from "./components/TTLNav";
 import YourLibrary from '@/app/components/YourLibrary';
 import WelcomeBoard from '@/app/components/WelcomeBoard';
+import Floor from '@/app/components/Floor';
+import Surface from '@/app/components/Surface';
 
 
 // =========================
@@ -2012,11 +2014,36 @@ export default function ReadingRoomHome() {
             <NewChapterAlerts />
             <LiveActivityFeed />
             <CountdownDrops />
+            <InkWallet
+              ink={ink}
+              inkPacks={INK_PACKS}
+              isOpeningCheckout={isOpeningCheckout}
+              openingInk={openingInk}
+              onBuyInk={buyInk}
+            />
           </YourLibrary>
 
           <WelcomeBoard />
 
-          <MoodSelector onMoodSelect={setMoodGenres} />
+          <Floor name="The Shelf" number={2} slug="Everything published on TTL">
+            <Surface span={12}>
+              <MoodSelector onMoodSelect={setMoodGenres} />
+              <FeaturedStories
+                allGenres={allGenres}
+                selectedGenre={selectedGenre}
+                setSelectedGenre={setSelectedGenre}
+                storiesLoading={storiesLoading}
+                storiesError={storiesError}
+                filteredStories={filteredStories}
+                ink={ink}
+                unlocks={unlocks}
+                user={user}
+                onUnlock={unlockStory}
+                DEFAULT_UNLOCK_COST={DEFAULT_UNLOCK_COST}
+              />
+            </Surface>
+          </Floor>
+
           <ReadingRoomBanner />
           <FeaturedAuthors />
           {/* ── FEATURED STORIES ── */}
@@ -2033,14 +2060,7 @@ export default function ReadingRoomHome() {
             onUnlock={unlockStory}
             DEFAULT_UNLOCK_COST={DEFAULT_UNLOCK_COST}
           />
-          {/* ── INK WALLET ── */}
-          <InkWallet
-            ink={ink}
-            inkPacks={INK_PACKS}
-            isOpeningCheckout={isOpeningCheckout}
-            openingInk={openingInk}
-            onBuyInk={buyInk}
-          />
+
           {/* ── HOW IT WORKS ── */}
           <HowItWorks stories={stories} />
         </div>
