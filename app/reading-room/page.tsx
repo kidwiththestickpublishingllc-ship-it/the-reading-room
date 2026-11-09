@@ -496,7 +496,7 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
     font-size: clamp(80px, 11vw, 160px);
     font-weight: 300;
     line-height: 0.9;
-    color: #ffffff;
+    color: var(--text-main);
     margin-bottom: 28px;
   }
 
@@ -579,7 +579,7 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
     font-size: 10px;
     letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: #ffffff;
+    color: var(--text-main);
     background: rgba(201,168,76,0.15);
     border: 1px solid rgba(201,168,76,0.4);
     padding: 13px 28px;
@@ -908,7 +908,7 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
     font-family: 'Cormorant Garamond', Georgia, serif;
     font-size: 22px;
     font-weight: 400;
-    color: #ffffff;
+    color: var(--text-main);
     line-height: 1.15;
     margin-bottom: 5px;
   }
@@ -1054,7 +1054,7 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
     font-family: 'Cormorant Garamond', Georgia, serif;
     font-size: 20px;
     font-weight: 400;
-    color: #ffffff;
+    color: var(--text-main);
     line-height: 1.2;
   }
 
@@ -1200,7 +1200,7 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
     font-size: 11px;
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: #ffffff;
+    color: var(--text-main);
     margin-bottom: 10px;
   }
 
@@ -1273,7 +1273,7 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
     font-family: 'Cormorant Garamond', Georgia, serif;
     font-size: 28px;
     font-weight: 300;
-    color: #ffffff;
+    color: var(--text-main);
     margin-bottom: 4px;
   }
 
@@ -1298,7 +1298,7 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
     transition: all 0.2s;
   }
 
-  .ttl-modal-close:hover { color: #ffffff; border-color: var(--ink-border-gold); }
+  .ttl-modal-close:hover { color: var(--text-main); border-color: var(--ink-border-gold); }
 
   .ttl-modal-body {
     flex: 1;
@@ -1458,7 +1458,7 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
   border-radius: 12px;
   padding: 24px;
   margin-bottom: 24px;
-  background: #ffffff;
+  background: var(--plate);
 }
 
 .ttl-how-card,
