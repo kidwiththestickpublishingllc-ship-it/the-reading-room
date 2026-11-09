@@ -103,9 +103,14 @@ const STYLES = `
 `;
 
 // Strip tags and collapse whitespace, then cut on a word boundary.
-function excerptFrom(html: string | null, max = 340): string {
+function excerptFrom(html: string | null, max = 340, strip: (string | null)[] = []): string {
   if (!html) return "";
-  const text = html.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
+  let text = html.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
+  for (const s of strip) {
+    if (!s) continue;
+    const esc = s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    text = text.replace(new RegExp("^\\s*" + esc + "[\\s.·—-]*", "i"), "").trim();
+  }
   if (text.length <= max) return text;
   const cut = text.slice(0, max);
   return cut.slice(0, cut.lastIndexOf(" ")) + "…";
@@ -209,7 +214,7 @@ export default function GroundFloor() {
 
               <Surface kind="plate" span={12} style={{ maxWidth: "58ch" }}>
                 <p className="gf-excerpt">
-                  {excerptFrom(chapter?.content ?? null) || story?.description || ""}
+                  {excerptFrom(chapter?.content ?? null, 340, [story?.title ?? null, story?.author_name ?? null]) || story?.description || ""}
                 </p>
               </Surface>
 

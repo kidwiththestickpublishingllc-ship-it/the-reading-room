@@ -20,6 +20,8 @@ import AdWindow from "./components/AdWindow";
 import StorySocial from "./components/StorySocial";
 import StoryStage, { StageTheme } from "./components/StoryStage";
 import { TTLNav, TTLFooter } from "./components/TTLNav";
+import YourLibrary from '@/app/components/YourLibrary';
+import WelcomeBoard from '@/app/components/WelcomeBoard';
 
 
 // =========================
@@ -2004,11 +2006,16 @@ export default function ReadingRoomHome() {
         {/* ── MAIN CONTENT ── */}
        <div className="ttl-wrap">
           {/* ── SPONSORED BANNER ── */}
-          <ContinueReadingStrip />
-          <ReadingStreak />
-          <NewChapterAlerts />
-          <LiveActivityFeed />
-          <CountdownDrops />
+          <YourLibrary user={user}>
+            <ContinueReadingStrip />
+            <ReadingStreak />
+            <NewChapterAlerts />
+            <LiveActivityFeed />
+            <CountdownDrops />
+          </YourLibrary>
+
+          <WelcomeBoard />
+
           <MoodSelector onMoodSelect={setMoodGenres} />
           <ReadingRoomBanner />
           <FeaturedAuthors />
