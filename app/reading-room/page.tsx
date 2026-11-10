@@ -2086,20 +2086,7 @@ export default function ReadingRoomHome() {
 
           <ReadingRoomBanner />
           <FeaturedAuthors />
-          {/* ── FEATURED STORIES ── */}
-          <FeaturedStories
-            allGenres={allGenres}
-            selectedGenre={selectedGenre}
-            setSelectedGenre={setSelectedGenre}
-            storiesLoading={storiesLoading}
-            storiesError={storiesError}
-            filteredStories={filteredStories}
-            ink={ink}
-            unlocks={unlocks}
-            user={user}
-            onUnlock={unlockStory}
-            DEFAULT_UNLOCK_COST={DEFAULT_UNLOCK_COST}
-          />
+          {/* Featured Stories renders on The Shelf floor above */}
 
           {/* ── HOW IT WORKS ── */}
           <HowItWorks stories={stories} />
