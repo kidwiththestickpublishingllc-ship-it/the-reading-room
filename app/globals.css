@@ -219,6 +219,7 @@ body {
   --text-dim: rgba(26,16,8,0.75);
   --text-faint: rgba(26,16,8,0.45);
   --signal-alert: #C0392B;
+  --gold: #8A6510;
   --signal-ok: #2E6B45;
 
   /* notebook surfaces */
@@ -248,6 +249,7 @@ body {
   --text-dim: rgba(240,236,226,0.75);
   --text-faint: rgba(240,236,226,0.45);
   --signal-alert: #F08A82;
+  --gold: #C9A84C;
   --signal-ok: #7FD6A0;
 
   --paper:        #1C1A17;

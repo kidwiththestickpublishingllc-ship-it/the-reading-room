@@ -215,7 +215,7 @@ const TTL_STYLES = `
   *, *::before, *::after { box-sizing: border-box; }
 
   :root {
-    --gold: #C9A84C;
+    --gold: #8A6510;
     --gold-light: #C9A84C;
     --gold-dim: rgba(201,168,76,0.45);
     --gold-glow: rgba(201,168,76,0.12);
