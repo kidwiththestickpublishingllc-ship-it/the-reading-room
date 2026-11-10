@@ -23,9 +23,9 @@ export default function ContinueReadingStrip() {
 
   return (
     <div style={{
-      background: "linear-gradient(90deg, rgba(201,168,76,0.08), rgba(201,168,76,0.04))",
-      border: "1px solid rgba(201,168,76,0.25)",
-      borderLeft: "3px solid #C9A84C",
+      background: "linear-gradient(90deg, rgba(138, 101, 16, 0.08), rgba(138, 101, 16, 0.04))",
+      border: "1px solid rgba(138, 101, 16, 0.25)",
+      borderLeft: "3px solid var(--gold)",
       borderRadius: 8,
       padding: "12px 20px",
       marginBottom: 24,
@@ -38,7 +38,7 @@ export default function ContinueReadingStrip() {
       <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
         <span style={{ fontSize: 18 }}>📖</span>
         <div>
-          <div style={{ fontSize: 9, letterSpacing: "0.2em", textTransform: "uppercase" as const, color: "rgba(201,168,76,0.7)", marginBottom: 2 }}>Continue Reading</div>
+          <div style={{ fontSize: 9, letterSpacing: "0.2em", textTransform: "uppercase" as const, color: "rgba(138, 101, 16, 0.7)", marginBottom: 2 }}>Continue Reading</div>
           <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 16, color: "var(--text-main)", lineHeight: 1.2 }}>
             {lastRead.title}
             <span style={{ fontSize: 11, color: "var(--text-faint)", marginLeft: 8 }}>· Ch. {lastRead.chapter} · {lastRead.author}</span>

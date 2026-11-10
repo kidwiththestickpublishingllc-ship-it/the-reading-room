@@ -41,24 +41,24 @@ function DropCard({ drop }: { drop: Drop }) {
   return (
     <div style={{
       background: "rgba(15,15,20,0.6)",
-      border: `1px solid ${isLive ? "rgba(74,222,128,0.3)" : "rgba(201,168,76,0.15)"}`,
+      border: `1px solid ${isLive ? "rgba(74,222,128,0.3)" : "rgba(138, 101, 16, 0.15)"}`,
       borderRadius: 10, padding: "16px 20px",
       display: "flex", alignItems: "center",
       justifyContent: "space-between", gap: 16,
     }}>
       <div>
-        <div style={{ fontSize: 9, letterSpacing: "0.2em", textTransform: "uppercase" as const, color: isLive ? "#4ade80" : "rgba(201,168,76,0.6)", marginBottom: 4 }}>
+        <div style={{ fontSize: 9, letterSpacing: "0.2em", textTransform: "uppercase" as const, color: isLive ? "var(--signal-ok)" : "rgba(138, 101, 16, 0.6)", marginBottom: 4 }}>
           {isLive ? "🟢 Live Now" : "⏳ Dropping Soon"}
         </div>
         <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 16, color: "var(--text-main)", lineHeight: 1.2 }}>{drop.title}</div>
         <div style={{ fontSize: 10, color: "var(--text-faint)", marginTop: 2 }}>by {drop.author}</div>
       </div>
       <div style={{ textAlign: "right" as const, flexShrink: 0 }}>
-        <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 22, color: isLive ? "#4ade80" : "#C9A84C", fontWeight: 300 }}>{timeLeft}</div>
+        <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 22, color: isLive ? "var(--signal-ok)" : "var(--gold)", fontWeight: 300 }}>{timeLeft}</div>
         {isLive && (
           <a href={`/reading-room/stories/${drop.slug}/chapters/1`} style={{
             fontSize: 9, letterSpacing: "0.14em", textTransform: "uppercase" as const,
-            color: "#4ade80", textDecoration: "none",
+            color: "var(--signal-ok)", textDecoration: "none",
             border: "1px solid rgba(74,222,128,0.3)",
             padding: "4px 12px", borderRadius: 6, display: "inline-block", marginTop: 6,
           }}>Read Now →</a>
@@ -97,7 +97,7 @@ export default function CountdownDrops() {
 
   return (
     <div style={{ marginBottom: 32 }}>
-      <div style={{ fontSize: 9, letterSpacing: "0.28em", textTransform: "uppercase" as const, color: "rgba(201,168,76,0.6)", marginBottom: 12 }}>
+      <div style={{ fontSize: 9, letterSpacing: "0.28em", textTransform: "uppercase" as const, color: "rgba(138, 101, 16, 0.6)", marginBottom: 12 }}>
         Upcoming Drops
       </div>
       <div style={{ display: "flex", flexDirection: "column" as const, gap: 8 }}>

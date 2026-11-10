@@ -1,52 +1,171 @@
 "use client";
-import React, { useEffect, useState } from "react";
 
-function CarouselControls() {
-  const [index, setIndex] = useState(0);
-  const total = 10;
-  const visible = 4;
-  const max = total - visible;
+// app/reading-room/components/FeaturedAuthors.tsx
+// Authors as newspaper clippings pinned to a cork board.
+// Replaces the carousel, which was configured for ten cards and had three.
+// Monochrome ink on newsprint; each author's accent survives as the pushpin.
+// Prefix: fa-
 
-  useEffect(() => {
-    const track = document.getElementById("ttl-carousel-track");
-    if (!track) return;
-    const cardWidth = track.children[0]
-      ? (track.children[0] as HTMLElement).offsetWidth + 16
-      : 0;
-    track.style.transform = `translateX(-${index * cardWidth}px)`;
-  }, [index]);
+import React from "react";
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setIndex(i => (i >= max ? 0 : i + 1));
-    }, 4500);
-    return () => clearInterval(timer);
-  }, [max]);
+type Author = {
+  slug: string;
+  name: string;
+  role: string;
+  tagline: string;
+  quote: string;
+  genres: string[];
+  accent: string;
+};
 
-  return (
-    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: 20 }}>
-      <div style={{ display: "flex", gap: 6 }}>
-        {Array.from({ length: max + 1 }).map((_, i) => (
-          <button key={i} onClick={() => setIndex(i)} style={{ width: index === i ? 20 : 6, height: 6, borderRadius: 3, background: index === i ? "#C9A84C" : "rgba(255,255,255,0.15)", border: "none", cursor: "pointer", transition: "all 0.3s", padding: 0 }} />
-        ))}
-      </div>
-      <div style={{ display: "flex", gap: 8 }}>
-        <button onClick={() => setIndex(i => Math.max(i - 1, 0))} disabled={index === 0} style={{ width: 38, height: 38, borderRadius: 999, border: "1px solid rgba(201,168,76,0.26)", background: "rgba(201,168,76,0.13)", color: "#E2C97E", fontSize: 16, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", opacity: index === 0 ? 0.25 : 1 }}>←</button>
-        <button onClick={() => setIndex(i => Math.min(i + 1, max))} disabled={index >= max} style={{ width: 38, height: 38, borderRadius: 999, border: "1px solid rgba(201,168,76,0.26)", background: "rgba(201,168,76,0.13)", color: "#E2C97E", fontSize: 16, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", opacity: index >= max ? 0.25 : 1 }}>→</button>
-      </div>
-    </div>
-  );
-}
-
-const AUTHORS = [
+const AUTHORS: Author[] = [
   { slug: "chris-knopf", name: "Chris Knopf", role: "Founding Author · Published", tagline: "Where the dead aren't quite done.", quote: "A ghost grows attached to someone who reminds him of himself.", genres: ["Horror Mystery", "Thriller"], accent: "#9B2335" },
   { slug: "d-cedeno", name: "Daniel Cedeno", role: "Founding Author · Creator", tagline: "Worlds that refuse to stay quiet.", quote: "The sky above Hartford wasn't supposed to flicker like a broken screen… but tonight it did.", genres: ["Sci-Fi", "Young Adult"], accent: "#C9A84C" },
   { slug: "sergio-lastre", name: "Sergio Lastre", role: "Founding Author", tagline: "Stories that live in the marrow.", quote: "Some doors don't open. They remember.", genres: ["Latin Stories", "Contemporary Fiction"], accent: "#6495ED" },
 ];
 
+const STYLES = `
+  .fa-board {
+    --cork: #C2995F;
+    --cork-frame: #A9762F;
+    --news: #EDE7D6;
+    --news-ink: #211B13;
+    --news-dim: rgba(33,27,19,0.66);
+    --news-rule: rgba(33,27,19,0.30);
+
+    position: relative;
+    padding: 40px 36px 44px;
+    border: 14px solid var(--cork-frame);
+    border-radius: 3px;
+    background-color: var(--cork);
+    background-image:
+      radial-gradient(circle at 18% 28%, rgba(0,0,0,0.055) 0.9px, transparent 1.1px),
+      radial-gradient(circle at 68% 62%, rgba(0,0,0,0.045) 0.8px, transparent 1px),
+      radial-gradient(circle at 42% 84%, rgba(255,255,255,0.05) 0.7px, transparent 1px);
+    background-size: 13px 13px, 19px 19px, 23px 23px;
+    box-shadow: 0 14px 34px var(--surface-shadow), inset 0 0 60px rgba(0,0,0,0.14);
+  }
+  :root[data-theme="dark"] .fa-board {
+    --cork: #3B2E20;
+    --cork-frame: #241A11;
+    --news: #2B2721;
+    --news-ink: #E9E3D5;
+    --news-dim: rgba(233,227,213,0.66);
+    --news-rule: rgba(233,227,213,0.28);
+  }
+
+  .fa-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 34px 30px;
+  }
+
+  .fa-clip {
+    position: relative;
+    display: block;
+    text-decoration: none;
+    background: var(--news);
+    color: var(--news-ink);
+    padding: 30px 26px 22px;
+    box-shadow: 0 9px 22px rgba(0,0,0,0.34);
+    transition: transform 0.22s ease, box-shadow 0.22s ease;
+  }
+  /* a deckled bottom edge, so it reads as cut rather than cropped */
+  .fa-clip::after {
+    content: "";
+    position: absolute; left: 0; right: 0; bottom: -6px; height: 7px;
+    background: var(--news);
+    -webkit-mask-image: radial-gradient(circle at 5px 0, transparent 0 4.4px, #000 4.9px);
+    mask-image: radial-gradient(circle at 5px 0, transparent 0 4.4px, #000 4.9px);
+    -webkit-mask-size: 10px 7px;
+    mask-size: 10px 7px;
+  }
+  .fa-clip:nth-child(1) { transform: rotate(-1.1deg); }
+  .fa-clip:nth-child(2) { transform: rotate(0.8deg); }
+  .fa-clip:nth-child(3) { transform: rotate(0.6deg); }
+  .fa-clip:nth-child(4) { transform: rotate(-0.7deg); }
+  .fa-clip:hover { transform: rotate(0deg) translateY(-5px); box-shadow: 0 16px 32px rgba(0,0,0,0.4); }
+
+  .fa-pin {
+    position: absolute; top: -11px; left: 50%; margin-left: -10px;
+    width: 20px; height: 20px; border-radius: 50%;
+    box-shadow: 0 4px 7px rgba(0,0,0,0.5);
+    z-index: 3;
+  }
+
+  .fa-kicker {
+    font: 700 8.5px 'Syne', sans-serif;
+    letter-spacing: 0.26em; text-transform: uppercase;
+    text-align: center; color: var(--news-dim);
+    padding: 7px 0;
+    border-top: 3px double var(--news-rule);
+    border-bottom: 1px solid var(--news-rule);
+  }
+
+  .fa-name {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: clamp(27px, 3vw, 36px);
+    font-weight: 600; line-height: 1.04;
+    text-align: center; margin: 15px 0 10px;
+    color: var(--news-ink);
+  }
+
+  .fa-standfirst {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 15.5px; font-style: italic; line-height: 1.45;
+    text-align: center; color: var(--news-dim);
+    padding-bottom: 14px; margin-bottom: 14px;
+    border-bottom: 1px solid var(--news-rule);
+  }
+
+  .fa-quote {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 17px; line-height: 1.68;
+    color: var(--news-ink);
+    padding-left: 14px;
+    border-left: 2px solid var(--news-rule);
+    margin-bottom: 18px;
+  }
+
+  .fa-filed {
+    font: 700 8px 'Syne', sans-serif;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--news-dim);
+    padding-top: 11px;
+    border-top: 1px solid var(--news-rule);
+    display: flex; justify-content: space-between; gap: 12px;
+  }
+  .fa-filed span:last-child { white-space: nowrap; }
+
+  /* the classified ad */
+  .fa-ad {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; padding: 34px 26px;
+  }
+  .fa-ad-rule { border: 2px double var(--news-rule); padding: 24px 20px; width: 100%; }
+  .fa-ad-k { font: 700 8px 'Syne', sans-serif; letter-spacing: 0.3em; text-transform: uppercase; color: var(--news-dim); }
+  .fa-ad-h {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 26px; font-weight: 600; line-height: 1.15; margin: 12px 0 10px;
+  }
+  .fa-ad-s { font-size: 12.5px; line-height: 1.6; color: var(--news-dim); margin-bottom: 18px; }
+  .fa-ad-go {
+    font: 700 9px 'Syne', sans-serif; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--news-ink); border-bottom: 1px solid var(--news-rule); padding-bottom: 3px;
+  }
+
+  @media (max-width: 860px) {
+    .fa-board { padding: 26px 18px 30px; border-width: 10px; }
+    .fa-grid { grid-template-columns: 1fr; gap: 28px; }
+    .fa-clip { transform: none !important; }
+  }
+`;
+
 export default function FeaturedAuthors() {
   return (
-    <div className="ttl-section" style={{ background: "linear-gradient(135deg, var(--plate), var(--plate))", border: "1px solid rgba(201,168,76,0.25)", borderRadius: 16 }}>
+    <div className="ttl-section fa-board">
+      <style>{STYLES}</style>
+
       <div className="ttl-section-header">
         <div>
           <div className="ttl-section-accent">
@@ -60,46 +179,35 @@ export default function FeaturedAuthors() {
         <a href="/reading-room/authors" className="ttl-section-link">Full Directory →</a>
       </div>
       <div className="ttl-divider" />
-      <div style={{ position: "relative" }}>
-        <div style={{ overflow: "hidden", borderRadius: 16 }}>
-          <div id="ttl-carousel-track" style={{ display: "flex", gap: 16, transition: "transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)" }}>
-            {AUTHORS.map((author) => {
-              const initial = author.name.split(" ").pop()?.[0] ?? author.name[0];
-              return (
-                <a key={author.slug} href={`/reading-room/authors/${author.slug}`} style={{ flexShrink: 0, width: "calc(25% - 12px)", minHeight: 420, borderRadius: 16, background: "#111", border: `1px solid ${author.accent}22`, textDecoration: "none", display: "flex", flexDirection: "column", position: "relative", overflow: "hidden", transition: "transform 0.3s" }}
-                  onMouseEnter={e => (e.currentTarget.style.transform = "translateY(-6px)")}
-                  onMouseLeave={e => (e.currentTarget.style.transform = "translateY(0)")}>
-                  <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, background: `linear-gradient(90deg, transparent, ${author.accent}, transparent)` }} />
-                  <div style={{ position: "absolute", top: -40, right: -40, width: 180, height: 180, borderRadius: "50%", background: author.accent, opacity: 0.1, filter: "blur(40px)", pointerEvents: "none" }} />
-                  <div style={{ padding: "28px 24px 24px", display: "flex", flexDirection: "column", flex: 1, position: "relative", zIndex: 1 }}>
-                    <div style={{ width: 64, height: 64, borderRadius: 12, background: "linear-gradient(135deg, #1a1a24, #252535)", border: `1px solid ${author.accent}40`, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Cormorant Garamond', serif", fontSize: 28, color: author.accent, marginBottom: 20 }}>{initial}</div>
-                    <div style={{ fontSize: 8, letterSpacing: "0.22em", textTransform: "uppercase" as const, color: author.accent, opacity: 0.7, marginBottom: 8 }}>{author.role}</div>
-                    <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 24, fontWeight: 300, color: "var(--text-main)", marginBottom: 6, lineHeight: 1.1 }}>{author.name}</div>
-                    <div style={{ fontSize: 11, color: "var(--text-main)", marginBottom: 16, lineHeight: 1.55 }}>{author.tagline}</div>
-                    <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 14, fontStyle: "italic", color: "var(--text-main)", lineHeight: 1.7, borderLeft: `2px solid ${author.accent}30`, paddingLeft: 14, marginBottom: 20, flex: 1 }}>"{author.quote}"</div>
-                    <div style={{ display: "flex", flexWrap: "wrap" as const, gap: 5, marginBottom: 20 }}>
-                      {author.genres.map(g => (
-                        <span key={g} style={{ fontSize: 8, letterSpacing: "0.12em", textTransform: "uppercase" as const, padding: "3px 9px", borderRadius: 999, border: "1px solid rgba(100,149,237,0.22)", color: "#84b0f5", background: "rgba(100,149,237,0.22)" }}>{g}</span>
-                      ))}
-                    </div>
-                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", paddingTop: 14, borderTop: "1px solid var(--edge)" }}>
-                      <span style={{ fontSize: 9, letterSpacing: "0.16em", textTransform: "uppercase" as const, color: "var(--text-faint)" }}>🪶 View profile</span>
-                      <span style={{ fontSize: 16, color: author.accent }}>↗</span>
-                    </div>
-                  </div>
-                </a>
-              );
-            })}
-            <div style={{ flexShrink: 0, width: "calc(25% - 12px)", minHeight: 420, borderRadius: 16, background: "linear-gradient(135deg, #0f0f18, #151520)", border: "1px solid rgba(201,168,76,0.2)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "32px 24px", textAlign: "center" as const, position: "relative", overflow: "hidden" }}>
-              <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, background: "linear-gradient(90deg, transparent, #C9A84C, transparent)" }} />
-              <div style={{ fontSize: 8, letterSpacing: "0.3em", textTransform: "uppercase" as const, color: "rgba(201,168,76,0.4)", marginBottom: 20 }}>Featured Placement</div>
-              <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 22, fontWeight: 300, color: "var(--text-main)", lineHeight: 1.3, marginBottom: 12 }}>Your Story<br />Could Live Here</div>
-              <div style={{ fontSize: 11, color: "var(--text-faint)", lineHeight: 1.65, marginBottom: 24 }}>Reach thousands of readers. Feature your work in the Reading Room carousel.</div>
-              <a href="/reading-room/authors" style={{ fontSize: 9, letterSpacing: "0.18em", textTransform: "uppercase" as const, color: "#E2C97E", border: "1px solid rgba(201,168,76,0.38)", background: "rgba(201,168,76,0.13)", padding: "8px 20px", borderRadius: 999, textDecoration: "none" }}>Learn More →</a>
+
+      <div className="fa-grid">
+        {AUTHORS.map(author => (
+          <a key={author.slug} className="fa-clip" href={`/reading-room/authors/${author.slug}`}>
+            <span
+              className="fa-pin"
+              aria-hidden="true"
+              style={{ background: `radial-gradient(circle at 34% 30%, #ffffff88, ${author.accent} 55%, #00000055)` }}
+            />
+            <div className="fa-kicker">{author.role}</div>
+            <h3 className="fa-name">{author.name}</h3>
+            <div className="fa-standfirst">{author.tagline}</div>
+            <p className="fa-quote">&ldquo;{author.quote}&rdquo;</p>
+            <div className="fa-filed">
+              <span>Filed under: {author.genres.join(" · ")}</span>
+              <span>Read →</span>
             </div>
+          </a>
+        ))}
+
+        <div className="fa-clip fa-ad">
+          <span className="fa-pin" aria-hidden="true" style={{ background: "radial-gradient(circle at 34% 30%, #ffffff88, #5A6B7A 55%, #00000055)" }} />
+          <div className="fa-ad-rule">
+            <div className="fa-ad-k">Classified</div>
+            <div className="fa-ad-h">Your Story<br />Could Live Here</div>
+            <div className="fa-ad-s">Reach thousands of readers. Feature your work on the board.</div>
+            <a href="/reading-room/authors" className="fa-ad-go">Enquire →</a>
           </div>
         </div>
-        <CarouselControls />
       </div>
     </div>
   );

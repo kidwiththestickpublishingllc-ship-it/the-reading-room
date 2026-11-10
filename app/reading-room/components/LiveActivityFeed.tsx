@@ -46,7 +46,7 @@ export default function LiveActivityFeed() {
       marginBottom: 32,
     }}>
       <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 16 }}>
-        <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#4ade80", boxShadow: "0 0 6px #4ade80" }} />
+        <div style={{ width: 6, height: 6, borderRadius: "50%", background: "var(--signal-ok)", boxShadow: "0 0 6px var(--signal-ok)" }} />
         <span style={{ fontSize: 9, letterSpacing: "0.24em", textTransform: "uppercase" as const, color: "rgba(74,222,128,0.7)" }}>Live Activity</span>
       </div>
       <div style={{ display: "flex", flexDirection: "column" as const, gap: 10 }}>
@@ -55,7 +55,7 @@ export default function LiveActivityFeed() {
             <div style={{ fontSize: 12, color: "var(--text-dim)", lineHeight: 1.4 }}>
               <span style={{ color: "var(--text-main)", fontWeight: 600 }}>{a.reader}</span>
               {" "}{a.action}{" "}
-              <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 13, color: "#C9A84C", fontStyle: "italic" }}>{a.story}</span>
+              <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 13, color: "var(--gold)", fontStyle: "italic" }}>{a.story}</span>
             </div>
             <span style={{ fontSize: 9, color: "var(--text-faint)", whiteSpace: "nowrap" as const, letterSpacing: "0.06em" }}>{a.time}</span>
           </div>

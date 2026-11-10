@@ -29,6 +29,12 @@ const RULES = [
   // the glow gold becomes the paper gold, alpha intact
   { re: /rgba\(201,\s*168,\s*76,\s*([\d.]+)\)/g, to: (_, a) => `rgba(138, 101, 16, ${a})` },
 
+  // near-black panel grounds that assumed a dark page
+  { fill: true, re: /(background(?:-color|Color)?:\s*"?)rgba\(15,\s*15,\s*20,\s*[\d.]+\)/g,
+    to: (_, p) => p + 'var(--wash)' },
+  { fill: true, re: /(background(?:-color|Color)?:\s*"?)rgba\(8,\s*8,\s*8,\s*[\d.]+\)/g,
+    to: (_, p) => p + 'var(--plate)' },
+
   // white used as a FILL becomes a warm paper wash, not a border colour
   { fill: true, re: /(background(?:-color|Color)?:\s*"?)rgba\(255,\s*255,\s*255,\s*0\.0[0-9]\)/g,
     to: (_, p) => p + 'var(--wash, rgba(122,96,40,0.06))' },
