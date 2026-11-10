@@ -47,6 +47,13 @@ const GOLD = "#C9A84C";
 const GOLD_LIGHT = "#E2C97E";
 const DEFAULT_THEME: StageTheme = { bgFrom: "#16263f", bgTo: "#0f1c30", mode: "dark" };
 
+function hexToRgba(hex: string, a: number): string {
+  const h = hex.replace("#", "");
+  const n = h.length === 3 ? h.split("").map(function (c) { return c + c; }).join("") : h;
+  const num = parseInt(n, 16);
+  return "rgba(" + ((num >> 16) & 255) + ", " + ((num >> 8) & 255) + ", " + (num & 255) + ", " + a + ")";
+}
+
 const DEFAULT_PROMOS: PromoCard[] = [
   { label: "Featured", title: "Your story could live here", sub: "Promote your work in the Reading Room.", href: "/reading-room/authors" },
   { label: "Support", title: "Buy Ink, back a writer", sub: "Every unlock pays the author directly.", href: "/reading-room/buy-ink" },
@@ -71,7 +78,14 @@ export default function StoryStage({
   const rootRef = useRef<HTMLDivElement | null>(null);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  const isLight = theme.mode === "light";
+  // The stage sits on paper now, so the light palette always applies.
+  const isLight = true;
+
+  // The story's colour survives as a highlighter swipe over the description.
+  const hlMark = hexToRgba(theme.bgFrom, 0.32);
+  const hlGradient =
+    "linear-gradient(104deg, rgba(0,0,0,0) 0.3%, " + hlMark +
+    " 1.8%, " + hlMark + " 97%, rgba(0,0,0,0) 99%)";
   const txtMain = isLight ? "#1a1208" : "#ffffff";
   const txtDim = isLight ? "rgba(26,18,8,0.85)" : "#ffffff";
   const txtFaint = isLight ? "rgba(26,18,8,0.62)" : "rgba(255,255,255,0.72)";
@@ -153,7 +167,7 @@ export default function StoryStage({
       className="ss-stage"
       ref={rootRef}
       style={{
-        background: `linear-gradient(135deg, ${theme.bgFrom}, ${theme.bgTo})`,
+        background: "var(--plate)",
         border: `1px solid ${GOLD}55`,
       }}
     >
@@ -221,7 +235,9 @@ export default function StoryStage({
           {writer?.bio || writer?.tagline || `${story.author} publishes original fiction at The Tiniest Library.`}
         </div>
         <div className="ss-desc-label" style={{ color: GOLD, borderColor: divider }}>The Story</div>
-        <div className="ss-desc" style={{ color: txtDim }}>{story.description}</div>
+        <div className="ss-desc" style={{ color: txtMain }}>
+          <span className="ss-desc-mark" style={{ backgroundImage: hlGradient }}>{story.description}</span>
+        </div>
         {story.id ? (
           <div className="ss-social-wrap">
             <StorySocial storyId={story.id} storySlug={story.slug} storyTitle={story.title} userId={userId} />
@@ -273,7 +289,7 @@ export default function StoryStage({
       </div>
 
       <style jsx>{`
-        .ss-stage { position: relative; border-radius: 16px; overflow: hidden; box-shadow: 0 16px 48px rgba(0,0,0,0.4); display: grid; grid-template-columns: 240px 1.1fr 1fr 0.9fr; min-height: 360px; margin-bottom: 16px; }
+        .ss-stage { position: relative; border-radius: 4px; overflow: hidden; box-shadow: 0 14px 34px var(--surface-shadow); display: grid; grid-template-columns: 240px 1.1fr 1fr 0.9fr; min-height: 360px; margin-bottom: 16px; }
         .ss-goldline { position: absolute; top: 0; left: 0; right: 0; height: 2px; z-index: 5; }
         .ss-zone { padding: 26px 22px; display: flex; flex-direction: column; min-width: 0; }
         .ss-zone-label { font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 0.24em; text-transform: uppercase; opacity: 0.85; margin-bottom: 14px; }
@@ -303,17 +319,18 @@ export default function StoryStage({
         .ss-unlock-btn:disabled { opacity: 0.5; cursor: default; }
 
         .ss-author-head { display: flex; gap: 14px; align-items: center; margin-bottom: 12px; }
-        .ss-author-photo { width: 56px; height: 56px; border-radius: 12px; flex-shrink: 0; background: linear-gradient(135deg, #1e2e48, #2a3f60); border: 1px solid; display: flex; align-items: center; justify-content: center; font-family: 'Cinzel', serif; font-size: 22px; overflow: hidden; }
+        .ss-author-photo { width: 56px; height: 56px; border-radius: 2px; flex-shrink: 0; background: var(--plate); border: 1px solid; display: flex; align-items: center; justify-content: center; font-family: 'Cinzel', serif; font-size: 22px; overflow: hidden; }
         .ss-author-photo img { width: 100%; height: 100%; object-fit: cover; }
         .ss-author-name { font-family: 'Lora', serif; font-size: 16px; margin-bottom: 2px; }
         .ss-author-role { font-family: 'Source Sans 3', sans-serif; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; }
         .ss-author-bio { font-family: 'Lora', serif; font-size: 13px; line-height: 1.55; margin-bottom: 14px; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
         .ss-desc-label { font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 0.24em; text-transform: uppercase; opacity: 0.85; padding-top: 12px; border-top: 1px solid; margin-bottom: 8px; }
-        .ss-desc { font-family: 'Lora', serif; font-size: 13px; line-height: 1.6; flex: 1; display: -webkit-box; -webkit-line-clamp: 5; -webkit-box-orient: vertical; overflow: hidden; }
+        .ss-desc { font-family: 'Lora', serif; font-size: 13px; line-height: 1.85; flex: 1; display: -webkit-box; -webkit-line-clamp: 5; -webkit-box-orient: vertical; overflow: hidden; }
+        .ss-desc-mark { display: inline; -webkit-box-decoration-break: clone; box-decoration-break: clone; padding: 2px 4px; margin: 0 -3px; background-repeat: no-repeat; border-radius: 1px; }
         .ss-social-wrap { margin-top: 12px; }
 
         .ss-media-zone { }
-        .ss-media-box { width: 100%; flex: 1; min-height: 200px; border-radius: 10px; overflow: hidden; border: 1px solid; background: #0d1726; }
+        .ss-media-box { width: 100%; flex: 1; min-height: 200px; border-radius: 2px; overflow: hidden; border: 1px dashed var(--edge); background: var(--plate); }
         .ss-media-box video, .ss-media-box img { width: 100%; height: 100%; object-fit: cover; display: block; }
         .ss-media-empty { width: 100%; flex: 1; min-height: 200px; border-radius: 10px; border: 1px dashed; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; }
         .ss-media-empty span { font-size: 28px; }
