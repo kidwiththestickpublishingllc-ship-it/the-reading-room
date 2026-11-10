@@ -1495,9 +1495,8 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
   background: var(--plate);
 }
 
-.ttl-how-card,
-.ttl-panel,
-/* .ttl-ink-pack borders come from --ink-border in the main block */
+/* .ttl-how-card, .ttl-panel and .ttl-ink-pack take their borders
+   from --ink-border in the main block above. */
 
   @media (max-width: 768px) {
     #ttl-carousel-track > a, #ttl-carousel-track > div {

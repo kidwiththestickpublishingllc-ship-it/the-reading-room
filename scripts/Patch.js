@@ -20,52 +20,15 @@ const fs = require('fs');
 const path = require('path');
 
 const EDITS = [
-
-  {
-    file: 'app/components/PageChatWidget.tsx',
-    label: 'scope the chat widget palette to the widget',
-    from: `  :root {
-    --gold: #C9A84C;
-    --gold-light: #E2C97E;
-    --gold-dim: rgba(201,168,76,0.35);
-    --gold-glow: rgba(201,168,76,0.13);
-    --blue: #6495ED;
-    --blue-dim: rgba(100,149,237,0.22);
-    --ink-bg: #0a0a0a;
-    --ink-surface: #111111;
-    --ink-surface2: #181818;
-    --ink-border: rgba(255,255,255,0.08);
-    --ink-border-gold: rgba(201,168,76,0.28);
-  }`,
-    to: `  /* Scoped to the widget's own elements. These were declared on :root,
-     which meant a chat widget mounted in layout.tsx redefined the whole
-     site's palette on every page - and won ties, because its style tag is
-     injected after the page's. */
-  [class^="page-"], [class*=" page-"] {
-    --gold: #C9A84C;
-    --gold-light: #E2C97E;
-    --gold-dim: rgba(201,168,76,0.35);
-    --gold-glow: rgba(201,168,76,0.13);
-    --blue: #6495ED;
-    --blue-dim: rgba(100,149,237,0.22);
-    --ink-bg: #0a0a0a;
-    --ink-surface: #111111;
-    --ink-surface2: #181818;
-    --ink-border: rgba(255,255,255,0.08);
-    --ink-border-gold: rgba(201,168,76,0.28);
-  }`,
-  },
-
   {
     file: 'app/reading-room/page.tsx',
-    label: 'remove the stray !important ink-pack override',
-    from: `.ttl-ink-pack {
-  border: 1px solid rgba(0,0,0,0.1) !important;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.06) !important;
-}`,
-    to: `/* .ttl-ink-pack borders come from --ink-border in the main block */`,
+    label: 'repair the dangling selector list I left behind',
+    from: `.ttl-how-card,
+.ttl-panel,
+/* .ttl-ink-pack borders come from --ink-border in the main block */`,
+    to: `/* .ttl-how-card, .ttl-panel and .ttl-ink-pack take their borders
+   from --ink-border in the main block above. */`,
   },
-
 ];
 
 // ── engine ───────────────────────────────────────────────────────────
