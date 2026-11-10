@@ -1497,10 +1497,7 @@ box-shadow: 0 2px 40px rgba(0,80,200,0.12), 0 0 0 1px rgba(100,149,237,0.08);
 
 .ttl-how-card,
 .ttl-panel,
-.ttl-ink-pack {
-  border: 1px solid rgba(0,0,0,0.1) !important;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.06) !important;
-}
+/* .ttl-ink-pack borders come from --ink-border in the main block */
 
   @media (max-width: 768px) {
     #ttl-carousel-track > a, #ttl-carousel-track > div {

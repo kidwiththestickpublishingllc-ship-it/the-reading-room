@@ -531,7 +531,11 @@ export default function PageChatWidget() {
 // Styles
 // =============================================================
 const WIDGET_STYLES = `
-  :root {
+  /* Scoped to the widget's own elements. These were declared on :root,
+     which meant a chat widget mounted in layout.tsx redefined the whole
+     site's palette on every page - and won ties, because its style tag is
+     injected after the page's. */
+  [class^="page-"], [class*=" page-"] {
     --gold: #C9A84C;
     --gold-light: #E2C97E;
     --gold-dim: rgba(201,168,76,0.35);

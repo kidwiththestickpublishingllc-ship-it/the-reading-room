@@ -28,7 +28,7 @@ export default function MoodSelector({ onMoodSelect }: MoodSelectorProps) {
 
   return (
     <div style={{ marginBottom: 32 }}>
-      <div style={{ fontSize: 9, letterSpacing: "0.28em", textTransform: "uppercase" as const, color: "rgba(201,168,76,0.6)", marginBottom: 16 }}>
+      <div style={{ fontSize: 9, letterSpacing: "0.28em", textTransform: "uppercase" as const, color: "rgba(138, 101, 16, 0.6)", marginBottom: 16 }}>
         What are you in the mood for?
       </div>
       <div style={{ display: "flex", gap: 10, flexWrap: "wrap" as const }}>
@@ -54,7 +54,7 @@ export default function MoodSelector({ onMoodSelect }: MoodSelectorProps) {
       </div>
       {activeMood && (
         <div style={{ marginTop: 12, fontSize: 10, color: "var(--text-faint)", letterSpacing: "0.08em" }}>
-          Showing stories that match <span style={{ color: "#C9A84C" }}>{activeMood}</span> — <button onClick={() => { setActiveMood(null); onMoodSelect([]); }} style={{ background: "none", border: "none", color: "var(--text-faint)", cursor: "pointer", fontSize: 10, textDecoration: "underline", padding: 0 }}>clear</button>
+          Showing stories that match <span style={{ color: "var(--gold)" }}>{activeMood}</span> — <button onClick={() => { setActiveMood(null); onMoodSelect([]); }} style={{ background: "none", border: "none", color: "var(--text-faint)", cursor: "pointer", fontSize: 10, textDecoration: "underline", padding: 0 }}>clear</button>
         </div>
       )}
     </div>

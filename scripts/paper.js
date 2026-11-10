@@ -93,6 +93,9 @@ for (const rel of files) {
 
     // a 1px element with a background is a divider, so it keeps the edge colour
     const isHairline = /height:\s*1\b/.test(after);
+
+    // a colour sitting in a data row is identity, not surface - leave it alone
+    if (/\b(label|emoji|slug|genres|packs|tier|mood)\s*:/.test(after)) continue;
     for (const r of RULES) {
       if (isHairline && r.fill) continue;
       after = after.replace(r.re, r.to);

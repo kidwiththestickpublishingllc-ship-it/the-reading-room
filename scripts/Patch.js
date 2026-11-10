@@ -22,24 +22,48 @@ const path = require('path');
 const EDITS = [
 
   {
-    file: 'app/globals.css',
-    label: '--gold becomes a theme pair, light',
-    from: `  --signal-alert: #C0392B;`,
-    to: `  --signal-alert: #C0392B;
-  --gold: #8A6510;`,
+    file: 'app/components/PageChatWidget.tsx',
+    label: 'scope the chat widget palette to the widget',
+    from: `  :root {
+    --gold: #C9A84C;
+    --gold-light: #E2C97E;
+    --gold-dim: rgba(201,168,76,0.35);
+    --gold-glow: rgba(201,168,76,0.13);
+    --blue: #6495ED;
+    --blue-dim: rgba(100,149,237,0.22);
+    --ink-bg: #0a0a0a;
+    --ink-surface: #111111;
+    --ink-surface2: #181818;
+    --ink-border: rgba(255,255,255,0.08);
+    --ink-border-gold: rgba(201,168,76,0.28);
+  }`,
+    to: `  /* Scoped to the widget's own elements. These were declared on :root,
+     which meant a chat widget mounted in layout.tsx redefined the whole
+     site's palette on every page - and won ties, because its style tag is
+     injected after the page's. */
+  [class^="page-"], [class*=" page-"] {
+    --gold: #C9A84C;
+    --gold-light: #E2C97E;
+    --gold-dim: rgba(201,168,76,0.35);
+    --gold-glow: rgba(201,168,76,0.13);
+    --blue: #6495ED;
+    --blue-dim: rgba(100,149,237,0.22);
+    --ink-bg: #0a0a0a;
+    --ink-surface: #111111;
+    --ink-surface2: #181818;
+    --ink-border: rgba(255,255,255,0.08);
+    --ink-border-gold: rgba(201,168,76,0.28);
+  }`,
   },
-  {
-    file: 'app/globals.css',
-    label: '--gold becomes a theme pair, dark',
-    from: `  --signal-alert: #F08A82;`,
-    to: `  --signal-alert: #F08A82;
-  --gold: #C9A84C;`,
-  },
+
   {
     file: 'app/reading-room/page.tsx',
-    label: 'homepage gold → the paper tone',
-    from: `    --gold: #C9A84C;`,
-    to: `    --gold: #8A6510;`,
+    label: 'remove the stray !important ink-pack override',
+    from: `.ttl-ink-pack {
+  border: 1px solid rgba(0,0,0,0.1) !important;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06) !important;
+}`,
+    to: `/* .ttl-ink-pack borders come from --ink-border in the main block */`,
   },
 
 ];

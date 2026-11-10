@@ -69,7 +69,7 @@ export default function ChapterUnlocks({ bookId, chapterNumber }: Props) {
       position: "fixed", bottom: 0, left: 0, right: 0, zIndex: 50,
       transform: open ? "translateY(0)" : "translateY(100%)",
       transition: "transform 0.4s ease",
-      background: "#111", borderTop: "1px solid rgba(201,168,76,0.3)",
+      background: "var(--plate)", borderTop: "1px solid rgba(138, 101, 16, 0.3)",
       maxHeight: "60vh", overflowY: "auto",
       fontFamily: "'Syne', sans-serif"
     }}>
@@ -78,7 +78,7 @@ export default function ChapterUnlocks({ bookId, chapterNumber }: Props) {
         {/* Header */}
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
           <div>
-            <p style={{ fontSize: 10, letterSpacing: "0.3em", textTransform: "uppercase", color: "#C9A84C", marginBottom: 4 }}>
+            <p style={{ fontSize: 10, letterSpacing: "0.3em", textTransform: "uppercase", color: "var(--gold)", marginBottom: 4 }}>
               Chapter Complete
             </p>
             <h3 style={{ fontSize: 20, color: "var(--text-main)", fontFamily: "'Cormorant Garamond', serif", fontWeight: 300 }}>
@@ -98,18 +98,18 @@ export default function ChapterUnlocks({ bookId, chapterNumber }: Props) {
             <button onClick={() => setActiveTab("glossary")} style={{
               fontSize: 10, letterSpacing: "0.2em", textTransform: "uppercase",
               padding: "6px 16px", borderRadius: 999, cursor: "pointer",
-              background: activeTab === "glossary" ? "#C9A84C" : "transparent",
+              background: activeTab === "glossary" ? "var(--gold)" : "transparent",
               color: activeTab === "glossary" ? "#000" : "rgba(255,255,255,0.4)",
-              border: "1px solid rgba(201,168,76,0.4)", fontWeight: 700
+              border: "1px solid rgba(138, 101, 16, 0.4)", fontWeight: 700
             }}>Glossary ({glossary.length})</button>
           )}
           {characters.length > 0 && (
             <button onClick={() => setActiveTab("characters")} style={{
               fontSize: 10, letterSpacing: "0.2em", textTransform: "uppercase",
               padding: "6px 16px", borderRadius: 999, cursor: "pointer",
-              background: activeTab === "characters" ? "#C9A84C" : "transparent",
+              background: activeTab === "characters" ? "var(--gold)" : "transparent",
               color: activeTab === "characters" ? "#000" : "rgba(255,255,255,0.4)",
-              border: "1px solid rgba(201,168,76,0.4)", fontWeight: 700
+              border: "1px solid rgba(138, 101, 16, 0.4)", fontWeight: 700
             }}>Characters ({characters.length})</button>
           )}
         </div>
@@ -119,10 +119,10 @@ export default function ChapterUnlocks({ bookId, chapterNumber }: Props) {
           <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
             {glossary.map(term => (
               <div key={term.id} style={{
-                background: "rgba(201,168,76,0.06)", border: "1px solid rgba(201,168,76,0.15)",
+                background: "rgba(138, 101, 16, 0.06)", border: "1px solid rgba(138, 101, 16, 0.15)",
                 borderRadius: 8, padding: "14px 18px"
               }}>
-                <p style={{ fontSize: 13, fontWeight: 700, color: "#C9A84C", marginBottom: 6 }}>{term.term}</p>
+                <p style={{ fontSize: 13, fontWeight: 700, color: "var(--gold)", marginBottom: 6 }}>{term.term}</p>
                 <p style={{ fontSize: 13, color: "var(--text-dim)", lineHeight: 1.7 }}>{term.definition}</p>
               </div>
             ))}
