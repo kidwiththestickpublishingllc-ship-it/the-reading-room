@@ -39,9 +39,9 @@ export default function ContinueReadingStrip() {
         <span style={{ fontSize: 18 }}>📖</span>
         <div>
           <div style={{ fontSize: 9, letterSpacing: "0.2em", textTransform: "uppercase" as const, color: "rgba(201,168,76,0.7)", marginBottom: 2 }}>Continue Reading</div>
-          <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 16, color: "#f0ece2", lineHeight: 1.2 }}>
+          <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 16, color: "var(--text-main)", lineHeight: 1.2 }}>
             {lastRead.title}
-            <span style={{ fontSize: 11, color: "rgba(232,228,218,0.4)", marginLeft: 8 }}>· Ch. {lastRead.chapter} · {lastRead.author}</span>
+            <span style={{ fontSize: 11, color: "var(--text-faint)", marginLeft: 8 }}>· Ch. {lastRead.chapter} · {lastRead.author}</span>
           </div>
         </div>
       </div>
@@ -59,7 +59,7 @@ export default function ContinueReadingStrip() {
         </a>
         <button onClick={() => setDismissed(true)} style={{
           background: "transparent", border: "none",
-          color: "rgba(232,228,218,0.3)", fontSize: 16,
+          color: "var(--text-faint)", fontSize: 16,
           cursor: "pointer", padding: 4,
         }}>✕</button>
       </div>

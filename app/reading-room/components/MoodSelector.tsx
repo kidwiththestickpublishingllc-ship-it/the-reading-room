@@ -40,7 +40,7 @@ export default function MoodSelector({ onMoodSelect }: MoodSelectorProps) {
               padding: "10px 20px", borderRadius: 999,
               border: `1px solid ${active ? mood.color : "rgba(255,255,255,0.1)"}`,
               background: active ? `${mood.color}22` : "transparent",
-              color: active ? mood.color : "rgba(232,228,218,0.6)",
+              color: active ? mood.color : "var(--text-dim)",
               fontFamily: "'Times New Roman', serif",
               fontSize: 12, letterSpacing: "0.1em",
               cursor: "pointer", transition: "all 0.2s",
@@ -53,8 +53,8 @@ export default function MoodSelector({ onMoodSelect }: MoodSelectorProps) {
         })}
       </div>
       {activeMood && (
-        <div style={{ marginTop: 12, fontSize: 10, color: "rgba(232,228,218,0.3)", letterSpacing: "0.08em" }}>
-          Showing stories that match <span style={{ color: "#C9A84C" }}>{activeMood}</span> — <button onClick={() => { setActiveMood(null); onMoodSelect([]); }} style={{ background: "none", border: "none", color: "rgba(232,228,218,0.4)", cursor: "pointer", fontSize: 10, textDecoration: "underline", padding: 0 }}>clear</button>
+        <div style={{ marginTop: 12, fontSize: 10, color: "var(--text-faint)", letterSpacing: "0.08em" }}>
+          Showing stories that match <span style={{ color: "#C9A84C" }}>{activeMood}</span> — <button onClick={() => { setActiveMood(null); onMoodSelect([]); }} style={{ background: "none", border: "none", color: "var(--text-faint)", cursor: "pointer", fontSize: 10, textDecoration: "underline", padding: 0 }}>clear</button>
         </div>
       )}
     </div>

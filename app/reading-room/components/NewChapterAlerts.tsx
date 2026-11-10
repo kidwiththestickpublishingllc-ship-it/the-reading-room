@@ -59,10 +59,10 @@ export default function NewChapterAlerts() {
             <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
               <span style={{ fontSize: 14 }}>📬</span>
               <div>
-                <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 14, color: "#f0ece2" }}>
+                <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 14, color: "var(--text-main)" }}>
                   {alert.story_title}
                 </span>
-                <span style={{ fontSize: 10, color: "rgba(232,228,218,0.4)", marginLeft: 8 }}>
+                <span style={{ fontSize: 10, color: "var(--text-faint)", marginLeft: 8 }}>
                   Ch. {alert.chapter_number} · {alert.author_name}
                 </span>
               </div>
@@ -75,7 +75,7 @@ export default function NewChapterAlerts() {
                 padding: "5px 12px", borderRadius: 6,
               }}>Read →</a>
               <button onClick={() => setDismissed(d => [...d, `${alert.story_slug}-${alert.chapter_number}`])} style={{
-                background: "none", border: "none", color: "rgba(232,228,218,0.3)",
+                background: "none", border: "none", color: "var(--text-faint)",
                 cursor: "pointer", fontSize: 12, padding: 2,
               }}>✕</button>
             </div>

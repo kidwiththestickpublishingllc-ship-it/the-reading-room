@@ -50,8 +50,8 @@ function DropCard({ drop }: { drop: Drop }) {
         <div style={{ fontSize: 9, letterSpacing: "0.2em", textTransform: "uppercase" as const, color: isLive ? "#4ade80" : "rgba(201,168,76,0.6)", marginBottom: 4 }}>
           {isLive ? "🟢 Live Now" : "⏳ Dropping Soon"}
         </div>
-        <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 16, color: "#f0ece2", lineHeight: 1.2 }}>{drop.title}</div>
-        <div style={{ fontSize: 10, color: "rgba(232,228,218,0.4)", marginTop: 2 }}>by {drop.author}</div>
+        <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 16, color: "var(--text-main)", lineHeight: 1.2 }}>{drop.title}</div>
+        <div style={{ fontSize: 10, color: "var(--text-faint)", marginTop: 2 }}>by {drop.author}</div>
       </div>
       <div style={{ textAlign: "right" as const, flexShrink: 0 }}>
         <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 22, color: isLive ? "#4ade80" : "#C9A84C", fontWeight: 300 }}>{timeLeft}</div>

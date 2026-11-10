@@ -41,7 +41,7 @@ export default function LiveActivityFeed() {
   return (
     <div style={{
       background: "rgba(15,15,20,0.6)",
-      border: "1px solid rgba(255,255,255,0.06)",
+      border: "1px solid var(--edge)",
       borderRadius: 12, padding: "20px 24px",
       marginBottom: 32,
     }}>
@@ -52,12 +52,12 @@ export default function LiveActivityFeed() {
       <div style={{ display: "flex", flexDirection: "column" as const, gap: 10 }}>
         {activities.map(a => (
           <div key={a.id} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12 }}>
-            <div style={{ fontSize: 12, color: "rgba(232,228,218,0.5)", lineHeight: 1.4 }}>
-              <span style={{ color: "#f0ece2", fontWeight: 600 }}>{a.reader}</span>
+            <div style={{ fontSize: 12, color: "var(--text-dim)", lineHeight: 1.4 }}>
+              <span style={{ color: "var(--text-main)", fontWeight: 600 }}>{a.reader}</span>
               {" "}{a.action}{" "}
               <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 13, color: "#C9A84C", fontStyle: "italic" }}>{a.story}</span>
             </div>
-            <span style={{ fontSize: 9, color: "rgba(232,228,218,0.2)", whiteSpace: "nowrap" as const, letterSpacing: "0.06em" }}>{a.time}</span>
+            <span style={{ fontSize: 9, color: "var(--text-faint)", whiteSpace: "nowrap" as const, letterSpacing: "0.06em" }}>{a.time}</span>
           </div>
         ))}
       </div>

@@ -72,21 +72,21 @@ interface TTLStoryCardProps {
 const DARK = {
   bg:          "#141210",
   bgHover:     "#1e1a16",
-  border:      "rgba(255,255,255,0.08)",
+  border:      "var(--edge)",
   borderHover: "rgba(201,168,76,0.35)",
   borderTop:   "#C9A84C",
-  text:        "rgba(232,228,218,0.95)",
-  textSub:     "rgba(232,228,218,0.5)",
-  textFaint:   "rgba(232,228,218,0.25)",
+  text:        "var(--text-main)",
+  textSub:     "var(--text-dim)",
+  textFaint:   "var(--text-faint)",
   badge: {
     exclusive:   { bg: "rgba(201,168,76,0.12)", border: "rgba(201,168,76,0.4)", color: "#C9A84C" },
-    early:       { bg: "rgba(232,228,218,0.06)", border: "rgba(232,228,218,0.2)", color: "rgba(232,228,218,0.7)" },
+    early:       { bg: "var(--text-faint)", border: "var(--text-faint)", color: "var(--text-dim)" },
     serial:      { bg: "rgba(100,149,237,0.1)", border: "rgba(100,149,237,0.3)", color: "#6495ED" },
   },
   unlockBtn:   { bg: "rgba(201,168,76,0.1)", border: "rgba(201,168,76,0.4)", color: "#C9A84C" },
   readBtn:     { bg: "linear-gradient(135deg,#C9A84C,#8a6510)", color: "#000" },
   tag:         { bg: "rgba(100,149,237,0.08)", border: "rgba(100,149,237,0.2)", color: "#6495ED" },
-  progress:    { track: "rgba(255,255,255,0.08)", fill: "#C9A84C" },
+  progress:    { track: "var(--edge)", fill: "#C9A84C" },
   shadow:      "0 4px 24px rgba(0,0,0,0.4)",
 };
 

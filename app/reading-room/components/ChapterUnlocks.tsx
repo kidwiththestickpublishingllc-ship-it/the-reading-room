@@ -81,7 +81,7 @@ export default function ChapterUnlocks({ bookId, chapterNumber }: Props) {
             <p style={{ fontSize: 10, letterSpacing: "0.3em", textTransform: "uppercase", color: "#C9A84C", marginBottom: 4 }}>
               Chapter Complete
             </p>
-            <h3 style={{ fontSize: 20, color: "#f0ece2", fontFamily: "'Cormorant Garamond', serif", fontWeight: 300 }}>
+            <h3 style={{ fontSize: 20, color: "var(--text-main)", fontFamily: "'Cormorant Garamond', serif", fontWeight: 300 }}>
               Unlocked Content
             </h3>
           </div>
@@ -123,7 +123,7 @@ export default function ChapterUnlocks({ bookId, chapterNumber }: Props) {
                 borderRadius: 8, padding: "14px 18px"
               }}>
                 <p style={{ fontSize: 13, fontWeight: 700, color: "#C9A84C", marginBottom: 6 }}>{term.term}</p>
-                <p style={{ fontSize: 13, color: "rgba(240,236,226,0.7)", lineHeight: 1.7 }}>{term.definition}</p>
+                <p style={{ fontSize: 13, color: "var(--text-dim)", lineHeight: 1.7 }}>{term.definition}</p>
               </div>
             ))}
           </div>
@@ -142,7 +142,7 @@ export default function ChapterUnlocks({ bookId, chapterNumber }: Props) {
                 )}
                 <div>
                   <p style={{ fontSize: 13, fontWeight: 700, color: "#84b0f5", marginBottom: 6 }}>{char.name}</p>
-                  <p style={{ fontSize: 13, color: "rgba(240,236,226,0.7)", lineHeight: 1.7 }}>{char.backstory}</p>
+                  <p style={{ fontSize: 13, color: "var(--text-dim)", lineHeight: 1.7 }}>{char.backstory}</p>
                 </div>
               </div>
             ))}

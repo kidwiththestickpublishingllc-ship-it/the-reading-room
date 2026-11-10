@@ -46,7 +46,7 @@ const AUTHORS = [
 
 export default function FeaturedAuthors() {
   return (
-    <div className="ttl-section" style={{ background: "linear-gradient(135deg, #1a1a2e, #16213e)", border: "1px solid rgba(201,168,76,0.25)", borderRadius: 16 }}>
+    <div className="ttl-section" style={{ background: "linear-gradient(135deg, var(--plate), var(--plate))", border: "1px solid rgba(201,168,76,0.25)", borderRadius: 16 }}>
       <div className="ttl-section-header">
         <div>
           <div className="ttl-section-accent">
@@ -74,16 +74,16 @@ export default function FeaturedAuthors() {
                   <div style={{ padding: "28px 24px 24px", display: "flex", flexDirection: "column", flex: 1, position: "relative", zIndex: 1 }}>
                     <div style={{ width: 64, height: 64, borderRadius: 12, background: "linear-gradient(135deg, #1a1a24, #252535)", border: `1px solid ${author.accent}40`, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Cormorant Garamond', serif", fontSize: 28, color: author.accent, marginBottom: 20 }}>{initial}</div>
                     <div style={{ fontSize: 8, letterSpacing: "0.22em", textTransform: "uppercase" as const, color: author.accent, opacity: 0.7, marginBottom: 8 }}>{author.role}</div>
-                    <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 24, fontWeight: 300, color: "#f0ece2", marginBottom: 6, lineHeight: 1.1 }}>{author.name}</div>
-                    <div style={{ fontSize: 11, color: "rgba(240,236,226,0.92)", marginBottom: 16, lineHeight: 1.55 }}>{author.tagline}</div>
-                    <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 14, fontStyle: "italic", color: "rgba(240,236,226,0.92)", lineHeight: 1.7, borderLeft: `2px solid ${author.accent}30`, paddingLeft: 14, marginBottom: 20, flex: 1 }}>"{author.quote}"</div>
+                    <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 24, fontWeight: 300, color: "var(--text-main)", marginBottom: 6, lineHeight: 1.1 }}>{author.name}</div>
+                    <div style={{ fontSize: 11, color: "var(--text-main)", marginBottom: 16, lineHeight: 1.55 }}>{author.tagline}</div>
+                    <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 14, fontStyle: "italic", color: "var(--text-main)", lineHeight: 1.7, borderLeft: `2px solid ${author.accent}30`, paddingLeft: 14, marginBottom: 20, flex: 1 }}>"{author.quote}"</div>
                     <div style={{ display: "flex", flexWrap: "wrap" as const, gap: 5, marginBottom: 20 }}>
                       {author.genres.map(g => (
                         <span key={g} style={{ fontSize: 8, letterSpacing: "0.12em", textTransform: "uppercase" as const, padding: "3px 9px", borderRadius: 999, border: "1px solid rgba(100,149,237,0.22)", color: "#84b0f5", background: "rgba(100,149,237,0.22)" }}>{g}</span>
                       ))}
                     </div>
-                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", paddingTop: 14, borderTop: "1px solid rgba(255,255,255,0.06)" }}>
-                      <span style={{ fontSize: 9, letterSpacing: "0.16em", textTransform: "uppercase" as const, color: "rgba(232,228,218,0.25)" }}>🪶 View profile</span>
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", paddingTop: 14, borderTop: "1px solid var(--edge)" }}>
+                      <span style={{ fontSize: 9, letterSpacing: "0.16em", textTransform: "uppercase" as const, color: "var(--text-faint)" }}>🪶 View profile</span>
                       <span style={{ fontSize: 16, color: author.accent }}>↗</span>
                     </div>
                   </div>
@@ -93,8 +93,8 @@ export default function FeaturedAuthors() {
             <div style={{ flexShrink: 0, width: "calc(25% - 12px)", minHeight: 420, borderRadius: 16, background: "linear-gradient(135deg, #0f0f18, #151520)", border: "1px solid rgba(201,168,76,0.2)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "32px 24px", textAlign: "center" as const, position: "relative", overflow: "hidden" }}>
               <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, background: "linear-gradient(90deg, transparent, #C9A84C, transparent)" }} />
               <div style={{ fontSize: 8, letterSpacing: "0.3em", textTransform: "uppercase" as const, color: "rgba(201,168,76,0.4)", marginBottom: 20 }}>Featured Placement</div>
-              <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 22, fontWeight: 300, color: "#f0ece2", lineHeight: 1.3, marginBottom: 12 }}>Your Story<br />Could Live Here</div>
-              <div style={{ fontSize: 11, color: "rgba(232,228,218,0.25)", lineHeight: 1.65, marginBottom: 24 }}>Reach thousands of readers. Feature your work in the Reading Room carousel.</div>
+              <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 22, fontWeight: 300, color: "var(--text-main)", lineHeight: 1.3, marginBottom: 12 }}>Your Story<br />Could Live Here</div>
+              <div style={{ fontSize: 11, color: "var(--text-faint)", lineHeight: 1.65, marginBottom: 24 }}>Reach thousands of readers. Feature your work in the Reading Room carousel.</div>
               <a href="/reading-room/authors" style={{ fontSize: 9, letterSpacing: "0.18em", textTransform: "uppercase" as const, color: "#E2C97E", border: "1px solid rgba(201,168,76,0.38)", background: "rgba(201,168,76,0.13)", padding: "8px 20px", borderRadius: 999, textDecoration: "none" }}>Learn More →</a>
             </div>
           </div>
