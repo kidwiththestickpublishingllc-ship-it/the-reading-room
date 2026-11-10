@@ -39,8 +39,8 @@ const RULES = [
   { re: /rgba\(255,\s*255,\s*255,\s*0\.0[0-9]\)/g, to: () => 'var(--edge)' },
 
   // signal colours picked for contrast against black
-  { re: /#f87171\b/gi, to: () => '#C0392B' },
-  { re: /#4ade80\b/gi, to: () => '#2E6B45' },
+  { re: /#f87171\b/gi, to: () => 'var(--signal-alert)' },
+  { re: /#4ade80\b/gi, to: () => 'var(--signal-ok)' },
 ];
 
 // Applied only to lines that are NOT painting a gradient.

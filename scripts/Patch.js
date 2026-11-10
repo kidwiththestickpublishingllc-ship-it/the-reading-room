@@ -21,19 +21,66 @@ const path = require('path');
 
 const EDITS = [
 
+  // ── stage text follows the theme, not a hardcoded palette ───────────
+  {
+    file: 'app/reading-room/components/StoryStage.tsx',
+    label: 'main text → token',
+    from: `  const txtMain = isLight ? "#1a1208" : "#ffffff";`,
+    to: `  const txtMain = "var(--text-main)";`,
+  },
+  {
+    file: 'app/reading-room/components/StoryStage.tsx',
+    label: 'dim text → token',
+    from: `  const txtDim = isLight ? "rgba(26,18,8,0.85)" : "#ffffff";`,
+    to: `  const txtDim = "var(--text-dim)";`,
+  },
+  {
+    file: 'app/reading-room/components/StoryStage.tsx',
+    label: 'faint text → token',
+    from: `  const txtFaint = isLight ? "rgba(26,18,8,0.62)" : "rgba(255,255,255,0.72)";`,
+    to: `  const txtFaint = "var(--text-faint)";`,
+  },
+  {
+    file: 'app/reading-room/components/StoryStage.tsx',
+    label: 'zone surface → wash token',
+    from: `  const surface = isLight ? "rgba(122,96,40,0.07)" : "rgba(255,255,255,0.06)";`,
+    to: `  const surface = "var(--wash)";`,
+  },
+  {
+    file: 'app/reading-room/components/StoryStage.tsx',
+    label: 'zone border → edge token',
+    from: `  const surfaceBorder = isLight ? "rgba(0,0,0,0.12)" : "rgba(255,255,255,0.14)";`,
+    to: `  const surfaceBorder = "var(--edge)";`,
+  },
+
+  // ── signal colours become token pairs ───────────────────────────────
   {
     file: 'app/globals.css',
-    label: 'add --wash to the light palette',
-    from: `  --surface-shadow: rgba(46,41,34,0.18);`,
-    to: `  --surface-shadow: rgba(46,41,34,0.18);
-  --wash: rgba(122,96,40,0.06);`,
+    label: 'signal tokens, light',
+    from: `  --text-faint: rgba(26,16,8,0.45);`,
+    to: `  --text-faint: rgba(26,16,8,0.45);
+  --signal-alert: #C0392B;
+  --signal-ok: #2E6B45;`,
   },
   {
     file: 'app/globals.css',
-    label: 'add --wash to the dark palette',
-    from: `  --surface-shadow: rgba(0,0,0,0.55);`,
-    to: `  --surface-shadow: rgba(0,0,0,0.55);
-  --wash: rgba(255,255,255,0.05);`,
+    label: 'signal tokens, dark',
+    from: `  --text-faint: rgba(240,236,226,0.45);`,
+    to: `  --text-faint: rgba(240,236,226,0.45);
+  --signal-alert: #F08A82;
+  --signal-ok: #7FD6A0;`,
+  },
+  {
+    file: 'app/reading-room/components/StorySocial.tsx',
+    label: 'liked heart → signal token',
+    from: `    color: #C0392B;`,
+    to: `    color: var(--signal-alert);`,
+  },
+  {
+    file: 'app/reading-room/components/StorySocial.tsx',
+    label: 'copied state → signal token',
+    from: `    color: #2E6B45;`,
+    to: `    color: var(--signal-ok);`,
   },
 
 ];

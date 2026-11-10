@@ -87,11 +87,11 @@ export default function StoryStage({
   const hlGradient =
     "linear-gradient(104deg, rgba(0,0,0,0) 0.3%, " + hlMark +
     " 1.8%, " + hlMark + " 97%, rgba(0,0,0,0) 99%)";
-  const txtMain = isLight ? "#1a1208" : "#ffffff";
-  const txtDim = isLight ? "rgba(26,18,8,0.85)" : "#ffffff";
-  const txtFaint = isLight ? "rgba(26,18,8,0.62)" : "rgba(255,255,255,0.72)";
-  const surface = isLight ? "rgba(122,96,40,0.07)" : "rgba(255,255,255,0.06)";
-  const surfaceBorder = isLight ? "rgba(0,0,0,0.12)" : "rgba(255,255,255,0.14)";
+  const txtMain = "var(--text-main)";
+  const txtDim = "var(--text-dim)";
+  const txtFaint = "var(--text-faint)";
+  const surface = "var(--wash)";
+  const surfaceBorder = "var(--edge)";
   const divider = `${GOLD}40`;
 
   useEffect(() => {

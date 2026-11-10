@@ -53,7 +53,7 @@ const STYLES = `
   }
 
   .ttl-social-btn.liked {
-    color: #C0392B;
+    color: var(--signal-alert);
     border-color: rgba(248,113,113,0.3);
     background: rgba(248,113,113,0.08);
   }
@@ -69,7 +69,7 @@ const STYLES = `
   }
 
   .ttl-social-btn.shared {
-    color: #2E6B45;
+    color: var(--signal-ok);
     border-color: rgba(74,222,128,0.3);
     background: rgba(74,222,128,0.08);
   }
