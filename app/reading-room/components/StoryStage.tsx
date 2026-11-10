@@ -43,7 +43,8 @@ type Writer = {
 };
 type MediaItem = { url: string; type: string };
 
-const GOLD = "#C9A84C";
+// Deep gold for ink on paper. GOLD_LIGHT stays for type on the dark cover.
+const GOLD = "#8A6510";
 const GOLD_LIGHT = "#E2C97E";
 const DEFAULT_THEME: StageTheme = { bgFrom: "#16263f", bgTo: "#0f1c30", mode: "dark" };
 
@@ -89,7 +90,7 @@ export default function StoryStage({
   const txtMain = isLight ? "#1a1208" : "#ffffff";
   const txtDim = isLight ? "rgba(26,18,8,0.85)" : "#ffffff";
   const txtFaint = isLight ? "rgba(26,18,8,0.62)" : "rgba(255,255,255,0.72)";
-  const surface = isLight ? "rgba(0,0,0,0.06)" : "rgba(255,255,255,0.06)";
+  const surface = isLight ? "rgba(122,96,40,0.07)" : "rgba(255,255,255,0.06)";
   const surfaceBorder = isLight ? "rgba(0,0,0,0.12)" : "rgba(255,255,255,0.14)";
   const divider = `${GOLD}40`;
 
@@ -211,7 +212,7 @@ export default function StoryStage({
           <div className="ss-bay-actions">
             <button type="button" className="ss-open-btn" onClick={openReader}>Open Reader →</button>
             {!isUnlocked && (
-              <button type="button" className="ss-unlock-btn" disabled={!canUnlock} onClick={onUnlock} style={{ color: GOLD_LIGHT, borderColor: `${GOLD}66` }}>
+              <button type="button" className="ss-unlock-btn" disabled={!canUnlock} onClick={onUnlock} style={{ color: GOLD, borderColor: `${GOLD}66` }}>
                 {canUnlock ? "Unlock" : "Need Ink"}
               </button>
             )}
@@ -273,10 +274,10 @@ export default function StoryStage({
         <div className="ss-promo-stage">
           {promos.map((p, i) => (
             <a key={i} href={p.href} className={`ss-promo${promo === i ? " active" : ""}`} style={{ borderColor: surfaceBorder, background: surface }}>
-              <span className="ss-promo-label" style={{ color: GOLD_LIGHT, borderColor: `${GOLD}66` }}>{p.label}</span>
+              <span className="ss-promo-label" style={{ color: GOLD, borderColor: `${GOLD}66` }}>{p.label}</span>
               <div className="ss-promo-title" style={{ color: txtMain }}>{p.title}</div>
               <div className="ss-promo-sub" style={{ color: txtFaint }}>{p.sub}</div>
-              <div className="ss-promo-cta" style={{ color: GOLD_LIGHT }}>Learn more →</div>
+              <div className="ss-promo-cta" style={{ color: GOLD }}>Learn more →</div>
             </a>
           ))}
         </div>
