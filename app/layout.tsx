@@ -30,7 +30,6 @@ const syne = Syne({
 
 const caveat = Caveat({
   subsets: ['latin'],
-  weight: ['500', '600', '700'],
   variable: '--font-caveat',
 })
 
