@@ -20,15 +20,47 @@ const fs = require('fs');
 const path = require('path');
 
 const EDITS = [
+
   {
     file: 'app/reading-room/page.tsx',
-    label: 'repair the dangling selector list I left behind',
-    from: `.ttl-how-card,
-.ttl-panel,
-/* .ttl-ink-pack borders come from --ink-border in the main block */`,
-    to: `/* .ttl-how-card, .ttl-panel and .ttl-ink-pack take their borders
-   from --ink-border in the main block above. */`,
+    label: 'import NoticeBoard',
+    from: `import WelcomeBoard from '@/app/components/WelcomeBoard';`,
+    to: `import WelcomeBoard from '@/app/components/WelcomeBoard';
+import NoticeBoard from '@/app/reading-room/components/NoticeBoard';`,
   },
+  {
+    file: 'app/reading-room/page.tsx',
+    label: 'notice board sits under the sign',
+    from: `        {/* ── THE SIGN ── */}
+        <div className="ttl-wrap">
+          <WelcomeBoard />
+        </div>`,
+    to: `        {/* ── THE SIGN ── */}
+        <div className="ttl-wrap">
+          <WelcomeBoard />
+          <NoticeBoard stories={stories} />
+        </div>`,
+  },
+  {
+    file: 'app/reading-room/page.tsx',
+    label: 'retire HowItWorks - its panels now live on the notice board',
+    from: `          {/* ── HOW IT WORKS ── */}
+          <HowItWorks stories={stories} />`,
+    to: `          {/* How It Works panels moved to NoticeBoard, under the sign. */}`,
+  },
+  {
+    file: 'app/globals.css',
+    label: 'body copy darker on paper',
+    from: `  --text-dim: rgba(26,16,8,0.75);`,
+    to: `  --text-dim: rgba(26,16,8,0.86);`,
+  },
+  {
+    file: 'app/globals.css',
+    label: 'faint text darker on paper',
+    from: `  --text-faint: rgba(26,16,8,0.45);`,
+    to: `  --text-faint: rgba(26,16,8,0.62);`,
+  },
+
 ];
 
 // ── engine ───────────────────────────────────────────────────────────

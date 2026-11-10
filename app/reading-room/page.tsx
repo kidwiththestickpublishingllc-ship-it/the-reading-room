@@ -22,6 +22,7 @@ import StoryStage, { StageTheme } from "./components/StoryStage";
 import { TTLNav, TTLFooter } from "./components/TTLNav";
 import YourLibrary from '@/app/components/YourLibrary';
 import WelcomeBoard from '@/app/components/WelcomeBoard';
+import NoticeBoard from '@/app/reading-room/components/NoticeBoard';
 import Floor from '@/app/components/Floor';
 import Surface from '@/app/components/Surface';
 
@@ -2037,6 +2038,7 @@ export default function ReadingRoomHome() {
         {/* ── THE SIGN ── */}
         <div className="ttl-wrap">
           <WelcomeBoard />
+          <NoticeBoard stories={stories} />
         </div>
 
         {/* ── HERO ── */}
@@ -2084,8 +2086,7 @@ export default function ReadingRoomHome() {
           <FeaturedAuthors />
           {/* Featured Stories renders on The Shelf floor above */}
 
-          {/* ── HOW IT WORKS ── */}
-          <HowItWorks stories={stories} />
+          {/* How It Works panels moved to NoticeBoard, under the sign. */}
         </div>
          {/* ── FOOTER ── */}
           <TTLFooter />

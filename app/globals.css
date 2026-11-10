@@ -216,8 +216,8 @@ body {
   --ink-border: rgba(0,0,0,0.12);
   --ink-border-gold: rgba(201,168,76,0.4);
   --text-main: #1a1008;
-  --text-dim: rgba(26,16,8,0.75);
-  --text-faint: rgba(26,16,8,0.45);
+  --text-dim: rgba(26,16,8,0.86);
+  --text-faint: rgba(26,16,8,0.62);
   --signal-alert: #C0392B;
   --gold: #8A6510;
   --signal-ok: #2E6B45;
