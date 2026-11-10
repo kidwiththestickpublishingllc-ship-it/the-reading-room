@@ -21,30 +21,40 @@ const path = require('path');
 
 const EDITS = [
   {
-    file: 'app/components/Chalkboard.tsx',
-    label: 'use the artwork',
-    from: `    background-color: #2E3A35;
-    background-image:
-      radial-gradient(ellipse at 20% 15%, rgba(255,255,255,0.045), transparent 55%),
-      radial-gradient(ellipse at 80% 70%, rgba(255,255,255,0.035), transparent 50%),
-      repeating-linear-gradient(97deg, rgba(255,255,255,0.012) 0 2px, transparent 2px 7px),
-      linear-gradient(160deg, #35423C, #222C28);`,
-    to: `    background-color: #2E3A35;
-    background-image: url('/images/chalkboard.jpg');
-    background-size: cover;
-    background-position: center top;
-    background-repeat: no-repeat;`,
+    file: 'app/reading-room/page.tsx',
+    label: 'import Chalkboard',
+    from: `import WelcomeBoard from '@/app/components/WelcomeBoard';`,
+    to: `import WelcomeBoard from '@/app/components/WelcomeBoard';
+import Chalkboard from '@/app/components/Chalkboard';`,
   },
   {
-    file: 'app/components/Chalkboard.tsx',
-    label: 'the artwork carries the chalk now',
-    from: `  @media (max-width: 1240px) {
-    .cb-chalk, .cb-rule, .cb-ico { display: none; }
+    file: 'app/reading-room/page.tsx',
+    label: 'the page lies on the board',
+    from: `  .ttl-root {
+    min-height: 100vh;
+    background: var(--paper, #F0E7D2);
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    color: #1a1008;
+    position: relative;
+    overflow-x: hidden;
   }`,
-    to: `  .cb-chalk, .cb-rule, .cb-ico { display: none; }
-  @media (max-width: 1240px) {
-    .cb-board { background-image: none; }
-  }`,
+    to: `  .ttl-root {
+    min-height: 100vh;
+    background: transparent;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    color: var(--text-main);
+    position: relative;
+    overflow-x: hidden;
+  }
+  /* everything on the page sits above the board */
+  .ttl-root > *:not(.cb-board) { position: relative; z-index: 1; }`,
+  },
+  {
+    file: 'app/reading-room/page.tsx',
+    label: 'render the board',
+    from: `        <div style={{ height: 90 }} />`,
+    to: `        <Chalkboard />
+        <div style={{ height: 90 }} />`,
   },
 ];
 

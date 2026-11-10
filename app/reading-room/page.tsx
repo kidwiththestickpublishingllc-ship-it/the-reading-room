@@ -22,6 +22,7 @@ import StoryStage, { StageTheme } from "./components/StoryStage";
 import { TTLNav, TTLFooter } from "./components/TTLNav";
 import YourLibrary from '@/app/components/YourLibrary';
 import WelcomeBoard from '@/app/components/WelcomeBoard';
+import Chalkboard from '@/app/components/Chalkboard';
 import NoticeBoard from '@/app/reading-room/components/NoticeBoard';
 import Floor from '@/app/components/Floor';
 import Surface from '@/app/components/Surface';
@@ -234,12 +235,14 @@ const TTL_STYLES = `
   }
   .ttl-root {
     min-height: 100vh;
-    background: var(--paper, #F0E7D2);
+    background: transparent;
     font-family: 'Cormorant Garamond', Georgia, serif;
-    color: #1a1008;
+    color: var(--text-main);
     position: relative;
     overflow-x: hidden;
   }
+  /* everything on the page sits above the board */
+  .ttl-root > *:not(.cb-board) { position: relative; z-index: 1; }
   .ttl-root.dark {
     --ink-bg: #0a0a0a;
     --ink-surface: #111111;
@@ -2034,6 +2037,7 @@ export default function ReadingRoomHome() {
             <AdQueue />
           </>
         } />
+        <Chalkboard />
         <div style={{ height: 90 }} />
         {/* ── THE SIGN ── */}
         <div className="ttl-wrap">
