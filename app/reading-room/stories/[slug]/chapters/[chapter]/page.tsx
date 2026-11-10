@@ -10,7 +10,7 @@ const ANON = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 async function fetchStory(slug: string) {
   try {
     const res = await fetch(
-      `${SUPA}/rest/v1/stories?slug=eq.${encodeURIComponent(slug)}&select=title,author_name,description,meta_description,cover_url&limit=1`,
+      `${SUPA}/rest/v1/stories?slug=eq.${encodeURIComponent(slug)}&select=id,title,author_name,description,meta_description,cover_url&limit=1`,
       {
         headers: { apikey: ANON!, Authorization: `Bearer ${ANON}` },
         next: { revalidate: 3600 },
@@ -22,6 +22,28 @@ async function fetchStory(slug: string) {
   } catch {
     return null;
   }
+}
+
+async function fetchChapters(storyId: string) {
+  try {
+    const res = await fetch(
+      `${SUPA}/rest/v1/chapters?story_id=eq.${encodeURIComponent(storyId)}&select=*&order=chapter_number`,
+      {
+        headers: { apikey: ANON!, Authorization: `Bearer ${ANON}` },
+        next: { revalidate: 300 },
+      }
+    );
+    if (!res.ok) return [];
+    return (await res.json()) ?? [];
+  } catch {
+    return [];
+  }
+}
+
+// Prose only ships in the HTML for free chapters. A locked chapter
+// server-renders its title and unlock prompt, never its text.
+function redact(c: any) {
+  return c?.is_free ? c : { ...c, content: null };
 }
 
 export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
@@ -66,6 +88,8 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
 export default async function ChapterPage({ params }: { params: Params }) {
   const { slug, chapter } = await params;
   const story = await fetchStory(slug);
+  const chapters: any[] = story?.id ? await fetchChapters(story.id) : [];
+  const thisChapter = chapters.find((c: any) => c.chapter_number === parseInt(chapter, 10)) ?? null;
   const url = `${SITE}/reading-room/stories/${slug}/chapters/${chapter}`;
 
   const jsonLd = story
@@ -98,7 +122,13 @@ export default async function ChapterPage({ params }: { params: Params }) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       )}
-      <ChapterReaderClient storySlug={slug} chapterNum={parseInt(chapter, 10)} />
+      <ChapterReaderClient
+        storySlug={slug}
+        chapterNum={parseInt(chapter, 10)}
+        initialStory={story}
+        initialChapters={chapters.map(redact)}
+        initialChapter={thisChapter ? redact(thisChapter) : null}
+      />
     </>
   );
 }

@@ -631,7 +631,12 @@ function MediaPanel({ chapter, story, open, onClose }: { chapter: Chapter; story
 // =========================
 // Main Reader
 // =========================
-function ChapterReaderContent({ storySlug, chapterNum }: { storySlug: string; chapterNum: number }) {
+function ChapterReaderContent({
+  storySlug, chapterNum, initialStory = null, initialChapter = null, initialChapters = [],
+}: {
+  storySlug: string; chapterNum: number;
+  initialStory?: any; initialChapter?: any; initialChapters?: any[];
+}) {
   const [mode, setMode] = useState<'dark' | 'light'>('dark');
   const [fontSize, setFontSize] = useState(19);
   const [uiHidden, setUiHidden] = useState(false);
@@ -642,12 +647,12 @@ function ChapterReaderContent({ storySlug, chapterNum }: { storySlug: string; ch
   const [resumePrompt, setResumePrompt] = useState<{ chapter: number; scrollPct: number } | null>(null);
   const [adGate, setAdGate] = useState<null | (() => void)>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
-  const [story, setStory] = useState<Story | null>(null);
-  const [chapter, setChapter] = useState<Chapter | null>(null);
-  const [allChapters, setAllChapters] = useState<Chapter[]>([]);
+  const [story, setStory] = useState<Story | null>(initialStory);
+  const [chapter, setChapter] = useState<Chapter | null>(initialChapter);
+  const [allChapters, setAllChapters] = useState<Chapter[]>(initialChapters);
   const [ink, setInk] = useState(0);
   const [unlocked, setUnlocked] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(!initialChapter);
   const [unlocking, setUnlocking] = useState(false);
   const [signedIn, setSignedIn] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -669,7 +674,7 @@ function ChapterReaderContent({ storySlug, chapterNum }: { storySlug: string; ch
   useEffect(() => {
     async function load() {
       try {
-        setLoading(true);
+        setLoading(!initialChapter);
         const { data: { session } } = await supabase.auth.getSession();
         setSignedIn(!!session);
         if (session) {
@@ -978,6 +983,19 @@ function ChapterReaderContent({ storySlug, chapterNum }: { storySlug: string; ch
 // Next.js Page Export
 // File: app/reading-room/stories/[slug]/chapters/[chapter]/page.tsx
 // =========================
-export default function ChapterReaderClient({ storySlug, chapterNum }: { storySlug: string; chapterNum: number }) {
-  return <ChapterReaderContent storySlug={storySlug} chapterNum={chapterNum} />;
+export default function ChapterReaderClient({
+  storySlug, chapterNum, initialStory = null, initialChapter = null, initialChapters = [],
+}: {
+  storySlug: string; chapterNum: number;
+  initialStory?: any; initialChapter?: any; initialChapters?: any[];
+}) {
+  return (
+    <ChapterReaderContent
+      storySlug={storySlug}
+      chapterNum={chapterNum}
+      initialStory={initialStory}
+      initialChapter={initialChapter}
+      initialChapters={initialChapters}
+    />
+  );
 }
