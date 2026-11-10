@@ -2053,13 +2053,6 @@ export default function ReadingRoomHome() {
             <NewChapterAlerts />
             <LiveActivityFeed />
             <CountdownDrops />
-            <InkWallet
-              ink={ink}
-              inkPacks={INK_PACKS}
-              isOpeningCheckout={isOpeningCheckout}
-              openingInk={openingInk}
-              onBuyInk={buyInk}
-            />
           </YourLibrary>
 
 
@@ -2086,7 +2079,16 @@ export default function ReadingRoomHome() {
           <FeaturedAuthors />
           {/* Featured Stories renders on The Shelf floor above */}
 
-          {/* How It Works panels moved to NoticeBoard, under the sign. */}
+          {/* ── THE LEDGER — last thing a patron sees ── */}
+          {user && (
+            <InkWallet
+              ink={ink}
+              inkPacks={INK_PACKS}
+              isOpeningCheckout={isOpeningCheckout}
+              openingInk={openingInk}
+              onBuyInk={buyInk}
+            />
+          )}
         </div>
          {/* ── FOOTER ── */}
           <TTLFooter />

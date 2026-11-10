@@ -21,62 +21,32 @@ const path = require('path');
 
 const EDITS = [
   {
-    file: 'app/reading-room/stories/[slug]/chapters/[chapter]/ChapterReaderClient.tsx',
-    label: 'wrapper accepts the server data',
-    from: `export default function ChapterReaderClient({ storySlug, chapterNum }: { storySlug: string; chapterNum: number }) {
-  return <ChapterReaderContent storySlug={storySlug} chapterNum={chapterNum} />;
-}`,
-    to: `export default function ChapterReaderClient({
-  storySlug, chapterNum, initialStory = null, initialChapter = null, initialChapters = [],
-}: {
-  storySlug: string; chapterNum: number;
-  initialStory?: any; initialChapter?: any; initialChapters?: any[];
-}) {
-  return (
-    <ChapterReaderContent
-      storySlug={storySlug}
-      chapterNum={chapterNum}
-      initialStory={initialStory}
-      initialChapter={initialChapter}
-      initialChapters={initialChapters}
-    />
-  );
-}`,
+    file: 'app/reading-room/page.tsx',
+    label: 'take the wallet out of Your Library',
+    from: `            <InkWallet
+              ink={ink}
+              inkPacks={INK_PACKS}
+              isOpeningCheckout={isOpeningCheckout}
+              openingInk={openingInk}
+              onBuyInk={buyInk}
+            />
+          </YourLibrary>`,
+    to: `          </YourLibrary>`,
   },
   {
-    file: 'app/reading-room/stories/[slug]/chapters/[chapter]/ChapterReaderClient.tsx',
-    label: 'content component accepts the server data',
-    from: `function ChapterReaderContent({ storySlug, chapterNum }: { storySlug: string; chapterNum: number }) {`,
-    to: `function ChapterReaderContent({
-  storySlug, chapterNum, initialStory = null, initialChapter = null, initialChapters = [],
-}: {
-  storySlug: string; chapterNum: number;
-  initialStory?: any; initialChapter?: any; initialChapters?: any[];
-}) {`,
-  },
-  {
-    file: 'app/reading-room/stories/[slug]/chapters/[chapter]/ChapterReaderClient.tsx',
-    label: 'seed state from the server render',
-    from: `  const [story, setStory] = useState<Story | null>(null);
-  const [chapter, setChapter] = useState<Chapter | null>(null);
-  const [allChapters, setAllChapters] = useState<Chapter[]>([]);`,
-    to: `  const [story, setStory] = useState<Story | null>(initialStory);
-  const [chapter, setChapter] = useState<Chapter | null>(initialChapter);
-  const [allChapters, setAllChapters] = useState<Chapter[]>(initialChapters);`,
-  },
-  {
-    file: 'app/reading-room/stories/[slug]/chapters/[chapter]/ChapterReaderClient.tsx',
-    label: 'no skeleton when the server already rendered',
-    from: `  const [loading, setLoading] = useState(true);`,
-    to: `  const [loading, setLoading] = useState(!initialChapter);`,
-  },
-  {
-    file: 'app/reading-room/stories/[slug]/chapters/[chapter]/ChapterReaderClient.tsx',
-    label: 'and no flash back to it when the effect runs',
-    from: `        setLoading(true);
-        const { data: { session } } = await supabase.auth.getSession();`,
-    to: `        setLoading(!initialChapter);
-        const { data: { session } } = await supabase.auth.getSession();`,
+    file: 'app/reading-room/page.tsx',
+    label: 'the ledger is the last thing on the page',
+    from: `          {/* How It Works panels moved to NoticeBoard, under the sign. */}`,
+    to: `          {/* ── THE LEDGER — last thing a patron sees ── */}
+          {user && (
+            <InkWallet
+              ink={ink}
+              inkPacks={INK_PACKS}
+              isOpeningCheckout={isOpeningCheckout}
+              openingInk={openingInk}
+              onBuyInk={buyInk}
+            />
+          )}`,
   },
 ];
 
