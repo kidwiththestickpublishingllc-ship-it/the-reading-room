@@ -68,7 +68,7 @@ export default function FeaturedStories({
               else { window.location.href = `/reading-room/genres/${encodeURIComponent(g.toLowerCase().replace(/\s+/g, "-").replace(/[+]/g, "").replace(/&/g, "and"))}`; }
             }}
             className={`ttl-filter-btn${selectedGenre === g ? " active" : ""}`}
-            style={g === "LitRPG" ? { color: "#FF69B4", borderColor: "#FF1493", boxShadow: "0 0 10px rgba(255,20,147,0.6), inset 0 0 6px rgba(255,20,147,0.15)", textShadow: "0 0 6px rgba(255,20,147,0.5)", animation: "litrpgBtnGlow 2.5s ease-in-out infinite" } : undefined}
+            style={g === "LitRPG" ? { color: "#C2187F" } : undefined}
           >{g}</button>
         ))}
       </div>
