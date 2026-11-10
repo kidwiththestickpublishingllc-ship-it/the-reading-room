@@ -21,32 +21,30 @@ const path = require('path');
 
 const EDITS = [
   {
-    file: 'app/reading-room/page.tsx',
-    label: 'take the wallet out of Your Library',
-    from: `            <InkWallet
-              ink={ink}
-              inkPacks={INK_PACKS}
-              isOpeningCheckout={isOpeningCheckout}
-              openingInk={openingInk}
-              onBuyInk={buyInk}
-            />
-          </YourLibrary>`,
-    to: `          </YourLibrary>`,
+    file: 'app/components/Chalkboard.tsx',
+    label: 'use the artwork',
+    from: `    background-color: #2E3A35;
+    background-image:
+      radial-gradient(ellipse at 20% 15%, rgba(255,255,255,0.045), transparent 55%),
+      radial-gradient(ellipse at 80% 70%, rgba(255,255,255,0.035), transparent 50%),
+      repeating-linear-gradient(97deg, rgba(255,255,255,0.012) 0 2px, transparent 2px 7px),
+      linear-gradient(160deg, #35423C, #222C28);`,
+    to: `    background-color: #2E3A35;
+    background-image: url('/images/chalkboard.jpg');
+    background-size: cover;
+    background-position: center top;
+    background-repeat: no-repeat;`,
   },
   {
-    file: 'app/reading-room/page.tsx',
-    label: 'the ledger is the last thing on the page',
-    from: `          {/* How It Works panels moved to NoticeBoard, under the sign. */}`,
-    to: `          {/* ── THE LEDGER — last thing a patron sees ── */}
-          {user && (
-            <InkWallet
-              ink={ink}
-              inkPacks={INK_PACKS}
-              isOpeningCheckout={isOpeningCheckout}
-              openingInk={openingInk}
-              onBuyInk={buyInk}
-            />
-          )}`,
+    file: 'app/components/Chalkboard.tsx',
+    label: 'the artwork carries the chalk now',
+    from: `  @media (max-width: 1240px) {
+    .cb-chalk, .cb-rule, .cb-ico { display: none; }
+  }`,
+    to: `  .cb-chalk, .cb-rule, .cb-ico { display: none; }
+  @media (max-width: 1240px) {
+    .cb-board { background-image: none; }
+  }`,
   },
 ];
 
