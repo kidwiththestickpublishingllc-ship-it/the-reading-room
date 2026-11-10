@@ -24,7 +24,7 @@ const STYLES = `
     gap: 6px;
     padding-top: 12px;
     margin-top: 12px;
-    border-top: 1px solid rgba(255,255,255,0.06);
+    border-top: 1px solid var(--edge);
     position: relative;
   }
 
@@ -36,7 +36,7 @@ const STYLES = `
     font-size: 11px;
     font-weight: 600;
     letter-spacing: 0.06em;
-    color: rgba(232,228,218,0.4);
+    color: var(--text-faint);
     background: transparent;
     border: 1px solid transparent;
     border-radius: 999px;
@@ -47,13 +47,13 @@ const STYLES = `
   }
 
   .ttl-social-btn:hover {
-    color: rgba(232,228,218,0.8);
-    background: rgba(255,255,255,0.05);
-    border-color: rgba(255,255,255,0.08);
+    color: var(--text-main);
+    background: var(--wash, rgba(122,96,40,0.06));
+    border-color: var(--edge);
   }
 
   .ttl-social-btn.liked {
-    color: #f87171;
+    color: #C0392B;
     border-color: rgba(248,113,113,0.3);
     background: rgba(248,113,113,0.08);
   }
@@ -63,13 +63,13 @@ const STYLES = `
   }
 
   .ttl-social-btn.commented {
-    color: #C9A84C;
-    border-color: rgba(201,168,76,0.3);
-    background: rgba(201,168,76,0.08);
+    color: var(--gold);
+    border-color: rgba(138, 101, 16, 0.3);
+    background: rgba(138, 101, 16, 0.08);
   }
 
   .ttl-social-btn.shared {
-    color: #4ade80;
+    color: #2E6B45;
     border-color: rgba(74,222,128,0.3);
     background: rgba(74,222,128,0.08);
   }
@@ -77,7 +77,7 @@ const STYLES = `
   .ttl-social-sep {
     width: 1px;
     height: 14px;
-    background: rgba(255,255,255,0.08);
+    background: var(--wash, rgba(122,96,40,0.06));
     flex-shrink: 0;
   }
 
@@ -87,10 +87,10 @@ const STYLES = `
     bottom: calc(100% + 8px);
     left: 0;
     right: 0;
-    background: #111111;
-    border: 1px solid rgba(201,168,76,0.2);
+    background: var(--plate);
+    border: 1px solid rgba(138, 101, 16, 0.2);
     border-radius: 12px;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.7);
+    box-shadow: 0 20px 60px var(--surface-shadow);
     z-index: 50;
     overflow: hidden;
     animation: ttl-drawer-in 0.2s ease;
@@ -103,7 +103,7 @@ const STYLES = `
 
   .ttl-comment-drawer-header {
     padding: 12px 16px;
-    border-bottom: 1px solid rgba(255,255,255,0.06);
+    border-bottom: 1px solid var(--edge);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -114,13 +114,13 @@ const STYLES = `
     font-size: 10px;
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: rgba(201,168,76,0.7);
+    color: rgba(138, 101, 16, 0.7);
   }
 
   .ttl-comment-close {
     background: none;
     border: none;
-    color: rgba(232,228,218,0.3);
+    color: var(--text-faint);
     cursor: pointer;
     font-size: 16px;
     padding: 0;
@@ -128,7 +128,7 @@ const STYLES = `
     transition: color 0.15s;
   }
 
-  .ttl-comment-close:hover { color: rgba(232,228,218,0.7); }
+  .ttl-comment-close:hover { color: var(--text-dim); }
 
   .ttl-comment-list {
     max-height: 200px;
@@ -138,7 +138,7 @@ const STYLES = `
 
   .ttl-comment-item {
     padding: 10px 16px;
-    border-bottom: 1px solid rgba(255,255,255,0.04);
+    border-bottom: 1px solid var(--edge);
   }
 
   .ttl-comment-item:last-child { border-bottom: none; }
@@ -154,19 +154,19 @@ const STYLES = `
     font-family: 'Syne', sans-serif;
     font-size: 11px;
     font-weight: 700;
-    color: rgba(232,228,218,0.8);
+    color: var(--text-main);
   }
 
   .ttl-comment-date {
     font-family: 'Syne', sans-serif;
     font-size: 10px;
-    color: rgba(232,228,218,0.25);
+    color: var(--text-faint);
   }
 
   .ttl-comment-text {
     font-family: 'Syne', sans-serif;
     font-size: 12px;
-    color: rgba(232,228,218,0.55);
+    color: var(--text-dim);
     line-height: 1.6;
   }
 
@@ -175,13 +175,13 @@ const STYLES = `
     text-align: center;
     font-family: 'Syne', sans-serif;
     font-size: 12px;
-    color: rgba(232,228,218,0.25);
+    color: var(--text-faint);
     font-style: italic;
   }
 
   .ttl-comment-input-row {
     padding: 12px 16px;
-    border-top: 1px solid rgba(255,255,255,0.06);
+    border-top: 1px solid var(--edge);
     display: flex;
     gap: 8px;
     align-items: flex-end;
@@ -191,9 +191,9 @@ const STYLES = `
     flex: 1;
     font-family: 'Syne', sans-serif;
     font-size: 12px;
-    color: rgba(232,228,218,0.85);
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.08);
+    color: var(--text-main);
+    background: var(--wash, rgba(122,96,40,0.06));
+    border: 1px solid var(--edge);
     border-radius: 8px;
     padding: 8px 12px;
     outline: none;
@@ -205,11 +205,11 @@ const STYLES = `
   }
 
   .ttl-comment-input:focus {
-    border-color: rgba(201,168,76,0.35);
+    border-color: rgba(138, 101, 16, 0.35);
   }
 
   .ttl-comment-input::placeholder {
-    color: rgba(232,228,218,0.2);
+    color: var(--text-faint);
   }
 
   .ttl-comment-submit {
@@ -237,12 +237,12 @@ const STYLES = `
     text-align: center;
     font-family: 'Syne', sans-serif;
     font-size: 11px;
-    color: rgba(232,228,218,0.35);
-    border-top: 1px solid rgba(255,255,255,0.06);
+    color: var(--text-faint);
+    border-top: 1px solid var(--edge);
   }
 
   .ttl-comment-login-link {
-    color: #C9A84C;
+    color: var(--gold);
     text-decoration: underline;
     text-underline-offset: 3px;
     cursor: pointer;
@@ -494,14 +494,14 @@ export default function StorySocial({ storyId, storySlug, storyTitle, userId }: 
             <span>Share</span>
           </button>
           {shared && (
-            <div style={{ position: "absolute", bottom: "calc(100% + 8px)", left: 0, background: "#111", border: "1px solid rgba(201,168,76,0.3)", borderRadius: 10, padding: 8, display: "flex", flexDirection: "column", gap: 4, minWidth: 180, zIndex: 50, boxShadow: "0 8px 32px rgba(0,0,0,0.6)" }}>
-              <button onClick={() => { window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(`Reading "${storyTitle}" on The Tiniest Library`)}&url=${encodeURIComponent(shareUrl)}`, '_blank'); setShared(false); }} style={{ display: "flex", alignItems: "center", gap: 10, padding: "8px 12px", background: "none", border: "none", color: "#f0ece2", cursor: "pointer", fontSize: 12, borderRadius: 6, textAlign: "left", width: "100%" }}
-                onMouseEnter={e => e.currentTarget.style.background = "rgba(255,255,255,0.05)"}
+            <div style={{ position: "absolute", bottom: "calc(100% + 8px)", left: 0, background: "var(--plate)", border: "1px solid rgba(138, 101, 16, 0.3)", borderRadius: 10, padding: 8, display: "flex", flexDirection: "column", gap: 4, minWidth: 180, zIndex: 50, boxShadow: "0 8px 32px var(--surface-shadow)" }}>
+              <button onClick={() => { window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(`Reading "${storyTitle}" on The Tiniest Library`)}&url=${encodeURIComponent(shareUrl)}`, '_blank'); setShared(false); }} style={{ display: "flex", alignItems: "center", gap: 10, padding: "8px 12px", background: "none", border: "none", color: "var(--text-main)", cursor: "pointer", fontSize: 12, borderRadius: 6, textAlign: "left", width: "100%" }}
+                onMouseEnter={e => e.currentTarget.style.background = "var(--wash, rgba(122,96,40,0.06))"}
                 onMouseLeave={e => e.currentTarget.style.background = "none"}>
                 𝕏 Share on X / Twitter
               </button>
-              <button onClick={() => { window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`, 'fbshare', 'width=600,height=500,scrollbars=yes'); setShared(false); }} style={{ display: "flex", alignItems: "center", gap: 10, padding: "8px 12px", background: "none", border: "none", color: "#f0ece2", cursor: "pointer", fontSize: 12, borderRadius: 6, textAlign: "left", width: "100%" }}
-                onMouseEnter={e => e.currentTarget.style.background = "rgba(255,255,255,0.05)"}
+              <button onClick={() => { window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`, 'fbshare', 'width=600,height=500,scrollbars=yes'); setShared(false); }} style={{ display: "flex", alignItems: "center", gap: 10, padding: "8px 12px", background: "none", border: "none", color: "var(--text-main)", cursor: "pointer", fontSize: 12, borderRadius: 6, textAlign: "left", width: "100%" }}
+                onMouseEnter={e => e.currentTarget.style.background = "var(--wash, rgba(122,96,40,0.06))"}
                 onMouseLeave={e => e.currentTarget.style.background = "none"}>
                 📘 Share on Facebook
               </button>
@@ -518,9 +518,9 @@ export default function StorySocial({ storyId, storySlug, storyTitle, userId }: 
                 onMouseLeave={e => e.currentTarget.style.background = "none"}>
                 📸 Instagram &amp; Stories
               </button>
-              <div style={{ height: 1, background: "rgba(255,255,255,0.07)", margin: "2px 0" }} />
-              <button onClick={async () => { await handleCopyLink(); setShared(false); }} style={{ display: "flex", alignItems: "center", gap: 10, padding: "8px 12px", background: "none", border: "none", color: "#C9A84C", cursor: "pointer", fontSize: 12, borderRadius: 6, textAlign: "left", width: "100%" }}
-                onMouseEnter={e => e.currentTarget.style.background = "rgba(201,168,76,0.08)"}
+              <div style={{ height: 1, background: "var(--edge)", margin: "2px 0" }} />
+              <button onClick={async () => { await handleCopyLink(); setShared(false); }} style={{ display: "flex", alignItems: "center", gap: 10, padding: "8px 12px", background: "none", border: "none", color: "var(--gold)", cursor: "pointer", fontSize: 12, borderRadius: 6, textAlign: "left", width: "100%" }}
+                onMouseEnter={e => e.currentTarget.style.background = "rgba(138, 101, 16, 0.08)"}
                 onMouseLeave={e => e.currentTarget.style.background = "none"}>
                 🔗 Copy Link
               </button>

@@ -22,35 +22,18 @@ const path = require('path');
 const EDITS = [
 
   {
-    file: 'app/reading-room/components/StoryStage.tsx',
-    label: 'GOLD → the paper-side deep gold',
-    from: `const GOLD = "#C9A84C";`,
-    to: `// Deep gold for ink on paper. GOLD_LIGHT stays for type on the dark cover.
-const GOLD = "#8A6510";`,
+    file: 'app/globals.css',
+    label: 'add --wash to the light palette',
+    from: `  --surface-shadow: rgba(46,41,34,0.18);`,
+    to: `  --surface-shadow: rgba(46,41,34,0.18);
+  --wash: rgba(122,96,40,0.06);`,
   },
   {
-    file: 'app/reading-room/components/StoryStage.tsx',
-    label: 'warm the zone surface off grey',
-    from: `  const surface = isLight ? "rgba(0,0,0,0.06)" : "rgba(255,255,255,0.06)";`,
-    to: `  const surface = isLight ? "rgba(122,96,40,0.07)" : "rgba(255,255,255,0.06)";`,
-  },
-  {
-    file: 'app/reading-room/components/StoryStage.tsx',
-    label: 'unlock button → deep gold',
-    from: '              <button type="button" className="ss-unlock-btn" disabled={!canUnlock} onClick={onUnlock} style={{ color: GOLD_LIGHT, borderColor: `${GOLD}66` }}>',
-    to: '              <button type="button" className="ss-unlock-btn" disabled={!canUnlock} onClick={onUnlock} style={{ color: GOLD, borderColor: `${GOLD}66` }}>',
-  },
-  {
-    file: 'app/reading-room/components/StoryStage.tsx',
-    label: 'promo label → deep gold',
-    from: '              <span className="ss-promo-label" style={{ color: GOLD_LIGHT, borderColor: `${GOLD}66` }}>{p.label}</span>',
-    to: '              <span className="ss-promo-label" style={{ color: GOLD, borderColor: `${GOLD}66` }}>{p.label}</span>',
-  },
-  {
-    file: 'app/reading-room/components/StoryStage.tsx',
-    label: 'promo CTA → deep gold',
-    from: '              <div className="ss-promo-cta" style={{ color: GOLD_LIGHT }}>Learn more →</div>',
-    to: '              <div className="ss-promo-cta" style={{ color: GOLD }}>Learn more →</div>',
+    file: 'app/globals.css',
+    label: 'add --wash to the dark palette',
+    from: `  --surface-shadow: rgba(0,0,0,0.55);`,
+    to: `  --surface-shadow: rgba(0,0,0,0.55);
+  --wash: rgba(255,255,255,0.05);`,
   },
 
 ];
