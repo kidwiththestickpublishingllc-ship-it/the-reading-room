@@ -736,7 +736,7 @@ export default function HowItWorksPage() {
 
               <a href="https://write.the-tiniest-library.com" className="hiw-room-card hiw-room-writers">
                 <span className="hiw-room-emoji">🪶</span>
-                <div className="hiw-room-name">The Writer's Room</div>
+                <div className="hiw-room-name">The Creators Room</div>
                 <div className="hiw-room-desc">
                   Where writers live. Apply, build your profile, submit chapters, track your earnings, and connect with your readers.
                 </div>
@@ -747,7 +747,7 @@ export default function HowItWorksPage() {
                   <div className="hiw-room-feature">Founding 100 writers badge</div>
                 </div>
                 <div className="hiw-room-cta" style={{ color: "#84b0f5" }}>
-                  Enter the Writer's Room →
+                  Enter The Creators Room →
                 </div>
               </a>
             </div>
@@ -855,15 +855,15 @@ export default function HowItWorksPage() {
                 },
                 {
                   q: "How much do writers earn?",
-                  a: "70% of every chapter unlock goes to the writer. 100% of every tip goes directly to the writer, with no platform cut. Writers can also see their full earnings dashboard in The Writer's Room."
+                  a: "70% of every chapter unlock goes to the creator, 80% for Founding 100 members. 100% of every tip goes directly to creators, with no platform cut. Creators can see their full earnings dashboard in The Creators Room."
                 },
                 {
                   q: "Can I submit my comics or manga to TTL?",
-                  a: "Yes — TTL is actively looking for comics artists and manga creators. Apply through The Writer's Room. You keep your copyright and earn through the same Ink economy as prose writers."
+                  a: "Yes — TTL is actively looking for comics artists and manga creators. Apply through The Creators Room and choose Artist. You keep your copyright and earn through the same Ink economy as prose writers."
                 },
                 {
                   q: "How do I apply to write for TTL?",
-                  a: "Head to The Writer's Room at write.the-tiniest-library.com and submit your application. The founding 100 writers receive a permanent badge and priority placement across the platform."
+                  a: "Head to The Creators Room at write.the-tiniest-library.com and submit your application. The Founding 100 creators receive a permanent badge and priority placement across the platform."
                 },
               ].map((item, i) => (
                 <div key={i} className="hiw-faq-item">

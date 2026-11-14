@@ -583,7 +583,7 @@ export default function ComicsMangaPage() {
             TTL is looking for its founding visual storytellers. Keep your copyright. Earn from every chapter unlocked.
           </p>
           <a href="https://write.the-tiniest-library.com/apply" className="cm-submit-btn">
-            Apply to The Writer's Room →
+            Apply to The Creators Room →
           </a>
         </div>
           </div>

@@ -16,7 +16,7 @@ export async function POST(req: NextRequest) {
 ABOUT TTL:
 The Tiniest Library (TTL) is a curated digital library of independent fiction. It has three spaces:
 - The Reading Room: general fiction — serials, exclusives, early access chapters across 24+ genres
-- The Writer's Room: where authors apply, manage stories, and earn Ink
+- The Creators Room: where writers and artists apply, manage their stories and comics, and earn Ink
 
 INK SYSTEM:
 - Ink is TTL's currency. New readers get 50 Ink free

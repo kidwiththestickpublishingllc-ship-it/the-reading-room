@@ -499,7 +499,7 @@ export default function ChapterDropCalendar() {
                   <span className="cdc-empty-icon">📅</span>
                   <div className="cdc-empty-title">No drops scheduled yet.</div>
                   <p className="cdc-empty-text">
-                    Writers schedule their chapter drops in the Writer's Room.
+                    Creators schedule their chapter drops in The Creators Room.
                     Follow writers you love to see their upcoming drops here.
                   </p>
                 </div>

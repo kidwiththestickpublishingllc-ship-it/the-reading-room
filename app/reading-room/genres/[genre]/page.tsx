@@ -1734,7 +1734,7 @@ function GenrePageContent({ genreSlug }: { genreSlug: string }) {
                 <span className="gp-empty-icon">{meta.emoji}</span>
                 <div className="gp-empty-title">No {meta.label} stories yet.</div>
                 <p className="gp-empty-text">
-                  Be the first to write in this genre. Apply to join The Writer's Room and claim your founding spot.
+                  Be the first to write in this genre. Apply to join The Creators Room and claim your founding spot.
                 </p>
                 <div style={{ display: "flex", justifyContent: "center", gap: 12, marginTop: 24 }}>
                   <a href="https://www.the-tiniest-library.com/new-page-1" target="_blank" rel="noopener noreferrer" className="gp-btn-primary">

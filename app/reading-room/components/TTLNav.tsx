@@ -488,7 +488,7 @@ export function TTLNav({ extras }: { extras?: ReactNode }) {
               <a href="https://artists.the-tiniest-library.com" className="ttl-shared-link">The Galleria</a>
               <a href="/reading-room/buy-ink" className="ttl-shared-link">Buy Ink ✒️</a>
               <a href="/reading-room/how-it-works" className="ttl-shared-link">How It Works</a>
-              <a href="https://write.the-tiniest-library.com" className="ttl-shared-link">Writer's Room</a>
+              <a href="https://write.the-tiniest-library.com" className="ttl-shared-link">Creators Room</a>
               <a href="/members" className="ttl-shared-link ttl-shared-link-members">Members Room</a>
 
               {/* My TTL dropdown */}
@@ -609,7 +609,7 @@ export function TTLFooter() {
       <div className="ttl-shared-footer-actions">
         <a href="/reading-room/stories" className="ttl-shared-footer-btn">Browse Stories</a>
         <a href="/reading-room/authors" className="ttl-shared-footer-btn">Authors</a>
-        <a href="https://write.the-tiniest-library.com" className="ttl-shared-footer-btn">Writer's Room</a>
+        <a href="https://write.the-tiniest-library.com" className="ttl-shared-footer-btn">Creators Room</a>
         <a href="/members" className="ttl-shared-footer-btn-primary">Members Room →</a>
       </div>
     </footer>

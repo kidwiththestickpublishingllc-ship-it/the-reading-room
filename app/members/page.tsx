@@ -507,7 +507,7 @@ return (
             <a href="https://write.the-tiniest-library.com" style={{ textDecoration: "none" }}>
               <div style={{ background: "#FFFFFF", border: "1px solid rgba(201,168,76,0.3)", borderRadius: "12px", padding: "20px", boxShadow: "0 2px 8px rgba(201,168,76,0.08)" }}>
                 <span style={{ fontSize: "24px" }}>🪶</span>
-                <h3 style={{ color: "#C9A84C", fontSize: "15px", fontWeight: "600", margin: "8px 0 4px" }}>The Writer's Room</h3>
+                <h3 style={{ color: "#C9A84C", fontSize: "15px", fontWeight: "600", margin: "8px 0 4px" }}>The Creators Room</h3>
                 <p style={{ color: "#5C4F3A", fontSize: "12px", margin: 0 }}>Apply to write →</p>
               </div>
             </a>
