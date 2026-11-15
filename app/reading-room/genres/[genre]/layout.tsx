@@ -1,4 +1,9 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+
+// Adult genres live on TTL After Dark, never on this site.
+// Any /reading-room/genres/adult… address returns "not found".
+const isAdultSlug = (slug: string) => /^adult(-|$)/.test(decodeURIComponent(slug).toLowerCase());
 
 /* ============================================================
    Server layout for /reading-room/genres/[genre]
@@ -43,7 +48,7 @@ const GENRE_SEO: Record<string, { title: string; description: string }> = {
   Romance: {
     title: "Romance Fiction",
     description:
-      "Read original romance serials on The Tiniest Library — slow burns, age-gap, and love stories that don't flinch, from independent authors who keep their rights.",
+      "Read original romance serials on The Tiniest Library — slow burns, second chances, and love stories with heart, from independent authors who keep their rights.",
   },
 };
 
@@ -78,6 +83,10 @@ export async function generateMetadata(
   };
 }
 
-export default function GenreLayout({ children }: { children: React.ReactNode }) {
+export default async function GenreLayout(
+  { children, params }: { children: React.ReactNode; params: Promise<{ genre: string }> }
+) {
+  const { genre } = await params;
+  if (isAdultSlug(genre)) notFound();
   return <>{children}</>;
 }
