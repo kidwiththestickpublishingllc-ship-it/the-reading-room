@@ -1,19 +1,14 @@
-/* scripts/patch.js — exact, verified multi-line edits.
+/* scripts/patch.js — exact, verified edits.
  *
- *   node scripts/patch.js           → dry run, reports what would change
+ *   node scripts/patch.js           → dry run
  *   node scripts/patch.js --apply   → writes
  *
  * Run from the repo root (~/the-reading-room).
+ * regex — PATTERN must match exactly once; GONE is text that proves the edit
+ *         is still needed. If anything is missing or ambiguous, NOTHING is
+ *         written. CRLF safe.
  *
- * Safety:
- *   - Matches against LF internally, writes back in the file's own line ending,
- *     so Windows CRLF files are handled without corruption.
- *   - If an edit's FROM text is missing, it checks whether the TO text is
- *     already there and says "already applied" instead of failing blind.
- *   - If anything is genuinely MISSING, NOTHING is written. All or nothing.
- *   - Refuses to run if a FROM string appears more than once in its file.
- *
- * Batch: Reading Room — sign to the top, genre bar to whiteboard.
+ * Batch: Reading Room — remove the Adult 18+ door from the Stories page.
  */
 
 const fs = require('fs');
@@ -21,47 +16,17 @@ const path = require('path');
 
 const EDITS = [
   {
-    file: 'app/reading-room/page.tsx',
-    label: 'import Chalkboard',
-    from: `import WelcomeBoard from '@/app/components/WelcomeBoard';`,
-    to: `import WelcomeBoard from '@/app/components/WelcomeBoard';
-import Chalkboard from '@/app/components/Chalkboard';`,
-  },
-  {
-    file: 'app/reading-room/page.tsx',
-    label: 'the page lies on the board',
-    from: `  .ttl-root {
-    min-height: 100vh;
-    background: var(--paper, #F0E7D2);
-    font-family: 'Cormorant Garamond', Georgia, serif;
-    color: #1a1008;
-    position: relative;
-    overflow-x: hidden;
-  }`,
-    to: `  .ttl-root {
-    min-height: 100vh;
-    background: transparent;
-    font-family: 'Cormorant Garamond', Georgia, serif;
-    color: var(--text-main);
-    position: relative;
-    overflow-x: hidden;
-  }
-  /* everything on the page sits above the board */
-  .ttl-root > *:not(.cb-board) { position: relative; z-index: 1; }`,
-  },
-  {
-    file: 'app/reading-room/page.tsx',
-    label: 'render the board',
-    from: `        <div style={{ height: 90 }} />`,
-    to: `        <Chalkboard />
-        <div style={{ height: 90 }} />`,
+    file: 'app/reading-room/stories/page.tsx', kind: 'regex',
+    label: 'stories: skip the Adult 18+ panel',
+    pattern: /if \(panel\.genre === "Adult 18\+"\) \{[\s\S]*?\n\}\n(?=[ \t]*return \()/,
+    replace: () => 'if (panel.genre === "Adult 18+") return null;\n',
+    gone: 'genres/adult-18"; }}',
   },
 ];
 
 // ── engine ───────────────────────────────────────────────────────────
 const apply = process.argv.includes('--apply');
-
-const cache = new Map();   // file → { full, text, crlf, dirty }
+const cache = new Map();
 
 function load(rel) {
   if (cache.has(rel)) return cache.get(rel);
@@ -75,58 +40,31 @@ function load(rel) {
 }
 
 let ok = 0, already = 0, missing = 0, ambiguous = 0;
+const report = (sym, msg, e) => console.log(`  ${sym} ${msg.padEnd(15)} ${e.label}`);
 
 for (const e of EDITS) {
   const f = load(e.file);
-  if (!f) {
-    console.log(`  x MISSING FILE   ${e.file}`);
-    missing++;
+  if (!f) { console.log(`  ✗ MISSING FILE   ${e.file}`); missing++; continue; }
+  const all = new RegExp(e.pattern.source, e.pattern.flags.replace('g', '') + 'g');
+  const n = (f.text.match(all) || []).length;
+  if (n === 0) {
+    if (f.text.includes(e.gone)) { missing++; report('✗', 'NOT FOUND', e); }
+    else { already++; report('·', 'already done', e); }
     continue;
   }
-
-  const hits = f.text.split(e.from).length - 1;
-
-  if (hits === 1) {
-    f.text = f.text.replace(e.from, e.to);
-    f.dirty = true;
-    ok++;
-    console.log(`  + will change    ${e.label}`);
-  } else if (hits > 1) {
-    ambiguous++;
-    console.log(`  x AMBIGUOUS (${hits}x)  ${e.label}`);
-    console.log(`      the FROM text appears ${hits} times in ${e.file} - needs more context`);
-  } else if (f.text.includes(e.to)) {
-    already++;
-    console.log(`  . already done   ${e.label}`);
-  } else {
-    missing++;
-    console.log(`  x NOT FOUND      ${e.label}`);
-    console.log(`      in ${e.file} - the file has drifted from what this patch expects`);
-  }
+  if (n > 1) { ambiguous++; report('✗', `AMBIGUOUS ${n}×`, e); continue; }
+  f.text = f.text.replace(e.pattern, e.replace);
+  f.dirty = true; ok++; report('✓', 'will change', e);
 }
 
 console.log('');
-console.log(`${ok} to change | ${already} already applied | ${missing} not found | ${ambiguous} ambiguous`);
+console.log(`${ok} to change · ${already} already applied · ${missing} not found · ${ambiguous} ambiguous`);
+if (missing || ambiguous) { console.log('\nNothing written. Send me the output.'); process.exit(1); }
+if (!apply) { console.log('Dry run. Add --apply to write.'); process.exit(0); }
 
-if (missing || ambiguous) {
-  console.log('');
-  console.log('Nothing written. Fix the mismatches above first - send me the failing');
-  console.log('labels and I will re-cut those edits against the real text.');
-  process.exit(1);
-}
-
-if (!apply) {
-  console.log('Dry run. Add --apply to write.');
-  process.exit(0);
-}
-
-let written = 0;
 for (const [rel, f] of cache) {
   if (!f.dirty) continue;
   fs.writeFileSync(f.full, f.crlf ? f.text.replace(/\n/g, '\r\n') : f.text, 'utf8');
-  written++;
   console.log(`  wrote  ${rel}`);
 }
-
-console.log('');
-console.log(written ? 'Written. Check Problems, then push.' : 'Nothing to write.');
+console.log('\nWritten. Check Problems, then push.');

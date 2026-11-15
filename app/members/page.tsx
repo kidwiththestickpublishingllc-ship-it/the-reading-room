@@ -721,7 +721,6 @@ return (
               </div>
             </div>
           )}
-          {/* ── RED ROOM TAB ── */}
           
           {activeTab === "discover" && (
             <DiscoverPanel />
