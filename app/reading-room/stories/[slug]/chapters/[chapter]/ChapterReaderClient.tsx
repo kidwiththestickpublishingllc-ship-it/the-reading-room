@@ -679,16 +679,16 @@ function ChapterReaderContent({
         const { data: storyData } = await supabase.from('stories').select('*').eq('slug', storySlug).single();
         if (!storyData) { setError('Story not found.'); return; }
         setStory(storyData);
-        const { data: chaptersData } = await supabase.from('chapters').select('*').eq('story_id', storyData.id).order('chapter_number');
+        const { data: chaptersData } = await supabase.from('chapters').select('id, story_id, chapter_number, title, is_free, ink_cost, created_at, media_type, publish_at, split_id').eq('story_id', storyData.id).order('chapter_number');
         if (chaptersData) setAllChapters(chaptersData);
         const thisChapter = chaptersData?.find(c => c.chapter_number === chapterNum) ?? null;
         setChapter(thisChapter);
         if (thisChapter) {
-          if (thisChapter.is_free) { setUnlocked(true); }
-          else if (session) {
-            const { data: unlockData } = await supabase.from('chapter_unlocks').select('id').eq('user_id', session.user.id).eq('chapter_id', thisChapter.id).maybeSingle();
-            setUnlocked(!!unlockData);
-          }
+          // Text and media only come from get_chapter_body, which answers for
+          // free chapters, chapters this reader unlocked, their own story, or admins.
+          const { data: body } = await supabase.rpc('get_chapter_body', { p_chapter_id: thisChapter.id });
+          if (body) { setChapter({ ...thisChapter, ...body }); setUnlocked(true); }
+          else { setUnlocked(false); }
         }
       } catch { setError('Something went wrong loading this chapter.'); }
       finally { setLoading(false); }
@@ -736,7 +736,10 @@ function ChapterReaderContent({
     try {
       const { data: result, error: rpcError } = await supabase.rpc('unlock_chapter', { p_user_id: session.user.id, p_chapter_id: chapter.id });
       if (rpcError) throw rpcError;
-      setInk(v => v - chapter.ink_cost);
+      if (result && result.ok === false) { alert(result.error === 'Insufficient Ink' ? `You need ${chapter.ink_cost} Ink.` : (result.error ?? 'Could not unlock this chapter.')); return; }
+      if (!result?.already) setInk(v => v - chapter.ink_cost);
+      const { data: body } = await supabase.rpc('get_chapter_body', { p_chapter_id: chapter.id });
+      if (body) setChapter(c => (c ? { ...c, ...body } : c));
       setUnlocked(true);
     } catch { alert('Something went wrong. Please try again.'); }
     finally { setUnlocking(false); }

@@ -27,7 +27,7 @@ async function fetchStory(slug: string) {
 async function fetchChapters(storyId: string) {
   try {
     const res = await fetch(
-      `${SUPA}/rest/v1/chapters?story_id=eq.${encodeURIComponent(storyId)}&select=*&order=chapter_number`,
+      `${SUPA}/rest/v1/chapters?story_id=eq.${encodeURIComponent(storyId)}&select=id,story_id,chapter_number,title,is_free,ink_cost,created_at,media_type,publish_at,split_id&order=chapter_number`,
       {
         headers: { apikey: ANON!, Authorization: `Bearer ${ANON}` },
         next: { revalidate: 300 },
@@ -38,6 +38,20 @@ async function fetchChapters(storyId: string) {
   } catch {
     return [];
   }
+}
+
+// Text and media for one chapter, only if get_chapter_body allows it
+// (for a signed-out visitor: free chapters only).
+async function fetchBody(chapterId: string) {
+  try {
+    const res = await fetch(`${SUPA}/rest/v1/rpc/get_chapter_body`, {
+      method: "POST",
+      headers: { apikey: ANON!, Authorization: `Bearer ${ANON}`, "Content-Type": "application/json" },
+      body: JSON.stringify({ p_chapter_id: chapterId }),
+    });
+    if (!res.ok) return null;
+    return await res.json();
+  } catch { return null; }
 }
 
 // Prose only ships in the HTML for free chapters. A locked chapter
@@ -90,6 +104,7 @@ export default async function ChapterPage({ params }: { params: Params }) {
   const story = await fetchStory(slug);
   const chapters: any[] = story?.id ? await fetchChapters(story.id) : [];
   const thisChapter = chapters.find((c: any) => c.chapter_number === parseInt(chapter, 10)) ?? null;
+  if (thisChapter?.is_free) Object.assign(thisChapter, (await fetchBody(thisChapter.id)) ?? {});
   const url = `${SITE}/reading-room/stories/${slug}/chapters/${chapter}`;
 
   const jsonLd = story
