@@ -1775,11 +1775,15 @@ function ChapterReaderModal({
     setLoading(true);
     supabase
       .from("chapters")
-      .select("id, chapter_number, title, content, is_free, ink_cost")
+      .select("id, chapter_number, title, is_free, ink_cost")
       .eq("story_id", story.id)
       .order("chapter_number", { ascending: true })
-      .then(({ data }) => {
-        const chs = (data ?? []) as Chapter[];
+      .then(async ({ data }) => {
+        // Text only for chapters get_chapter_body allows (free, unlocked, own, admin).
+        const chs = await Promise.all(((data ?? []) as Chapter[]).map(async (ch) => {
+          const { data: body } = await supabase.rpc("get_chapter_body", { p_chapter_id: ch.id });
+          return { ...ch, content: body?.content ?? "" } as Chapter;
+        }));
         setChapters(chs);
         if (chs.length > 0) setActiveChapter(chs[0]);
         setLoading(false);

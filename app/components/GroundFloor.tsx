@@ -142,12 +142,16 @@ export default function GroundFloor() {
         if (storyRow) {
           const { data: c } = await supabase
             .from("chapters")
-            .select("chapter_number, title, content, is_free")
+            .select("id, chapter_number, title, is_free")
             .eq("story_id", storyRow.id)
             .order("chapter_number")
             .limit(1)
             .maybeSingle();
-          if (!cancelled && c) setChapter(c as Chapter);
+          if (!cancelled && c) {
+            // Text only comes through get_chapter_body (free chapters for everyone).
+            const { data: body } = await supabase.rpc("get_chapter_body", { p_chapter_id: c.id });
+            if (!cancelled) setChapter({ ...c, content: body?.content ?? null } as Chapter);
+          }
         }
       } catch { /* fall through to the invitation */ }
       finally { if (!cancelled) setLoading(false); }

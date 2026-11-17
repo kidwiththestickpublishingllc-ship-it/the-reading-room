@@ -6,96 +6,55 @@
  * Run from the repo root (~/the-reading-room).
  * If anything is missing or ambiguous, NOTHING is written. CRLF safe.
  *
- * Batch: chapter reader — paid chapters stay paid.
- *   • The chapter list loads WITHOUT text or media.
- *   • Text + media come from get_chapter_body(), which only answers for
- *     free chapters, chapters this reader unlocked, the reader's own story,
- *     or an admin. Writers and admins read their own paid chapters free.
- *   • After unlocking, the text is fetched the same way.
- *   • "Insufficient Ink" from unlock_chapter now shows a message instead
- *     of pretending the chapter unlocked.
- *   • The server page asks for the free chapter's text the same way.
+ * Batch: stage 2b — the last two Reading Room places that read chapter text
+ * directly now ask get_chapter_body instead (free chapters for everyone,
+ * paid ones only once unlocked).
+ *   • GroundFloor: the first-chapter preview
+ *   • reading-room/page.tsx: the quick-read story modal
  */
 
 const fs = require('fs');
 const path = require('path');
 
-const DIR = 'app/reading-room/stories/[slug]/chapters/[chapter]';
-const CR = `${DIR}/ChapterReaderClient.tsx`;
-const SP = `${DIR}/page.tsx`;
-
-const META = 'id, story_id, chapter_number, title, is_free, ink_cost, created_at, media_type, publish_at, split_id';
+const GF = 'app/components/GroundFloor.tsx';
+const RP = 'app/reading-room/page.tsx';
 
 const EDITS = [
-
-  // ═══ READER (browser) ═════════════════════════════════════════════════
   {
-    file: CR, label: 'chapter list loads without text or media',
-    from: `await supabase.from('chapters').select('*').eq('story_id', storyData.id).order('chapter_number');`,
-    to: `await supabase.from('chapters').select('${META}').eq('story_id', storyData.id).order('chapter_number');`,
+    file: GF, label: 'Ground Floor preview: text via get_chapter_body',
+    from: `            .select("chapter_number, title, content, is_free")
+            .eq("story_id", storyRow.id)
+            .order("chapter_number")
+            .limit(1)
+            .maybeSingle();
+          if (!cancelled && c) setChapter(c as Chapter);`,
+    to: `            .select("id, chapter_number, title, is_free")
+            .eq("story_id", storyRow.id)
+            .order("chapter_number")
+            .limit(1)
+            .maybeSingle();
+          if (!cancelled && c) {
+            // Text only comes through get_chapter_body (free chapters for everyone).
+            const { data: body } = await supabase.rpc("get_chapter_body", { p_chapter_id: c.id });
+            if (!cancelled) setChapter({ ...c, content: body?.content ?? null } as Chapter);
+          }`,
   },
   {
-    file: CR, label: 'text + media only through get_chapter_body',
-    from: `        setChapter(thisChapter);
-        if (thisChapter) {
-          if (thisChapter.is_free) { setUnlocked(true); }
-          else if (session) {
-            const { data: unlockData } = await supabase.from('chapter_unlocks').select('id').eq('user_id', session.user.id).eq('chapter_id', thisChapter.id).maybeSingle();
-            setUnlocked(!!unlockData);
-          }
-        }`,
-    to: `        setChapter(thisChapter);
-        if (thisChapter) {
-          // Text and media only come from get_chapter_body, which answers for
-          // free chapters, chapters this reader unlocked, their own story, or admins.
-          const { data: body } = await supabase.rpc('get_chapter_body', { p_chapter_id: thisChapter.id });
-          if (body) { setChapter({ ...thisChapter, ...body }); setUnlocked(true); }
-          else { setUnlocked(false); }
-        }`,
-  },
-  {
-    file: CR, label: 'after unlocking: check the result, then load the text',
-    from: `      if (rpcError) throw rpcError;
-      setInk(v => v - chapter.ink_cost);
-      setUnlocked(true);`,
-    to: `      if (rpcError) throw rpcError;
-      if (result && result.ok === false) { alert(result.error === 'Insufficient Ink' ? \`You need \${chapter.ink_cost} Ink.\` : (result.error ?? 'Could not unlock this chapter.')); return; }
-      if (!result?.already) setInk(v => v - chapter.ink_cost);
-      const { data: body } = await supabase.rpc('get_chapter_body', { p_chapter_id: chapter.id });
-      if (body) setChapter(c => (c ? { ...c, ...body } : c));
-      setUnlocked(true);`,
-  },
-
-  // ═══ SERVER PAGE ══════════════════════════════════════════════════════
-  {
-    file: SP, label: 'server: chapter list without text or media',
-    from: `&select=*&order=chapter_number`,
-    to: `&select=${META.replace(/ /g, '')}&order=chapter_number`,
-  },
-  {
-    file: SP, label: 'server: helper that asks get_chapter_body',
-    from: `// Prose only ships in the HTML for free chapters.`,
-    to: `// Text and media for one chapter, only if get_chapter_body allows it
-// (for a signed-out visitor: free chapters only).
-async function fetchBody(chapterId: string) {
-  try {
-    const res = await fetch(\`\${SUPA}/rest/v1/rpc/get_chapter_body\`, {
-      method: "POST",
-      headers: { apikey: ANON!, Authorization: \`Bearer \${ANON}\`, "Content-Type": "application/json" },
-      body: JSON.stringify({ p_chapter_id: chapterId }),
-    });
-    if (!res.ok) return null;
-    return await res.json();
-  } catch { return null; }
-}
-
-// Prose only ships in the HTML for free chapters.`,
-  },
-  {
-    file: SP, label: 'server: free chapter text for the page',
-    from: `  const thisChapter = chapters.find((c: any) => c.chapter_number === parseInt(chapter, 10)) ?? null;`,
-    to: `  const thisChapter = chapters.find((c: any) => c.chapter_number === parseInt(chapter, 10)) ?? null;
-  if (thisChapter?.is_free) Object.assign(thisChapter, (await fetchBody(thisChapter.id)) ?? {});`,
+    file: RP, label: 'quick-read modal: text via get_chapter_body',
+    from: `      .select("id, chapter_number, title, content, is_free, ink_cost")
+      .eq("story_id", story.id)
+      .order("chapter_number", { ascending: true })
+      .then(({ data }) => {
+        const chs = (data ?? []) as Chapter[];`,
+    to: `      .select("id, chapter_number, title, is_free, ink_cost")
+      .eq("story_id", story.id)
+      .order("chapter_number", { ascending: true })
+      .then(async ({ data }) => {
+        // Text only for chapters get_chapter_body allows (free, unlocked, own, admin).
+        const chs = await Promise.all(((data ?? []) as Chapter[]).map(async (ch) => {
+          const { data: body } = await supabase.rpc("get_chapter_body", { p_chapter_id: ch.id });
+          return { ...ch, content: body?.content ?? "" } as Chapter;
+        }));`,
   },
 ];
 
