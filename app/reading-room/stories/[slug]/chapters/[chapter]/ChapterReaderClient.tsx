@@ -688,7 +688,12 @@ function ChapterReaderContent({
           // free chapters, chapters this reader unlocked, their own story, or admins.
           const { data: body } = await supabase.rpc('get_chapter_body', { p_chapter_id: thisChapter.id });
           if (body) { setChapter({ ...thisChapter, ...body }); setUnlocked(true); }
-          else { setUnlocked(false); }
+          else {
+            // Locked: only a short teaser (the first 600 characters), never the chapter.
+            const { data: teaser } = await supabase.rpc('get_chapter_teaser', { p_chapter_id: thisChapter.id });
+            if (teaser) setChapter({ ...thisChapter, content: teaser });
+            setUnlocked(false);
+          }
         }
       } catch { setError('Something went wrong loading this chapter.'); }
       finally { setLoading(false); }
@@ -809,7 +814,7 @@ function ChapterReaderContent({
             chapter.content ? (
               <div className="chapter-content fade-in" style={{ fontSize }}
                 dangerouslySetInnerHTML={{ __html: formatContent(chapter.content) }} />
-            ) : <p className="empty-content">Sergio is still writing this chapter — check back soon.</p>
+            ) : <p className="empty-content">{story.author_name || 'The author'} is still writing this chapter — check back soon.</p>
           ) : (
             <>
               {chapter.content && (
@@ -849,6 +854,11 @@ function ChapterReaderContent({
                     </p>
                   </>
                 )}
+              </div>
+              {/* Ad space at the paywall: below the lock box, apart from its buttons */}
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8, margin: '40px auto 8px' }}>
+                <span style={{ fontFamily: 'var(--font-ui)', fontSize: 10, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--text-dim)' }}>Advertisement</span>
+                <TTLHouseAd width={300} height={250} />
               </div>
             </>
           )}

@@ -6,55 +6,54 @@
  * Run from the repo root (~/the-reading-room).
  * If anything is missing or ambiguous, NOTHING is written. CRLF safe.
  *
- * Batch: stage 2b — the last two Reading Room places that read chapter text
- * directly now ask get_chapter_body instead (free chapters for everyone,
- * paid ones only once unlocked).
- *   • GroundFloor: the first-chapter preview
- *   • reading-room/page.tsx: the quick-read story modal
+ * Batch: chapter reader paywall.
+ *   • An ad space below the lock box (TTL house ads now, AdSense later),
+ *     labeled and kept apart from the Unlock / Join buttons.
+ *   • Locked chapters get their 600-character teaser back, from
+ *     get_chapter_teaser — never the full text.
+ *   • "Sergio is still writing…" now uses the story's real author.
  */
 
 const fs = require('fs');
 const path = require('path');
 
-const GF = 'app/components/GroundFloor.tsx';
-const RP = 'app/reading-room/page.tsx';
+const CR = 'app/reading-room/stories/[slug]/chapters/[chapter]/ChapterReaderClient.tsx';
 
 const EDITS = [
   {
-    file: GF, label: 'Ground Floor preview: text via get_chapter_body',
-    from: `            .select("chapter_number, title, content, is_free")
-            .eq("story_id", storyRow.id)
-            .order("chapter_number")
-            .limit(1)
-            .maybeSingle();
-          if (!cancelled && c) setChapter(c as Chapter);`,
-    to: `            .select("id, chapter_number, title, is_free")
-            .eq("story_id", storyRow.id)
-            .order("chapter_number")
-            .limit(1)
-            .maybeSingle();
-          if (!cancelled && c) {
-            // Text only comes through get_chapter_body (free chapters for everyone).
-            const { data: body } = await supabase.rpc("get_chapter_body", { p_chapter_id: c.id });
-            if (!cancelled) setChapter({ ...c, content: body?.content ?? null } as Chapter);
+    file: CR, label: 'locked chapters: teaser only (600 characters)',
+    from: `          else { setUnlocked(false); }`,
+    to: `          else {
+            // Locked: only a short teaser (the first 600 characters), never the chapter.
+            const { data: teaser } = await supabase.rpc('get_chapter_teaser', { p_chapter_id: thisChapter.id });
+            if (teaser) setChapter({ ...thisChapter, content: teaser });
+            setUnlocked(false);
           }`,
   },
   {
-    file: RP, label: 'quick-read modal: text via get_chapter_body',
-    from: `      .select("id, chapter_number, title, content, is_free, ink_cost")
-      .eq("story_id", story.id)
-      .order("chapter_number", { ascending: true })
-      .then(({ data }) => {
-        const chs = (data ?? []) as Chapter[];`,
-    to: `      .select("id, chapter_number, title, is_free, ink_cost")
-      .eq("story_id", story.id)
-      .order("chapter_number", { ascending: true })
-      .then(async ({ data }) => {
-        // Text only for chapters get_chapter_body allows (free, unlocked, own, admin).
-        const chs = await Promise.all(((data ?? []) as Chapter[]).map(async (ch) => {
-          const { data: body } = await supabase.rpc("get_chapter_body", { p_chapter_id: ch.id });
-          return { ...ch, content: body?.content ?? "" } as Chapter;
-        }));`,
+    file: CR, label: '"still writing" uses the real author',
+    from: `<p className="empty-content">Sergio is still writing this chapter — check back soon.</p>`,
+    to: `<p className="empty-content">{story.author_name || 'The author'} is still writing this chapter — check back soon.</p>`,
+  },
+  {
+    file: CR, label: 'ad space below the lock box',
+    from: `                  </>
+                )}
+              </div>
+            </>
+          )}
+        </main>`,
+    to: `                  </>
+                )}
+              </div>
+              {/* Ad space at the paywall: below the lock box, apart from its buttons */}
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8, margin: '40px auto 8px' }}>
+                <span style={{ fontFamily: 'var(--font-ui)', fontSize: 10, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--text-dim)' }}>Advertisement</span>
+                <TTLHouseAd width={300} height={250} />
+              </div>
+            </>
+          )}
+        </main>`,
   },
 ];
 
