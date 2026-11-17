@@ -639,6 +639,8 @@ function ChapterReaderContent({
   const [pageVisible, setPageVisible] = useState(false);
   const [resumePrompt, setResumePrompt] = useState<{ chapter: number; scrollPct: number } | null>(null);
   const [adGate, setAdGate] = useState<null | (() => void)>(null);
+  // No more ad gate: whatever the reader picked runs straight away.
+  useEffect(() => { if (adGate) { const go = adGate; setAdGate(null); go(); } }, [adGate]);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [story, setStory] = useState<Story | null>(initialStory);
   const [chapter, setChapter] = useState<Chapter | null>(initialChapter);
@@ -920,7 +922,7 @@ function ChapterReaderContent({
         )}
 
         {/* Media panel */}
-        {adGate && <AdGate onDone={() => { const go = adGate; setAdGate(null); go(); }} />}
+        {/* chapter gate removed: readers go straight to the page */}
         <MediaPanel chapter={chapter} story={story} open={mediaPanelOpen} onClose={() => setMediaPanelOpen(false)} />
         <div className={`drawer-overlay${mediaPanelOpen ? ' open' : ''}`} onClick={() => setMediaPanelOpen(false)} />
 
