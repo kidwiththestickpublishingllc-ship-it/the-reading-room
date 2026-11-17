@@ -1,5 +1,6 @@
 "use client";
 
+import TTLHouseAd from "../components/TTLHouseAd";
 import React, { useEffect, useState } from "react";
 import { TTLNav, TTLFooter } from "@/app/reading-room/components/TTLNav";
 
@@ -536,8 +537,8 @@ export default function ComicsMangaPage() {
           {/* LEFT AD */}
           <div style={{ padding: '24px 16px', position: 'sticky', top: 80 }}>
             <div style={{ background: 'rgba(45,212,191,0.03)', border: '1px solid rgba(45,212,191,0.2)', borderRadius: 12, padding: '16px', minHeight: 400 }}>
-              <span style={{ display: 'block', fontSize: 9, fontWeight: 700, letterSpacing: '0.2em', color: '#2DD4BF', border: '1px solid rgba(45,212,191,0.3)', borderRadius: 20, padding: '2px 10px', marginBottom: 16, fontFamily: 'sans-serif', width: 'fit-content' }}>SPONSORED</span>
-              <iframe src="//a.magsrv.com/iframe.php?idzone=5907426&size=160x600" width="160" height="600" scrolling="no" frameBorder={0} style={{ border: 'none', display: 'block', margin: '0 auto' }} />
+              <span style={{ display: 'block', fontSize: 9, fontWeight: 700, letterSpacing: '0.2em', color: '#2DD4BF', border: '1px solid rgba(45,212,191,0.3)', borderRadius: 20, padding: '2px 10px', marginBottom: 16, fontFamily: 'sans-serif', width: 'fit-content' }}>FROM THE LIBRARY</span>
+              <TTLHouseAd width={160} height={600} />
             </div>
           </div>
           <div>

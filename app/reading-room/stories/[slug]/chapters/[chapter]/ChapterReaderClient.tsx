@@ -1,4 +1,5 @@
 "use client";
+import TTLHouseAd from "../../../../components/TTLHouseAd";
 import AskTheWriter from "@/app/components/AskTheWriter";
 import { useEffect, useState, useRef } from "react";
 import { createBrowserClient } from "@supabase/ssr";
@@ -481,14 +482,6 @@ function PageNarrator({ text, title, onClose }: { text: string; title: string; o
 function AdGate({ onDone }: { onDone: () => void }) {
   const [canSkip, setCanSkip] = useState(false);
   useEffect(() => {
-    // inject magsrv provider + serve the zone
-    const s = document.createElement('script');
-    s.async = true;
-    s.src = 'https://a.magsrv.com/ad-provider.js';
-    document.body.appendChild(s);
-    s.onload = () => {
-      try { ((window as any).AdProvider = (window as any).AdProvider || []).push({ serve: {} }); } catch {}
-    };
     const t1 = setTimeout(() => setCanSkip(true), 2000);
     const t2 = setTimeout(() => onDone(), 5000);
     return () => { clearTimeout(t1); clearTimeout(t2); };
@@ -501,7 +494,7 @@ function AdGate({ onDone }: { onDone: () => void }) {
         <div style={{ fontFamily: 'var(--font-display)', fontSize: 18, color: 'var(--gold)', marginBottom: 4 }}>Finding your page…</div>
         <div style={{ fontSize: 12, color: 'var(--text-dim)', marginBottom: 20 }}>The Tiniest Library</div>
         <div style={{ width: 300, height: 250, margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(255,255,255,0.02)', borderRadius: 10, overflow: 'hidden' }}>
-          <ins className="eas6a97888e2" data-zoneid="5949872"></ins>
+          <TTLHouseAd width={300} height={250} />
         </div>
         <button
           onClick={onDone}

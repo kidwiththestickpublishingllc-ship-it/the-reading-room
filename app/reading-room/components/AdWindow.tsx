@@ -1,15 +1,10 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-
-declare global {
-  interface Window {
-    AdProvider?: any[];
-  }
-}
+import TTLHouseAd from "./TTLHouseAd";
 
 // =============================================================
-// TTL Ad Window — ExoClick zone 5938670 (300x500)
+// TTL Ad Window — 300x500, shows TTL house ads (AdSense later)
 // Drop in: app/reading-room/components/AdWindow.tsx
 //
 // Ad slot stays EXACTLY 300x500. The animated gold gradient border
@@ -36,19 +31,6 @@ export default function AdWindow({
   useEffect(() => {
     if (!mounted || initialized.current) return;
     initialized.current = true;
-
-    // 1. Load the ExoClick ad-provider script once.
-    if (!document.querySelector('script[src="https://a.magsrv.com/ad-provider.js"]')) {
-      const script = document.createElement("script");
-      script.async = true;
-      script.type = "application/javascript";
-      script.src = "https://a.magsrv.com/ad-provider.js";
-      document.body.appendChild(script);
-    }
-
-    // 2. Tell ExoClick to serve the zone.
-    window.AdProvider = window.AdProvider || [];
-    window.AdProvider.push({ serve: {} });
   }, [mounted]);
 
   return (
@@ -95,11 +77,7 @@ export default function AdWindow({
       <div className="adwin-frame">
         <div className="adwin-slot" style={{ width, height }}>
           {mounted ? (
-            <ins
-              className="eas6a97888e2"
-              data-zoneid={zoneId}
-              style={{ display: "block", width, height }}
-            />
+            <TTLHouseAd width={width} height={height} />
           ) : null}
         </div>
       </div>

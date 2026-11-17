@@ -1,5 +1,6 @@
 "use client";
 
+import TTLHouseAd from "../../components/TTLHouseAd";
 import React, { useEffect, useMemo, useState } from "react";
 import { supabase } from "@/lib/supabase";
 import GenreLandingPage from "@/app/components/GenreLandingPage";
@@ -1660,8 +1661,8 @@ function GenrePageContent({ genreSlug }: { genreSlug: string }) {
           {/* LEFT AD */}
           <div style={{ padding: '32px 16px', position: 'sticky', top: 80 }}>
             <div style={{ background: 'rgba(201,168,76,0.03)', border: '1px solid rgba(201,168,76,0.2)', borderRadius: 12, padding: '20px 16px', minHeight: 640 }}>
-              <span style={{ display: 'block', fontSize: 9, fontWeight: 700, letterSpacing: '0.2em', color: '#6495ED', border: '1px solid rgba(100,149,237,0.3)', borderRadius: 20, padding: '2px 10px', marginBottom: 16, fontFamily: 'sans-serif', width: 'fit-content' }}>SPONSORED</span>
-              <iframe src={`//a.magsrv.com/iframe.php?idzone=${GENRE_AD_ZONES[genreSlug] ?? FALLBACK_AD_ZONE}&size=160x600`} width="160" height="600" scrolling="no" frameBorder={0} style={{ border: 'none', display: 'block', margin: '0 auto' }} />
+              <span style={{ display: 'block', fontSize: 9, fontWeight: 700, letterSpacing: '0.2em', color: '#6495ED', border: '1px solid rgba(100,149,237,0.3)', borderRadius: 20, padding: '2px 10px', marginBottom: 16, fontFamily: 'sans-serif', width: 'fit-content' }}>FROM THE LIBRARY</span>
+              <TTLHouseAd width={160} height={600} />
             </div>
           </div>
         <div className="gp-wrap">
